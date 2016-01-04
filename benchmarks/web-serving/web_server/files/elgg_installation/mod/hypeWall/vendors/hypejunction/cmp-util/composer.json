@@ -1,0 +1,19 @@
+{
+	"name": "hypejunction/cmp-util",
+	"repository": "hypeJunction/cmp-util",
+	"description": "Util classes",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"classes", "util"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "ismayil.khayredinov@gmail.com"
+		}
+	],
+	"autoload": {
+        "psr-4": {"hypeJunction\\": "classes/"}
+    }
+}

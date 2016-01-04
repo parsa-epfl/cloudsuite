@@ -1,0 +1,49 @@
+<?php
+
+$status = elgg_view('input/plaintext', array(
+	'name' => 'status',
+	'class' => 'hj-wall-status'
+		));
+
+$friends = elgg_view('input/relationship_tags', array(
+	'name' => 'friends',
+	'options' => hj_wall_prepare_friend_tags(),
+	'class' => 'hj-wall-friends'
+		));
+
+if (elgg_is_active_plugin('hypeMaps')) {
+	$location = elgg_view('input/text', array(
+		'name' => 'friends',
+		'class' => 'hj-wall-location'
+			));
+}
+
+$access = elgg_view('input/access', array(
+	'class' => 'hj-wall-access'
+		));
+
+$button = elgg_view('input/submit', array(
+	'value' => elgg_echo('post')
+		));
+
+$html = <<<HTML
+<div class="hj-wall-form-wrapper">
+	<div class="clearfix">$status</div>
+	<div class="hj-wall-form-taginput">
+		$friends
+		$location
+	</div>
+	<div class="hj-wall-form-bar clearfix">
+		<ul class="hj-wall-status-extras">
+			<li>$friends_icon</li>
+			<li>$location_icon</li>
+		</ul>
+		<ul class="hj-wall-status-controls">
+			<li>$access</li>
+			<li>$button</li>
+		</ul>
+	</div>
+</div>
+HTML;
+
+echo $html;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<benchmark>
+	<!-- 
+    <name></name>
+    <version></version>
+    <config-form></config-form>
+    <config-stylesheet></config-stylesheet>
+    <config-file-name>run.xml</config-file-name>
+    <benchmark-class>com.sun.faban.harness.DefaultFabanBenchmark2</benchmark-class>
+    <result-file-path>summary.xml</result-file-path>
+    <metric></metric>
+    <scaleName></scaleName>
+    <scaleUnit></scaleUnit>
+    <banner-page>bannerPage.html</banner-page>      -->
+</benchmark>
