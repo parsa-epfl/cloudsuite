@@ -1,0 +1,82 @@
+
+Thu Apr 17 12:12:51  2003
+Tim Brecht
+
+I was able to produce a version of httperf that
+looks like it can be run on Windows machines.
+I've compiled it on a cygwin environment but
+have been able to run a few simple tests in a non cygwin
+environment (Windows 2000 and Windows 98).
+
+----------------------------------------------------------------------
+NOTES:
+------
+
+It seems that with the Nagle algorithm disabled
+that httperf.exe sends a separate packet for each element
+of a writev vector. Httperf uses several vectors for
+each request. This can lead to significant performance
+hits for both the client and the server.
+E.g., the request arrives in something like 5-7 packets
+and depending on how the server is implemented it may require
+that many reads to get one request from the socket.
+
+I've only experimented a bit with leaving the Nagle
+algorithm enabled. This reduces the number of packets needed
+for a request (still > 1) but I haven't checked on timing/delays.
+
+----------------------------------------------------------------------
+INCREASING THE NUMBER OF FDS:
+-----------------------------
+
+Cygwin seems to be set up to handle a user defined FD_SETSIZE.
+
+So to increase the number of open file descriptors (default is 64) 
+with CYGWIN.
+
+in "config.h"
+#define FD_SETSIZE  (1024)
+
+----------------------------------------------------------------------
+RUNNING:
+--------
+After producing a statically compiled version of the
+httperf executable (httperf.exe) I copied it and 
+the CYGWIN DLL (cygwin1.dll) to another machine
+(both in the same directory) and was able to run a few simple tests.
+The file cygwin1.dll can be found in a cygwin installation in the 
+/bin directory.
+
+----------------------------------------------------------------------
+COMPILING:
+---------
+Compiling httperf my version of cygwin, which was running on 
+Windows 2000.
+
+% mkdir build
+% cd build
+% ../configure
+
+Then I modified config.h so that a few things that autoconf
+defined were not defined.
+
+/* Define if you have the <openssl/ssl.h> header file.  */
+/* #define HAVE_OPENSSL_SSL_H 1 */
+
+/* Define if you have the crypto library (-lcrypto).  */
+/* #define HAVE_LIBCRYPTO 1 */
+
+
+I modified the Makefile to remove 
+# LIBS = -lcrypto -lm
+LIBS = -lm
+
+From the build directory I modified all the Makefiles
+so that everything is statically linked.
+
+% vi Makefile */Makefile
+
+# LDFLAGS =
+LDFLAGS = -static -Bstatic
+
+----------------------------------------------------------------------

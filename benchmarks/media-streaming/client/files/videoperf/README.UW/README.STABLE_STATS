@@ -1,0 +1,29 @@
+The STABLE_STATS feature defines a ramp-up and ramp-down time for
+an experiment.  Sessions that start before the ramp-up period expires
+are not counted in the statistics, and sessions that start within the
+ramp-down time at the end of the experiment are also not counted.
+
+The ramp-up and ramp-down periods are specified using --ramp-up-num-conns
+and --ramp-down-num-conns, and these parameters are specified as numbers
+of connections.  Each session uses a single connection, so when sessions
+are in use, the number of connections is equal to the number of sessions.
+
+This feature is can be enabled by defining STABLE_STATS.  Because
+STABLE_STATS adds some values to the param struct, it needs to be defined
+everywhere param is used; so I define STABLE_STATS in the configure file
+rather than Makefile.in.  This is likely not the right way to do this.
+
+It is implemented mostly in stat/basic.c.  It is controlled by two
+variables stable_conns_start and stable_conns_end that are set to the values
+supplied on the command line, or to default values that will select all
+connections.  Each connection is given an id number in sequence.  If
+the connection id is larger than stable_conns_start and smaller than
+stable_conns_end, then an 'is_stable' flag is set true for that connection,
+otherwise it is set false.
+
+The code is modified to keep two versions of the most important statistics;
+one set that includes only connections that are stable, and the other
+that collects statistics for all connections.  To avoid changing the
+data scripts that extract information from the output, the stable stats
+values are reported using the existing labels and the statistics
+for all connections are reported using new labels that start with "All".

@@ -1,0 +1,23 @@
+The --stagger-start option causes httperf to start multiple httperf clients
+at slightly different times to avoid burstiness in the requests.  Without
+this option, if all instances of httperf start at approximately the same
+time, they will issue requests at the same time.  With these synchronized
+requests, the traffic consists of large bursts of requests that cause an
+unrealistic load on the test server.
+
+The session period is divided by the number of clients, and each client
+delays for a different fraction of the session period before starting the
+first session, based on client ID.  This will have the effect of staggering
+the requests from the different clients rather than synchronizing them.
+This option has the greatest effect when using a uniform rate.  If a rate
+distribution is used, the staggering won't make much of a difference.
+
+This modification is not surrounded by an #ifdef since it is simple
+and has no effect if the option is not selected.
+
+It is implemented by modifying the rate_generator_start() function in
+gen/rate.c.  If param.client.stagger_start is set, this routine adds
+a small delay to the deadline for when the first session should start.
+Subsequent arrival delays are calculated relative to the first in tick(),
+so with deterministic arrival rates, the clients will continue to issue
+requests in a staggered fashion throughout the experiment.
