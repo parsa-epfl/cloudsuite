@@ -1,0 +1,27 @@
+{
+	"name": "hypejunction/cmp-filestore",
+	"repository": "hypeJunction/cmp-filestore",
+	"description": "Filestore classes",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"classes", "filestore"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "ismayil.khayredinov@gmail.com"
+		}
+	],
+	"config": {
+		"vendor-dir": "vendors"
+	},
+	"require": {
+		"smottt/wideimage": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"hypeJunction\\": "classes/"
+		}
+	}
+}

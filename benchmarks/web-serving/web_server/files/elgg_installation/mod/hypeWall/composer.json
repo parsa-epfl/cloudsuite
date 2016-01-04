@@ -1,0 +1,42 @@
+{
+	"name": "hypejunction/hypewall",
+	"type": "elgg-plugin",
+	"repository": "hypeJunction/hypeWall",
+	"description": "Rich status updates",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "ismayil.khayredinov@gmail.com"
+		}
+	],
+	"extra": {
+		"installer-name": "hypeWall"
+	},
+	"config": {
+		"vendor-dir": "vendors",
+		"preferred-install": "dist"
+	},
+	"suggest": {
+		"hypejunction/hypeembed" : "@stable",
+		"hypejunction/elgg_dropzone" : "@stable"
+	},
+	"require": {
+		"php": ">=5.3.3",
+		"composer/installers": ">=1.0.8",
+		"hypejunction/cmp-util": "1.0.*",
+		"hypejunction/cmp-filestore": "1.0.*",
+		"smottt/wideimage": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"hypeJunction\\": "classes/hypeJunction/",
+			"UFCOE\\": "classes/UFCOE/"
+		}
+	}
+}
+

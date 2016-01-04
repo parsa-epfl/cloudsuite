@@ -1,0 +1,13 @@
+/* CKEditor */
+
+.cke {
+	clear: right;
+}
+
+.cke_bottom .cke_wordcount {
+	float: left;
+}
+
+.cke_bottom .cke_path {
+	float: right;
+}

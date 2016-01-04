@@ -1,0 +1,1 @@
+See http://learn.elgg.org/en/1.9/admin/upgrading.html

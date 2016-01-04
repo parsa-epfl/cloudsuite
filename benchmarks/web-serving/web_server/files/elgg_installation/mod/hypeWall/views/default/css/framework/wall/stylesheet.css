@@ -1,0 +1,442 @@
+body.wall-state-loading:before {
+  display: block;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: -25px auto 0;
+  z-index: 10000;
+  content: "\f110";
+  color: #0054a7;
+  font-size: 50px;
+  line-height: 50px;
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.elgg-menu-wall-filter {
+  text-align: right;
+  margin: 10px;
+}
+.elgg-menu-wall-filter > li {
+  display: inline-block;
+}
+.elgg-menu-wall-filter > li a {
+  font-size: 20px;
+  -webkit-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  -ms-border-radius: 1000px;
+  -o-border-radius: 1000px;
+  border-radius: 1000px;
+  margin: 4px;
+  color: #cccccc;
+}
+.elgg-menu-wall-filter > li.elgg-state-selected a, .elgg-menu-wall-filter > li a:hover {
+  color: #0054a7;
+}
+
+.wall-icon {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.wall-icon.wall-icon-photo:before {
+  content: "\f030";
+}
+.wall-icon.wall-icon-status:before {
+  content: "\f040";
+}
+.wall-icon.wall-icon-url:before {
+  content: "\f0c1";
+}
+.wall-icon.wall-icon-file:before {
+  content: "\f0ee";
+}
+.wall-icon.wall-icon-content:before {
+  content: "\f0ea";
+}
+.wall-icon.wall-icon-find-me:before {
+  content: "\f05b";
+}
+
+.wall-container {
+  font-family: 'Open Sans', 'sans-serif';
+  position: relative;
+  margin: 10px;
+}
+.wall-container * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.wall-container form {
+  padding: 0;
+  background: transparent;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+.wall-container form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.wall-container form fieldset > div {
+  margin-bottom: 10px;
+}
+.wall-container form label {
+  font-weight: normal;
+  font-family: "Open Sans", "sans-serif";
+  display: inline-block;
+  margin-bottom: 7px;
+  float: left;
+}
+.wall-container form textarea {
+  height: 75px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+.wall-container form input[type="text"] {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+.wall-container form .wall-find-me {
+  float: right;
+}
+.wall-container form .wall-bar-controls {
+  text-align: right;
+  margin: 10px;
+}
+.wall-container form .wall-bar-controls > li {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px;
+}
+.wall-container form .wall-bar-controls > li select {
+  margin: auto;
+  line-height: 20px;
+}
+.wall-container form .wall-bar-controls > li label {
+  line-height: 20px;
+  font-weight: normal;
+}
+
+.wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
+  font-size: 90%;
+  color: #666;
+}
+
+.wall-post-list {
+  border: none;
+}
+.wall-post-list * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.wall-post-list > li {
+  border: none;
+  position: relative;
+}
+
+.wall-post {
+  *zoom: 1;
+  padding-top: 10px;
+}
+.wall-post:before, .wall-post:after {
+  content: " ";
+  display: table;
+}
+.wall-post:after {
+  clear: both;
+}
+.wall-post > .elgg-image {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 16.66667%;
+  float: left;
+  margin: 0;
+  padding: 0 3px;
+  position: relative;
+}
+.wall-post > .elgg-image .elgg-avatar {
+  max-width: 100%;
+}
+.wall-post > .elgg-image .elgg-avatar img {
+  max-width: 100%;
+  height: auto;
+}
+.wall-post > .elgg-image .wall-owner-icon-block {
+  margin: -20px 0 0 30px;
+  position: absolute;
+  display: block;
+}
+.wall-post > .elgg-body {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 83.33333%;
+  float: left;
+  padding: 0 3px;
+}
+.wall-post > .elgg-body .elgg-content {
+  *zoom: 1;
+}
+.wall-post > .elgg-body .elgg-content:before, .wall-post > .elgg-body .elgg-content:after {
+  content: " ";
+  display: table;
+}
+.wall-post > .elgg-body .elgg-content:after {
+  clear: both;
+}
+.wall-post > .elgg-body .elgg-menu-entity {
+  margin-top: 15px;
+  margin-left: 0;
+  float: none;
+}
+.wall-post > .elgg-body .wall-bubble {
+  background: #ffffff;
+  position: relative;
+  margin-left: 15px;
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+}
+.wall-post > .elgg-body .wall-bubble:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 15px 15px 0;
+  border-color: transparent #e6e6e6 transparent transparent;
+  margin-left: -16px;
+  margin-top: -1px;
+  z-index: 1;
+}
+.wall-post > .elgg-body .wall-bubble:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 15px 15px 0;
+  border-color: transparent #ffffff transparent transparent;
+  margin-left: -14px;
+  margin-top: 0;
+  z-index: 5;
+}
+
+.wall-post-alt {
+  *zoom: 1;
+  padding-top: 10px;
+}
+.wall-post-alt:before, .wall-post-alt:after {
+  content: " ";
+  display: table;
+}
+.wall-post-alt:after {
+  clear: both;
+}
+.wall-post-alt > .elgg-image-alt {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 16.66667%;
+  float: left;
+  float: right;
+  margin: 0;
+  padding: 0 3px;
+  position: relative;
+}
+.wall-post-alt > .elgg-image-alt .elgg-avatar {
+  max-width: 100%;
+}
+.wall-post-alt > .elgg-image-alt .elgg-avatar img {
+  max-width: 100%;
+  height: auto;
+}
+.wall-post-alt > .elgg-image-alt .wall-owner-icon-block {
+  margin: -20px 0 0 30px;
+  position: absolute;
+  display: block;
+}
+.wall-post-alt > .elgg-body {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 83.33333%;
+  float: left;
+  float: left;
+  padding: 0 3px;
+}
+.wall-post-alt > .elgg-body .elgg-content {
+  *zoom: 1;
+}
+.wall-post-alt > .elgg-body .elgg-content:before, .wall-post-alt > .elgg-body .elgg-content:after {
+  content: " ";
+  display: table;
+}
+.wall-post-alt > .elgg-body .elgg-content:after {
+  clear: both;
+}
+.wall-post-alt > .elgg-body .elgg-menu-entity {
+  margin-top: 15px;
+  margin-left: 0;
+  float: none;
+}
+.wall-post-alt > .elgg-body .wall-bubble {
+  background: #ffffff;
+  position: relative;
+  margin-right: 15px;
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+}
+.wall-post-alt > .elgg-body .wall-bubble:before {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 15px 15px 0 0;
+  border-color: #e6e6e6 transparent transparent transparent;
+  margin-right: -16px;
+  margin-top: -1px;
+  z-index: 1;
+}
+.wall-post-alt > .elgg-body .wall-bubble:after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 15px 15px 0 0;
+  border-color: #fff transparent transparent transparent;
+  margin-right: -14px;
+  margin-top: 0;
+  z-index: 5;
+}
+
+.wall-poster-avatar, .wall-owner-avatar {
+  -webkit-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  -ms-border-radius: 1000px;
+  -o-border-radius: 1000px;
+  border-radius: 1000px;
+  border: 1px solid #cccccc;
+}
+
+.wall-status-counter {
+  text-align: right;
+  left: 0;
+  bottom: 0;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 20px;
+  vertical-align: middle;
+  color: #666;
+}
+.wall-status-counter .wall-chars-counter {
+  margin: 0 5px 0 0;
+  font-size: 12px;
+}
+.wall-status-counter.wall-status-counter-overflow .wall-chars-counter {
+  color: darkred;
+  font-weight: bold;
+}
+
+.wall-attachments, .wall-url-preview {
+  margin: 10px 0;
+}
+.wall-attachments img, .wall-attachments iframe, .wall-attachments object, .wall-attachments embed, .wall-url-preview img, .wall-url-preview iframe, .wall-url-preview object, .wall-url-preview embed {
+  max-width: 100%;
+}
+.wall-attachments .elgg-gallery > li, .wall-url-preview .elgg-gallery > li {
+  display: inline-block;
+  float: none;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 33%;
+}
+
+.wall-widget-list > li {
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.elgg-module.elgg-module-embed {
+  font-family: "Open Sans", 'sans-serif';
+  background: #f2f2f2;
+  border: 1px solid #cccccc;
+  margin: 10px 0;
+}
+.elgg-module.elgg-module-embed > .elgg-head {
+  padding: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+.elgg-module.elgg-module-embed > .elgg-head h3 {
+  margin: 0;
+}
+.elgg-module.elgg-module-embed > .elgg-body {
+  background: white;
+  padding: 0;
+}
+.elgg-module.elgg-module-embed > .elgg-body .elgg-image-block {
+  padding: 10px;
+}
+.elgg-module.elgg-module-embed > .elgg-foot {
+  border-top: 1px solid #cccccc;
+  padding: 10px;
+}
+.elgg-module.elgg-module-embed > .elgg-foot a {
+  word-break: break-all;
+}
+
+.extractor-link {
+  line-height: 110%;
+  background: #f4f4f4;
+  vertical-align: middle;
+}
+.extractor-link .favicon {
+  background-size: 16px;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin: 0 5px;
+}
+.extractor-link .link {
+  margin: 0 5px;
+}
