@@ -10,7 +10,7 @@ show_ord: 20
     	{% for node in pages_list %}
       	{% if node.title != null %}
         	{% if node.layout == "benchmark" %}
-          		<li><a target="_blank" href="{{ node.url }}">{{ node.title }}</a></li>
+          		<li><a target="_blank" href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a></li>
         	{% endif %}
       	{% endif %}
     {% endfor %}

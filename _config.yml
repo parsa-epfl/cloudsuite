@@ -9,7 +9,7 @@ title:               CloudSuite
 tagline:             'The Suite of Scale-out Benchmarks'
 description:         'CloudSuite'
 url:                 http://cloudsuite.ch
-baseurl:             ''
+baseurl:             '/cloudsuite'
 paginate:            5
 
 # About/contact
