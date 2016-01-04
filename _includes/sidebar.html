@@ -1,5 +1,6 @@
 <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
      styles, `#sidebar-checkbox` for behavior. -->
+<!-- <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" checked> -->
 <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
 
 <!-- Toggleable sidebar -->
@@ -16,18 +17,48 @@
       `layout: page` in the front-matter. See readme for usage.
     {% endcomment %}
 
-    {% assign pages_list = site.pages | sort:"url" %}
+    {% assign pages_list = site.pages | sort:"show_ord" %}
     {% for node in pages_list %}
       {% if node.title != null %}
-        {% if node.layout == "page" %}
+        {% if node.layout == "page" and node.sidebar == "true" %}
           <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
         {% endif %}
       {% endif %}
     {% endfor %}
 
-    <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a>
-    <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a>
-    <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+    <!-- <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a> -->
+    <!-- <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a> -->
+    <!-- <span class="sidebar-nav-item">Currently v{{ site.version }}</span> -->
+    <!-- <span class="sidebar-nav-item">Workloads TBD</span> -->
+    <!-- <span class="sidebar-nav-item">Workloads TBD</span> -->
+
+
+<!--     <div id='cssmenu'>
+<ul>
+   <li class='has-sub'><a href='#'><span>Workloads</span></a>
+      <ul>
+          {% assign pages_list = site.pages | sort:"show_ord" %}
+          {% for node in pages_list %}
+            {% if node.title != null %}
+              {% if node.layout == "page" %}
+                <li><a href="{{ node.url }}">{{ node.title }}</a></li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+      </ul>
+   </li>
+</ul>
+</div> -->
+
+<div class="sidebar-item">
+      <a href="http://parsa.epfl.ch/"><img alt="Parsa Logo" src="{{ site.baseurl }}/logo/parsalogo.jpg" width="60%" height="60%"></img></a>
+      <a href="http://www.ecocloud.ch/"><img alt="EcoCloud Logo" src="{{ site.baseurl }}/logo/ecocloud_logo.png" width="60%" height="60%"></img></a>
+      <a href="http://www.epfl.ch/"><img alt="EPFL Logo" src="{{ site.baseurl }}/logo/epfl_logo1.png" width="60%" height="60%"></img></a>
+      <a href="http://www.stonybrook.edu/"><img alt="SBU Logo" src="{{ site.baseurl }}/logo/SBU_new2.jpg" width="60%" height="60%"></img></a>
+      <a href="http://compas.cs.stonybrook.edu/"><img alt="COMPAS Logo" src="{{ site.baseurl }}/logo/compass.png" width="60%" height="60%"></img></a>
+ </div>
+
   </nav>
 
   <div class="sidebar-item">
@@ -35,4 +66,20 @@
       &copy; {{ site.time | date: '%Y' }}. All rights reserved.
     </p>
   </div>
+
+<!--           <div class="logo_bottom1">
+          <a href="http://www.parsa.epfl.ch/"><img src="{{ site.baseurl }}/logo/parsalogo.jpg" height=70px width=120px align="right"></a>
+        </div>
+        <div class="logo_bottom1">
+          <a href="http://www.ecocloud.ch/"><img src="{{ site.baseurl }}/logo/ecocloud_logo.png" height=70px width=150px align="left"></a>
+        </div>
+        <div class="logo_bottom">
+          <a href="http://epfl.ch/"><img src="{{ site.baseurl }}/logo/epfl_logo1.png" height=150px width=150px align="bottom"></a>
+         </div> -->
+
+<!-- <a href="http://www.ecocloud.ch/"><img src="{{ site.baseurl }}/logo/ecocloud_logo.png" height=70px width=150px></a>
+<a href="http://epfl.ch/"><img src="{{ site.baseurl }}/logo/epfl_logo1.png" height=150px width=150px></a>
+<a href="http://www.parsa.epfl.ch/"><img src="{{ site.baseurl }}/logo/parsalogo.jpg" height=70px width=120px></a>
+ -->
+
 </div>
