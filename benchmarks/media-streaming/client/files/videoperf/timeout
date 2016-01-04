@@ -1,0 +1,7 @@
+./README.UW/README.TIMEOUT:  if (s->recvq && (timeout == 0.0 || timeout > s->recvq->timeout))
+./README.UW/README.TIMEOUT:    timeout = s->recvq->timeout;
+./core.c:	      && s->recvq && now >= s->recvq->timeout)
+./core.c:		fprintf(stderr, "Receive queue timeout = %f \n", s->recvq->timeout);
+./core.c:  if (s->recvq && (timeout == 0.0 || timeout > s->recvq->timeout))
+./core.c:    timeout = s->recvq->timeout;
+Binary file ./.core.c.swp matches

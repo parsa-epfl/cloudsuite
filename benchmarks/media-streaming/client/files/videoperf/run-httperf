@@ -1,0 +1,2 @@
+#!/bin/csh
+build-linux/httperf --verbose --timeout=2 --client=0/12 --server=192.168.41.110 --port=6800 --uri=/test/ --rate=3 --send-buffer=4096 --recv-buffer=1048576 --call-stats=30 --call-stats-file=/home/jasummer/logs/call-stats-5000x100Mb --wsesslog=25,0.000,/home/jasummer/logs/cl-pop3-25x1x100Mb-00.log --ramp-up-time=1 --ramp-down-time=1

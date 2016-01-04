@@ -1,0 +1,350 @@
+High Level Overview:
+
+	Notation:
+		T is the value --timeout=T
+
+	A connection must be established in T seconds or the client will timeout
+	Once a connection is established, the client must send the request within T seconds or
+		the client will timeout
+	Once the request is sent the response must be completely received within T seconds or
+		the client will timeout
+
+	Note: The concept of a session is only used by HTTPERF in the
+	context of generating a workload specified by wsess or wsesslog. The
+	core	of HTTPERF, which is responsible for establishing connections
+	and sending requests to the server, is not aware of the concept of a
+	session. As such, there are	no timers that span the length of a
+	session. 
+
+
+
+
+
+Lower Level Details:
+
+Timer started when:
+	(1)establishing a connection (time = T)
+	(2)when a call is moved to the sendq (time = T)
+	(3)another spot in do_send...*
+	(4)when a call is moved to the recvq (time = T)
+	(5)after some data has been recved but not all (time = R)
+
+R is the time remaining on the prevous timer started at (4) or (5)
+
+Timer cancelled when (if a timer exists):
+	-core_close:
+		-a connection fails
+		-a connection times out
+		-a call finishs 
+		-a session finishs
+	-core_loop_handle_socket:
+		-when a connection is established
+		-when the request is sent
+		-when data is recved 
+
+Observations:
+	-timers are created a minimum of 3 times for a connection (assuming 1 call per conn)
+		>twice before sending the request [timer start: (1), (2)]
+		>once after sending and before receiving any data [timer start: (4)]
+		>larger file requests create more timers then small file requests
+			#"extra" timers are created during the receiving process
+			#the delay they are created with is determined by the calls timeout time**
+			#timer start: (5)
+
+Aside:
+	-wsesslog uses timers to create user think time
+	-the rate generator uses timers  
+		>it allows them to time out (ie they are not cancelled)
+	-in httperf.c there are two timers that are/can be created
+		>perf_sample
+		>dump_stats
+
+*		-I believe this is used when the request is large but I am not sure
+			I have not run any tests that have caused this to occur
+
+**	-the timeout time is first set at the time when the call is moved to the sendq
+			It is reset before all other timers are created with the exception of this one
+		-the delay the timer is created with can be a negative number which means the timer is created with
+			the default value of 1 'tick' (which is the smallest it can be given) 
+			This means that a call can go passed its timeout time as long data continues to
+			be received in 1 tick intervals 
+		-I do not know what 1 'tick' is in terms of time in seconds
+
+
+#########################################################
+static void schedule_timeouts (Conn *s)
+---------------------------------------------------------
+{
+  Any_Type arg;
+  Time timeout = 0.0;
+
+/* if there is already a timer running for this connection
+ * then do not add a new one */
+  if (s->watchdog)
+    return;
+
+/* take the shortest timeout between the first item in the sendq
+ * and the first item in the recvq */
+  if (s->sendq)
+    timeout = s->sendq->timeout;
+  if (s->recvq && (timeout == 0.0 || timeout > s->recvq->timeout))
+    timeout = s->recvq->timeout;
+
+  if (timeout > 0.0)
+	{
+		arg.vp = s;
+		s->watchdog = timer_schedule (conn_timeout, arg,timeout - timer_now ()); /* timer starts: (2), (4), (5) */
+	}
+}
+#########################################################
+
+
+#########################################################
+int core_connect (Conn *s)
+---------------------------------------------------------
+
+  SYSCALL (CONNECT,result = connect (sd, sin, sizeof (*sin)));
+  saved_err = errno;
+  if (result == 0)
+	{
+#ifdef HAVE_SSL if (param.use_ssl)
+		{
+			core_ssl_connect (s);
+		}
+		else
+#endif
+		{
+			s->state = S_CONNECTED;
+			arg.l = 0;
+			event_signal (EV_CONN_CONNECTED, (Object *) s, arg);
+		}
+	}
+  else if (errno == EINPROGRESS)
+  {
+   /* The socket becomes writable only after the connection has
+	 been established.  Hence we wait for writability to
+	 detect connection establishment.  */
+
+		s->state = S_CONNECTING;
+		interested_in_writing (s);
+
+/* it is neccisary to 'manually' add this timer because there is
+ * no calls in the sendq or recvq, whose timeouts would have been used
+ * in the call to interested_in_writing() */
+		if (param.timeout > 0.0)
+		{
+			arg.vp = s;
+			assert (!s->watchdog);
+			s->watchdog = timer_schedule (conn_timeout, arg, param.timeout); /* timer start: (1) */
+		}
+  }
+  else
+	{
+		len = sizeof (async_errno);
+		if (getsockopt (sd, SOL_SOCKET, SO_ERROR, &async_errno, &len) ==0 && async_errno != 0)
+		{
+			errno = async_errno;
+		}
+    saved_err = async_errno;
+
+#########################################################
+
+
+#########################################################
+static void interested_in_reading (Conn *s)
+---------------------------------------------------------
+{
+  set_active (s, &rdfds);
+#ifdef HAVE_EPOLL
+  if (param.use_epoll)
+      update_epoll_event (s); 
+#endif
+  schedule_timeouts (s); /* timer start: (4), (5) */
+}
+#########################################################
+
+
+#########################################################
+static void interested_in_writing (Conn *s)
+---------------------------------------------------------
+{
+  set_active(s, &wrfds);
+#ifdef HAVE_EPOLL
+  if (param.use_epoll)
+      update_epoll_event (s); 
+#endif
+  schedule_timeouts (s); /* timer start: (2) */
+}
+#########################################################
+
+
+#########################################################
+static void core_loop_handle_socket (int sd, int is_readable, int is_writable)
+---------------------------------------------------------
+
+  if (conn->watchdog)
+    {
+      timer_cancel (conn->watchdog);
+      conn->watchdog = 0;
+    }
+
+  if (conn->state == S_CONNECTING)
+	{
+#ifdef HAVE_SSL
+		if (param.use_ssl)
+				core_ssl_connect (conn);
+		else
+#endif
+		{
+			if (is_writable)
+			{
+				len = sizeof (async_errno);
+				rc = getsockopt (sd, SOL_SOCKET, SO_ERROR, &async_errno, &len);
+				if (rc < 0)
+				{
+					printf("%s: getsockopt failed\n", __FUNCTION__);
+					perror(__FUNCTION__);
+					exit(1);
+				}
+				else if (async_errno == 0)
+				{
+					FD_CLR (sd, &wrfds);
+					conn->state = S_CONNECTED;
+					arg.l = 0;
+					event_signal (EV_CONN_CONNECTED, (Object *) conn, arg);
+				}
+				else
+				{
+				// printf("%s: connect failed %s\n", __FUNCTION__, strerror(async_errno));
+					conn_failure(conn, async_errno);
+				}
+			}
+		}
+  }
+	else
+	{
+		if (is_writable && conn->sendq)
+				do_send (conn);
+		if (is_readable && conn->recvq)
+				do_recv (conn);
+	}
+
+#########################################################
+
+
+#########################################################
+called by:
+	conn_failure
+	conn_timeout
+	session_destroyed (gen/session.c)
+	call_done (gen/session.c)
+
+void core_close (Conn *conn)
+---------------------------------------------------------
+
+  if (conn->watchdog)
+	{
+			timer_cancel (conn->watchdog);
+			conn->watchdog = 0;
+	}
+
+#########################################################
+
+
+
+#########################################################
+static void do_send (Conn *conn)
+---------------------------------------------------------
+
+      if (call->req.iov_index < NELEMS (call->req.iov))
+	{
+	  /* there are more header bytes to write */
+	  call->timeout = param.timeout ? timer_now () + param.timeout : 0.0;
+          interested_in_writing (conn); /* timer start: (3) */
+	  return;
+	}
+
+      /* we're done with sending this request */
+      conn->sendq = call->sendq_next;
+      if (!conn->sendq)
+	{
+	  conn->sendq_tail = 0;
+	  FD_CLR (sd, &wrfds);
+	}
+      arg.l = 0;
+      event_signal (EV_CALL_SEND_STOP, (Object *) call, arg);
+      if (conn->state >= S_CLOSING)
+	{
+	  call_dec_ref (call);
+	  return;
+	}
+
+      /* get ready to receive matching reply (note that we implicitly
+         pass on the reference to the call from the sendq to the
+         recvq): */
+      call->recvq_next = 0;
+      if (!conn->recvq)
+	conn->recvq = conn->recvq_tail = call;
+      else
+	{
+	  conn->recvq_tail->recvq_next = call;
+	  conn->recvq_tail = call;
+	}
+      call->timeout = param.timeout + param.think_timeout;
+      if (call->timeout > 0.0)
+	call->timeout += timer_now ();
+      interested_in_reading (conn); /* timer start: (4) */
+      if (conn->state < S_REPLY_STATUS)
+	conn->state = S_REPLY_STATUS;	/* expecting reply status */
+
+      if (!conn->sendq)
+	return;
+
+      arg.l = 0;
+      event_signal (EV_CALL_SEND_START, (Object *) conn->sendq, arg);
+      if (conn->state >= S_CLOSING)
+	return;
+    }
+}
+#########################################################
+
+
+#########################################################
+static void do_recv (Conn *s)
+---------------------------------------------------------
+
+/* if there is more information expected then was received in
+	 the buffer then a timer is created */
+  if (s->recvq)
+    interested_in_reading (c->conn); /* timer start: (5) */
+}
+#########################################################
+
+
+#########################################################
+called by:
+	-send_calls (gen/session.c)
+
+int core_send (Conn *conn, Call *call)
+---------------------------------------------------------
+
+  /* insert call into connection's send queue: */
+  call_inc_ref (call);
+  call->sendq_next = 0;
+  if (!conn->sendq)
+    {
+      conn->sendq = conn->sendq_tail = call;
+      arg.l = 0;
+      event_signal (EV_CALL_SEND_START, (Object *) call, arg);
+      if (conn->state >= S_CLOSING)
+	return -1;
+      call->timeout = param.timeout ? timer_now () + param.timeout : 0.0;
+      interested_in_writing (conn); /* timer start: (2) */
+    }
+  else
+    {
+      conn->sendq_tail->sendq_next = call;
+      conn->sendq_tail = call;
+    }
+
+#########################################################

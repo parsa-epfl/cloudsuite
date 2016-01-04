@@ -1,0 +1,4 @@
+David Mosberger		(main sources)
+Martin Arlitt		(SSL support)
+Stephane Eranian	(wlog URI generator)
+Richard Carter		(wsesslog workload generator)

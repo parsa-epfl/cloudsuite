@@ -1,0 +1,11 @@
+
+Working on code Adam did for
+handling headers (including range requests).
+
+Think about making this code selectable via --with or --without
+options.
+
+Added stuff to use an increased number of open files.
+The "include" directory has new definitions for __FD_SETSIZE.
+This is used in the Makefile.in where -DBIG_FD_SETSIZE is set.
+
