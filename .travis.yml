@@ -15,8 +15,8 @@ script:
   # - build "cloudsuite/data-analytics" "latest" "./benchmarks/data-analytics/"
   # - build "cloudsuite/data-analytics" "data" "./benchmarks/data-analytics/dataset"
   # Data Caching
-  - build "cloudsuite/data-caching" "server" "./benchmarks/data-caching/server"
-  - build "cloudsuite/data-caching" "client" "./benchmarks/data-caching/client"
+  # - build "cloudsuite/data-caching" "server" "./benchmarks/data-caching/server"
+  # - build "cloudsuite/data-caching" "client" "./benchmarks/data-caching/client"
   # Data Serving
   # - build "cloudsuite/data-serving" "server" "./benchmarks/data-serving/server"
   # - build "cloudsuite/data-serving" "client" "./benchmarks/data-serving/client"
@@ -27,9 +27,9 @@ script:
   # Media Streaming
   # Spark Base
   # Web Search
-  # - build "cloudsuite/web-search" "server" "./benchmarks/web-search/server"
-  # - build "cloudsuite/web-search" "client" "./benchmarks/web-search/client"
-  # - build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
+  - build "cloudsuite/web-search" "server" "./benchmarks/web-search/server"
+  - build "cloudsuite/web-search" "client" "./benchmarks/web-search/client"
+  - build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
   # Web Serving
   # - build "cloudsuite/web-serving" "db_server" "./benchmarks/web-serving/db_server"
   # - build "cloudsuite/data-serving" "faban_client" "./benchmarks/web-serving/faban_client"
