@@ -5,7 +5,7 @@
 
 This repository contains the docker image for Cloudsuite's Web Search benchmark.
 
-The Web Search benchmark relies on the Apache Solr search engine framework. The benchmark includes a client machine that simulates real-world clients that send requests to the index nodes. The index nodes contain an index of the text and fields found in a set of crawled websites.
+The Web Search benchmark relies on the [Apache Solr][apachesolr] search engine framework. The benchmark includes a client machine that simulates real-world clients that send requests to the index nodes. The index nodes contain an index of the text and fields found in a set of crawled websites.
 
 ## Using the benchmark ##
 
@@ -62,6 +62,8 @@ The output results will show on the screen after the benchmark finishes.
 [datadocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/data/Dockerfile "Data volume Dockerfile"
 [serverdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/server/Dockerfile "Server Dockerfile"
 [clientdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/client/Dockerfile "Client Dockerfile"
+[solrui]: https://cwiki.apache.org/confluence/display/solr/Overview+of+the+Solr+Admin+UI "Apache Solr UI"
+[apachesolr]: https://github.com/apache/solr "Apache Solr"
 [repo]: https://github.com/CloudSuite-EPFL/WebSearch "Web Search GitHub Repo"
 [dhrepo]: https://hub.docker.com/r/cloudsuite/websearch/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/websearch.svg "Go to DockerHub Page"
