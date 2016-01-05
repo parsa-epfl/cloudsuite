@@ -43,7 +43,7 @@ To start the server you have to first `pull` the server image and then run it. T
 
 	$ docker pull cloudsuite/websearch:server
 
-The following command will start the server and forward port 8983 to the host, so that the Solr web interface can be accessed from the web browser, using the host IP address.
+The following command will start the server and forward port 8983 to the host, so that the Solr web interface can be accessed from the web browser using the host's IP address. More information of Apache Solr's web interface can be found [here][solrui].
 
 	$ docker run -it --volumes-from data --name server --net search_network -p 8983:8983 cloudsuite/websearch:server
 
