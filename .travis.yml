@@ -1,0 +1,37 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+before_script:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
+
+script:
+  # Build Function --> $1: DockerHub Repo, $2: Image Tag, $3: Build Path
+  - build () { docker build -t $1:$2 $3; docker push $1; }
+  # Data Analytics
+  # - build "cloudsuite/data-analytics" "latest" "./benchmarks/data-analytics/"
+  # - build "cloudsuite/data-analytics" "data" "./benchmarks/data-analytics/dataset"
+  # Data Caching
+  - build "cloudsuite/data-caching" "server" "./benchmarks/data-caching/server"
+  - build "cloudsuite/data-caching" "client" "./benchmarks/data-caching/client"
+  # Data Serving
+  # - build "cloudsuite/data-serving" "server" "./benchmarks/data-serving/server"
+  # - build "cloudsuite/data-serving" "client" "./benchmarks/data-serving/client"
+  # Graph Analytics
+  # - build "cloudsuite/graph-analytics" "benchmark" "./benchmarks/graph-analytics/benchmark"
+  # - build "cloudsuite/graph-analytics" "data" "./benchmarks/graph-analytics/data"
+  # In-memory Analytics
+  # Media Streaming
+  # Spark Base
+  # Web Search
+  # - build "cloudsuite/web-search" "server" "./benchmarks/web-search/server"
+  # - build "cloudsuite/web-search" "client" "./benchmarks/web-search/client"
+  # - build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
+  # Web Serving
+  # - build "cloudsuite/web-serving" "db_server" "./benchmarks/web-serving/db_server"
+  # - build "cloudsuite/data-serving" "faban_client" "./benchmarks/web-serving/faban_client"
+  # - build "cloudsuite/web-serving" "web_server" "./benchmarks/web-serving/web_server"
+  # - build "cloudsuite/data-serving" "memcached_server" "./benchmarks/web-serving/memcached_server"
