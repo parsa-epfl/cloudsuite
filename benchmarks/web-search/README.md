@@ -19,6 +19,14 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on [`CloudSuite-EPFL/WebSearch`][repo].
 
+### Creating a network between the server(s) and the client(s)
+
+To facilitate the communication between the client(s) and the server(s), we build a docker network:
+
+	$ docker network create search_network
+
+We will attach the launched containers to this newly created docker network.
+
 ### Starting the volume images ###
 
 The first step is to create the volume images that contain the dataset of the Web Search benchmark. First `pull` the volume images, using the following command:
@@ -37,7 +45,7 @@ To start the server you have to first `pull` the server image and then run it. T
 
 The following command will start the server and forward port 8983 to the host, so that the Solr web interface can be accessed from the web browser, using the host IP address.
 
-	$ docker run --volumes-from data --name server -it -p 8983:8983 -t websearch:server
+	$ docker run -it --volumes-from data --name server --net search_network -p 8983:8983 cloudsuite/websearch:server
 
 ### Starting the client and running the benchmark ###
 
@@ -47,7 +55,7 @@ To start a client you have to first `pull` the client image and then run it. To 
 
 The following command will start the client node and run the benchmark:
 
-	$ docker run --volumes-from data -p 9980:9980 --name client --link=server -it -t websearch:client
+	$ docker run -it --volumes-from data --name client --net search_network websearch:client
 
 The output results will show on the screen after the benchmark finishes.
 
