@@ -29,7 +29,7 @@ script:
   # Web Search
   # - build "cloudsuite/web-search" "server" "./benchmarks/web-search/server"
   # - build "cloudsuite/web-search" "client" "./benchmarks/web-search/client"
-  - travis_wait build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
+  - travis_wait 40 build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
   # Web Serving
   # - build "cloudsuite/web-serving" "db_server" "./benchmarks/web-serving/db_server"
   # - build "cloudsuite/data-serving" "faban_client" "./benchmarks/web-serving/faban_client"
