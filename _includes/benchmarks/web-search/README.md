@@ -55,7 +55,7 @@ To start a client you have to first `pull` the client image and then run it. To 
 
 The following command will start the client node and run the benchmark:
 
-	$ docker run -it --volumes-from data --name client --net search_network websearch:client
+	$ docker run -it --name client --net search_network websearch:client
 
 The output results will show on the screen after the benchmark finishes.
 
