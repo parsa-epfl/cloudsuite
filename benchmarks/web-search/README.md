@@ -43,9 +43,9 @@ To start the server you have to first `pull` the server image and then run it. T
 
 	$ docker pull cloudsuite/websearch:server
 
-The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui].
+The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pregenerated Solr index occupies 12GB of memory, and therefore we use `12g` to avoid disk accesses. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
 
-	$ docker run -it --volumes-from data --name server --net search_network -p 8983:8983 cloudsuite/websearch:server
+	$ docker run -it --volumes-from data --name server --net search_network -p 8983:8983 cloudsuite/websearch:server 12g 1
 	
 At the end of the server booting process, the container prints the `server_address` of the index node. This address is used in the client container. The `server_address` message in the container should look like this (note that the IP address might change):
 
@@ -67,11 +67,11 @@ The output results will show on the screen after the benchmark finishes.
 
 - The target response time requires that 99% of the requests are serviced within 200ms.
 
-- The throughput metric, operations per second, is indicated as: 
+- The throughput statistic, operations per second, is shown as: 
 	
 	`<metric unit="ops/sec">25.133</metric>`
 
-- The response time statistics, average, maximun, minimum, 90-th, and 99-th, are indicated as:
+- The response time statistics, average, maximun, minimum, 90-th, and 99-th, are shown as:
 
 	```
 	<responseTimes unit="seconds">
