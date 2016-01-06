@@ -46,6 +46,10 @@ To start the server you have to first `pull` the server image and then run it. T
 The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui].
 
 	$ docker run -it --volumes-from data --name server --net search_network -p 8983:8983 cloudsuite/websearch:server
+	
+At the end of the server booting process, the container prints the `server_address` of the index node. This address is used in the client container. The `server_address` message in the container should look like this:
+
+	$ Index Node IP Address: 172.19.0.2
 
 ### Starting the client and running the benchmark ###
 
