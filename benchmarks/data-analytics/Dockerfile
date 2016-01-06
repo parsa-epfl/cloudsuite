@@ -6,17 +6,18 @@ USER root
 RUN apt-get update && apt-get install -y curl supervisor openssh-server net-tools iputils-ping nano
 
 #passwordless ssh
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key -y
-RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key -y
-RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
-RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key -y \
+     && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key -y \
+     && ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa \
+     && cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
-# JDK 1.7 
-ENV JDK_URL http://download.oracle.com/otn-pub/java/jdk 
-ENV JDK_VER 7u79-b15
-ENV JDK_VER2 jdk-7u79
-ENV JAVA_HOME /usr/local/jdk
-ENV PATH $PATH:$JAVA_HOME/bin 
+# JDK 1.7
+ENV JDK_URL=http://download.oracle.com/otn-pub/java/jdk \
+    JDK_VER=7u79-b15 \
+    JDK_VER2=jdk-7u79 \
+    JAVA_HOME=/usr/local/jdk \
+    PATH=$PATH:$JAVA_HOME/bin
+
 RUN cd $SRC_DIR && curl -LO "$JDK_URL/$JDK_VER/$JDK_VER2-linux-x64.tar.gz" -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
   && tar xzf $JDK_VER2-linux-x64.tar.gz && mv jdk1* $JAVA_HOME && rm -f $JDK_VER2-linux-x64.tar.gz \
   && echo '' >> /etc/profile \
@@ -25,22 +26,23 @@ RUN cd $SRC_DIR && curl -LO "$JDK_URL/$JDK_VER/$JDK_VER2-linux-x64.tar.gz" -H 'C
   && echo 'export PATH="$PATH:$JAVA_HOME/bin"' >> /etc/profile \
   && echo '' >> /etc/profile
 
-# Apache Hadoop 
-ENV SRC_DIR /opt 
-ENV HADOOP_URL http://www.eu.apache.org/dist/hadoop/common 
-ENV HADOOP_VERSION hadoop-2.7.1 
+# Apache Hadoop
+ENV SRC_DIR=/opt \
+    HADOOP_URL=http://www.eu.apache.org/dist/hadoop/common \
+    HADOOP_VERSION=hadoop-2.7.1
 RUN cd $SRC_DIR && wget http://parsa.epfl.ch/cloudsuite/software/new_analytic.tar.gz && tar xzf new_analytic.tar.gz && cd new_analytic \
-&& tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
-#&& curl -LO "$HADOOP_URL/$HADOOP_VERSION/$HADOOP_VERSION.tar.gz" \ 
-#&& tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz 
-  
+    && tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
+#&& curl -LO "$HADOOP_URL/$HADOOP_VERSION/$HADOOP_VERSION.tar.gz" \
+#&& tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
+
 # Hadoop ENV
-ENV HADOOP_PREFIX $SRC_DIR/new_analytic/$HADOOP_VERSION 
-ENV PATH $PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin 
-ENV HADOOP_MAPRED_HOME $HADOOP_PREFIX 
-ENV HADOOP_COMMON_HOME $HADOOP_PREFIX 
-ENV HADOOP_HDFS_HOME $HADOOP_PREFIX 
-ENV YARN_HOME $HADOOP_PREFIX 
+ENV HADOOP_PREFIX=$SRC_DIR/new_analytic/$HADOOP_VERSION \
+    PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin \
+    HADOOP_MAPRED_HOME=$HADOOP_PREFIX \
+    HADOOP_COMMON_HOME=$HADOOP_PREFIX \
+    HADOOP_HDFS_HOME=$HADOOP_PREFIX \
+    YARN_HOME=$HADOOP_PREFIX
+    
 RUN echo '# Hadoop' >> /etc/profile \
   && echo "export HADOOP_PREFIX=$HADOOP_PREFIX" >> /etc/profile \
   && echo 'export PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin' >> /etc/profile \
@@ -59,7 +61,7 @@ RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/local/jdk:' $HADOOP_P
 # Name node foramt
 RUN hdfs namenode -format
 
-# SSH conf 
+# SSH conf
 ADD ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config
 RUN chown root:root /root/.ssh/config
@@ -69,12 +71,12 @@ ENV MAHOUT_URL http://www.eu.apache.org/dist/mahout/
 ENV MAHOUT_VERSION 0.11.0
 #RUN cd $SRC_DIR && curl -LO "$MAHOUT_URL/$MAHOUT_VERSION/apache-mahout-distribution-$MAHOUT_VERSION-src.tar.gz" \
 RUN cd $SRC_DIR/new_analytic && tar xzf apache-mahout-distribution-$MAHOUT_VERSION-src.tar.gz ; rm -f apache-mahout-distribution-$MAHOUT_VERSION-src.tar.gz
- 
+
 # MAVEN
 ENV MAVEN_URL http://www.eu.apache.org/dist/maven/
 ENV MAVEN_VERSION maven-3
 ENV MAVEN_VERSION2 3.3.3
-#RUN cd $SRC_DIR \ 
+#RUN cd $SRC_DIR \
 #&& curl -LO "$MAVEN_URL/$MAVEN_VERSION/$MAVEN_VERSION2/binaries/apache-maven-$MAVEN_VERSION2-bin.tar.gz" \
 RUN cd $SRC_DIR/new_analytic && tar xzf apache-maven-$MAVEN_VERSION2-bin.tar.gz ; rm -f apache-maven-$MAVEN_VERSION2-bin.tar.gz
 
@@ -93,7 +95,7 @@ RUN echo '# MAHOUT and MAVEN' >> /etc/profile \
 #install mahout
 RUN cd $MAHOUT_HOME && mvn install -DskipTests
 
-#prepare mahout enviorenment 
+#prepare mahout enviorenment
 RUN cd $MAHOUT_HOME/examples && mkdir temp
 ADD categories.txt  $MAHOUT_HOME/examples/temp/categories.txt
 #RUN cd $MAHOUT_HOME/examples/temp \
