@@ -73,7 +73,7 @@ The output results will show on the screen after the benchmark finishes.
 
 - The response time statistics, average, maximun, minimum, 90-th, and 99-th, are indicated as:
 
-	<responseTimes unit="seconds">
+	`<responseTimes unit="seconds">
             <operation name="GET" r90th="0.500">
                 <avg>0.034</avg>
                 <max>0.285</max>
@@ -82,7 +82,7 @@ The output results will show on the screen after the benchmark finishes.
                 <passed>true</passed>
                 <p99th>0.143</p99th>
             </operation>
-        </responseTimes>
+        </responseTimes>`
 
 <metric unit="ops/sec">25.133</metric>
 
