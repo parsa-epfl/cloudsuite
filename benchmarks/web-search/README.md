@@ -69,7 +69,7 @@ The output results will show on the screen after the benchmark finishes.
 
 - The throughput metric, operations per second, is indicated as: 
 	
-	<metric unit="ops/sec">25.133</metric>
+	`<metric unit="ops/sec">25.133</metric>`
 
 - The response time statistics, average, maximun, minimum, 90-th, and 99-th, are indicated as:
 
