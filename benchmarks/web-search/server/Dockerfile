@@ -48,21 +48,3 @@ EXPOSE $SOLR_PORT
 USER $SOLR_USER
 
 ENTRYPOINT ["/entrypoint.sh"]
-
-#START ZOOKEEPER (SERVER 0)
-#RUN	cd $SOLR_HOME \
-#	&& bin/solr start -cloud -p $SOLR_PORT -s $SOLR_CORE_DIR -m $SERVER_HEAP_SIZE \
-#	&& bin/solr status \
-#	&& bin/solr status \
-#	&& bin/solr status 
-
-
-#START (SERVER 1..N-1) (ASSUME I RELOAD CONF)
-#RUN	cd $SOLR_HOME \
-#	&& bin/solr start -cloud -p $SOLR_PORT -z $SERVER_0_IP:$ZOOKEEPER_PORT -s $SOLR_CORE_DIR -m $SERVER_HEAP_SIZE \
-#	&& sleep 10s
-
-#CREATE COLLECTION
-#RUN	cd $SOLR_HOME \ 
-#	&& bin/solr create_collection -c cloudsuite_web_search -d basic_configs -shards $NUM_SERVERS -p $SOLR_PORT
-#RUN     ls 
