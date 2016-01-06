@@ -73,18 +73,18 @@ The output results will show on the screen after the benchmark finishes.
 
 - The response time statistics, average, maximun, minimum, 90-th, and 99-th, are indicated as:
 
-```
-<responseTimes unit="seconds">
-   <operation name="GET" r90th="0.500">
-   	<avg>0.034</avg>
-   	<max>0.285</max>
-   	<sd>0.035</sd>
-   	<p90th>0.080</p90th>
-   	<passed>true</passed>
-   	<p99th>0.143</p99th>
-   </operation>
-</responseTimes>
-```
+	```
+	<responseTimes unit="seconds">
+   		<operation name="GET" r90th="0.500">
+   			<avg>0.034</avg>
+   			<max>0.285</max>
+   			<sd>0.035</sd>
+   			<p90th>0.080</p90th>
+   			<passed>true</passed>
+   			<p99th>0.143</p99th>
+   		</operation>
+	</responseTimes>
+	```
 
 [datadocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/data/Dockerfile "Data volume Dockerfile"
 [serverdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/server/Dockerfile "Server Dockerfile"
