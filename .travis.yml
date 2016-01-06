@@ -27,9 +27,9 @@ env:
   # - DH_REPO="cloudsuite/web-search" IMG_TAG="data" DF_PATH="./benchmarks/web-search/data"
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
 before_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
