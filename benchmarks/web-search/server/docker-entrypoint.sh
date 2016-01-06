@@ -11,4 +11,5 @@ sleep 60s
 $SOLR_HOME/bin/solr status
 sleep 60s
 $SOLR_HOME/bin/solr status
+echo "Index Node IP Address: "`ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
 bash
