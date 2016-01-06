@@ -53,9 +53,9 @@ To start a client you have to first `pull` the client image and then run it. To 
 
 	$ docker pull cloudsuite/websearch:client
 
-The following command will start the client node and run the benchmark:
+The following command will start the client node and run the benchmark. The `server_address` refers to the IP address, in brackets (e.g., "172.19.0.2", of the index node that receives the client requests. The four numbers after the server address refer to: the scale, which indicates the number of concurrent clients (50); the ramp-up time in seconds (90), which refers to the time to to warm up the server; the steady-state time in seconds (60), which indicates the time to the benchmark is in the steady state; and the rump-down time in seconds (60), which refers to the time to wait before ending the benchmark. Tune these parameters accordingly to stress your target system.
 
-	$ docker run -it --name client --net search_network cloudsuite/websearch:client
+	$ docker run -it --volumes-from data --name client --net search_network cloudsuite/websearch:client server_address 50 90 60 60  
 
 The output results will show on the screen after the benchmark finishes.
 
