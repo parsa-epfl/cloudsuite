@@ -63,6 +63,29 @@ The following command will start the client node and run the benchmark. The `ser
 
 The output results will show on the screen after the benchmark finishes.
 
+### Important remarks ###
+
+- The target response time requires that 99% of the requests are serviced within 200ms.
+
+- The throughput metric, operations per second, is indicated as: 
+	
+	<metric unit="ops/sec">25.133</metric>
+
+- The response time statistics, average, maximun, minimum, 90-th, and 99-th, are indicated as:
+
+	<responseTimes unit="seconds">
+            <operation name="GET" r90th="0.500">
+                <avg>0.034</avg>
+                <max>0.285</max>
+                <sd>0.035</sd>
+                <p90th>0.080</p90th>
+                <passed>true</passed>
+                <p99th>0.143</p99th>
+            </operation>
+        </responseTimes>
+
+<metric unit="ops/sec">25.133</metric>
+
 [datadocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/data/Dockerfile "Data volume Dockerfile"
 [serverdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/server/Dockerfile "Server Dockerfile"
 [clientdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/client/Dockerfile "Client Dockerfile"
