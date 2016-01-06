@@ -92,7 +92,9 @@ The output results will show on the screen after the benchmark finishes.
 
 - The commands to add multiple index nodes are almost identical to the commands executed in the server image. An index has to be copied to Apache Solr's core folder, and then the server is started. The only difference is that the new server nodes have to know the address and the port of the first index node. In our example, it should be `server_address` and `8983`. Note that we also need to use a different port for the servers, for example `9983`.
 
-	```$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g```
+	```
+	$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
+	```
 
 [datadocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/data/Dockerfile "Data volume Dockerfile"
 [serverdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/server/Dockerfile "Server Dockerfile"
