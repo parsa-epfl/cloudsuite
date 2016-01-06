@@ -31,8 +31,8 @@ RUN 	mkdir -p $BASE_PATH/cloudsuite-web-search \
 	&& tar -zxf solr.tar.gz 
 
 RUN 	cd $SOLR_HOME/server/solr/configsets/basic_configs/conf \
-	&& wget $SCHEMA_URL \
-	&& wget $SOLR_CONFIG_URL 
+	&& wget $SCHEMA_URL -O schema.xml \
+	&& wget $SOLR_CONFIG_URL -O solrconfig.xml
 
 #RELOAD CONFIGURATION
 RUN     cd $SOLR_HOME \
