@@ -5,12 +5,19 @@ language: bash
 services:
   - docker
 
+env:
+  # Data Caching
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+
 before_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 
 script:
   # Build Function --> $1: DockerHub Repo, $2: Image Tag, $3: Build Path
-  - build () { docker build -t $1:$2 $3; docker push $1; }
+  # - build () { docker build -t $1:$2 $3; docker push $1; }
+   - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+   - docker push $DH_REPO; 
   # Data Analytics
   # - build "cloudsuite/data-analytics" "latest" "./benchmarks/data-analytics/"
   # - build "cloudsuite/data-analytics" "data" "./benchmarks/data-analytics/dataset"
@@ -29,7 +36,7 @@ script:
   # Web Search
   # - build "cloudsuite/web-search" "server" "./benchmarks/web-search/server"
   # - build "cloudsuite/web-search" "client" "./benchmarks/web-search/client"
-  - travis_wait 40 build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
+  # - travis_wait 40 build "cloudsuite/web-search" "data" "./benchmarks/web-search/data"
   # Web Serving
   # - build "cloudsuite/web-serving" "db_server" "./benchmarks/web-serving/db_server"
   # - build "cloudsuite/data-serving" "faban_client" "./benchmarks/web-serving/faban_client"
