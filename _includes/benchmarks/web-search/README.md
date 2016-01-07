@@ -84,11 +84,13 @@ The output results will show on the screen after the benchmark finishes.
 	```
 	$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
 	```
+More information about Solr can be found [here][solrmanual].
 
 [datadocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/data/Dockerfile "Data volume Dockerfile"
 [serverdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/server/Dockerfile "Server Dockerfile"
 [clientdocker]: https://github.com/CloudSuite-EPFL/WebSearch/tree/master/client/Dockerfile "Client Dockerfile"
 [solrui]: https://cwiki.apache.org/confluence/display/solr/Overview+of+the+Solr+Admin+UI "Apache Solr UI"
+[solmanual]: https://cwiki.apache.org/confluence/display/solr/Apache+Solr+Reference+Guide "Apache Solr Manual"
 [nutchtutorial]: https://wiki.apache.org/nutch/NutchTutorial "Nutch Tutorial"
 [apachesolr]: https://github.com/apache/solr "Apache Solr"
 [apachenutch]: https://github.com/apache/nutch "Apache Nutch"
