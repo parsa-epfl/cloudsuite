@@ -97,7 +97,7 @@ A rule of thumb on the dataset size
 -----------------------------------
 To emulate a realistic setup, you can generate more data than your main memory size if you have a low-latency, high-bandwidth I/O subsystem. For example, for a machine with 24GB memory, you can generate 30 million records corresponding to a 30GB dataset size.
 
-Note: The dataset resides in Cassandra’s data folder(s).The actual data takes up more space than the total size of the records because data files have metadata structures (e.g., index). Make sure you have enough disk space.
+Note: The dataset resides in Cassandraâs data folder(s).The actual data takes up more space than the total size of the records because data files have metadata structures (e.g., index). Make sure you have enough disk space.
 
 Tuning the server performance
 -----------------------------
@@ -124,3 +124,4 @@ The *run.command* file takes the *settings.dat* file as an input and runs the fo
 [dhrepo]: https://hub.docker.com/r/cloudsuite/dataserving/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/dataserving.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/dataserving.svg "Go to DockerHub Page"
+
