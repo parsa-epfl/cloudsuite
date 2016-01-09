@@ -124,3 +124,4 @@ The *run.command* file takes the *settings.dat* file as an input and runs the fo
 [dhrepo]: https://hub.docker.com/r/cloudsuite/dataserving/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/dataserving.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/dataserving.svg "Go to DockerHub Page"
+
