@@ -5,13 +5,13 @@ title: Home
 <!-- #icon: flaticon-user7 -->
 
 <div id="content_outline">
-<div id="content-projects"> 
+<div id="content-projects">
 
 <h1><b>News</b></h1>
 
 <ul style="list-style: none; padding-left:0;">
 
-<li> <b> Dec 2015: </b> <br> A tutorial, <a href="./tutorial2015-hipeac/index.html">Server Benchmarking with CloudSuite 3.0</a>, will be presented on January, 20th.</li>
+<li> <b> Dec 2015: </b> <br> A tutorial, <a href="./tutorial2016-hipeac/index.html">Server Benchmarking with CloudSuite 3.0</a>, will be presented on January, 20th.</li>
 <br>
 <li> <b> Feb 2015: </b> <br> A two-day tutorial, <a href="http://parsa.epfl.ch/cloudsuite/CloudSuite-Flexus-epfl15.html">Rigorous and Practical Server Design Evaluation</a>, will be presented on February 2nd-3rd at EPFL. Here are the tutorial slides used on the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day1.pdf">first day</a> and the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day2.pdf">second day</a>.</li>
 <br>
@@ -37,7 +37,7 @@ title: Home
 <h1>Motivation</h1>
 
 <p>
-Cloud computing is emerging as a dominant computing platform for providing scalable online services to a global client base. Today's popular online services (e.g., web search, social networking, and business analytics) are characterized by massive working sets, high degrees of parallelism, and real-time constraints. These characteristics set scale-out applications apart from desktop (SPEC), parallel (PARSEC), and traditional commercial server applications. In order to stimulate research in the field of cloud and data-centric computing, we have created CloudSuite, a benchmark suite based on real-world online services. 
+Cloud computing is emerging as a dominant computing platform for providing scalable online services to a global client base. Today's popular online services (e.g., web search, social networking, and business analytics) are characterized by massive working sets, high degrees of parallelism, and real-time constraints. These characteristics set scale-out applications apart from desktop (SPEC), parallel (PARSEC), and traditional commercial server applications. In order to stimulate research in the field of cloud and data-centric computing, we have created CloudSuite, a benchmark suite based on real-world online services.
 </p>
 <p>
 CloudSuite covers a broad range of application categories commonly found in today's datacenters. The first release includes data analytics, data serving, media streaming, large-scale and computation-intensive tasks, web search, and web serving. The second release also includes graph analytics and data caching.</a>.
@@ -47,7 +47,7 @@ CloudSuite covers a broad range of application categories commonly found in toda
 We provide Docker images for all CloudSuite benchmarks (available <a href="./benchmarks">here</a>). In addition to these Docker images, we have also prepared--and provide upon request--CloudSuite images running on the Simics full-system simulator, to facilitate micro-architectural simulation of CloudSuite applications. The Simics images allow the simulation of CloudSuite applications running on up to 64 cores and were released at our ISCA 2012 tutorial: "CloudSuite on Flexus".
 </p>
 <p>
- To get a copy of the CloudSuite images, please send an email to cloudsuite-admin(at)groupes.epfl.ch; you will be provided with an account to access and download the images. Please note that these images are based on the SPARC v9 ISA, running the Solaris OS, and are only compatible with Simics. 
+ To get a copy of the CloudSuite images, please send an email to cloudsuite-admin(at)groupes.epfl.ch; you will be provided with an account to access and download the images. Please note that these images are based on the SPARC v9 ISA, running the Solaris OS, and are only compatible with Simics.
 </p>
 </p>
 <h1>Usage and licenses of CloudSuite</h1>
