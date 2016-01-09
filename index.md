@@ -11,6 +11,8 @@ title: Home
 
 <ul style="list-style: none; padding-left:0;">
 
+<li> <b> Jan 2016: </b> <br> A tutorial, <a href="./tutorial2016-eurosys/">Server Benchmarking with CloudSuite 3.0</a>, will be presented at EuroSys 2016.</li>
+<br>
 <li> <b> Dec 2015: </b> <br> A tutorial, <a href="./tutorial2016-hipeac/index.html">Server Benchmarking with CloudSuite 3.0</a>, will be presented on January, 20th.</li>
 <br>
 <li> <b> Feb 2015: </b> <br> A two-day tutorial, <a href="http://parsa.epfl.ch/cloudsuite/CloudSuite-Flexus-epfl15.html">Rigorous and Practical Server Design Evaluation</a>, will be presented on February 2nd-3rd at EPFL. Here are the tutorial slides used on the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day1.pdf">first day</a> and the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day2.pdf">second day</a>.</li>
