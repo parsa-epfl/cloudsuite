@@ -2,6 +2,7 @@ FROM ubuntu:14.04
 
 # Download datasets
 RUN BUILD_DEPS="curl unzip" \
+    && set -x \
     && apt-get update -y && apt-get install -y --no-install-recommends ${BUILD_DEPS} \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /data \
