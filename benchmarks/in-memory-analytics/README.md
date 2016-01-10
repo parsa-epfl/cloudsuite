@@ -37,7 +37,7 @@ More information about the dataset is available at
 ### Running the Benchmark
 
 The benchmark runs the ALS algorithm on Spark through the spark-submit script
-distributed with Spark. It takes two arguments -- the dataset to use for
+distributed with Spark. It takes two arguments: the dataset to use for
 training, and the personal ratings file to give recommendations for. Any
 remaining arguments are passed to spark-submit.
 
