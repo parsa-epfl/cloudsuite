@@ -21,7 +21,7 @@ RUN BUILD_DEPS="curl openjdk-7-jdk" \
     && curl ${MIRROR}${SPARK_PATH} | tar -xzC /root \
     && export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") \
     && cd /root/spark-${SPARK_VERSION} \
-    && ./make-distribution.sh -Phadoop-${HADOOP_VERSION} -Pyarn -Pnetlib-lgpl \
+    && ./make-distribution.sh -q -Phadoop-${HADOOP_VERSION} -Pyarn -Pnetlib-lgpl \
     && mv dist /opt/spark-${SPARK_VERSION} \
     && cd /root && rm -r .zinc .m2 spark-${SPARK_VERSION} \
     && apt-get purge -y --auto-remove ${BUILD_DEPS}
