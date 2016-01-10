@@ -60,5 +60,5 @@ before_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 
 script:
-   - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-   - docker push $DH_REPO;
+   - travis_wait 50 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+   - travis_wait 50 docker push $DH_REPO;
