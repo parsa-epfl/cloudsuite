@@ -76,7 +76,7 @@ We can monitor our jobs using Spark's web UI. Point your browser to MASTER_IP:80
 
 Finally, to submit a job, we can use any of the methods described in the Single
 Container section, with the addition of the network argument to Docker and
-spark-master to Spark.
+spark-master argument to Spark.
 
 Start Spark container with bash and run spark-submit inside it to estimate Pi:
 
@@ -102,6 +102,6 @@ the cluster manager. The only difference is that the new network needs to be an
 overlay network instead of a bridge network.
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/spark/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/spark "Go to DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/spark.svg "Go to DockerHub Page"
 
