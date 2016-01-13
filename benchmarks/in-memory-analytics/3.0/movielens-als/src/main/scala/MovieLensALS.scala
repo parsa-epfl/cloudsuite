@@ -31,6 +31,9 @@ object MovieLensALS {
       .set("spark.executor.memory", "2g")
     val sc = new SparkContext(conf)
 
+    // time the execution
+    val t0 = System.currentTimeMillis
+
     // load personal ratings
 
     val myRatings = loadRatings(args(1))
@@ -139,6 +142,10 @@ object MovieLensALS {
       println("%2d".format(i) + ": " + movies(r.product))
       i += 1
     }
+
+    // time the execution
+    val te = System.currentTimeMillis - t0
+    println("Benchmark execution time: " + te + "ms")
 
     // clean up
     sc.stop()

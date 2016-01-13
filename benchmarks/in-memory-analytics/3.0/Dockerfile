@@ -1,15 +1,15 @@
-FROM ubuntu:14.04
+FROM cloudsuite/spark
 
-# Copy files
+# Benchmark files
 COPY movielens-als /root/movielens-als
 
 WORKDIR /root
 
 # Build the benchmark using sbt
-RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
+RUN set -x \
+    && echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823 \
-    && apt-get update -y \
-    && apt-get install -y sbt \
+    && apt-get update -y && apt-get install -y --no-install-recommends sbt \
     && rm -rf /var/lib/apt/lists/* \
     && (cd movielens-als && sbt package) \
     && mkdir -p /benchmarks/movielens-als \
@@ -18,5 +18,7 @@ RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
     && apt-get purge -y --auto-remove sbt \
     && rm -r .sbt .ivy2
 
-VOLUME ["/benchmarks"]
+COPY files /root/
+
+ENTRYPOINT ["/root/entrypoint.sh"]
 
