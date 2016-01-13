@@ -24,7 +24,7 @@ Since its inception, CloudSuite (cloudsuite.ch) has emerged as a popular suite o
 CloudSuite 3.0 is a major enhancement over prior releases both in workloads and infrastructure. It includes benchmarks that represent massive data maniuplation with tight latency constraints such as in-memory data analytics using Apache Spark, a new real-time video streaming benchmark following today’s most popular video-sharing website setups, and a new web serving benchmark mirroring today’s multi-tier web server software stacks with a caching layer.
 </p>
 <p>
-To ease the deployment of CloudSuite into private and public cloud systems, the benchmarks are integrated into the Docker container system and Google’s PerfKit Benchmarker. PerfKit helps at automate the process of benchmarking with a performance comparison across existing cloud server systems. CloudSuite 3.0 will be released and supported to run both on real hardware and a QEMU- based emulation platform.
+To ease the deployment of CloudSuite into private and public cloud systems, the benchmarks are integrated into the Docker container system and Google’s PerfKit Benchmarker. PerfKit helps at automating the process of benchmarking with a performance comparison across existing cloud server systems. CloudSuite 3.0 will be released and supported to run both on real hardware and a QEMU-based emulation platform.
 </p>
 <br/>
 
