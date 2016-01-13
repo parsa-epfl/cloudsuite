@@ -24,7 +24,7 @@ This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image, t
 
 The following command will start the volume image, making the data available for other docker images on the host:
 
-    docker create --name data cloudsuite/dataanalytics/dataset)
+    $ docker create --name data cloudsuite/dataanalytics/dataset)
 
 ## Starting the Master ##
 To start the master you first have to `pull` the master image.
