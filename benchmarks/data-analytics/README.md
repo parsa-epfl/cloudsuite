@@ -18,13 +18,13 @@ Supported tags and their respective `Dockerfile` links:
 These images are automatically built using the mentioned Dockerfiles available on `cloudsuite/benchmarks/data-analytics/` [GitHub repo][repo].
 
 ## Starting the volume image ##
-This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image, to download this dataset once, and use it to run the benchmark. You can pull this image from Docker Hub.
+This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image for training dataset, to download it once, and use it to run the benchmark. You can pull this image from Docker Hub.
 
     $ docker pull cloudsuite/dataanalytics/dataset
 
 The following command will start the volume image, making the data available for other docker images on the host:
 
-    $ docker create --name data cloudsuite/dataanalytics/dataset)
+    $ docker create --name data cloudsuite/dataanalytics/dataset
 
 ## Starting the Master ##
 To start the master you first have to `pull` the master image.
@@ -47,7 +47,7 @@ To connect the slave containers to the master, you need the master IP.
 
     $ FIRST_IP=$(docker inspect --format="{{.NetworkSettings.IPAddress}}" master)
 
-Then, run as many containers as you want:
+Then, run as many slave containers as you want:
 
     $ docker run -d -t --dns 127.0.0.1 -P --name slave$i -h slave$i.cloudsuite.com -e JOIN_IP=$FIRST_IP cloudsuite/dataanalytics/slave
 
@@ -65,7 +65,7 @@ Then, run the benchmark with the following command:
     $ ./run.sh
 
 It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0. 
-After entering the slave number, it prepares hadoop and runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikipediamodel folder.
+After entering the slave number, it prepares hadoop, downloads the dataset (it takes a lot of time to download this dataset) and runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikipediamodel directory.
 
 [basedocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/Dockerfile "Base Dockerfile"
 [masterdocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/Dockerfile "Master Dockerfile"
