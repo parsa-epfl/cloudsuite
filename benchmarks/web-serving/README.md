@@ -14,7 +14,7 @@ Supported tags and their respective `Dockerfile` links:
 
  - [`web_server`][webserverdocker]: This represents the web server.
  - [`memcached_server`][memcacheserverdocker]: This represents the memcached server.
- - [`db_server`][mysqlserverdocker]: This represents the database server which runs MySQL.
+ - [`db_server`][mysqlserverdocker]: This represents the database server, which runs MySQL.
  - [`fabanclient`][clientdocker]: This represents the faban client.
 
 These images are automatically built using the mentioned Dockerfiles available on the `CloudSuite-EPFL/WebServing` [GitHub repo][repo].
@@ -27,8 +27,8 @@ To facilitate the communication between the client(s) and the servers, we build 
 
 We will attach the launched containers to this newly created docker network.
 
-### Starting the Web Server ####
-To start the web server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
+### Starting the web server ####
+To start the web server, you first have to `pull` the server image. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/webserving:web_server
 
@@ -36,8 +36,8 @@ The following command will start the web server, and attach it to the *my_net* n
 
     $ docker run -d -t --net=my_net --privileged=true --name=mysql_server cloudsuite/webserving:web_server /etc/bootstrap.sh
     
-### Starting the Database Server ####
-To start the database server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
+### Starting the database server ####
+To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/webserving:db_server
 
@@ -45,8 +45,8 @@ The following command will start the database server, and attach it to the *my_n
 
     $ docker run -d -t --net=my_net --privileged=true --name=mysql_server cloudsuite/webserving:db_server
     
-### Starting the Memcached Server ####
-To start the memcached server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
+### Starting the memcached server ####
+To start the memcached server, you have to first `pull` the server image. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/webserving:memcached_server
 
@@ -54,9 +54,9 @@ The following command will start the memcached server, and attach it to the *my_
 
     $ docker run run -d -t --net=my_net --privileged=true --name=memcache_server cloudsuite/webserving:memcached_server
 
-### Starting the Client ####
+### Starting the client ####
 
-To start the client you have to first `pull` the client image and then run it. To `pull` the client image use the following command:
+To start the client, you have to first `pull` the client image. To `pull` the client image use the following command:
 
     $ docker pull cloudsuite/webserving:faban_client
 
@@ -70,7 +70,7 @@ To start the client, you need to run the run.sh file.
 
     $ ./run.sh
 
-You can find the summary of the results in summary.xml file. 
+You can find the summary of the results in the summary.xml file. 
 
 
   [webserverdocker]: https://github.com/CloudSuite-EPFL/WebServing/blob/master/web_server/Dockerfile "WebServer Dockerfile"

@@ -1,5 +1,18 @@
 #!/bin/bash
 
+#Read Index Node's IP
+export IP=$1
+
+#Read local IP
+export HOST_IP=$(echo `ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`) \
+  && export AGENTS=$HOST_IP:$NUM_AGENTS
+
+#Read client parameters
+export SCALE=$2 \
+  && export RAMP_UP=$3 \
+  && export RAMP_DOWN=$4 \
+  && export STEADY_STATE=$5
+
 #PREPARE
 export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 $FABAN_HOME/master/bin/startup.sh

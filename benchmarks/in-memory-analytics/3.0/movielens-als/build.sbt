@@ -2,7 +2,7 @@ name := "movielens-als"
 
 version := "1.0"
 
-organization := "EcoCloud"
+organization := "PARSA"
 
 scalaVersion := "2.10.4"
 
