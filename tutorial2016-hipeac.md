@@ -9,7 +9,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <li><b>Where?</b> In conjunction with <a href="https://www.hipeac.net/2016/prague/schedule/#tutorial">HiPEAC </a> in Prague, Czech Republic.</li>
 <li><b>When?</b> January 20th, 2016.</li>
 <li><b>Intended audience:</b> Academic/industrial researchers interested in scale-out datacenter workloads and their performance evaluation via both existing state- of-the-art servers and cycle-accurate simulation.</li>
-<li><b>Team:</b> Alexander Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
+<li><b>Team:</b> Alexandros Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
 <li><b>Keywords:</b> Scale-out workloads, server benchmarking, rigorous measurement methodologies, performance evaluation.</li>
 <li><b>Registration:</b> Please follow the registration link on the <a href="https://www.hipeac.net/2016/prague/">conference web page</a>.</li>
 </ul>
@@ -52,7 +52,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <tr align="center"><td>15:00 - 15:15</td>
 <td><em>Coffee Break</em></td><td></td>
 </tr>
-<tr align="center"><td>15:15 - 16:15</td><td>CloudSuite 3.0 on Real Hardware</td><td>Running CloudSuite on real hardware</td></tr>
+<tr align="center"><td>15:15 - 16:15</td><td>CloudSuite 3.0 on Real Hardware (Docker)</td><td>Running CloudSuite on real hardware</td></tr>
 <tr align="center"><td>16:15 - 16:30</td><td><em>Coffee break</em></td><td></td>
 </tr>
 <tr align="center"><td>16:30 - 17:30</td><td>CloudSuite 3.0 Full-System Simulation</td><td>Introduction to Flexus and its interaction with the QEMU full-system simulator</td>
