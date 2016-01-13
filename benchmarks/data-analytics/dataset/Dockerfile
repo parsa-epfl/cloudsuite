@@ -12,4 +12,4 @@ RUN cd /data \
 
 
 
-VOLUME /data
+VOLUME ["/data"]
