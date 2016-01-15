@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install wget -y
 RUN mkdir /data
 
 RUN cd /data \
-  && wget http://parsa.epfl.ch/cloudsuite/software/enwiki-20100904-pages-articles1.xml.bz2
+  && wget -nv http://parsa.epfl.ch/cloudsuite/software/enwiki-20100904-pages-articles1.xml.bz2
 
 
 VOLUME ["/data"]

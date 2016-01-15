@@ -1,4 +1,4 @@
-FROM cloudsuite/dataanalytics/base
+FROM cloudsuite/data-analytics:base
 
 USER root
 

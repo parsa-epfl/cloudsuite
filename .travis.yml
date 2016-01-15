@@ -6,21 +6,40 @@ services:
   - docker
 
 env:
+  # Commons
+  # Spark
+  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
+
+  # Spark Base
+  - DH_REPO="cloudsuite/spark-base" IMG_TAG="base" DF_PATH="./benchmarks/spark-base/spark-base"
+  - DH_REPO="cloudsuite/spark-base" IMG_TAG="client" DF_PATH="./benchmarks/spark-base/spark-client"
+  - DH_REPO="cloudsuite/spark-base" IMG_TAG="worker" DF_PATH="./benchmarks/spark-base/spark-worker"
+  - DH_REPO="cloudsuite/spark-base" IMG_TAG="master" DF_PATH="./benchmarks/spark-base/spark-master"
+
+  # Datasets
+  # Movielens
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
+
   # Becnhmark Images
   # Data Analytics
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="base" DF_PATH="./benchmarks/data-analytics/base"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="dataset" DF_PATH="./benchmarks/data-analytics/dataset"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="master" DF_PATH="./benchmarks/data-analytics/master"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="slave" DF_PATH="./benchmarks/data-analytics/slave"
+
   # Data Caching
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+
   # Data Serving
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+
   # Graph Analytics
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="benchmark" DF_PATH="./benchmarks/graph-analytics/benchmark"
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="data" DF_PATH="./benchmarks/graph-analytics/data"
+
   # In-memory Analytics
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
@@ -30,37 +49,28 @@ env:
   # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="worker" DF_PATH="./benchmarks/in-memory-analytics/worker"
   # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="base" DF_PATH="./benchmarks/in-memory-analytics/base"
   # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="data" DF_PATH="./benchmarks/in-memory-analytics/data"
+
   # Media Streaming
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
-  # Spark Base
-  # - DH_REPO="cloudsuite/spark-base" IMG_TAG="base" DF_PATH="./benchmarks/spark-base/spark-base"
-  # - DH_REPO="cloudsuite/spark-base" IMG_TAG="client" DF_PATH="./benchmarks/spark-base/spark-client"
-  # - DH_REPO="cloudsuite/spark-base" IMG_TAG="worker" DF_PATH="./benchmarks/spark-base/spark-worker"
-  # - DH_REPO="cloudsuite/spark-base" IMG_TAG="master" DF_PATH="./benchmarks/spark-base/spark-master"
+
   # Web Search
   - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
   - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
   # - DH_REPO="cloudsuite/web-search" IMG_TAG="data" DF_PATH="./benchmarks/web-search/data"
+
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
-  # Commons
-  # Spark
-  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
-  - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
-
-  # Datasets
-  # Movielens
-  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
-
 before_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 
 script:
-   - travis_wait 50 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-   - travis_wait 50 docker push $DH_REPO;
+  - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+  - docker push $DH_REPO;
+  # - travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+  # - travis_wait 40 docker push $DH_REPO;
