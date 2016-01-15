@@ -10,7 +10,7 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.url }}{{ site.baseurl }}">Home</a>
 
     {% comment %}
       The code below dynamically generates a sidebar nav of pages with
@@ -52,11 +52,11 @@
 </div> -->
 
 <div class="sidebar-item">
-      <a href="http://parsa.epfl.ch/"><img alt="Parsa Logo" src="{{ site.baseurl }}logo/parsalogo.jpg" width="60%" height="60%"></img></a>
-      <a href="http://www.ecocloud.ch/"><img alt="EcoCloud Logo" src="{{ site.baseurl }}logo/ecocloud_logo.png" width="60%" height="60%"></img></a>
-      <a href="http://www.epfl.ch/"><img alt="EPFL Logo" src="{{ site.baseurl }}logo/epfl_logo1.png" width="60%" height="60%"></img></a>
-      <a href="http://www.stonybrook.edu/"><img alt="SBU Logo" src="{{ site.baseurl }}logo/SBU_new2.jpg" width="60%" height="60%"></img></a>
-      <a href="http://compas.cs.stonybrook.edu/"><img alt="COMPAS Logo" src="{{ site.baseurl }}logo/compass.png" width="60%" height="60%"></img></a>
+      <a href="http://parsa.epfl.ch/"><img alt="Parsa Logo" src="{{ site.baseurl }}/logo/parsalogo.jpg" width="60%" height="60%"></img></a>
+      <a href="http://www.ecocloud.ch/"><img alt="EcoCloud Logo" src="{{ site.baseurl }}/logo/ecocloud_logo.png" width="60%" height="60%"></img></a>
+      <a href="http://www.epfl.ch/"><img alt="EPFL Logo" src="{{ site.baseurl }}/logo/epfl_logo1.png" width="60%" height="60%"></img></a>
+      <a href="http://www.stonybrook.edu/"><img alt="SBU Logo" src="{{ site.baseurl }}/logo/SBU_new2.jpg" width="60%" height="60%"></img></a>
+      <a href="http://compas.cs.stonybrook.edu/"><img alt="COMPAS Logo" src="{{ site.baseurl }}/logo/compass.png" width="60%" height="60%"></img></a>
  </div>
 
   </nav>
