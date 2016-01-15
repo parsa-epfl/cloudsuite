@@ -10,7 +10,7 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}/">Home</a>
+    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
 
     {% comment %}
       The code below dynamically generates a sidebar nav of pages with
@@ -21,7 +21,7 @@
     {% for node in pages_list %}
       {% if node.title != null %}
         {% if node.layout == "page" and node.sidebar == "true" %}
-          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ site.url }}{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -52,11 +52,11 @@
 </div> -->
 
 <div class="sidebar-item">
-      <a href="http://parsa.epfl.ch/"><img alt="Parsa Logo" src="{{ site.baseurl }}/logo/parsalogo.jpg" width="60%" height="60%"></img></a>
-      <a href="http://www.ecocloud.ch/"><img alt="EcoCloud Logo" src="{{ site.baseurl }}/logo/ecocloud_logo.png" width="60%" height="60%"></img></a>
-      <a href="http://www.epfl.ch/"><img alt="EPFL Logo" src="{{ site.baseurl }}/logo/epfl_logo1.png" width="60%" height="60%"></img></a>
-      <a href="http://www.stonybrook.edu/"><img alt="SBU Logo" src="{{ site.baseurl }}/logo/SBU_new2.jpg" width="60%" height="60%"></img></a>
-      <a href="http://compas.cs.stonybrook.edu/"><img alt="COMPAS Logo" src="{{ site.baseurl }}/logo/compass.png" width="60%" height="60%"></img></a>
+      <a href="http://parsa.epfl.ch/"><img alt="Parsa Logo" src="{{ site.baseurl }}logo/parsalogo.jpg" width="60%" height="60%"></img></a>
+      <a href="http://www.ecocloud.ch/"><img alt="EcoCloud Logo" src="{{ site.baseurl }}logo/ecocloud_logo.png" width="60%" height="60%"></img></a>
+      <a href="http://www.epfl.ch/"><img alt="EPFL Logo" src="{{ site.baseurl }}logo/epfl_logo1.png" width="60%" height="60%"></img></a>
+      <a href="http://www.stonybrook.edu/"><img alt="SBU Logo" src="{{ site.baseurl }}logo/SBU_new2.jpg" width="60%" height="60%"></img></a>
+      <a href="http://compas.cs.stonybrook.edu/"><img alt="COMPAS Logo" src="{{ site.baseurl }}logo/compass.png" width="60%" height="60%"></img></a>
  </div>
 
   </nav>
@@ -66,20 +66,5 @@
       &copy; {{ site.time | date: '%Y' }}. All rights reserved.
     </p>
   </div>
-
-<!--           <div class="logo_bottom1">
-          <a href="http://www.parsa.epfl.ch/"><img src="{{ site.baseurl }}/logo/parsalogo.jpg" height=70px width=120px align="right"></a>
-        </div>
-        <div class="logo_bottom1">
-          <a href="http://www.ecocloud.ch/"><img src="{{ site.baseurl }}/logo/ecocloud_logo.png" height=70px width=150px align="left"></a>
-        </div>
-        <div class="logo_bottom">
-          <a href="http://epfl.ch/"><img src="{{ site.baseurl }}/logo/epfl_logo1.png" height=150px width=150px align="bottom"></a>
-         </div> -->
-
-<!-- <a href="http://www.ecocloud.ch/"><img src="{{ site.baseurl }}/logo/ecocloud_logo.png" height=70px width=150px></a>
-<a href="http://epfl.ch/"><img src="{{ site.baseurl }}/logo/epfl_logo1.png" height=150px width=150px></a>
-<a href="http://www.parsa.epfl.ch/"><img src="{{ site.baseurl }}/logo/parsalogo.jpg" height=70px width=120px></a>
- -->
 
 </div>
