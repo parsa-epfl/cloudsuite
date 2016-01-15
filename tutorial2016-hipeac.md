@@ -52,7 +52,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <tr align="center"><td>15:00 - 15:15</td>
 <td><em>Coffee Break</em></td><td></td>
 </tr>
-<tr align="center"><td>15:15 - 16:15</td><td><a href="../tutorial2016-hipeac-handson">CloudSuite 3.0 on Real Hardware (Docker)</a></td><td>Running CloudSuite on real hardware</td></tr>
+<tr align="center"><td>15:15 - 16:15</td><td><a href="../tutorial2016-hipeac-docker-handson">CloudSuite 3.0 on Real Hardware (Docker)</a></td><td>Running CloudSuite on real hardware</td></tr>
 <tr align="center"><td>16:15 - 16:30</td><td><em>Coffee break</em></td><td></td>
 </tr>
 <tr align="center"><td>16:30 - 17:30</td><td>CloudSuite 3.0 Full-System Simulation</td><td>Introduction to Flexus and its interaction with the QEMU full-system simulator</td>
