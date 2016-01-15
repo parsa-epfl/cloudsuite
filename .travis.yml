@@ -73,4 +73,4 @@ script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
   - travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  - travis_wait 40 docker push $DH_REPO;
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && travis_wait 40 docker push $DH_REPO;
