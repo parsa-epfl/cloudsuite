@@ -8,14 +8,14 @@ relative_permalinks: true
 title:               CloudSuite
 tagline:             'The Suite of Scale-out Benchmarks'
 description:         'CloudSuite'
-url:                 http://www.cloudsuite.ch
+url:                 http://cloudsuite.ch
 baseurl:             ''
 paginate:            5
 
 # About/contact
 author:
   name:              CloudSuite
-  url:               https://www.cloudsuite.ch
+  url:               https://cloudsuite.ch
   email:             cloudsuite@listes.epfl.ch
 
 # Custom vars
