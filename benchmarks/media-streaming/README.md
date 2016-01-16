@@ -1,4 +1,4 @@
-# MediaStreaming
+# Media Streaming
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
@@ -16,7 +16,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`client`][clientdocker]: This represents the httperf client.
  - [`dataset`][datasetdocker]: This represents the video files dataset for the streaming server.
 
-These images are automatically built using the mentioned Dockerfiles available on the `CloudSuite-EPFL/MediaStreaming` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite/media-streaming` [GitHub repo][repo].
 
 ### Dataset
 
@@ -24,11 +24,11 @@ The streaming server requires a video dataset to serve. We generate a synthetic 
 
 To set up the dataset you have to first `pull` the dataset image and then run it. To `pull` the dataset image use the following command:
 
-    $ docker pull cloudsuite/mediastreaming:dataset
+    $ docker pull cloudsuite/media-streaming:dataset
 
 The following command will create a dataset container that exposes the video dataset volume, which will be used by the streaming server:
 
-    $ docker run -d --name streaming_dataset cloudsuite/mediastreaming:dataset
+    $ docker run -d --name streaming_dataset cloudsuite/media-streaming:dataset
 
 
 ### Creating a network between the server and the client(s)
@@ -42,34 +42,34 @@ We will attach the launched containers to this newly created docker network.
 ### Starting the Server ####
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
 
-    $ docker pull cloudsuite/mediastreaming:server
+    $ docker pull cloudsuite/media-streaming:server
 
 The following command will start the server, mount the dataset volume, and attach it to the *streaming_network* network:
 
-    $ docker run -it --name=streaming_server --volumes-from streaming_dataset --net streaming_network cloudsuite/mediastreaming:server
+    $ docker run -it --name=streaming_server --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:server
 
 
 ### Starting the Client ####
 
 To start the client you have to first `pull` the client image and then run it. To `pull` the client image use the following command:
 
-    $ docker pull cloudsuite/mediastreaming:client
+    $ docker pull cloudsuite/media-streaming:client
 
 To start the client container and connect it to the *streaming_network* network use the following command:
 
-    $ docker run -it --name=streaming_client --volumes-from streaming_dataset --net streaming_network cloudsuite/mediastreaming:client
+    $ docker run -it --name=streaming_client --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:client
 
 To start the client, navigate to the /videoperf/run directory in the client container and launch the *benchmark.sh* script. This script is configured to launch a client process that issues a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of the script's execution, the client's log files can be found under the /videoperf/run/output directory.
 
-  [datasetdocker]: https://github.com/CloudSuite-EPFL/MediaStreaming/blob/master/dataset/Dockerfile "Dataset Dockerfile"  
+  [datasetdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [serverdocker]: https://github.com/CloudSuite-EPFL/MediaStreaming/blob/master/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/CloudSuite-EPFL/MediaStreaming/blob/master/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/CloudSuite-EPFL/MediaStreaming "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/mediastreaming/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/mediastreaming.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/mediastreaming.svg "Go to DockerHub Page"
+  [repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+  [dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
+  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
+  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"
   [nginx_repo]: https://github.com/nginx/nginx "Nginx repo"
   [httperf_repo]: https://github.com/httperf/httperf "httperf repo"
