@@ -1,6 +1,6 @@
 ---
 layout: page
-title: CloudSuite on Docker Demo 
+title: CloudSuite on Docker Demo
 ---
 
 This demo illustrates the use of CloudSuite's Data Caching benchmark on Docker.
@@ -11,13 +11,13 @@ To follow this demo, you need to have Docker version 1.9.0 or newer installed on
 Since the size of the images for the Data Caching workload that will be used is several megabytes, it is recommended
 that you download them in advance:
 
-    $ docker pull cloudsuite/datacaching:server
-    $ docker pull cloudsuite/datacaching:client
+    $ docker pull cloudsuite/data-caching:server
+    $ docker pull cloudsuite/data-caching:client
 
 #### Single-node setup and run
 
 We will go through the setup and execution process of a single server - single client Memcached deployment on a single host machine.
-The instructions to do that can be found [here](http://parsalab.github.io/cloudsuite/datacaching/).
+The instructions to do that can be found [here](http://cloudsuite.ch/datacaching/).
 
 #### Multinode setup and run
 

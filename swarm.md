@@ -98,7 +98,7 @@ Attach to one of the containers and ping the other:
     docker -H tcp://$MANAGER_HOST_IP:22222 attach u1
     ping -w3 u2
 
-#### Example 2: running [Memcached](https://github.com/CloudSuite-EPFL/DataCaching) containers with Swarm and swarm-network
+#### Example 2: running [Memcached](http://cloudsuite.ch/datacaching/) containers with Swarm and swarm-network
 
 In this example, we will run the simplest deployment of CloudSuite's Data Caching benchmark (i.e., a single client and a single server),
 where each container runs on a different host. Let's assume we run the Memcached server on node n1 and the Memcached client on node n2.
@@ -106,13 +106,13 @@ We assume that the respective Docker images have been pulled to their respective
 
 Run the server container on n1:
 
-    docker -H tcp://$MANAGER_HOST_IP:22222 run --net swarm-network -e constraint:node==n1 --name dc-server -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
+    docker -H tcp://$MANAGER_HOST_IP:22222 run --net swarm-network -e constraint:node==n1 --name dc-server -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
 
 Run the client container on n2:
 
-    docker run -it --net swarm-network --name dc-client cloudsuite/datacaching:client bash
+    docker run -it --net swarm-network --name dc-client cloudsuite/data-caching:client bash
 
-Prepare the client and run its traffic generator, as described [here](https://github.com/CloudSuite-EPFL/DataCaching#preparing-the-client).
+Prepare the client and run its traffic generator, as described [here](http://cloudsuite.ch/datacaching/#preparing-the-client).
 
 #### Setup environment for Swarm
 
