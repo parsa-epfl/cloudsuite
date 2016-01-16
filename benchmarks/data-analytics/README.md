@@ -12,28 +12,28 @@ Supported tags and their respective `Dockerfile` links:
 
  - [`Base`][basedocker]: This image contains the hadoop base which is needed for both master and slave images.
  - [`Master`][masterdocker]: This image contains the main benchmark (hadoop master node, and mahout).
- - [`Slave`][slavedocker]: This image contains the hadoop slave image. 
+ - [`Slave`][slavedocker]: This image contains the hadoop slave image.
  - [`Data`][datasetdocker]: This image contains the dataset used by the benchmark.
 
-These images are automatically built using the mentioned Dockerfiles available on `cloudsuite/benchmarks/data-analytics/` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on `ParsaLab/cloudsuite` [GitHub repo][repo].
 
 ## Starting the volume image ##
 This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image for training dataset, to download it once, and use it to run the benchmark. You can pull this image from Docker Hub.
 
-    $ docker pull cloudsuite/dataanalytics/dataset
+    $ docker pull cloudsuite/data-analytics:dataset
 
 The following command will start the volume image, making the data available for other docker images on the host:
 
-    $ docker create --name data cloudsuite/dataanalytics/dataset
+    $ docker create --name data cloudsuite/data-analytics:dataset
 
 ## Starting the Master ##
 To start the master you first have to `pull` the master image.
 
-    $ docker pull cloudsuite/dataanalytics/master
+    $ docker pull cloudsuite/data-analytics:master
 
 Then, run the benchmark with the following command:
 
-    $ docker run -d -t --dns 127.0.0.1 -P --name master -h master.cloudsuite.com --volumes-from data cloudsuite/dataanalytics/master
+    $ docker run -d -t --dns 127.0.0.1 -P --name master -h master.cloudsuite.com --volumes-from data cloudsuite/data-analytics:master
 
 
 ## Starting the Slaves ##
@@ -41,7 +41,7 @@ If you want to have a single-node cluster, please skip this step.
 
 To have more than one node, you need to start the slave containers. In order to do that, you first need to `pull` the slave image.
 
-    $ docker pull cloudsuite/dataanalytics/slave
+    $ docker pull cloudsuite/data-analytics:slave
 
 To connect the slave containers to the master, you need the master IP.
 
@@ -49,9 +49,9 @@ To connect the slave containers to the master, you need the master IP.
 
 Then, run as many slave containers as you want:
 
-    $ docker run -d -t --dns 127.0.0.1 -P --name slave$i -h slave$i.cloudsuite.com -e JOIN_IP=$FIRST_IP cloudsuite/dataanalytics/slave
+    $ docker run -d -t --dns 127.0.0.1 -P --name slave$i -h slave$i.cloudsuite.com -e JOIN_IP=$FIRST_IP cloudsuite/data-analytics:slave
 
-Where `$i` is the slave number, you should start with 1 (i.e., slave1, slave1.cloudsuite.com, slave2, slave2.cloudsuite.com, ...). 
+Where `$i` is the slave number, you should start with 1 (i.e., slave1, slave1.cloudsuite.com, slave2, slave2.cloudsuite.com, ...).
 
 
 ## Running the benchmark ##
@@ -64,16 +64,15 @@ Then, run the benchmark with the following command:
 
     $ ./run.sh
 
-It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0. 
+It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0.
 After entering the slave number, it prepares hadoop, downloads the dataset (it takes a lot of time to download this dataset) and runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikipediamodel directory.
 
-[basedocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/Dockerfile "Base Dockerfile"
-[masterdocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/Dockerfile "Master Dockerfile"
-[slavedocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/Dockerfile "Slave Dockerfile"
+[basedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Base Dockerfile"
+[masterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Master Dockerfile"
+[slavedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/slave/Dockerfile "Slave Dockerfile"
+[datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/dataset/Dockerfile "Dataset Dockerfile"
 
-[datasetdocker]: https://github.com/CloudSuite-EPFL/DataAnalytics/blob/master/dataset/Dockerfile "Dataset Dockerfile"
-
-[repo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/data-analytics "GitHub Repo"
-[dhrepo]: https://hub.docker.com/r/cloudsuite/dataanalytics/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/dataanalytics.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/dataanalytics.svg "Go to DockerHub Page"
+[repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/data-analytics/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-analytics.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-analytics.svg "Go to DockerHub Page"
