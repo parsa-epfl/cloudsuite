@@ -19,19 +19,19 @@ Supported tags and their respective `Dockerfile` links:
 - [`spark-worker`][sparkworkerdocker] This builds an image for the Spark worker node. You may spawn several workers.
 - [`spark-client`][sparkclientdocker] This builds an image with the Spark client node. The client is used to start the benchmark.
 
-These images are automatically built using the mentioned Dockerfiles available on [`CloudSuite-EPFL/GraphAnalytics`][repo] and [`CloudSuite-EPFL/spark-base`][sparkrepo].
+These images are automatically built using the mentioned Dockerfiles available on [`ParsaLab/cloudsuite`][repo].
 
 ### Starting the volume images ###
 
 The first step is to create the volume images that contain the binaries and the dataset of the Graph Analytics benchmark. First `pull` the volume images, using the following command:
 
-    $ docker pull cloudsuite/GraphAnalytics:data
-    $ docker pull cloudsuite/GraphAnalytics:benchmark
+    $ docker pull cloudsuite/graph-analytics:data
+    $ docker pull cloudsuite/graph-analytics:benchmark
 
 The following command will start the volume images, making both the data and the binaries available for other docker images on the host:
 
-    $ docker create --name data cloudsuite/GraphAnalytics:data
-    $ docker create --name bench cloudsuite/GraphAnalytics:benchmark
+    $ docker create --name data cloudsuite/graph-analytics:data
+    $ docker create --name bench cloudsuite/graph-analytics:benchmark
 
 ### Starting the master node ###
 
@@ -71,13 +71,16 @@ To run the benchmark from the interactive container, use the following command:
 
     $ bash /benchmark/graph_analytics/run_benchmark.sh
 
-[benchmarkdocker]: https://github.com/CloudSuite-EPFL/GraphAnalytics/blob/master/benchmarks/Dockerfile "Benchmark volume Dockerfile"
-[datadocker]: https://github.com/CloudSuite-EPFL/GraphAnalytics/blob/master/data/Dockerfile "Data volume Dockerfile"
-[sparkmasterdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-master/Dockerfile "Spark Master Node Dockerfile"
-[sparkworkerdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-worker/Dockerfile "Spark Worker Dockerfile"
-[sparkclientdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-client/Dockerfile "Spark Client Dockerfile"
-[repo]: https://github.com/CloudSuite-EPFL/GraphAnalytics "Graph Analytics GitHub Repo"
-[sparkrepo]: https://github.com/CloudSuite-EPFL/spark-base "Spark Base GitHub Repo"
-[dhrepo]: https://hub.docker.com/r/cloudsuite/graphanalytics/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/graphanalytics.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/graphanalytics.svg "Go to DockerHub Page"
+[benchmarkdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/graph-analytics/benchmark/Dockerfile "Benchmark volume Dockerfile"
+[datadocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/graph-analytics/data/Dockerfile "Data volume Dockerfile"
+[sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
+[sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
+[sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
+[repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/graph-analytics/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
+
+[serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
+
+[clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
