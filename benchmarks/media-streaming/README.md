@@ -16,7 +16,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`client`][clientdocker]: This represents the httperf client.
  - [`dataset`][datasetdocker]: This represents the video files dataset for the streaming server.
 
-These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite/media-streaming` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite` [GitHub repo][repo].
 
 ### Dataset
 
@@ -61,13 +61,13 @@ To start the client container and connect it to the *streaming_network* network 
 
 To start the client, navigate to the /videoperf/run directory in the client container and launch the *benchmark.sh* script. This script is configured to launch a client process that issues a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of the script's execution, the client's log files can be found under the /videoperf/run/output directory.
 
-  [datasetdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/dataset/Dockerfile "Dataset Dockerfile"  
+  [datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [serverdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/ParsaLab/cloudsuite/media-streaming/blob/master/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+  [repo]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"
