@@ -17,7 +17,7 @@ To facilitate the communication between the client and the server(s), we build a
 
 We will attach the launched containers to this newly created docker network.
 
-###Server Container
+### Server Container
 Start the server container:
 
     $ docker run -it --name cassandra-server --net serving_network cloudsuite/data-serving:server bash
@@ -50,7 +50,7 @@ If you make a mistake you can use the *drop* command and try again:
 
     $ drop keyspace usertable;
 
-###Multiple Server Containers
+### Multiple Server Containers
 
 For a cluster setup with multiple servers, we need to instantiate a seed server:
 
@@ -68,7 +68,7 @@ $ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
 
-###Client Container(s)
+### Client Container(s)
 After successfully creating the aforementioned schema, you are ready to benchmark with YCSB.
 Start the client container:
 
@@ -121,6 +121,6 @@ The *run.command* file takes the *settings.dat* file as an input and runs the fo
 
     $ /ycsb/bin/ycsb run cassandra-10 -p hosts=server -P /ycsb/workloads/workloada
 
-[dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
+[dhrepo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/data-serving "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-serving.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-serving.svg "Go to DockerHub Page"
