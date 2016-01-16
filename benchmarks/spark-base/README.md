@@ -1,5 +1,9 @@
 Spark Base Image for Cloudsuite
 ==========
+
+[![Pulls on DockerHub][dhpulls]][dhrepo]
+[![Stars on DockerHub][dhstars]][dhrepo]
+
 This repository contains the docker image with a base Spark image for the CloudSuite workloads.
 
 ## Building the images ##
@@ -11,7 +15,7 @@ Supported tags and their respective `Dockerfile` links:
 - [`spark-worker`][sparkworkerdocker] This builds an image with the Spark worker node. You may spawn clusters of several workers.
 - [`spark-client`][sparkclientdocker] This builds an image with the Spark client node. The client is used to start the benchmark.
 
-These images are automatically built using the mentioned Dockerfiles available on [`CloudSuite-EPFL/spark-base`][sparkrepo].
+These images are automatically built using the mentioned Dockerfiles available on [`ParsaLab/cloudsuite`][repo].
 
 ### Starting the volume images ###
 
@@ -21,7 +25,7 @@ The `data` container contains the dataset that is necessary for the benchmark to
 
 The `bench` container hosts the Java Spark binaries and scripts necessary to run the benchmark. The client `Entrypoint` script looks for a folder with the same name as the command line argument passed to the `docker run` command and runs the `run_benchmark.sh` script in that folder.
 
-Assuming all the volume images are pulled, the following command will start the volume images, making both the data and the binaries avaliable for other docker images in the host:
+Assuming all the volume images are pulled, the following command will start the volume images, making both the data and the binaries available for other docker images in the host:
 
     $ docker create --name data [data-volume-image-tag]
     $ docker create --name bench [binary-volume-image-tag]
@@ -64,7 +68,12 @@ To run the benchmark from the interactive container, use the following command:
 
     $ bash /benchmark/[benchmark-name]/run_benchmark.sh
 
-[sparkmasterdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-master/Dockerfile "Spark Master Node Dockerfile"
-[sparkworkerdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-worker/Dockerfile "Spark Worker Dockerfile"
-[sparkclientdocker]: https://github.com/CloudSuite-EPFL/spark-base/blob/master/spark-client/Dockerfile "Spark Client Dockerfile"
-[sparkrepo]: https://github.com/CloudSuite-EPFL/spark-base "Spark Base GitHub Repo"
+    [sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
+    [sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
+    [sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
+
+    [repo]: https://github.com/ParsaLab/cloudsuite/ "GitHub Repo"
+
+    [dhrepo]: https://hub.docker.com/r/cloudsuite/spark-base/ "DockerHub Page"
+    [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark-base.svg "Go to DockerHub Page"
+    [dhstars]: https://img.shields.io/docker/stars/cloudsuite/spark-base.svg "Go to DockerHub Page"
