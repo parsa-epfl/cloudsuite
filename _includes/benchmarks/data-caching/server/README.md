@@ -4,5 +4,5 @@ This `Dockerfile` creates an ubuntu (latest) image containing the latest version
 Memcached will be started as a daemon with the passed parameters.
 Example:
 
-    $ docker pull cloudsuite/datacaching:server
-    $ docker run --name dc-server -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
+    $ docker pull cloudsuite/data-caching:server
+    $ docker run --name dc-server --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550

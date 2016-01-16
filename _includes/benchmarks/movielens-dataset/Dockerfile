@@ -1,21 +1,20 @@
 FROM ubuntu:14.04
 
-# Install packages
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      curl \
-      unzip \
-    && rm -rf /var/lib/apt/lists/*
-
 # Download datasets
-RUN mkdir /data \
+RUN BUILD_DEPS="curl unzip" \
+    && set -x \
+    && apt-get update -y && apt-get install -y --no-install-recommends ${BUILD_DEPS} \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /data \
     && curl -o /data/ml-latest-small.zip http://files.grouplens.org/datasets/movielens/ml-latest-small.zip \
     && unzip -d /data /data/ml-latest-small.zip \
     && rm /data/ml-latest-small.zip \
     && curl -o /data/ml-latest.zip http://files.grouplens.org/datasets/movielens/ml-latest.zip \
     && unzip -d /data /data/ml-latest.zip \
-    && rm /data/ml-latest.zip
+    && rm /data/ml-latest.zip \
+    && apt-get purge -y --auto-remove ${BUILD_DEPS}
 
-COPY myratings.csv /data/myratings.csv
+COPY files /data/
 
 VOLUME ["/data"]
 

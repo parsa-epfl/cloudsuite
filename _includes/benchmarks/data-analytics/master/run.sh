@@ -35,17 +35,18 @@ else
   exit
 fi
 
+cd $MAHOUT_HOME/examples/temp
+
 if [ -e enwiki-latest-pages-articles.xml.bz2 ] 
 then 
   echo "unzip the data file ..." 
-  bzip2 -d enwiki-latest-pages-articles.xml.bz2 > $MAHOUT_HOME/examples/temp/enwiki-latest-pages-articles.xml
-  mv enwiki-latest-pages-articles.xml.bz2 $MAHOUT_HOME/examples/temp/enwiki-latest-pages-articles.xml
+  bzip2 -d enwiki-latest-pages-articles.xml.bz2
 else
-  echo "No data file, please run the data container."
-  exit
+  echo "Getting the main dataset... It takes time..."
+  wget http://download.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
+  echo "unzip the data file ..." 
+  bzip2 -d enwiki-latest-pages-articles.xml.bz2
 fi
-
-cd $MAHOUT_HOME/examples/temp/
 
 mahout org.apache.mahout.text.wikipedia.WikipediaXmlSplitter -d $MAHOUT_HOME/examples/temp/enwiki-latest-pages-articles.xml -o wikipedia/chunks -c 64
 mahout org.apache.mahout.text.wikipedia.WikipediaXmlSplitter -d $MAHOUT_HOME/examples/temp/enwiki-20100904-pages-articles1.xml -o wikipedia-training/chunks -c 64

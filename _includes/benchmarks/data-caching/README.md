@@ -18,7 +18,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`server`][serverdocker]: This represents the Memcached server running as a daemon.
  - [`client`][clientdocker]: This represents the client which requests to access the server's data.
 
-These images are automatically built using the mentioned Dockerfiles available on `CloudSuite-EPFL/DataCaching` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on `ParsaLab/cloudsuite` [GitHub repo][repo].
 
 ### Preparing a network between the server(s) and the client
 
@@ -31,32 +31,32 @@ We will attach the launched containers to this newly created docker network.
 ### Starting the Server ####
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
 
-    $ docker pull cloudsuite/datacaching:server
+    $ docker pull cloudsuite/data-caching:server
 
 It takes some time to download the image, but this is only required the first time.
 The following command will start the server with four threads and 4096MB of dedicated memory, with a minimal object size of 550 bytes listening on port 11211 as default:
 
-    $ docker run --name dc-server --net caching_network -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
 
 We assigned a name to this server to facilitate linking it with the client. We also used `--net` option to attach the container to our prepared network.
 As mentioned before, you can have multiple instances of the Memcached server, just remember to give each of them a unique name. For example, the following commands create four Memcached server instances:
 
-    $ docker run --name dc-server1 --net caching_network -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server2 --net caching_network -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server3 --net caching_network -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server4 --net caching_network -d cloudsuite/datacaching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server1 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server2 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server3 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server4 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
 
 ### Starting the Client ####
 
 To start the client you have to first `pull` the client image and then run it. To `pull` the server image use the following command:
 
-    $ docker pull cloudsuite/datacaching:client
+    $ docker pull cloudsuite/data-caching:client
 
 It takes some time to download the image, but this is only required the first time.
 
 To start the client container use the following command:
 
-    $ docker run -it --name dc-client --net caching_network cloudsuite/datacaching:client bash
+    $ docker run -it --name dc-client --net caching_network cloudsuite/data-caching:client bash
 
 This boots up the client container and you'll be logged in as the `memcache` user. Note that by using the `--net` option, you can easily make these containers visible to each other.
 
@@ -133,11 +133,11 @@ and the client on different sockets of the same machine
 
   [memcachedWeb]: http://memcached.org/ "Memcached Website"
 
-  [serverdocker]: https://github.com/CloudSuite-EPFL/DataCaching/blob/master/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/CloudSuite-EPFL/DataCaching/blob/master/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/CloudSuite-EPFL/DataCaching "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/datacaching/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/datacaching.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/datacaching.svg "Go to DockerHub Page"
+  [repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+  [dhrepo]: https://hub.docker.com/r/cloudsuite/data-caching/ "DockerHub Page"
+  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-caching.svg "Go to DockerHub Page"
+  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-caching.svg "Go to DockerHub Page"

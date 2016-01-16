@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BENCHMARK_DIR=/benchmarks/graph_analytics
+BENCHMARK_DIR=/benchmark/graph_analytics
 WORKLOAD_NAME=pagerank
 
 ${SPARK_HOME}/bin/spark-submit \
