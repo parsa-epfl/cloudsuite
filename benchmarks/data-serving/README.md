@@ -20,7 +20,7 @@ We will attach the launched containers to this newly created docker network.
 ###Server Container
 Start the server container:
 
-    $ docker run -it --name cassandra-server --net serving_network cloudsuite/dataserving:server bash
+    $ docker run -it --name cassandra-server --net serving_network cloudsuite/data-serving:server bash
 
 In order to create a keyspace and a column family, you can use the following commands after connecting to the server with the cassandra-cli under the directory in which Cassandra is unpacked. (A link to a basic tutorial with cassandra-cli: http://wiki.apache.org/cassandra/CassandraCli)
 
@@ -49,13 +49,13 @@ You can use other commands in the cassandra-cli to verify the correctness of the
 If you make a mistake you can use the *drop* command and try again:
 
     $ drop keyspace usertable;
-    
+
 ###Multiple Server Containers
 
 For a cluster setup with multiple servers, we need to instantiate a seed server:
 
 ```
-$ docker run -it --name cassandra-server-seed --net serving_network cloudsuite/dataserving:server bash
+$ docker run -it --name cassandra-server-seed --net serving_network cloudsuite/data-serving:server bash
 ```
 
 Then we prepare the server as previously.
@@ -63,7 +63,7 @@ Then we prepare the server as previously.
 The other server containers are instantiated as follows:
 
 ```
-$ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/dataserving:server bash
+$ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/data-serving:server bash
 ```
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
@@ -72,7 +72,7 @@ You can find more details at the websites: http://wiki.apache.org/cassandra/Gett
 After successfully creating the aforementioned schema, you are ready to benchmark with YCSB.
 Start the client container:
 
-    $ docker run -it --name cassandra-client --link cassandra-server:server cloudsuite/dataserving:client bash	
+    $ docker run -it --name cassandra-client --link cassandra-server:server cloudsuite/data-serving:client bash
 
 Change to the ycsb directory:
 ```
@@ -86,7 +86,7 @@ or, for a "one seed - one normal server" setup:
 ```
 $ export HOSTS="cassandra-server-seed,cassandra-server1"
 ```
-Load dataset on ycsb: 
+Load dataset on ycsb:
 ```
 $ ./bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
 ```
@@ -113,15 +113,14 @@ Running the benchmark
 ---------------------
 After you install and run the server, install the YCSB framework files and populate Cassandra, you are one step away from running the benchmark. To specify the runtime parameters for the client, a good practice is to create a settings file. You can keep the important parameters (e.g., *target*, *threadcount*, *hosts*, *operationcount*, *recordcount*) in this file.
 
-The *settings.dat* file defines the IP address(es) of the node(s) running Cassandra, in addition to the *recordcount* parameter (which should be less than or equal to the number specified in the data generation step to avoid potential errors). 
+The *settings.dat* file defines the IP address(es) of the node(s) running Cassandra, in addition to the *recordcount* parameter (which should be less than or equal to the number specified in the data generation step to avoid potential errors).
 
-The *operationcount* parameter sets the number of operations to be executed on the data store. 
+The *operationcount* parameter sets the number of operations to be executed on the data store.
 
 The *run.command* file takes the *settings.dat* file as an input and runs the following command:
 
     $ /ycsb/bin/ycsb run cassandra-10 -p hosts=server -P /ycsb/workloads/workloada
 
-[dhrepo]: https://hub.docker.com/r/cloudsuite/dataserving/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/dataserving.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/dataserving.svg "Go to DockerHub Page"
-
+[dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-serving.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-serving.svg "Go to DockerHub Page"
