@@ -68,12 +68,12 @@ To run the benchmark from the interactive container, use the following command:
 
     $ bash /benchmark/[benchmark-name]/run_benchmark.sh
 
-    [sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
-    [sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
-    [sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
+[sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
+[sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
+[sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
 
-    [repo]: https://github.com/ParsaLab/cloudsuite/ "GitHub Repo"
+[repo]: https://github.com/ParsaLab/cloudsuite/ "GitHub Repo"
 
-    [dhrepo]: https://hub.docker.com/r/cloudsuite/spark-base/ "DockerHub Page"
-    [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark-base.svg "Go to DockerHub Page"
-    [dhstars]: https://img.shields.io/docker/stars/cloudsuite/spark-base.svg "Go to DockerHub Page"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/spark-base/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark-base.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/spark-base.svg "Go to DockerHub Page"
