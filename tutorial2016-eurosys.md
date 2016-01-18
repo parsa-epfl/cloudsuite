@@ -8,7 +8,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <ul>
 <li><b>Where?</b> In conjunction with <a href="http://eurosys16.doc.ic.ac.uk/">EuroSys </a> in London, UK.</li>
 <li><b>When?</b> April 18th, 2016. </li>
-<li><b>Intended audience:</b> Academic/industrial researchers interested in scale-out datacenter workloads and their performance evaluation via both existing state- of-the-art servers and cycle-accurate simulation.</li>
+<li><b>Intended audience:</b> Academic/industrial researchers interested in datacenter workloads and their performance evaluation via both existing state- of-the-art servers and cycle-accurate simulation.</li>
 <li><b>Team:</b> Alexander Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
 <li><b>Keywords:</b> Scale-out workloads, server benchmarking, rigorous measurement methodologies, performance evaluation.</li>
 <!-- <li><b>Registration:</b> Please follow the registration link on the <a href="http://eurosys16.doc.ic.ac.uk/">conference web page</a>.</li> -->
@@ -19,7 +19,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <br/>
 <h2>Tutorial In Brief</h2>
 <p>
-Since its inception, CloudSuite (cloudsuite.ch) has emerged as a popular suite of benchmarks both in industry and among academics for scale-out server and services performance evaluation. The EuroCloud Server project blueprinted key optimizations in server SoCs based on the salient features of CloudSuite workloads that lead to an order of magnitude improvement in efficiency while preserving QoS. ARM-based server products (e.g., Cavium ThunderX) have now emerged following these guidelines and showcasing the improved efficiency.
+Since its inception, CloudSuite (cloudsuite.ch) has emerged as a popular suite of benchmarks both in industry and among academics for the performance evaluation of cloud services. The EuroCloud Server project blueprinted key optimizations in server SoCs based on the salient features of CloudSuite workloads that lead to an order of magnitude improvement in efficiency while preserving QoS. ARM-based server products (e.g., Cavium ThunderX) have now emerged following these guidelines and showcasing the improved efficiency.
 </p>
 <p>
 CloudSuite 3.0 is a major enhancement over prior releases both in workloads and infrastructure. It includes benchmarks that represent massive data maniuplation with tight latency constraints such as in-memory data analytics using Apache Spark, a new real-time video streaming benchmark following today’s most popular video-sharing website setups, and a new web serving benchmark mirroring today’s multi-tier web server software stacks with a caching layer.
