@@ -6,7 +6,7 @@ relative_permalinks: true
 
 # Setup
 title:               CloudSuite
-tagline:             'The Suite of Cloud Service Benchmarks'
+tagline:             'The Benchmark Suite of Cloud Services'
 description:         'CloudSuite'
 url:                 http://cloudsuite.ch
 baseurl:             ''
