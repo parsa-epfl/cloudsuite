@@ -42,17 +42,20 @@ title: Home
 Cloud computing is emerging as a dominant computing platform for providing scalable online services to a global client base. Today's popular online services (e.g., web search, social networking, and business analytics) are characterized by massive working sets, high degrees of parallelism, and real-time constraints. These characteristics set cloud services apart from desktop (SPEC), parallel (PARSEC), and traditional commercial server applications. In order to stimulate research in the field of cloud and data-centric computing, we have created CloudSuite, a benchmark suite based on real-world online services.
 </p>
 <p>
-CloudSuite covers a broad range of application categories commonly found in today's datacenters. The first release included data analytics, data serving, media streaming, large-scale and computation-intensive tasks, web search, and web serving. The second release also included graph analytics and data caching.</a>
+CloudSuite covers a broad range of application categories commonly found in today's datacenters. The first release included data analytics, data serving, media streaming, large-scale and computation-intensive tasks, web search, and web serving. The second release also included graph analytics and data caching.
 </p>
 <p>
 CloudSuite 3.0 is a major enhancement over prior releases both in benchmarks and infrastructure. It includes benchmarks that represent massive data maniuplation with tight latency constraints such as in-memory data analytics using Apache Spark, a new real-time video streaming benchmark following today’s most popular video-sharing website setups, and a new web serving benchmark mirroring today’s multi-tier web server software stacks with a caching layer.
 </p>
 <h1>Deploying CloudSuite</h1>
 <p>
-To ease the deployment of CloudSuite into private and public cloud systems, we provide docker images for all CloudSuite benchmarks (available <a href="./benchmarks">here</a>). Furthermore, we are integrating CloudSuite into Google's <a href="https://github.com/GoogleCloudPlatform/PerfKitBenchmarker">PerfKit Benchmarker</a>. PerfKit helps at automating the process of benchmarking across existing cloud-server systems.
+To ease the deployment of CloudSuite into private and public cloud systems, we provide docker images for all CloudSuite benchmarks (available <a href="./benchmarks">here</a>). We are also integrating CloudSuite into Google's <a href="https://github.com/GoogleCloudPlatform/PerfKitBenchmarker">PerfKit Benchmarker</a>. PerfKit helps at automating the process of benchmarking across existing cloud-server systems.
 </p>
 <p>
-In addition to these Docker images, we have also prepared--and provide upon request--CloudSuite images running on the Simics full-system simulator, to facilitate micro-architectural simulation of CloudSuite applications. The Simics images allow the simulation of CloudSuite applications running on up to 64 cores and were released at our ISCA 2012 tutorial: "CloudSuite on Flexus". To get a copy of these CloudSuite images, please send an email to cloudsuite-admin(at)groupes.epfl.ch; you will be provided with an account to access and download the images. Please note that these images are based on the SPARC v9 ISA, running the Solaris OS, and are only compatible with Simics.
+In addition to these Docker images, we have also prepared--and provide upon request--CloudSuite images running on the Simics full-system simulator, to facilitate micro-architectural simulation of CloudSuite applications. The Simics images allow the simulation of CloudSuite applications running on up to 64 cores and were released at our ISCA 2012 tutorial: "CloudSuite on Flexus". 
+</p>
+<p>
+To get a copy of these CloudSuite images, please send an email to cloudsuite-admin(at)groupes.epfl.ch; you will be provided with an account to access and download the images. Please note that these images are based on the SPARC v9 ISA, running the Solaris OS, and are only compatible with Simics.
 </p>
 <h1>Usage and licenses of CloudSuite</h1>
 <p>CloudSuite is available for researchers interested in pursuing research in the field of cloud computing and datacenters. CloudSuite's software components are all available as open-source software. All of the software components are governed by their own licensing terms. Researchers interested in using CloudSuite are required to fully understand and abide by the licensing terms of the various components. For more information, please refer to the <a href="./licenses">license page</a>.</p>
