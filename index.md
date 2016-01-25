@@ -11,9 +11,9 @@ title: Home
 
 <ul style="list-style: none; padding-left:0;">
 
-<li> <b> Jan 2016: </b> <br> A tutorial, <a href="./tutorial2016-eurosys/">Server Benchmarking with CloudSuite 3.0</a>, will be presented at EuroSys 2016.</li>
+<li> <b> Jan 2016: </b> <br> A tutorial, <a href="./tutorial2016-eurosys/">Server Benchmarking with CloudSuite 3.0</a>, will be presented on April 18th at EuroSys 2016.</li>
 <br>
-<li> <b> Dec 2015: </b> <br> A tutorial, <a href="./tutorial2016-hipeac/index.html">Server Benchmarking with CloudSuite 3.0</a>, will be presented on January, 20th.</li>
+<li> <b> Dec 2015: </b> <br> A tutorial, <a href="./tutorial2016-hipeac/index.html">Server Benchmarking with CloudSuite 3.0</a>, will be presented on January 20th at HiPEAC 2016.</li>
 <br>
 <li> <b> Feb 2015: </b> <br> A two-day tutorial, <a href="http://parsa.epfl.ch/cloudsuite/CloudSuite-Flexus-epfl15.html">Rigorous and Practical Server Design Evaluation</a>, will be presented on February 2nd-3rd at EPFL. Here are the tutorial slides used on the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day1.pdf">first day</a> and the <a href="http://parsa.epfl.ch/cloudsuite/docs/CloudSuite2.0-on-Flexus-epfl-15_day2.pdf">second day</a>.</li>
 <br>
@@ -42,7 +42,10 @@ title: Home
 Cloud computing is emerging as a dominant computing platform for providing scalable online services to a global client base. Today's popular online services (e.g., web search, social networking, and business analytics) are characterized by massive working sets, high degrees of parallelism, and real-time constraints. These characteristics set cloud services apart from desktop (SPEC), parallel (PARSEC), and traditional commercial server applications. In order to stimulate research in the field of cloud and data-centric computing, we have created CloudSuite, a benchmark suite based on real-world online services.
 </p>
 <p>
-CloudSuite covers a broad range of application categories commonly found in today's datacenters. The first release includes data analytics, data serving, media streaming, large-scale and computation-intensive tasks, web search, and web serving. The second release also includes graph analytics and data caching.</a>.
+CloudSuite covers a broad range of application categories commonly found in today's datacenters. The first release included data analytics, data serving, media streaming, large-scale and computation-intensive tasks, web search, and web serving. The second release also included graph analytics and data caching.</a>
+</p>
+<p>
+CloudSuite 3.0 is a major enhancement over prior releases both in workloads and infrastructure. It includes benchmarks that represent massive data maniuplation with tight latency constraints such as in-memory data analytics using Apache Spark, a new real-time video streaming benchmark following today’s most popular video-sharing website setups, and a new web serving benchmark mirroring today’s multi-tier web server software stacks with a caching layer.
 </p>
 <h1>CloudSuite on Flexus</h1>
 <p>
