@@ -58,24 +58,24 @@ The output results will show on the screen after the benchmark finishes.
 
 - The throughput statistic, operations per second, is shown as:
 
-```xml
+{% highlight xml %}
 	<metric unit="ops/sec">25.133</metric>
-```
+{% endhighlight %}
 
 - The response time statistics, average, maximum, minimum, 90-th, and 99-th, are shown as:
 
-```xml
-	<responseTimes unit="seconds">
-   		<operation name="GET" r90th="0.500">
-   			<avg>0.034</avg>
-   			<max>0.285</max>
-   			<sd>0.035</sd>
-   			<p90th>0.080</p90th>
-   			<passed>true</passed>
-   			<p99th>0.143</p99th>
-   		</operation>
-	</responseTimes>
-```
+{% highlight xml %}
+<responseTimes unit="seconds">
+	<operation name="GET" r90th="0.500">
+		<avg>0.034</avg>
+		<max>0.285</max>
+		<sd>0.035</sd>
+		<p90th>0.080</p90th>
+		<passed>true</passed>
+		<p99th>0.143</p99th>
+	</operation>
+</responseTimes>
+{% endhighlight %}
 
 ### Additional Information ###
 
