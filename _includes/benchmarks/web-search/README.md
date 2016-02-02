@@ -58,13 +58,13 @@ The output results will show on the screen after the benchmark finishes.
 
 - The throughput statistic, operations per second, is shown as:
 
-{% highlight xml %}
-	<metric unit="ops/sec">25.133</metric>
-{% endhighlight %}
+```xml
+<metric unit="ops/sec">25.133</metric>
+```
 
 - The response time statistics, average, maximum, minimum, 90-th, and 99-th, are shown as:
 
-{% highlight xml %}
+```xml
 <responseTimes unit="seconds">
 	<operation name="GET" r90th="0.500">
 		<avg>0.034</avg>
@@ -75,7 +75,7 @@ The output results will show on the screen after the benchmark finishes.
 		<p99th>0.143</p99th>
 	</operation>
 </responseTimes>
-{% endhighlight %}
+```
 
 ### Additional Information ###
 
@@ -85,6 +85,7 @@ The output results will show on the screen after the benchmark finishes.
 
 
 	$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
+
 
 More information about Solr can be found [here][solrmanual].
 
