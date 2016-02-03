@@ -11,3 +11,23 @@
 .project_content {
     text-align: justify;
 }
+
+.clearfix:after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.footer {
+    border-top: 1px solid #EEE;
+}
+
+.footer-logo{
+    vertical-align: middle;
+    display:inline-block;
+    width:19%;
+    text-align: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
