@@ -12,58 +12,58 @@ The YCSB client has a data generator. After starting Cassandra, YCSB can start l
 ### Preparing a network between the server(s) and the client(s)
 
 To facilitate the communication between the client and the server(s), we build a docker network:
-
+```bash
     $ docker network create serving_network
-
+```
 We will attach the launched containers to this newly created docker network.
 
 ### Server Container
 Start the server container:
-
+```bash
     $ docker run -it --name cassandra-server --net serving_network cloudsuite/data-serving:server bash
-
+```
 In order to create a keyspace and a column family, you can use the following commands after connecting to the server with the cassandra-cli under the directory in which Cassandra is unpacked. (A link to a basic tutorial with cassandra-cli: http://wiki.apache.org/cassandra/CassandraCli)
 
 Run the server:     
-```
-$ cassandra
+```bash
+    $ cassandra
 ```
 
 Run the command:
-```
-$ cassandra-cli
+```bash
+    $ cassandra-cli
 ```
 
 Use the following commands to create a keyspace and column family for YCSB:
-```
-$ create keyspace usertable;
-$ use usertable;
-$ create column family data;
+```bash
+    $ create keyspace usertable;
+    $ use usertable;
+    $ create column family data;
 ```
 
 You can use other commands in the cassandra-cli to verify the correctness of the setup :
-
-    $ dshow keyspaces;
+```bash
+    $ show keyspaces;
     $ show schema;
-
+```
 If you make a mistake you can use the *drop* command and try again:
-
+```bash
     $ drop keyspace usertable;
-
+```
 ### Multiple Server Containers
 
 For a cluster setup with multiple servers, we need to instantiate a seed server:
 
-```
-$ docker run -it --name cassandra-server-seed --net serving_network cloudsuite/data-serving:server bash
+```bash
+    $ docker run -it --name cassandra-server-seed --net serving_network cloudsuite/data-serving:server bash
 ```
 
 Then we prepare the server as previously.
 
 The other server containers are instantiated as follows:
 
-```
-$ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/data-serving:server bash
+```bash
+    $ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/data-serving:server bash
 ```
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
@@ -71,24 +71,25 @@ You can find more details at the websites: http://wiki.apache.org/cassandra/Gett
 ### Client Container(s)
 After successfully creating the aforementioned schema, you are ready to benchmark with YCSB.
 Start the client container:
-
-    $ docker run -it --name cassandra-client --link cassandra-server:server cloudsuite/data-serving:client bash
+```bash
+    $ docker run -it --name cassandra-client --net serving_network cloudsuite/data-serving:client bash
+```
 
 Change to the ycsb directory:
-```
-$ cd ycsb
+```bash
+    $ cd ycsb
 ```
 Export the hosts ycsb will connect to:
-```
-$ export HOSTS=cassandra-server
+```bash
+    $ export HOSTS=cassandra-server
 ```
 or, for a "one seed - one normal server" setup:
-```
-$ export HOSTS="cassandra-server-seed,cassandra-server1"
+```bash
+    $ export HOSTS="cassandra-server-seed,cassandra-server1"
 ```
 Load dataset on ycsb:
-```
-$ ./bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
+```bash
+    $ ./bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
 ```
 
 More detailed instructions on generating the dataset can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings.
@@ -118,9 +119,9 @@ The *settings.dat* file defines the IP address(es) of the node(s) running Cassan
 The *operationcount* parameter sets the number of operations to be executed on the data store.
 
 The *run.command* file takes the *settings.dat* file as an input and runs the following command:
-
-    $ /ycsb/bin/ycsb run cassandra-10 -p hosts=server -P /ycsb/workloads/workloada
-
-[dhrepo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/data-serving "DockerHub Page"
+```bash
+    $ /ycsb/bin/ycsb run cassandra-10 -p hosts=$HOSTS -P /ycsb/workloads/workloada
+```
+[dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-serving.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-serving.svg "Go to DockerHub Page"

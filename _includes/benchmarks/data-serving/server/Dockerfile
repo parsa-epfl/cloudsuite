@@ -11,7 +11,7 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57
     	&& rm -rf /var/lib/apt/lists/*
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 7000 7001 7199 9042 9160
