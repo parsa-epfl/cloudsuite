@@ -36,6 +36,6 @@ sidebar: "true"
 ## Sponsors
 
 <div class="container">
-    <a class="sponsor-logo" href="http://www.cavium.com"><img alt="Cavium Logo" src="{{ site.baseurl }}/public/logos/Cavium.png" style="width: 10rem;"/></a>
-    <a class="sponsor-logo" href="http://www.google.com"><img alt="Google Logo" src="{{ site.baseurl }}/public/logos/Google.png" style="width: 10rem;"/></a>
+    <a class="s-logo" href="http://www.cavium.com"><img alt="Cavium Logo" src="{{ site.baseurl }}/public/logos/Cavium.png" style="width: 10rem;"/></a>
+    <a class="s-logo" href="http://www.google.com"><img alt="Google Logo" src="{{ site.baseurl }}/public/logos/Google.png" style="width: 10rem;"/></a>
 </div>
