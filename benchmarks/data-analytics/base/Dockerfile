@@ -18,9 +18,9 @@ RUN apt-get install -y unzip curl dnsmasq
 ADD conf/dnsmasq/* /etc/
 
 # install serf
-RUN curl -Lso serf.zip https://dl.bintray.com/mitchellh/serf/0.5.0_linux_amd64.zip \ 
-    && unzip serf.zip -d /bin \
-    && rm serf.zip
+RUN wget https://launchpad.net/ubuntu/+archive/primary/+files/serf_1.3.8.orig.tar.gz \ 
+    && tar -xzf serf_1.3.8.orig.tar.gz -C /bin \
+    && rm serf_1.3.8.orig.tar.gz
 
 # configure serf
 ENV SERF_CONFIG_DIR /etc/serf
