@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
 
 ENV root_password root
-ENV web_host php_server 
+ENV web_host web_server 
 
 # Install MySQL
 RUN echo mysql-server mysql-server/root_password password ${root_password} | sudo debconf-set-selections
