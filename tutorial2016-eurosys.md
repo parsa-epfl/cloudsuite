@@ -9,7 +9,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <li><b>Where?</b> In conjunction with <a href="http://eurosys16.doc.ic.ac.uk/">EuroSys </a> in London, UK.</li>
 <li><b>When?</b> April 18th, 2016. </li>
 <li><b>Intended audience:</b> Academic/industrial researchers interested in datacenter workloads and their performance evaluation via both existing state- of-the-art servers and cycle-accurate simulation.</li>
-<li><b>Team:</b> Alexander Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
+<li><b>Team:</b> Alexandros Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
 <li><b>Keywords:</b> Scale-out workloads, server benchmarking, rigorous measurement methodologies, performance evaluation.</li>
 <!-- <li><b>Registration:</b> Please follow the registration link on the <a href="http://eurosys16.doc.ic.ac.uk/">conference web page</a>.</li> -->
 <li><b>Registration:</b> TBA </li>
