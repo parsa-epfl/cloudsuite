@@ -9,7 +9,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <li><b>Where?</b> In conjunction with <a href="http://eurosys16.doc.ic.ac.uk/">EuroSys </a> in London, UK.</li>
 <li><b>When?</b> April 18th, 2016. </li>
 <li><b>Intended audience:</b> Academic/industrial researchers interested in datacenter workloads and their performance evaluation via both existing state- of-the-art servers and cycle-accurate simulation.</li>
-<li><b>Team:</b> Alexandros Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
+<li><b>Team:</b> Alexandros Daglis, Mario Paulo Drumond, Javier Picorel, Dmitrii Ustiugov, Babak Falsafi</li>
 <li><b>Keywords:</b> Scale-out workloads, server benchmarking, rigorous measurement methodologies, performance evaluation.</li>
 <!-- <li><b>Registration:</b> Please follow the registration link on the <a href="http://eurosys16.doc.ic.ac.uk/">conference web page</a>.</li> -->
 <li><b>Registration:</b> TBA </li>
@@ -35,7 +35,8 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <ul>
 <li><a href="http://parsa.epfl.ch/~daglis">Alexandros Daglis</a> is a fourth year PhD student that works at EPFL under the supervision of Babak Falsafi. His research interests include rack-scale computing and datacenter architectures. His current focus is on system design for high performance remote memory access.</li>
 <li><a href="http://parsa.epfl.ch/~picorel">Javier Picorel</a> is a fifth year PhD student working at EPFL under the supervision of Babak Falsafi. His research interests are in computer architecture, specially architectures and system support for processing-in-memory systems.</li>
-<li><a href="http://parsa.epfl.ch/~drumond">Mario Drumond</a> is a second year PhD student that works at EPFL under the supervision of Babak Falsafi. His research interests include reconfigurable computing and computer architecture. His current focus is on using FPGAs to accelerate machine learning algorithms.</li>
+<li><a href="http://parsa.epfl.ch/~drumond">Mario Paulo Drumond</a> is a second year PhD student that works at EPFL under the supervision of Babak Falsafi. His research interests include reconfigurable computing and computer architecture. His current focus is on using FPGAs to accelerate machine learning algorithms.</li>
+<li><a href="http://parsa.epfl.ch/~ustiugov/">Dmitrii Ustiugov</a> is a second year PhD student working at EPFL under the supervision of Babak Falsafi and Edouard Bugnion. His research interests include rack-scale computing and datacenter architectures. His current focus is on architecture support for combining high performance and strong consistency for rack-scale systems.</li>
 <!--
 <li> <a href="http://parsa.epfl.ch/~jevdjic">Djordje Jevdjic</a> is a fifth-year PhD candidate in the Parallel Systems Architecture Laboratory at EPFL, advised by Prof. Babak Falsafi. Djordje works on high-performance memory systems for servers, including on-chip DRAM caches and 3D-die stacking, with emphasis on locality and energy-efficiency.</li>
 <li> <a href="http://parsa.epfl.ch/~kaynak">Cansu Kaynak</a> is a fifth-year PhD candidate in the Parallel Systems Architecture Laboratory at EPFL, advised by Prof. Babak Falsafi. Cansu's research focuses on high-performance memory systems to bridge the ever-increasing processor/memory performance gap. She is currently working on mitigating instruction-related stalls, a key performance bottleneck in server applications.</li>
