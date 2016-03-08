@@ -49,7 +49,6 @@ options.foreach {
 	val runTime = System.currentTimeMillis() - startTime
 
 	println(s"Running time = $runTime")
-	//runTime.saveAsTextFile("OUTPUT_DIR")
 
   }
 }
