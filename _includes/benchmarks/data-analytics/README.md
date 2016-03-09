@@ -45,7 +45,7 @@ To have more than one node, you need to start the slave containers. In order to 
 
 To connect the slave containers to the master, you need the master IP.
 
-    $ FIRST_IP=$(docker inspect --format="{{.NetworkSettings.IPAddress}}" master)
+    $ FIRST_IP=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" master)
 
 Then, run as many slave containers as you want:
 
@@ -67,7 +67,7 @@ Then, run the benchmark with the following command:
 It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0.
 After entering the slave number, it prepares hadoop, downloads the dataset (it takes a lot of time to download this dataset) and runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikipediamodel directory.
 
-[basedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Base Dockerfile"
+[basedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/base/Dockerfile "Base Dockerfile"
 [masterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Master Dockerfile"
 [slavedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/slave/Dockerfile "Slave Dockerfile"
 [datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/dataset/Dockerfile "Dataset Dockerfile"

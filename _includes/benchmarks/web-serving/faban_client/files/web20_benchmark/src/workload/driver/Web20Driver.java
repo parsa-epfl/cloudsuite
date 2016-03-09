@@ -435,16 +435,26 @@ public class Web20Driver {
 				"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 		headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-		StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
+		thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
 				postRequest, headers);
+    StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + ACTIVITY_URL);
+    //thisClient.getHttp().fetchURL(hostUrl + ACTIVITY_URL);
+    //System.out.print("Hello");
+    //System.out.print(sb);
 
 		updateElggTokenAndTs(thisClient, sb, true);
 		printErrorMessageIfAny(sb, postRequest);
+
+    //System.out.print("Hello2");
+    //System.out.print(sb);
+
 		if (sb.toString().contains("You have been logged in")) {
 			logger.fine("Successfully logged in: "+thisClient.getUsername());
+      System.out.print("PRINT: Successfully logged in\n");
 		} else {
 			logger.fine("!!!!!!!!!!!!!!!!!! Failed to log in :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
-			throw new RuntimeException(sb.toString());
+			System.out.print("PRINT: Failed to login!\n");
+      throw new RuntimeException(sb.toString());
 		}
 		thisClient.setLoggedIn(true);
 		thisClient.setClientState(ClientState.LOGGED_IN);
@@ -804,7 +814,7 @@ public class Web20Driver {
 				accessHomePage();
 				doLogin();
 			}
-		}	*/	
+		}*/		
 
 	}
 
