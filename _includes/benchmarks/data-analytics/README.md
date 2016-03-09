@@ -45,7 +45,7 @@ To have more than one node, you need to start the slave containers. In order to 
 
 To connect the slave containers to the master, you need the master IP.
 
-    $ FIRST_IP=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" master)
+    $ FIRST_IP=$(docker inspect --format="{{ "{{ .NetworkSettings.IPAddress "}}}}" master)
 
 Then, run as many slave containers as you want:
 
