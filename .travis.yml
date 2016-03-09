@@ -11,15 +11,10 @@ env:
   - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
 
-  # Spark Base
-  - DH_REPO="cloudsuite/spark-base" IMG_TAG="base" DF_PATH="./benchmarks/spark-base/spark-base"
-  - DH_REPO="cloudsuite/spark-base" IMG_TAG="client" DF_PATH="./benchmarks/spark-base/spark-client"
-  - DH_REPO="cloudsuite/spark-base" IMG_TAG="worker" DF_PATH="./benchmarks/spark-base/spark-worker"
-  - DH_REPO="cloudsuite/spark-base" IMG_TAG="master" DF_PATH="./benchmarks/spark-base/spark-master"
-
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
+  - DH_REPO="cloudsuite/twitter-graph-dataset" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
 
   # Becnhmark Images
   # Data Analytics
@@ -37,18 +32,12 @@ env:
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
 
   # Graph Analytics
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="benchmark" DF_PATH="./benchmarks/graph-analytics/benchmark"
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="data" DF_PATH="./benchmarks/graph-analytics/data"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
 
   # In-memory Analytics
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="benchmarks" DF_PATH="./benchmarks/in-memory-analytics/benchmarks"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="master" DF_PATH="./benchmarks/in-memory-analytics/master"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="client" DF_PATH="./benchmarks/in-memory-analytics/client"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="worker" DF_PATH="./benchmarks/in-memory-analytics/worker"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="base" DF_PATH="./benchmarks/in-memory-analytics/base"
-  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="data" DF_PATH="./benchmarks/in-memory-analytics/data"
 
   # Media Streaming
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
