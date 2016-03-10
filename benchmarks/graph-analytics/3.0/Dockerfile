@@ -2,6 +2,7 @@ FROM cloudsuite/spark
 
 # Copy files
 COPY benchmark /root/benchmark
+COPY files /root/
      
 WORKDIR /root
 
@@ -17,8 +18,8 @@ RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list
     && mv benchmark/target/scala-2.10/*.jar benchmark/run_benchmark.sh /benchmarks \
     && rm -r benchmark \
     && apt-get purge -y --auto-remove sbt \
-    && rm -r .sbt .ivy2
+    && rm -r .sbt .ivy2 \
+    && chmod +x /root/entrypoint.sh
 
-COPY files /root/
 
 ENTRYPOINT ["/root/entrypoint.sh"]
