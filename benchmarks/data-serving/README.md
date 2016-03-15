@@ -103,7 +103,7 @@ $ export HOSTS="cassandra-server-seed,cassandra-server1"
 Load dataset on ycsb:
 
 ```bash
-$ ./bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
+$ /ycsb/bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
 ```
 
 More detailed instructions on generating the dataset can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings.
