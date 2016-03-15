@@ -22,4 +22,9 @@ RUN buildDeps='curl gcc libc6-dev libevent-dev make' \
 	&& chown -R memcache:memcache /usr/src/memcached \
 	&& apt-get purge -y --auto-remove $buildDeps
 
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 USER memcache
+CMD ["-rps", "180000"]
