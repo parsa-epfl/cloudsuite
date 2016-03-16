@@ -54,5 +54,23 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 	done
 fi
 
-exec "$@"
+#exec "$@"
+cassandra
+sleep 5
 
+exit=0
+while [ $exit -eq 0 ]; do
+    out=`cassandra-cli --host localhost -f /setup_tables.txt`
+    if [[ "$out" =~ "Connected to" ]]; then
+        exit=1
+    else
+        echo Cannot connect
+    fi
+    sleep 5
+done
+
+printf "========\n--------------Keyspace usertable was created--------------\n========\n"
+
+while true; do
+    sleep 100;
+done

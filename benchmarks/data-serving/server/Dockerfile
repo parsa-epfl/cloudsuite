@@ -13,6 +13,7 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57
 COPY setup_tables.txt /setup_tables.txt
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
+CMD ["cassandra"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 7000 7001 7199 9042 9160
