@@ -13,12 +13,10 @@ kill -9 $(pgrep java) $(pgrep java)
 #Download the index
 wget -O - $INDEX_URL \
   | tar zxvf - -C $SOLR_CORE_DIR/cloudsuite_web_search*
+
+echo "================================="
+echo "Index Node IP Address: "`ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
+echo "================================="
   
 #Run Solr  
-$SOLR_HOME/bin/solr start -cloud -p $SOLR_PORT -s $SOLR_CORE_DIR -m $SERVER_HEAP_SIZE 
-sleep 60s
-$SOLR_HOME/bin/solr status
-sleep 60s
-$SOLR_HOME/bin/solr status
-echo "Index Node IP Address: "`ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
-bash
+$SOLR_HOME/bin/solr start -cloud -f -p $SOLR_PORT -s $SOLR_CORE_DIR -m $SERVER_HEAP_SIZE 
