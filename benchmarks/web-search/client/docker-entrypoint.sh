@@ -40,6 +40,11 @@ echo "Print= $AGENTS"
 
 export CLASSPATH=$FABAN_HOME/lib/fabanagents.jar:$FABAN_HOME/lib/fabancommon.jar:$FABAN_HOME/lib/fabandriver.jar:$JAVA_HOME/lib/tools.jar:$FABAN_HOME/search/build/lib/search.jar
 
+until $(curl --output /dev/null --silent --head --fail http://$IP:$SOLR_PORT); do
+    printf '.'
+    sleep 5
+done
+
 #START Registry
 java -classpath $CLASSPATH -Djava.security.policy=$POLICY_PATH com.sun.faban.common.RegistryImpl &
 sleep 3s
@@ -54,5 +59,3 @@ sleep 3s
 
 #Output summary
 cat $FABAN_OUTPUT_DIR/1/summary.xml
-
-bash
