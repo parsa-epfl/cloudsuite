@@ -1,15 +1,13 @@
-all : STDOUT graphs
+CC = gcc
+CFLAGS = -Wall -g
+LIBS = -lm
 
-# MIXED_VIDEO
-STDOUT: make_zipf Makefile
-	./make_zipf video_files-SD-20000.list video_files-HD-8000.list | tee STDOUT
+all: make_zipf gen_fileset
 
-video_files : make_zipf
-	./make_zipf
+.PHONY: all
 
-# gcc -Wall -g -o make_zipf -lm make_zipf.c
-make_zipf : make_zipf.c
-	gcc -Wall -g -o make_zipf make_zipf.c -lm
+make_zipf: make_zipf.c
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-gen_fileset : gen_fileset.c
-	gcc -Wall -g -o gen_fileset -lm gen_fileset.c
+gen_fileset: gen_fileset.c
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
