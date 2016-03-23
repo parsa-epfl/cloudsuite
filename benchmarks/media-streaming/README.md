@@ -28,7 +28,7 @@ To set up the dataset you have to first `pull` the dataset image and then run it
 
 The following command will create a dataset container that exposes the video dataset volume, which will be used by the streaming server:
 
-    $ docker run -d --name streaming_dataset cloudsuite/media-streaming:dataset
+    $ docker create --name streaming_dataset cloudsuite/media-streaming:dataset
 
 
 ### Creating a network between the server and the client(s)
@@ -46,7 +46,7 @@ To start the server you have to first `pull` the server image and then run it. T
 
 The following command will start the server, mount the dataset volume, and attach it to the *streaming_network* network:
 
-    $ docker run -it --name=streaming_server --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:server
+    $ docker run -d --name streaming_server --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:server
 
 
 ### Starting the Client ####
@@ -57,9 +57,9 @@ To start the client you have to first `pull` the client image and then run it. T
 
 To start the client container and connect it to the *streaming_network* network use the following command:
 
-    $ docker run -it --name=streaming_client --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:client
+    $ docker run -t --name=streaming_client -v /path/to/output:/output --volumes-from streaming_dataset --net streaming_network cloudsuite/media-streaming:client streaming_server
 
-To start the client, navigate to the /videoperf/run directory in the client container and launch the *benchmark.sh* script. This script is configured to launch a client process that issues a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of the script's execution, the client's log files can be found under the /videoperf/run/output directory.
+The client will issue a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of client's execution, the resulting log files can be found under /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`.
 
   [datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
