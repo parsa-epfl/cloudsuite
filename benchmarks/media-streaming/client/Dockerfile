@@ -3,6 +3,7 @@ FROM ubuntu:14.04
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
+      bc \
       build-essential \
       libssl-dev \
     && rm -rf /var/lib/apt/lists/*

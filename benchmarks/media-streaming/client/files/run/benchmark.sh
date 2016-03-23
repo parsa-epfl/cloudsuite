@@ -15,3 +15,5 @@ peak_hunter/launch_hunt_bin.sh                     \
 	$num_clients_per_machine                   \
 	$min_num_sessions                          \
 	$max_num_sessions
+
+./process_logs.sh
