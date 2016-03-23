@@ -14,7 +14,7 @@ fi
 
 
 # TODO: this needs to be fixed - need static correspondence between log, ratio, and ip
-logs=$(echo ../logs/cl* | sed -e 's/ /,/g')
+logs=$(echo /videos/logs/cl* | sed -e 's/ /,/g')
 
 while read hostLine
 do
@@ -25,7 +25,7 @@ do
 	echo "Launching $numClientsPerHost clients on $host";
 	for i in $(seq 1 $numClientsPerHost)
 	do
-	cmd="/videoperf/httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 --port 80 --output-log=output/result$i.log --num-sessions=$numSessions --rate=$rate " # > output-stdout/stdout$i"
+	cmd="httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 --port 80 --output-log=/output/result$i.log --num-sessions=$numSessions --rate=$rate " # > output-stdout/stdout$i"
 	echo "Running command $cmd"
 	eval $cmd &
 	done 

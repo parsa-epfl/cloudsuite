@@ -31,10 +31,8 @@ RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& cd / && rm -rf /usr/src/memcached \
 	&& apt-get purge -y --auto-remove $buildDeps
 
-COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["memcached"]
 
 USER memcache
 EXPOSE 11211
-CMD ["memcached"]
+CMD ["-t", "4", "-m", "4096", "-n", "550"]

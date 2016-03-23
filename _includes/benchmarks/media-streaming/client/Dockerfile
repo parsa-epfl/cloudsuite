@@ -1,22 +1,23 @@
-# Container description
 FROM ubuntu:14.04
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
-RUN apt-get update && apt-get install -y \
-	build-essential \
-	git \
-	libssl-dev
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+      bc \
+      build-essential \
+      libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Build utilities
-COPY files/videoperf/ /videoperf/
-COPY files/run /videoperf/run
-WORKDIR /videoperf
-RUN ./configure
-RUN make
+COPY files /root/
+RUN set -x \
+    && chmod +x /root/docker-entrypoint.sh \
+    && mkdir -p /root/build \
+    && cd /root/build \
+    && /root/videoperf/configure \
+    && make \
+    && make install
 
-COPY files/docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+RUN mkdir /output
+VOLUME ["/output"]
 
-#CMD bash
+ENTRYPOINT ["/root/docker-entrypoint.sh"]

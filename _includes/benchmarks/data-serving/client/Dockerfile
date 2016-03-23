@@ -14,4 +14,8 @@ RUN wget -q https://github.com/brianfrankcooper/YCSB/releases/download/0.3.0/ycs
  && tar -xzf /ycsb-0.3.0.tar.gz && rm /ycsb-0.3.0.tar.gz && mv /ycsb-0.3.0 /ycsb \
  && chown cassandra:cassandra -R /ycsb/workloads
 
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 USER cassandra

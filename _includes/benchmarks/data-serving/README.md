@@ -18,48 +18,17 @@ $ docker network create serving_network
 We will attach the launched containers to this newly created docker network.
 
 ### Server Container
-Start the server container:
+Start the server container that will run cassandra server and installs a default keyspace usertable:
 
 ```bash
-$ docker run -it --name cassandra-server --net serving_network cloudsuite/data-serving:server bash
+$ docker run --name cassandra-server --net serving_network cloudsuite/data-serving:server cassandra
 ```
 
 In order to create a keyspace and a column family, you can use the following commands after connecting to the server with the cassandra-cli under the directory in which Cassandra is unpacked. (A link to a basic tutorial with cassandra-cli: http://wiki.apache.org/cassandra/CassandraCli)
 
-Run the server:     
-
-```bash
-$ cassandra
-```
-
-Run the command:
-
-```bash
-$ cassandra-cli
-```
-
-Use the following commands to create a keyspace and column family for YCSB:
-
-```bash
-$ create keyspace usertable;
-$ use usertable;
-$ create column family data;
-```
-
-You can use other commands in the cassandra-cli to verify the correctness of the setup :
-
-```bash
-$ show keyspaces;
-$ show schema;
-```
-
-If you make a mistake you can use the *drop* command and try again:
-
-```bash
-$ drop keyspace usertable;
-```
-
 ### Multiple Server Containers
+
+(To configure multiple-server setup, launch docker in the interactive mode with -it option.)
 
 For a cluster setup with multiple servers, we need to instantiate a seed server:
 
@@ -82,20 +51,12 @@ After successfully creating the aforementioned schema, you are ready to benchmar
 Start the client container:
 
 ```bash
-$ docker run -it --name cassandra-client --net serving_network cloudsuite/data-serving:client bash
+$ docker run --name cassandra-client --net serving_network cloudsuite/data-serving:client
 ```
 
-Change to the ycsb directory:
+In case you would like to run ycsb for a multiple-server configuration, follow these steps instead.
 
-```bash
-$ cd ycsb
-```
 Export the hosts ycsb will connect to:
-
-```bash
-$ export HOSTS=cassandra-server
-```
-or, for a "one seed - one normal server" setup:
 
 ```bash
 $ export HOSTS="cassandra-server-seed,cassandra-server1"
@@ -103,7 +64,7 @@ $ export HOSTS="cassandra-server-seed,cassandra-server1"
 Load dataset on ycsb:
 
 ```bash
-$ ./bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
+$ /ycsb/bin/ycsb load cassandra-10 -p hosts=$HOSTS -P workloads/workloada
 ```
 
 More detailed instructions on generating the dataset can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings.
@@ -112,7 +73,7 @@ A rule of thumb on the dataset size
 -----------------------------------
 To emulate a realistic setup, you can generate more data than your main memory size if you have a low-latency, high-bandwidth I/O subsystem. For example, for a machine with 24GB memory, you can generate 30 million records corresponding to a 30GB dataset size.
 
-Note: The dataset resides in Cassandra’s data folder(s).The actual data takes up more space than the total size of the records because data files have metadata structures (e.g., index). Make sure you have enough disk space.
+_Note_: The dataset resides in Cassandra’s data folder(s).The actual data takes up more space than the total size of the records because data files have metadata structures (e.g., index). Make sure you have enough disk space.
 
 Tuning the server performance
 -----------------------------
@@ -126,7 +87,9 @@ Tuning the server performance
 
 Running the benchmark
 ---------------------
-After you install and run the server, install the YCSB framework files and populate Cassandra, you are one step away from running the benchmark. To specify the runtime parameters for the client, a good practice is to create a settings file. You can keep the important parameters (e.g., *target*, *threadcount*, *hosts*, *operationcount*, *recordcount*) in this file.
+The benchmark is run automatically with the client container (for a single server setup). If you want to modify the setup, run the client container in docker's interactive mode.
+
+To specify the runtime parameters for the client, a good practice is to create a settings file. You can keep the important parameters (e.g., *target*, *threadcount*, *hosts*, *operationcount*, *recordcount*) in this file.
 
 The *settings.dat* file defines the IP address(es) of the node(s) running Cassandra, in addition to the *recordcount* parameter (which should be less than or equal to the number specified in the data generation step to avoid potential errors).
 

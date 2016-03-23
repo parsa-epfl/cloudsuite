@@ -25,10 +25,10 @@ echo "Maximum number of sessions = $maxNumSessions"
 
 benchmarkSuccess=1
 
-outputDir="./output"
-backUpStdoutDir="./output-stdout"
+outputDir="/output"
+backUpStdoutDir="/output-stdout"
 
-rm -rf "$outputDir" "$backUpStdoutDir"
+rm -rf "$outputDir/*" "$backUpStdoutDir"
 mkdir -p "$outputDir" "$backUpStdoutDir"
 
 # Launches remote with the specified number of sessions. 
@@ -59,6 +59,7 @@ function launchRemote () {
   echo "Percentage failure = $percFailure"
   if [ "$percFailure" -gt 5 ]; then
     echo "Benchmark failed.  The $backUpStdoutDir directory has output for the last successful run."
+    mv $backUpStdoutDir/* $outputDir
     sleep 10
     benchmarkSuccess=0
   else

@@ -7,80 +7,77 @@ The Graph Analytics benchmark relies the Spark framework to perform graph analyt
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-## Using the benchmark ##
+### Getting the Image
 
-### Dockerfiles ###
+Current version of the benchmark is 3.0. To obtain the image:
 
-Supported tags and their respective `Dockerfile` links:
+    $ docker pull cloudsuite/graph-analytics
 
-- [`benchmark`][benchmarkdocker] This builds a volume image that contains the benchmark's binaries.
-- [`data`][datadocker] This builds a volume image with the benchmark's dataset.
-- [`spark-master`][sparkmasterdocker] This builds an image for the Spark master node.
-- [`spark-worker`][sparkworkerdocker] This builds an image for the Spark worker node. You may spawn several workers.
-- [`spark-client`][sparkclientdocker] This builds an image with the Spark client node. The client is used to start the benchmark.
+### Datasets
 
-These images are automatically built using the mentioned Dockerfiles available on [`ParsaLab/cloudsuite`][repo].
+The benchmark uses a graph dataset generated from Twitter. To get the dataset image:
 
-### Starting the volume images ###
+    $ docker pull cloudsuite/twitter-dataset-graph
 
-The first step is to create the volume images that contain the binaries and the dataset of the Graph Analytics benchmark. First `pull` the volume images, using the following command:
+More information about the dataset is available at
+[cloudsuite/twitter-dataset-graph][ml-dhrepo].
 
-    $ docker pull cloudsuite/graph-analytics:data
-    $ docker pull cloudsuite/graph-analytics:benchmark
+### Running the Benchmark
 
-The following command will start the volume images, making both the data and the binaries available for other docker images on the host:
+The benchmark runs the PageRank algorithm on GraphX through the spark-submit
+script distributed with Spark. Any arguments are passed to
+spark-submit.
 
-    $ docker create --name data cloudsuite/graph-analytics:data
-    $ docker create --name bench cloudsuite/graph-analytics:benchmark
+To run a benchmark with the Twitter dataset:
 
-### Starting the master node ###
+    $ docker create --name data cloudsuite/twitter-dataset-graph $ docker
+    run --rm --volumes-from data cloudsuite/graph-analytics
 
-To start the server you have to first `pull` the Spark master node image and then run it. To `pull` the Spark master node image, use the following command:
+### Tweaking the Benchmark
 
-    $ docker pull cloudsuite/spark-base:master
+Any arguments after the two mandatory ones are passed to spark-submit
+and can be used to tweak execution. For example, to ensure that Spark
+has enough memory allocated to be able to execute the benchmark
+in-memory, supply it with --driver-memory and --executor-memory
+arguments:
 
-The following command will start the master node and forward port 8080 to the host, so that the Spark web interface can be accessed from the web browser, using the host IP address.
+    $ docker run --rm --volumes-from data
+        cloudsuite/graph-analytics \
+        --driver-memory 1g --executor-memory 4g
 
-    $ docker run -d -P -p 8080:8008-h master --volumes-from data --volumes-from bench --name spark-master cloudsuite/spark-base:master
+### Multi-node deployment
 
-### Starting the workers ###
+This section explains how to run the benchmark using multiple Spark
+workers (each running in a Docker container) that can be spread across
+multiple nodes in a cluster. For more information on running Spark
+with Docker look at [cloudsuite/spark][spark-dhrepo].
 
-To start a worker you have to first `pull` the Spark worker node image and then run it. To `pull` the Spark worker node image, use the following command:
+First, create a dataset image on every physical node where Spark
+workers will be running.
 
-    $ docker pull cloudsuite/spark-base:worker
+    $ docker create --name data cloudsuite/twitter-dataset-graph
 
-The following command will start the worker node.
+Start Spark master and Spark workers. They should all run within the
+same Docker network, which we call spark-net here. The workers get
+access to the datasets with --volumes-from data.
 
-    $ docker run -d -P --volumes-from data --volumes-from bench --link spark-master --name spark-worker1 cloudsuite/spark-base:worker spark://master:7077
+    $ docker run -dP --net spark-net --hostname spark-master --name
+    spark-master cloudsuite/spark master $ docker run -dP --net
+    spark-net --volumes-from data --name spark-worker-01
+    cloudsuite/spark worker \ spark://spark-master:7077 $ docker run
+    -dP --net spark-net --volumes-from data --name spark-worker-02
+    cloudsuite/spark worker \ spark://spark-master:7077 $ ...
 
-### Starting the client and running the benchmark ###
+Finally, run the benchmark as the client to the Spark master:
 
-To start the client you have to first `pull` the Spark client node image and then run it. To `pull` the Spark client node image, use the following command:
+    $ docker run --rm --net spark-net --volumes-from data
+        cloudsuite/graph-analytics \
+        --driver-memory 1g --executor-memory 4g
+        --master spark://spark-master:7077
 
-    $ docker pull cloudsuite/spark-base:client
-
-The following command will start the client node and run the benchmark:
-
-    $ docker run --rm --volumes-from data --volumes-from bench --link spark-master spark-client graph_analytics
-
-The following command will start the client in interactive mode:
-
-    $ docker run --rm --volumes-from data --volumes-from bench --link spark-master -it spark-client bash
-
-To run the benchmark from the interactive container, use the following command:
-
-    $ bash /benchmark/graph_analytics/run_benchmark.sh
-
-[benchmarkdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/graph-analytics/benchmark/Dockerfile "Benchmark volume Dockerfile"
-[datadocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/graph-analytics/data/Dockerfile "Data volume Dockerfile"
-[sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
-[sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
-[sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
-[repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
 [dhrepo]: https://hub.docker.com/r/cloudsuite/graph-analytics/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
+[ml-dhrepo]: https://hub.docker.com/r/cloudsuite/twitter-dataset-graph/
+[spark-dhrepo]: https://hub.docker.com/r/cloudsuite/spark/
 
-[serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
-
-[clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
