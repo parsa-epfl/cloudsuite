@@ -1405,16 +1405,15 @@ bad_wset_param:
 						prog_name, rc, errno, strerror(errno));
 				exit (1);
 			}
-		}
-		rc = sched_getaffinity (0, sizeof(cpu_mask), &cpu_mask);
-		if (rc < 0)
-		{
-			fprintf (stderr,
-					"%s: sched_getaffinity failed, rc=%d errno=%d (%s)\n",
-					prog_name, rc, errno, strerror(errno));
-			exit (1);
-		}
-		printf("Effective CPU mask: 0x%lx\n", cpu_mask);
+		        rc = sched_getaffinity (0, sizeof(cpu_mask), &cpu_mask);
+		        if (rc < 0)
+		        {
+			        fprintf (stderr, "%s: sched_getaffinity failed, rc=%d errno=%d (%s)\n",
+					 prog_name, rc, errno, strerror(errno));
+			        exit (1);
+		        }
+		        printf("Effective CPU mask: 0x%lx\n", cpu_mask);
+                }
 	}
 #endif /* HAVE_SCHED_AFFINITY */
 
