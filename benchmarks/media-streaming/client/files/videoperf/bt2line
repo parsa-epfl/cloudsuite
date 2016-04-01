@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -ne 1 ] ; then
+  echo "Usage: $0 executable"
+  exit
+fi
+
+executable=$1
+
+while read line ; do
+  addr=$(echo $line | grep -o '\[.*\]' | grep -o '[abcdefx0-9]*')
+  if [ -n "$addr" ] ; then
+    src=$(addr2line -e $executable $addr)
+    echo $line | sed "s|\[\(.*\)\]|\[$src\]|"
+  else
+    echo $line
+  fi
+done

@@ -62,6 +62,7 @@ test.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <execinfo.h>
 
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -271,9 +272,25 @@ dump_stats (Timer *t, Any_Type regarg)
 	timer_schedule (dump_stats, regarg, param.stats_interval);
 }
 
+// Print stack trace on segfault
+void sigsegv_handler(int sig) {
+  void *array[128];
+  size_t size;
+
+  size = backtrace(array, 128);
+
+  fprintf(stderr, "Backtrace:\n");
+  backtrace_symbols_fd(array, size, STDERR_FILENO);
+  exit(1);
+}
+
+
 	int
 main (int argc, char **argv)
 {
+        // Register segfault handler
+        signal(SIGSEGV, sigsegv_handler);
+
 #ifndef SRINI_RATE
 	int numRates = 0;
 #endif
