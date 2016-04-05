@@ -39,7 +39,6 @@ function launchRemote () {
   
   numSessions="$1"
   rate=$[numSessions/10]
-  find . -name stdout\* -exec mv '{}' $backUpStdoutDir/ \;
   $(dirname $0)/launch_remote.sh $videoServerIp $hostFileName $remoteOutputPath $numClientsPerHost $numSessions $rate
   if [ $? -ne 0 ]; then
     echo 'Failed launching remote... exiting.'
@@ -58,11 +57,11 @@ function launchRemote () {
   echo "Total errors = $totalErrors"
   echo "Percentage failure = $percFailure"
   if [ "$percFailure" -gt 5 ]; then
-    echo "Benchmark failed.  The $backUpStdoutDir directory has output for the last successful run."
-    mv $backUpStdoutDir/* $outputDir
+    cp $backUpStdoutDir/* $outputDir
     sleep 10
     benchmarkSuccess=0
   else
+    cp $outputDir/* $backUpStdoutDir
     benchmarkSuccess=1
   fi
 }
@@ -102,7 +101,7 @@ do
   if [ $diff -le 50 ]
   then
     maxThroughput=$[$numSessions*$numTotalClients]
-    echo "Benchmark succeeded for maximum sessions: $maxThroughput"
+#    echo "Benchmark succeeded for maximum sessions: $maxThroughput"
     exit 0
   fi
   delta=$[(maxNumSessions-minNumSessions)/2]
