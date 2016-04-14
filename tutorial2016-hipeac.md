@@ -43,7 +43,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 </ul>
 
 
-<h3>(Tentative) Agenda</h3>
+<h3>Agenda</h3>
 <table cellspacing="8" border="0">
 <tr id="row1"  >
 <td width="20%" align="center">Time Slot</td><td align="center"> Topic</td><td align="center">Material</td>
@@ -51,7 +51,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <tr align="center"><td>14:00 - 15:00</td><td>CloudSuite 3.0</td><td>Overview of CloudSuite 3.0</td>
 </tr>
 <tr align="center"><td>15:00 - 15:15</td>
-<td><em>Coffee Break</em></td><td></td>
+<td><em>Coffee break</em></td><td></td>
 </tr>
 <tr align="center"><td>15:15 - 16:15</td><td><a href="../tutorial2016-hipeac-docker-handson">CloudSuite 3.0 on Real Hardware (Docker)</a></td><td>Running CloudSuite on real hardware</td></tr>
 <tr align="center"><td>16:15 - 16:30</td><td><em>Coffee break</em></td><td></td>
