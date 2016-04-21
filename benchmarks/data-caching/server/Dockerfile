@@ -35,4 +35,4 @@ ENTRYPOINT ["memcached"]
 
 USER memcache
 EXPOSE 11211
-CMD ["-t", "4", "-m", "4096", "-n", "550"]
+CMD ["-t", "2", "-m", "2048", "-n", "550"]
