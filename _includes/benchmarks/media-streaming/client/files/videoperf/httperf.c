@@ -62,6 +62,7 @@ test.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <execinfo.h>
 
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -271,9 +272,25 @@ dump_stats (Timer *t, Any_Type regarg)
 	timer_schedule (dump_stats, regarg, param.stats_interval);
 }
 
+// Print stack trace on segfault
+void sigsegv_handler(int sig) {
+  void *array[128];
+  size_t size;
+
+  size = backtrace(array, 128);
+
+  fprintf(stderr, "Backtrace:\n");
+  backtrace_symbols_fd(array, size, STDERR_FILENO);
+  exit(1);
+}
+
+
 	int
 main (int argc, char **argv)
 {
+        // Register segfault handler
+        signal(SIGSEGV, sigsegv_handler);
+
 #ifndef SRINI_RATE
 	int numRates = 0;
 #endif
@@ -1405,16 +1422,15 @@ bad_wset_param:
 						prog_name, rc, errno, strerror(errno));
 				exit (1);
 			}
-		}
-		rc = sched_getaffinity (0, sizeof(cpu_mask), &cpu_mask);
-		if (rc < 0)
-		{
-			fprintf (stderr,
-					"%s: sched_getaffinity failed, rc=%d errno=%d (%s)\n",
-					prog_name, rc, errno, strerror(errno));
-			exit (1);
-		}
-		printf("Effective CPU mask: 0x%lx\n", cpu_mask);
+		        rc = sched_getaffinity (0, sizeof(cpu_mask), &cpu_mask);
+		        if (rc < 0)
+		        {
+			        fprintf (stderr, "%s: sched_getaffinity failed, rc=%d errno=%d (%s)\n",
+					 prog_name, rc, errno, strerror(errno));
+			        exit (1);
+		        }
+		        printf("Effective CPU mask: 0x%lx\n", cpu_mask);
+                }
 	}
 #endif /* HAVE_SCHED_AFFINITY */
 

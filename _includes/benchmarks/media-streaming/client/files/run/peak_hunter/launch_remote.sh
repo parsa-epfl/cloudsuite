@@ -25,7 +25,7 @@ do
 	echo "Launching $numClientsPerHost clients on $host";
 	for i in $(seq 1 $numClientsPerHost)
 	do
-	cmd="httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 --port 80 --output-log=/output/result$i.log --num-sessions=$numSessions --rate=$rate " # > output-stdout/stdout$i"
+	cmd="httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 --port 80 --output-log=/output/result$i.log --num-sessions=$numSessions --rate=$rate 2>>/output/bt$i.trace" # > output-stdout/stdout$i"
 	echo "Running command $cmd"
 	eval $cmd &
 	done 
