@@ -12,7 +12,7 @@ title: Server Benchmarking with CloudSuite 3.0
 <li><b>Team:</b> Alexandros Daglis, Mario Paulo Drumond, Javier Picorel, Babak Falsafi</li>
 <li><b>Keywords:</b> Scale-out workloads, server benchmarking, rigorous measurement methodologies, performance evaluation.</li>
 <li><b>Registration:</b> Please follow the registration link on the <a href="https://www.hipeac.net/2016/prague/">conference web page</a>.</li>
-<li><b>Slides:</b> <a href="{{ site.url }}{{ site.baseurl }}/public/presentations/2016-CloudSuite-HIPEAC-Tutorial.pdf" title="Slides">Download</a></li>
+<li><b>Slides:</b> <a href="{{ site.baseurl }}/public/presentations/2016-CloudSuite-HIPEAC-Tutorial.pdf" title="Slides">Download</a></li>
 </ul>
 </p>
 
