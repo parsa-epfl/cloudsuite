@@ -1,5 +1,5 @@
 FROM cloudsuite/data-analytics:base
-
+#FROM base
 USER root
 
 # Add in the etc/hadoop directory

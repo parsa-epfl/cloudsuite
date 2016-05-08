@@ -13,18 +13,10 @@ Supported tags and their respective `Dockerfile` links:
  - [`Base`][basedocker]: This image contains the hadoop base which is needed for both master and slave images.
  - [`Master`][masterdocker]: This image contains the main benchmark (hadoop master node, and mahout).
  - [`Slave`][slavedocker]: This image contains the hadoop slave image.
- - [`Data`][datasetdocker]: This image contains the dataset used by the benchmark.
 
 These images are automatically built using the mentioned Dockerfiles available on `ParsaLab/cloudsuite` [GitHub repo][repo].
 
-## Starting the volume image ##
 This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image for training dataset, to download it once, and use it to run the benchmark. You can pull this image from Docker Hub.
-
-    $ docker pull cloudsuite/data-analytics:dataset
-
-The following command will start the volume image, making the data available for other docker images on the host:
-
-    $ docker create --name data cloudsuite/data-analytics:dataset
 
 ## Starting the Master ##
 To start the master you first have to `pull` the master image.
@@ -33,7 +25,7 @@ To start the master you first have to `pull` the master image.
 
 Then, run the benchmark with the following command:
 
-    $ docker run -d -t --dns 127.0.0.1 -P --name master -h master.cloudsuite.com --volumes-from data cloudsuite/data-analytics:master
+    $ docker run -d -t --dns 127.0.0.1 -P --name master -h master.cloudsuite.com cloudsuite/data-analytics:master
 
 
 ## Starting the Slaves ##
@@ -65,7 +57,9 @@ Then, run the benchmark with the following command:
     $ ./run.sh
 
 It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0.
-After entering the slave number, it prepares hadoop, downloads the dataset (it takes a lot of time to download this dataset) and runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikipediamodel directory.
+After entering the slave number, it prepares hadoop, and then ask you to choose the dataset size.
+This benchmark uses a Wikipedia dataset. We prepared three datasets with various sizes. You will choose the dataset you require in the running process. We do not recommend the large dataset (~30GB) unless you have the resources.
+When downloading the dataset is done (it takes a lot of time to download this dataset), it runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikixml directory.
 
 [basedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/base/Dockerfile "Base Dockerfile"
 [masterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Master Dockerfile"
