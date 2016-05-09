@@ -16,8 +16,6 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on `ParsaLab/cloudsuite` [GitHub repo][repo].
 
-This benchmark uses a Wikipedia dataset of ~30GB. We prepared a dataset image for training dataset, to download it once, and use it to run the benchmark. You can pull this image from Docker Hub.
-
 ## Starting the Master ##
 To start the master you first have to `pull` the master image.
 
@@ -57,14 +55,13 @@ Then, run the benchmark with the following command:
     $ ./run.sh
 
 It asks you to enter the number of slaves, if you have a single-node cluster, please enter 0.
-After entering the slave number, it prepares hadoop, and then ask you to choose the dataset size.
-This benchmark uses a Wikipedia dataset. We prepared three datasets with various sizes. You will choose the dataset you require in the running process. We do not recommend the large dataset (~30GB) unless you have the resources.
-When downloading the dataset is done (it takes a lot of time to download this dataset), it runs the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikixml directory.
+After entering the slave number, it prepares hadoop, then ask you to choose the dataset size.
+We prepared three Wikipedia datasets with the various sizes. You will choose the dataset you require in the running process. We do not recommend the large dataset (~30GB) unless you have the resources.
+When downloading the dataset completes (it takes a lot of time to download this dataset), it will run the benchmark. After the benchmark finishes, the model will be available in HDFS, under the wikixml directory.
 
 [basedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/base/Dockerfile "Base Dockerfile"
 [masterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/master/Dockerfile "Master Dockerfile"
 [slavedocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/slave/Dockerfile "Slave Dockerfile"
-[datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-analytics/dataset/Dockerfile "Dataset Dockerfile"
 
 [repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
 [dhrepo]: https://hub.docker.com/r/cloudsuite/data-analytics/ "DockerHub Page"
