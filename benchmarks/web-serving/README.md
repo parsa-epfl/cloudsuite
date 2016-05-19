@@ -65,9 +65,7 @@ To start the client container which runs the benchmark, use the following comman
     $ WEB_SERVER_IP=$(docker inspect --format '{{ .NetworkSettings.Networks.wsnet.IPAddress }}' web_server)
     $ docker run --net=my_net --name=faban_client cloudsuite/web-serving:faban_client /etc/bootstrap.sh ${WEB_SERVER_IP}
 
-To output the summary of the benchmark results run:
-
-    $ docker exec faban_client sh -c "cat /faban/output/*/summary.xml" > summary.xml
+The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 
   [webserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
   [memcacheserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
@@ -78,4 +76,3 @@ To output the summary of the benchmark results run:
   [dhrepo]: https://hub.docker.com/r/cloudsuite/web-serving/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-serving.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-serving.svg "Go to DockerHub Page"
-
