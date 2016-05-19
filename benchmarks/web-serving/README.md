@@ -34,7 +34,7 @@ To start the web server, you first have to `pull` the server image. To `pull` th
 
 The following command will start the web server, and attach it to the *my_net* network:
 
-    $ docker run -d -t --net=my_net --privileged=true --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh
+    $ docker run -dt --net=my_net --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh
 
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -43,7 +43,7 @@ To start the database server, you have to first `pull` the server image. To `pul
 
 The following command will start the database server, and attach it to the *my_net* network:
 
-    $ docker run -d -t --net=my_net --privileged=true --name=mysql_server cloudsuite/web-serving:db_server
+    $ docker run -dt --net=my_net --name=mysql_server cloudsuite/web-serving:db_server
 
 ### Starting the memcached server ####
 To start the memcached server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -52,26 +52,22 @@ To start the memcached server, you have to first `pull` the server image. To `pu
 
 The following command will start the memcached server, and attach it to the *my_net* network:
 
-    $ docker run -d -t --net=my_net --privileged=true --name=memcache_server cloudsuite/web-serving:memcached_server
-
-### Starting the client ####
-
-To start the client, you have to first `pull` the client image. To `pull` the client image use the following command:
-
-    $ docker pull cloudsuite/web-serving:faban_client
-
-To start the client container and connect it to the *my_net* network use the following command:
-
-    $ docker run -d -t --net=my_net --privileged=true --name=faban_client cloudsuite/web-serving:faban_client /etc/bootstrap.sh -bash
+    $ docker run -dt --net=my_net --name=memcache_server cloudsuite/web-serving:memcached_server
 
 ###  Running the benchmark ###
 
-To start the client, you need to run the run.sh file.
+First `pull` the client image use the following command:
 
-    $ ./run.sh
+    $ docker pull cloudsuite/web-serving:faban_client
 
-You can find the summary of the results in the summary.xml file.
+To start the client container which runs the benchmark, use the following commands:
 
+    $ WEB_SERVER_IP=$(docker inspect --format '{{ .NetworkSettings.Networks.wsnet.IPAddress }}' web_server)
+    $ docker run --net=my_net --name=faban_client cloudsuite/web-serving:faban_client /etc/bootstrap.sh ${WEB_SERVER_IP}
+
+To output the summary of the benchmark results run:
+
+    $ docker exec faban_client sh -c "cat /faban/output/*/summary.xml" > summary.xml
 
   [webserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
   [memcacheserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
@@ -82,3 +78,4 @@ You can find the summary of the results in the summary.xml file.
   [dhrepo]: https://hub.docker.com/r/cloudsuite/web-serving/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-serving.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-serving.svg "Go to DockerHub Page"
+
