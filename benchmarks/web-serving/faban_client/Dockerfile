@@ -32,4 +32,4 @@ ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh
 RUN chmod 700 /etc/bootstrap.sh
 
-CMD ["/etc/bootstrap.sh", "-d"]
+ENTRYPOINT ["/etc/bootstrap.sh"]
