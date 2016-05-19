@@ -4,6 +4,7 @@ MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
+        curl \
 	openjdk-7-jdk \
 	wget
 
