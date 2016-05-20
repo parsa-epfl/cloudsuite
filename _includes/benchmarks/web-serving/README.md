@@ -63,7 +63,9 @@ First `pull` the client image use the following command:
 To start the client container which runs the benchmark, use the following commands:
 
     $ WEB_SERVER_IP=$(docker inspect --format '{{ .NetworkSettings.Networks.wsnet.IPAddress }}' web_server)
-    $ docker run --net=my_net --name=faban_client cloudsuite/web-serving:faban_client /etc/bootstrap.sh ${WEB_SERVER_IP}
+    $ docker run --net=my_net --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
+
+The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7).
 
 The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 
