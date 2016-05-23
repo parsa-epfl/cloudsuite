@@ -1,4 +1,4 @@
-## In-Memory Analytics
+# In-Memory Analytics #
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
