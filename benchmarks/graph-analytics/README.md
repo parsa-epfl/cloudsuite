@@ -1,4 +1,4 @@
-## Graph Analytics
+# Graph Analytics #
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
