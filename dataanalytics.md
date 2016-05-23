@@ -1,6 +1,6 @@
 ---
 layout: benchmark
-title: Data analytics
+title: Data Analytics
 ---
 
 {% include benchmarks/data-analytics/README.md %}
