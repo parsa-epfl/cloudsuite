@@ -46,7 +46,6 @@ env:
   # Web Search
   - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
   - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
-  # - DH_REPO="cloudsuite/web-search" IMG_TAG="data" DF_PATH="./benchmarks/web-search/data"
 
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
