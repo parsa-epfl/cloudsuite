@@ -8,50 +8,50 @@ services:
 env:
   # Commons
   # Spark
-  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
-  - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
+  - DH_REPO="sarora/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
+  - DH_REPO="sarora/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
 
   # Datasets
   # Movielens
-  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
-  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
+  - DH_REPO="sarora/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
+  - DH_REPO="sarora/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
 
   # Becnhmark Images
   # Data Analytics
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="base" DF_PATH="./benchmarks/data-analytics/base"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="master" DF_PATH="./benchmarks/data-analytics/master"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="slave" DF_PATH="./benchmarks/data-analytics/slave"
+  - DH_REPO="sarora/analytics" IMG_TAG="base" DF_PATH="./benchmarks/data-analytics/base"
+  - DH_REPO="sarora/data-analytics" IMG_TAG="master" DF_PATH="./benchmarks/data-analytics/master"
+  - DH_REPO="sarora/data-analytics" IMG_TAG="slave" DF_PATH="./benchmarks/data-analytics/slave"
 
   # Data Caching
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+  - DH_REPO="sarora/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
+  - DH_REPO="sarora/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
 
   # Data Serving
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+  - DH_REPO="sarora/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
+  - DH_REPO="sarora/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
 
   # Graph Analytics
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="sarora/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="sarora/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
 
   # In-memory Analytics
-  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
-  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="sarora/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="sarora/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
 
   # Media Streaming
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
+  - DH_REPO="sarora/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
+  - DH_REPO="sarora/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
+  - DH_REPO="sarora/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
 
   # Web Search
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
+  - DH_REPO="sarora/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
+  - DH_REPO="sarora/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
 
   # Web Serving
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+  - DH_REPO="sarora/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
+  - DH_REPO="sarora/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
+  - DH_REPO="sarora/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
+  - DH_REPO="sarora/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
 before_script:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
