@@ -23,17 +23,12 @@ Start the server container that will run cassandra server and installs a default
 ```bash
 $ docker run --name cassandra-server --net serving_network cloudsuite/data-serving:server cassandra
 ```
-
-In order to create a keyspace and a column family, you can use the following commands after connecting to the server with the cassandra-cli under the directory in which Cassandra is unpacked. (A link to a basic tutorial with cassandra-cli: http://wiki.apache.org/cassandra/CassandraCli)
-
 ### Multiple Server Containers
-
-(To configure multiple-server setup, launch docker in the interactive mode with -it option.)
 
 For a cluster setup with multiple servers, we need to instantiate a seed server:
 
 ```bash
-$ docker run -it --name cassandra-server-seed --net serving_network cloudsuite/data-serving:server bash
+$ docker run --name cassandra-server-seed --net serving_network cloudsuite/data-serving:server
 ```
 
 Then we prepare the server as previously.
@@ -41,7 +36,7 @@ Then we prepare the server as previously.
 The other server containers are instantiated as follows:
 
 ```bash
-$ docker run -it --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/data-serving:server bash
+$ docker run --name cassandra-server(id) --net serving_network -e CASSANDRA_SEEDS=cassandra-server-seed cloudsuite/data-serving:server
 ```
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
