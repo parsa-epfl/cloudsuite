@@ -62,3 +62,6 @@ script:
   # - docker push $DH_REPO;
   - travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && travis_wait 40 docker push $DH_REPO;
+  - curl -X POST -H "Content-Type: application/json"
+  --data '{"docker_tag_name": "latest"}'
+  https://registry.hub.docker.com/u/sarora/datacaching/trigger/$DOCKER_HUB_TOKEN/
