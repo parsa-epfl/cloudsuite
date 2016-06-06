@@ -19,7 +19,10 @@ while [[ ${paths[counter]} ]];
 		 if [ “${TRAVIS_PULL_REQUEST}” -eq “false” && “${TRAVIS_BRANCH}” -eq “master” ]
 		 
 		   then
+			docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 			travis_wait 40 docker push $DH_REPO
+		else 
+			echo "No Modifications to this image"
 		fi
 	fi
 	let counter=counter+1; 
