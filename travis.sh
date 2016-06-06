@@ -21,9 +21,10 @@ while [[ ${paths[counter]} ]];
 		   then
 			docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 			travis_wait 40 docker push $DH_REPO
-		else 
-			echo "No Modifications to this image"
+		
 		fi
+	else 
+			echo "No Modifications to this image"
 	fi
 	let counter=counter+1; 
 done
