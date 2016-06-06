@@ -5,6 +5,8 @@ counter=0
 check1=”${DH_REPO#*/}”
 check2=$IMG_TAG
 
+echo "Something"
+
 while [[ ${paths[counter]} ]]; 
  do 
  	benchmark="${paths[counter]#*/}"; 
