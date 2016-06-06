@@ -1,3 +1,4 @@
+set -x
 path=$(git --no-pager diff --name-only ${TRAVIS_BRANCH} $(git merge-base ${TRAVIS_BRANCH} master))
 paths=( $path )
 counter=0
