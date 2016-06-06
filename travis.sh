@@ -10,7 +10,9 @@ while [[ ${paths[counter]} ]];
 	tag="${benchmark#*/}"; 
 	benchmark="${benchmark%%/*}"; 
 	tag="${tag%%/*}"; 
-
+	
+	echo "Entered while" 	
+	
 	if [ “${check1}” -eq “${benchmark} && “${check2}” -eq “${tag}” ]
 	    then
 		
