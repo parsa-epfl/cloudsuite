@@ -8,6 +8,11 @@ check2=$IMG_TAG
 echo $path
 echo ${paths[counter]}
 
+if [ -z "$path" ]
+   then 
+	echo "No Modifications to this image"
+fi
+
 while [[ ${paths[counter]} ]]; 
  do 
  	benchmark="${paths[counter]#*/}"; 
