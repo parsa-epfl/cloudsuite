@@ -2,11 +2,11 @@ set -x
 path=$(git --no-pager diff --name-only ${TRAVIS_BRANCH} $(git merge-base ${TRAVIS_BRANCH} master))
 paths=( $path )
 counter=0
-check1=”${DH_REPO#*/}”
+check1=${DH_REPO#*/}
 check2=$IMG_TAG
 
 echo $path
-echo $paths[counter]
+echo ${paths[counter]}
 
 while [[ ${paths[counter]} ]]; 
  do 
