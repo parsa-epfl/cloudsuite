@@ -5,7 +5,8 @@ counter=0
 check1=”${DH_REPO#*/}”
 check2=$IMG_TAG
 
-echo "Something"
+echo $path
+echo $paths[counter]
 
 while [[ ${paths[counter]} ]]; 
  do 
