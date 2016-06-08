@@ -9,7 +9,7 @@ else
   echo "Checking against modified files"
 fi
 
-if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ tag_name="latest" ] )
+if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ tag_name = "latest" ] )
    then
 
   travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
