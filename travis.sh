@@ -16,8 +16,8 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
    then
 
   travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  
-  if [ result -eq 1 ]
+
+  if [ $result -eq "1" ]
     then
       TRAVIS_TEST_RESULT=1;
   fi
