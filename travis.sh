@@ -11,6 +11,18 @@ else
   echo "Checking against modified files"
 fi
 
+if grep -q "$benchmark_name/$tag_name" <<<$modified_files
+  then  echo "11111"
+fi
+
+if grep -q "$benchmark_name" <<<$modified_files
+  then  echo "2222"
+fi
+
+if [ tag_name = "latest" ]
+  then  echo "33333"
+fi
+
 if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ tag_name = "latest" ] )
    then
 
