@@ -11,19 +11,11 @@ else
   echo "Checking against modified files"
 fi
 
-if grep -q "$benchmark_name/$tag_name" <<<$modified_files
-  then  echo "11111"
+if
+  then
 fi
 
-if grep -q "$benchmark_name" <<<$modified_files
-  then  echo "2222"
-fi
-
-if [ $tag_name = "latest" ]
-  then  echo "33333"
-fi
-
-if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ] )
+if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ] ) || ( grep -q "travis.sh" <<<$modified_files ) || ( grep -q ".travis.yml" <<<$modified_files )
    then
 
   travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
