@@ -28,6 +28,7 @@ then
 
         docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 ​
+        result=$?
         if [ $result -eq "1" ]
         then
             return 1
@@ -35,6 +36,7 @@ then
 
   	    travis_wait 40 docker push $DH_REPO
 
+        result=$?
         if [ $result -eq "1" ]
         then
             return 1
