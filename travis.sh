@@ -20,7 +20,7 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
   if [ $result -eq "1" ]
     then
       echo "you say"
-      TRAVIS_TEST_RESULT=1;
+      return 1;
     else
       echo "sorry result is not 1. result is "
       echo $result
