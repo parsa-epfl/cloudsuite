@@ -20,9 +20,9 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
   echo "return_value"
   echo $return_value
 
-  if [ return_value -nq "0" ]
+  if [ $return_value -nq "0" ]
     then
-      return 1;
+      TRAVIS_TEST_RESULT=1;
   fi
 
   		 if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
