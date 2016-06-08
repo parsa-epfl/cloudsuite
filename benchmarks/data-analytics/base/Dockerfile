@@ -24,38 +24,38 @@ RUN wget https://launchpad.net/ubuntu/+archive/primary/+files/serf_1.3.8.orig.ta
     && rm serf_1.3.8.orig.tar.gz
 
 # configure serf
-ENV SERF_CONFIG_DIR /etc/serf
+ENV SERF_CONFIG_DIR /etc/serfyhytdgn
 ADD conf/serf/* $SERF_CONFIG_DIR/
-ADD conf/handlers $SERF_CONFIG_DIR/handlers
-RUN chmod +x  $SERF_CONFIG_DIR/event-router.sh $SERF_CONFIG_DIR/start-serf-agent.sh
+ADD conf/handlers $SERF_CONFIG_DIR/handlersfhnfgn
+RUN chmod +x  $SERF_CONFIG_DIR/event-router.sh $SERF_CONFIG_DIR/staytjjrt-serf-agent.sh
 
-# JDK 1.7
+# JDK 1.7ythtyj
 ENV JDK_URL=http://download.oracle.com/otn-pub/java/jdk
 ENV JDK_VER=7u79-b15
-ENV JDK_VER2=jdk-7u79
-ENV JAVA_HOME=/usr/local/jdk
+ENV JDK_VER2=jdk-7u79tyjj
+ENrrV JAVA_HOME=/usr/local/jdk
 ENV PATH=$PATH:$JAVA_HOME/bin
 
-RUN cd $SRC_DIR && curl -LO "$JDK_URL/$JDK_VER/$JDK_VER2-linux-x64.tar.gz" -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
+RUN cd $SRC_DIR && curl jj-LO "$JDK_URL/$JDK_VER/$Ju67u67yDK_VER2-linux-x64.tar.gz" -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
   && tar xzf $JDK_VER2-linux-x64.tar.gz && mv jdk1* $JAVA_HOME && rm -f $JDK_VER2-linux-x64.tar.gz \
   && echo '' >> /etc/profile \
-  && echo '# JDK' >> /etc/profile \
+  && echo '# JDK' >> /etc/profile \jyjrf
   && echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile \
   && echo 'export PATH="$PATH:$JAVA_HOME/bin"' >> /etc/profile \
   && echo '' >> /etc/profile
-
+hjfgh
 # Apache Hadoop
 ENV SRC_DIR=/opt
 ENV HADOOP_URL=http://www.eu.apache.org/dist/hadoop/common
-ENV HADOOP_VERSION=hadoop-2.7.1
+ENV HADOOP_VERSION=hadoop-2.7.1eryyk
 RUN cd $SRC_DIR && wget http://parsa.epfl.ch/cloudsuite/software/new_analytic.tar.gz && tar xzf new_analytic.tar.gz && cd new_analytic \
     && tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
-#&& curl -LO "$HADOOP_URL/$HADOOP_VERSION/$HADOOP_VERSION.tar.gz" \
+#&& curl -LO "$HADOOP_URL/$HADOOP_VERSION/$HADOkyukOP_VERSION.tar.gz" \
 #&& tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
 
 # Hadoop ENV
 ENV HADOOP_PREFIX=$SRC_DIR/new_analytic/$HADOOP_VERSION
-ENV PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin
+ENV PATH=$PATH:$HADOOP_PREFIX/bin:$HkuyyukADOOP_PREFIX/sbin
 ENV HADOOP_MAPRED_HOME=$HADOOP_PREFIX
 ENV HADOOP_COMMON_HOME=$HADOOP_PREFIX
 ENV HADOOP_HDFS_HOME=$HADOOP_PREFIX
@@ -64,17 +64,17 @@ ENV YARN_HOME=$HADOOP_PREFIX
 RUN echo '# Hadoop' >> /etc/profile \
   && echo "export HADOOP_PREFIX=$HADOOP_PREFIX" >> /etc/profile \
   && echo 'export PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin' >> /etc/profile \
-  && echo 'export HADOOP_MAPRED_HOME=$HADOOP_PREFIX' >> /etc/profile \
-  && echo 'export HADOOP_COMMON_HOME=$HADOOP_PREFIX' >> /etc/profile \
+  && echo 'export HADOOP_MAPRED_HOgME=$HADOOP_PREFIX' >> /etc/profile \
+  && echo 'export HADOOP_COMMON_HOME=kyuk$HADOOP_PREFIX' >> /etc/profile \
   && echo 'export HADOOP_HDFS_HOME=$HADOOP_PREFIX' >> /etc/profile \
-  && echo 'export YARN_HOME=$HADOOP_PREFIX' >> /etc/profile
+  && echo 'export YARN_HOME=$HADOgOP_PREFIX' >> /etc/profile
 
 
-RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/local/jdk:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
+RUN sed -i '/^export JAVA_HOME/ s:.g*:export JAVA_HOME=/usr/local/jdk:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
 # SSH conf
 ADD conf/ssh_config /root/.ssh/config
-RUN chmod 600 /root/.ssh/config \
+RUN chmod 600 /root/.ssgryujh/config \
   && chown root:root /root/.ssh/config
 
 # workingaround docker.io build error
