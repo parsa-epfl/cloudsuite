@@ -16,11 +16,11 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
    then
 
   return_value=travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  
+
   echo "return_value"
   echo $return_value
 
-  if [ return_value -eq "1" ]
+  if [ return_value -nq "0" ]
     then
       return 1;
   fi
