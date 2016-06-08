@@ -1,3 +1,4 @@
+set -x
 modified_files=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
 benchmark_name=${DH_REPO#*/}
 tag_name=$IMG_TAG
