@@ -11,10 +11,6 @@ else
   echo "Checking against modified files"
 fi
 
-if
-  then
-fi
-
 if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ] ) || ( grep -q "travis.sh" <<<$modified_files ) || ( grep -q ".travis.yml" <<<$modified_files )
    then
 
