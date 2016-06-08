@@ -11,11 +11,15 @@ else
   echo "Checking against modified files"
 fi
 
-if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ] ) || ( grep -q "travis.sh" <<<$modified_files ) || ( grep -q ".travis.yml" <<<$modified_files )
+if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ] ) || ( grep -q "1travis.sh" <<<$modified_files ) || ( grep -q ".1travis.yml" <<<$modified_files )
    then
 
-  travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  should_be_built=1
+  return_value=travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+
+  if [ return_value -eq "1" ]
+    then
+      return 1;
+  fi
 
   		 if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
   		   then
