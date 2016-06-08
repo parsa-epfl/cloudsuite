@@ -3,6 +3,7 @@ modified_files=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
 echo $modified_files
 benchmark_name=${DH_REPO#*/}
 tag_name=$IMG_TAG
+return_value=0;
 
 if [ -z "$modified_files" ]
    then
@@ -15,6 +16,9 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
    then
 
   return_value=travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+  
+  echo "return_value"
+  echo $return_value
 
   if [ return_value -eq "1" ]
     then
