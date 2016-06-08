@@ -16,7 +16,7 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) || ( grep -q "$ben
    then
 
   travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  result=travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+  result=$?
   if [ $result -eq "1" ]
     then
       echo "you say"
