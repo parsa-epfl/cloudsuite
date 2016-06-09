@@ -1,3 +1,4 @@
+#2
 FROM ubuntu:14.04
 
 # Install dependencies
@@ -35,4 +36,3 @@ ENV SPARK_WEBUI_PORT 8080
 EXPOSE ${SPARK_MASTER_PORT} ${SPARK_WEBUI_PORT}
 
 ENTRYPOINT ["/root/entrypoint.sh"]
-

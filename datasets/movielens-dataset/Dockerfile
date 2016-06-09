@@ -17,4 +17,3 @@ RUN BUILD_DEPS="curl unzip" \
 COPY files /data/
 
 VOLUME ["/data"]
-
