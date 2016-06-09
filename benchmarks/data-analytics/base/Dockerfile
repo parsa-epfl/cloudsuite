@@ -18,7 +18,7 @@ RUN apt-get install -y unzip curl dnsmasq
 ADD conf/dnsmasq/* /etc/
 
 # install serf
-RUN wget https://launchpad.net/ubuntu/+archive/primary/+files/serf_1.3.8.orig.tar.gz \ 
+RUN wget https://launchpad.net/ubuntu/+archive/primary/+files/serf_1.3.8.orig.tar.gz \
     && tar -xzf serf_1.3.8.orig.tar.gz -C /bin \
     && rm serf_1.3.8.orig.tar.gz
 
@@ -53,13 +53,13 @@ RUN cd $SRC_DIR && wget http://parsa.epfl.ch/cloudsuite/software/new_analytic.ta
 #&& tar xzf $HADOOP_VERSION.tar.gz ; rm -f $HADOOP_VERSION.tar.gz
 
 # Hadoop ENV
-ENV HADOOP_PREFIX=$SRC_DIR/new_analytic/$HADOOP_VERSION 
+ENV HADOOP_PREFIX=$SRC_DIR/new_analytic/$HADOOP_VERSION
 ENV PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin
 ENV HADOOP_MAPRED_HOME=$HADOOP_PREFIX
 ENV HADOOP_COMMON_HOME=$HADOOP_PREFIX
 ENV HADOOP_HDFS_HOME=$HADOOP_PREFIX
 ENV YARN_HOME=$HADOOP_PREFIX
-    
+
 RUN echo '# Hadoop' >> /etc/profile \
   && echo "export HADOOP_PREFIX=$HADOOP_PREFIX" >> /etc/profile \
   && echo 'export PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin' >> /etc/profile \
@@ -85,4 +85,3 @@ RUN ls -la $HADOOP_PREFIX/etc/hadoop/*-env.sh \
 RUN sed  -i "/^[^#]*UsePAM/ s/.*/#&/"  /etc/ssh/sshd_config \
   && echo "UsePAM no" >> /etc/ssh/sshd_config \
   && echo "Port 2122" >> /etc/ssh/sshd_config
-

@@ -7,6 +7,7 @@ services:
 
 env:
   # Commons
+  #matrix build
   # Spark
   - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
@@ -46,7 +47,6 @@ env:
   # Web Search
   - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
   - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
-  # - DH_REPO="cloudsuite/web-search" IMG_TAG="data" DF_PATH="./benchmarks/web-search/data"
 
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
@@ -54,11 +54,8 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
-before_script:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
 
 script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
-  - travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && travis_wait 40 docker push $DH_REPO;
+  - source ${TRAVIS_BUILD_DIR}/travis.sh
