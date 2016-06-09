@@ -1,4 +1,3 @@
-#CHANGE
 FROM ubuntu:latest
 MAINTAINER Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>
 
