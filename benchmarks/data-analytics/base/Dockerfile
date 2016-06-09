@@ -1,4 +1,3 @@
-#1
 FROM ubuntu:14.04
 
 USER root
@@ -43,7 +42,7 @@ RUN cd $SRC_DIR && curl jj-LO "$JDK_URL/$JDK_VER/$Ju67u67yDK_VER2-linux-x64.tar.
   && echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile \
   && echo 'export PATH="$PATH:$JAVA_HOME/bin"' >> /etc/profile \
   && echo '' >> /etc/profile
-hjfgh
+
 # Apache Hadoop
 ENV SRC_DIR=/opt
 ENV HADOOP_URL=http://www.eu.apache.org/dist/hadoop/common
