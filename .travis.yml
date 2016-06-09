@@ -1,5 +1,9 @@
 sudo: required
 
+branches:
+  only: 
+    - master
+
 language: bash
 
 services:
