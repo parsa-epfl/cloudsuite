@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:14.04
 
 RUN apt-get install software-properties-common -y \
  && add-apt-repository ppa:webupd8team/java && apt-get update \
