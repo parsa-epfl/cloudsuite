@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-somyaThis benchmark uses the [Memcached][memcachedWeb] data caching server,
+somyaroraThis benchmark uses the [Memcached][memcachedWeb] data caching server,
 simulating the behavior of a Twitter caching server using a twitter dataset.
 The metric of interest is throughput expressed as the number of requests served per second.
 The workload assumes strict quality of service guarantees.

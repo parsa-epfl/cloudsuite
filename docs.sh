@@ -20,7 +20,7 @@ then
   #cp -R ../../docs ./docs
   #git add .
   #git commit -a -m "Rebuilding"
-  git merge master
+  git merge master --no-edit
   git push -f origin gh-pages
   cd ${TRAVIS_BUILD_DIR}
   rm -rf out
