@@ -3,4 +3,4 @@ layout: benchmark
 title: Data Caching
 ---
 
-{% include benchmarks/data-caching/README.md %}
+{% include docs/benchmarks/data-caching.md %}

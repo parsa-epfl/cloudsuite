@@ -3,4 +3,4 @@ layout: benchmark
 title: Graph Analytics
 ---
 
-{% include benchmarks/graph-analytics/README.md %}
+{% include docs/benchmarks/graph-analytics.md %}

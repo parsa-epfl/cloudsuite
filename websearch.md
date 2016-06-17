@@ -3,4 +3,4 @@ layout: benchmark
 title: Web Search
 ---
 
-{% include benchmarks/web-search/README.md %}
+{% include docs/benchmarks/web-search.md %}

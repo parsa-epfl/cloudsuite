@@ -3,4 +3,4 @@ layout: benchmark
 title: Media Streaming
 ---
 
-{% include benchmarks/media-streaming/README.md %}
+{% include docs/benchmarks/media-streaming.md %}

@@ -3,4 +3,4 @@ layout: benchmark
 title: Web Serving
 ---
 
-{% include benchmarks/web-serving/README.md %}
+{% include docs/benchmarks/web-serving.md %}
