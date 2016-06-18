@@ -9,6 +9,9 @@ language: bash
 services:
   - docker
 
+before_install:
+  sudo yum install -y aspell-en
+
 env:
   # Commons
   #matrix build
@@ -57,6 +60,9 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+
+  #Spell Check
+  - MODIFIED_FILES=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
 
 
 script:

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
-modified_files=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
-if grep -q "docs/" <<<$modified_files
+MODIFIED_FILES=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
+if grep -q "docs/" <<<$MODIFIED_FILES
 then
   mkdir out;
   cd out
@@ -26,7 +26,7 @@ then
   rm -rf out
   git checkout master
   i=0
-  mod_arr=($modified_files)
+  mod_arr=($MODIFIED_FILES)
   rm -rf SpellCheck.txt
   while [[ ! -z ${mod_arr[i]} ]]; do
     echo "${mod_arr[i]} :- " > result.txt;
@@ -40,8 +40,12 @@ then
    cat result.txt >> SpellCheck.txt;
    let i=i+1;
  done
- echo "~~~  Spelling Errors  ~~~ "
- echo SpellCheck.txt
+ if [[ -s SpellCheck.txt ]]
+ then
+   echo "~~~  Spelling Errors  ~~~ "
+   echo SpellCheck.txt
+   return 1;
+ fi
  rm -rf result.txt
  rm -rf SpellCheck.txt
 fi
