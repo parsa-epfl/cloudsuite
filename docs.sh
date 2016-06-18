@@ -45,4 +45,3 @@ then
 fi
 rm -rf ./result.txt
 rm -rf ./SpellCheck.txt
-fi
