@@ -68,9 +68,9 @@ env:
 script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
-  - if [[ ! -s $MODIFIED_FILES ]];
+  - if [ ! -s $MODIFIED_FILES ];
     then source ${TRAVIS_BUILD_DIR}/travis.sh;
     fi
-  - if ( [[ -s $MODIFIED_FILES ]]  && grep -q "docs/" <<<$MODIFIED_FILES );
+  - if [ -s $MODIFIED_FILES ];
     then source ${TRAVIS_BUILD_DIR}/docs.sh;
     fi
