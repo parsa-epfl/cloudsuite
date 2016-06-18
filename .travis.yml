@@ -70,6 +70,4 @@ script:
   # - docker push $DH_REPO;
   - source ${TRAVIS_BUILD_DIR}/travis.sh
   if grep -q "docs/" <<<$MODIFIED_FILES
-  then
   - source ${TRAVIS_BUILD_DIR}/docs.sh
-  fi
