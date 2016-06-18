@@ -25,4 +25,23 @@ then
   cd ${TRAVIS_BUILD_DIR}
   rm -rf out
   git checkout master
+  i=0
+  mod_arr=($modified_files)
+  rm -rf SpellCheck.txt
+  while [[ ! -z ${mod_arr[i]} ]]; do
+    echo "${mod_arr[i]} :- " > result.txt;
+    <${mod_arr[i]} aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
+    grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |
+    grep '[a-zA-Z]\+' -o | sort | uniq |
+    while read word; do
+      grep -on "\<$word\>" ${mod_arr[i]};
+   done >>result.txt;
+   sort -n result.txt -o result.txt;
+   cat result.txt >> SpellCheck.txt;
+   let i=i+1;
+ done
+ echo "~~~  Spelling Errors  ~~~ "
+ echo SpellCheck.txt
+ rm -rf result.txt
+ rm -rf SpellCheck.txt
 fi
