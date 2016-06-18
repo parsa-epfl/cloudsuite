@@ -42,7 +42,7 @@ then
   if [[ -s ./SpellCheck.txt ]]
   then
     echo "~~~  Spelling Errors  ~~~ "
-    less ./SpellCheck.txt
+    cat ./SpellCheck.txt
     return 1;
   fi
   rm -rf ./result.txt
