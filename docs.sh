@@ -40,8 +40,8 @@ then
       done >>./result.txt;
       sort -n ./result.txt -o ./result.txt;
       cat ./result.txt >> ./SpellCheck.txt;
-      let i=i+1;
     fi
+    let i=i+1;
   done
   if [[ -s ./SpellCheck.txt ]]
   then
