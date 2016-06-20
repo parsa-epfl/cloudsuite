@@ -29,19 +29,18 @@ then
   rm -rf out
   git checkout master
   sudo apt-get install -y aspell-en
-  i=0
   modified_files_arr=($MODIFIED_FILES)
   rm -rf ./Misspelled_words.txt
-  for i in "${modified_files_arr[@]}"
+  for docs_file_modified in "${modified_files_arr[@]}"
   do
-    if grep -q "docs/" <<<${modified_files_arr[i]}
+    if grep -q "docs/" <<<$docs_file_modified
     then
-      echo "${modified_files_arr[i]} :- " > ./misspelled_per_file.txt;
-      <${modified_files_arr[i]} aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
+      echo "$docs_file_modified :- " > ./misspelled_per_file.txt;
+      <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
       grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |
       grep '[a-zA-Z]\+' -o | sort | uniq |
       while read word; do
-        grep -on "\<$word\>" ${modified_files_arr[i]};
+        grep -on "\<$word\>" $docs_file_modified;
       done >>./misspelled_per_file.txt;
       sort -n ./misspelled_per_file.txt -o ./misspelled_per_file.txt;
       cat ./misspelled_per_file.txt >> ./Misspelled_words.txt;
