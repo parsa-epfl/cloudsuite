@@ -32,7 +32,6 @@ then
   i=0
   modified_files_arr=($MODIFIED_FILES)
   rm -rf ./Misspelled_words.txt
-#  while [[ ! -z ${modified_files_arr[i]} ]; do
   for i in "${modified_files_arr[@]}"
   do
     if grep -q "docs/" <<<${modified_files_arr[i]}
@@ -47,7 +46,6 @@ then
       sort -n ./misspelled_per_file.txt -o ./misspelled_per_file.txt;
       cat ./misspelled_per_file.txt >> ./Misspelled_words.txt;
     fi
-  #  let i=i+1;
   done
   if [[ -s ./Misspelled_words.txt ]]
   then
