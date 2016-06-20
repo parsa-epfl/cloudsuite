@@ -9,8 +9,7 @@ language: bash
 services:
   - docker
 
-before_install:
-  sudo apt-get install -y aspell-en
+
 
 env:
   # Commons
@@ -62,15 +61,15 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
   #Spell Check
-  - MODIFIED_FILES=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
+  - Spell_Check="1"
 
 
 script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
-  - if [[ -z $MODIFIED_FILES ]];
-    then source ${TRAVIS_BUILD_DIR}/travis.sh;
+  - if [[ -z $Spell_Check ]];
+    then source ${TRAVIS_BUILD_DIR}/tests/travis.sh;
     fi
-  - if [[ ! -z $MODIFIED_FILES ]];
-    then source ${TRAVIS_BUILD_DIR}/docs.sh;
+  - if [[ ! -z $Spell_Check ]];
+    then source ${TRAVIS_BUILD_DIR}/tests/docs.sh;
     fi
