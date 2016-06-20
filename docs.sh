@@ -29,7 +29,7 @@ then
   mod_arr=($MODIFIED_FILES)
   rm -rf ./SpellCheck.txt
   while [[ ! -z ${mod_arr[i]} ]]; do
-    if grep -q "docs/" <<<$mod_arr[i]
+    if grep -q "docs/" <<<${mod_arr[i]}
     then
       echo "${mod_arr[i]} :- " > ./result.txt;
       <${mod_arr[i]} aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
