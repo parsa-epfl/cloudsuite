@@ -28,8 +28,6 @@ then
     cat ./Misspelled_words.txt
     return 1;
   fi
-  rm -rf ./misspelled_word_per_file.txt
-  rm -rf ./Misspelled_words.txt
   if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
   then
     mkdir out;
@@ -47,15 +45,13 @@ then
     if [ $result -eq "1" ]
     then
         return 1
+    else
+      git push -f origin gh-pages
+      result=$?
+      if [ $result -eq "1" ]
+      then
+        return 1
+      fi
     fi
-    git push -f origin gh-pages
-    result=$?
-    if [ $result -eq "1" ]
-    then
-      return 1
-    fi
-    cd ${TRAVIS_BUILD_DIR}
-    rm -rf out
-    git checkout master
   fi
 fi
