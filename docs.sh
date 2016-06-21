@@ -30,18 +30,18 @@ then
   fi
   rm -rf ./misspelled_word_per_file.txt
   rm -rf ./Misspelled_words.txt
-  mkdir out;
-  cd out
-  git clone https://github.com/ParsaLab/cloudsuite.git
-  cd cloudsuite
-  git checkout gh-pages
-  git config user.name ${GIT_USER}
-  git config user.email ${GIT_EMAIL}
-  git config credential.helper "store --file=.git/credentials"
-  git config --global push.default matching
-  echo "https://$GH_TOKEN:x-oauth-basic@github.com" >> .git/credentials
   if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
   then
+    mkdir out;
+    cd out
+    git clone https://github.com/ParsaLab/cloudsuite.git
+    cd cloudsuite
+    git checkout gh-pages
+    git config user.name ${GIT_USER}
+    git config user.email ${GIT_EMAIL}
+    git config credential.helper "store --file=.git/credentials"
+    git config --global push.default matching
+    echo "https://$GH_TOKEN:x-oauth-basic@github.com" >> .git/credentials
     git merge master --no-edit
     result=$?
     if [ $result -eq "1" ]
@@ -54,8 +54,8 @@ then
     then
       return 1
     fi
+    cd ${TRAVIS_BUILD_DIR}
+    rm -rf out
+    git checkout master
   fi
-  cd ${TRAVIS_BUILD_DIR}
-  rm -rf out
-  git checkout master
 fi
