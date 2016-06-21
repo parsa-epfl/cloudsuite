@@ -1,11 +1,10 @@
 #!/bin/bash
-set -x
 MODIFIED_FILES=$(git --no-pager diff --name-only ${TRAVIS_COMMIT_RANGE})
 if grep -q "docs/" <<<$MODIFIED_FILES
 then
   mkdir out;
   cd out
-  git clone https://github.com/srora/cloudsuite.git
+  git clone https://github.com/ParsaLab/cloudsuite.git
   cd cloudsuite
   git checkout gh-pages
   git config user.name ${GIT_USER}
@@ -13,17 +12,20 @@ then
   git config credential.helper "store --file=.git/credentials"
   git config --global push.default matching
   echo "https://$GH_TOKEN:x-oauth-basic@github.com" >> .git/credentials
-  git merge master --no-edit
-  result=$?
-  if [ $result -eq "1" ]
+  if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
   then
+    git merge master --no-edit
+    result=$?
+    if [ $result -eq "1" ]
+    then
+        return 1
+    fi
+    git push -f origin gh-pages
+    result=$?
+    if [ $result -eq "1" ]
+    then
       return 1
-  fi
-  git push -f origin gh-pages
-  result=$?
-  if [ $result -eq "1" ]
-  then
-      return 1
+    fi
   fi
   cd ${TRAVIS_BUILD_DIR}
   rm -rf out

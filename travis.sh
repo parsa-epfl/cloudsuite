@@ -21,13 +21,13 @@ then
     fi
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
     then
-        sudo docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS" https://index.docker.io/v1/
+        docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
         result=$?
         if [ $result -eq "1" ]
         then
             return 1
         fi
-  	    travis_wait 40 docker push $DOCKER_USER/$DH_REPO
+  	    travis_wait 40 docker push $DH_REPO
         result=$?
         if [ $result -eq "1" ]
         then
