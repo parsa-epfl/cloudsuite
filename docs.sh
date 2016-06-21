@@ -9,15 +9,18 @@ then
   do
     if grep -q "docs/" <<<$docs_file_modified
     then
-      echo "$docs_file_modified :- " > ./misspelled_per_file.txt;
       <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
       grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |
       grep '[a-zA-Z]\+' -o | sort | uniq |
       while read word; do
         grep -on "\<$word\>" $docs_file_modified;
       done >>./misspelled_per_file.txt;
-      sort -n ./misspelled_per_file.txt -o ./misspelled_per_file.txt;
-      cat ./misspelled_per_file.txt >> ./Misspelled_words.txt;
+      if [[ -s ./misspelled_per_file.txt ]]
+      then
+        sort -n ./misspelled_per_file.txt -o ./misspelled_per_file.txt;
+        echo "Misspelled words in File : $docs_file_modified :- " > ./Misspelled_words.txt;
+        cat ./misspelled_per_file.txt >> ./Misspelled_words.txt;
+      fi
     fi
   done
   if [[ -s ./Misspelled_words.txt ]]
