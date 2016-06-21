@@ -69,4 +69,6 @@ then
   else
     echo "Installation of Aspell Failed : No updates performed."
   fi
+else
+  echo "No modifications to Doc files"
 fi
