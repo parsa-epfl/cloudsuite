@@ -1,13 +1,15 @@
 sudo: required
 
 branches:
-  only: 
+  only:
     - master
 
 language: bash
 
 services:
   - docker
+
+
 
 env:
   # Commons
@@ -58,8 +60,14 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
 
+  #Spell Check
+  - Spell_Check="1"
+
 
 script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
-  - source ${TRAVIS_BUILD_DIR}/travis.sh
+  - if [[ -z $Spell_Check ]];
+    then source ${TRAVIS_BUILD_DIR}/travis.sh;
+    else source ${TRAVIS_BUILD_DIR}/docs.sh;
+    fi
