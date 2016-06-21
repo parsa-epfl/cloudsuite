@@ -69,7 +69,5 @@ script:
   # - docker push $DH_REPO;
   - if [[ -z $Spell_Check ]];
     then source ${TRAVIS_BUILD_DIR}/travis.sh;
-    fi
-  - if [[ ! -z $Spell_Check ]];
-    then source ${TRAVIS_BUILD_DIR}/docs.sh;
+    else source ${TRAVIS_BUILD_DIR}/docs.sh;
     fi
