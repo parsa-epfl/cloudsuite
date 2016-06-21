@@ -4,7 +4,6 @@ if grep -q "docs/" <<<$MODIFIED_FILES
 then
   sudo apt-get install -y aspell-en
   modified_files_arr=($MODIFIED_FILES)
-  rm -rf ./Misspelled_words.txt
   for docs_file_modified in "${modified_files_arr[@]}"
   do
     if grep -q "docs/" <<<$docs_file_modified
