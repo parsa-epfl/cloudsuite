@@ -68,6 +68,6 @@ script:
   # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
   # - docker push $DH_REPO;
   - if [[ -z $Spell_Check ]];
-    then source ${TRAVIS_BUILD_DIR}/travis.sh;
-    else source ${TRAVIS_BUILD_DIR}/docs.sh;
+    then source ${TRAVIS_BUILD_DIR}/tests/travis.sh;
+    else source ${TRAVIS_BUILD_DIR}/tests/docs.sh;
     fi

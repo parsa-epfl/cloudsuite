@@ -13,7 +13,7 @@ then
     do
       if grep -q "docs/" <<<$docs_file_modified
       then
-        <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./.aspell.en.pws |
+        <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./tests/.aspell.en.pws |
         grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |
         grep '[a-zA-Z]\+' -o | sort | uniq |
         while read word; do
