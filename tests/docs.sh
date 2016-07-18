@@ -20,7 +20,7 @@ then
       # if this modified file is a doc file
       if grep -q "docs/" <<<$docs_file_modified
       then
-        # Run spell check using aspell and find out file name and line no. of each misspelled words, sortinh them acc. to line no.
+        # Run spell check using aspell and find out file name and line no. of each misspelled words, sorting them acc. to line no.
         # Ignore certain selected words -  listed in /tests/.aspell.en.pws
         <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./tests/.aspell.en.pws |
         grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |

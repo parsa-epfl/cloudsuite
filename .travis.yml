@@ -62,13 +62,9 @@ env:
   #Spell Check
   - Spell_Check="1"
 
-
+# Separate build for spellcheck in modified .md files and auto-updation of gh-pages branch
 script:
   - if [[ -z $Spell_Check ]];
-    # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-    # - docker push $DH_REPO;
     then source ${TRAVIS_BUILD_DIR}/tests/travis.sh;
-    # Separate build for spellcheck in modified .md files
-    # Call script used to automatically update gh-pages branch
     else source ${TRAVIS_BUILD_DIR}/tests/docs.sh;
     fi
