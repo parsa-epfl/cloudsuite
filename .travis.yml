@@ -1,3 +1,4 @@
+# @authors: Somya Arora, Arash Pourhabibi
 sudo: required
 
 branches:
@@ -9,11 +10,9 @@ language: bash
 services:
   - docker
 
-
-
+# Build Matrix :
 env:
   # Commons
-  #matrix build
   # Spark
   - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
@@ -65,9 +64,11 @@ env:
 
 
 script:
-  # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
-  # - docker push $DH_REPO;
   - if [[ -z $Spell_Check ]];
+    # - docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+    # - docker push $DH_REPO;
     then source ${TRAVIS_BUILD_DIR}/tests/travis.sh;
+    # Separate build for spellcheck in modified .md files
+    # Call script used to automatically update gh-pages branch
     else source ${TRAVIS_BUILD_DIR}/tests/docs.sh;
     fi
