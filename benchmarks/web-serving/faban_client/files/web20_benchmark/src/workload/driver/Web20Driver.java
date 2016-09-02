@@ -435,18 +435,12 @@ public class Web20Driver {
 				"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 		headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-		thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
+		StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
 				postRequest, headers);
-    StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + ACTIVITY_URL);
-    //thisClient.getHttp().fetchURL(hostUrl + ACTIVITY_URL);
-    //System.out.print("Hello");
-    //System.out.print(sb);
 
 		updateElggTokenAndTs(thisClient, sb, true);
 		printErrorMessageIfAny(sb, postRequest);
 
-    //System.out.print("Hello2");
-    //System.out.print(sb);
 
 		if (sb.toString().contains("You have been logged in")) {
 			logger.fine("Successfully logged in: "+thisClient.getUsername());

@@ -13,7 +13,7 @@ fi
 WEB_SERVER_IP=$1
 LOAD_SCALE=${2:-7}
 
-while [ "$(curl -sSI web_server:8080 | grep 'HTTP/1.1' | awk '{print $2}')" != "200" ]; do
+while [ "$(curl -sSI ${WEB_SERVER_IP}:8080 | grep 'HTTP/1.1' | awk '{print $2}')" != "200" ]; do
   sleep 1
 done
 
