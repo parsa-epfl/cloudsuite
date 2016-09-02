@@ -40,3 +40,13 @@ GraphX
 PageRank
 dP
 hostname
+YCSB
+keyspace
+usertable
+cassandra
+metadata
+conf
+yaml
+threadcount
+OPERATIONCOUNT
+RECORDCOUNT
