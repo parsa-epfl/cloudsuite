@@ -22,6 +22,15 @@ Michael Ferdman, Almutaz Adileh, Onur Kocberber, Stavros Volos, Mohammad Alisafa
 [<a href="../bib/Clearing_the_Clouds.bib">bibtex</a>]
 [<a href ="./clearing-clouds.pdf">PDF</a>]</p>
 <br>
+<p>If using the dockerized version of the CloudSuite benchmarks, please also cite the following paper: <br><br>
+<b>Demystifying Cloud Benchmarking</b><br/>
+Tapti Palit, Yongming Shen, and Michael Ferdman.<br/>
+<em>In 2016 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS), April 2016.</em>
+<br>
+[<a href="../bib/Demystifying_Cloud_Benchmarking.bib">bibtex</a>]
+[<a href ="./demystifying-cloud-benchmarking.pdf">PDF</a>]</p>
+<br>
+
 
 <h1>Research Papers Using CloudSuite</h1>
 
