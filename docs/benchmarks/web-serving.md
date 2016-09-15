@@ -19,31 +19,31 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite` [GitHub repo][repo].
 
-### Creating a network between the servers and the client(s)
-
-To facilitate the communication between the client(s) and the servers, we build a docker network:
-
-    $ docker network create my_net
-
-We will attach the launched containers to this newly created docker network.
-
 ### Starting the web server ####
 To start the web server, you first have to `pull` the server image. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/web-serving:web_server
 
-The following command will start the web server, and attach it to the *my_net* network:
+The following command will start the web server:
 
-    $ docker run -dt --net=my_net --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh
+    $ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
+
+The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are mysql_server, and memcache_server, respectively, which are the default names of the containers. 
+The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
+
 
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/web-serving:db_server
 
-The following command will start the database server, and attach it to the *my_net* network:
+The following command will start the database server:
 
-    $ docker run -dt --net=my_net --name=mysql_server cloudsuite/web-serving:db_server
+    $ docker run -dt --net=host --name=mysql_server cloudsuite/web-serving:db_server ${WEB_SERVER_IP}
+
+The ${WEB_SERVER_IP}  parameter is mandatory. It sets the IP of the web_server. If you are using the host network, the web server IP is the IP of the machine that you are running the web_server container on. If you create your own network you can use the following command to get the IP address:
+
+    $ WEB_SERVER_IP=$(docker inspect --format '\{\{ .NetworkSettings.Networks.NAME_OF_YOUR_NETWORK.IPAddress \}\}' web_server)
 
 ### Starting the memcached server ####
 To start the memcached server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -52,7 +52,7 @@ To start the memcached server, you have to first `pull` the server image. To `pu
 
 The following command will start the memcached server, and attach it to the *my_net* network:
 
-    $ docker run -dt --net=my_net --name=memcache_server cloudsuite/web-serving:memcached_server
+    $ docker run -dt --net=host --name=memcache_server cloudsuite/web-serving:memcached_server
 
 ###  Running the benchmark ###
 
@@ -62,8 +62,7 @@ First `pull` the client image use the following command:
 
 To start the client container which runs the benchmark, use the following commands:
 
-    $ WEB_SERVER_IP=$(docker inspect --format '{{ .NetworkSettings.Networks.my_net.IPAddress }}' web_server)
-    $ docker run --net=my_net --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
+    $ docker run --net=host --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
 
 The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7).
 
