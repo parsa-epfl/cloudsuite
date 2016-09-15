@@ -17,6 +17,7 @@ while [ "$(curl -sSI ${WEB_SERVER_IP}:8080 | grep 'HTTP/1.1' | awk '{print $2}')
   sleep 1
 done
 
+sed -i -e"s/num_users=500/num_users=${LOAD_SCALE}/" /faban/usersetup.properties
 /faban/master/bin/startup.sh
 cd /web20_benchmark/build && java -jar Usergen.jar http://${WEB_SERVER_IP}:8080
 sed -i "s/<fa:scale.*/<fa:scale>${LOAD_SCALE}<\\/fa:scale>/" /web20_benchmark/deploy/run.xml
