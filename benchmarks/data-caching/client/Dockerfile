@@ -9,11 +9,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y libevent-2.0-5 --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN buildDeps='curl gcc libc6-dev libevent-dev make' \
+RUN buildDeps='curl gcc libc6-dev vim libevent-dev make' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& curl -SL "http://parsa.epfl.ch/cloudsuite/software/memcached.tar.gz" -o memcached.tar.gz \
+	&& curl -SL "http://parsa.epfl.ch/cloudsuite_old/software/memcached.tar.gz" -o memcached.tar.gz \
 	&& mkdir -p /usr/src/memcached \
 	&& tar -xzf memcached.tar.gz -C /usr/src/memcached --strip-components=1 \
 	&& rm memcached.tar.gz \
