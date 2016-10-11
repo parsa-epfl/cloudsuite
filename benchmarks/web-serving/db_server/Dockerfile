@@ -18,12 +18,11 @@ RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysq
 ADD files/execute.sh /execute.sh
 ADD files/elgg_db.dump /elgg_db.dump
 
-# Update the hostname/IP to that of the webserver
-RUN sed -i -e"s/HOST_IP/${web_host}:8080/" /elgg_db.dump
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh
+RUN chmod 700 /etc/bootstrap.sh
 
-RUN chmod a+x /execute.sh
-
-CMD bash -c "/execute.sh ${root_password}"
+ENTRYPOINT ["/etc/bootstrap.sh"]
 
 
 
