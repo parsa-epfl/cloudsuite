@@ -17,6 +17,10 @@ env:
   - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
 
+  # Hadoop
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.3"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.3" DF_PATH="./commons/hadoop/2.7.3"
+
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
