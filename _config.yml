@@ -3,7 +3,7 @@ permalink:           pretty
 
 # Setup
 title:               CloudSuite
-tagline:             'The Benchmark Suite of Cloud Services'
+tagline:             'A Benchmark Suite for Cloud Services'
 description:         'CloudSuite'
 url:                 http://cloudsuite.ch
 baseurl:             ''
