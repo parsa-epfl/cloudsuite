@@ -94,7 +94,7 @@ More information about Solr can be found [here][solrmanual].
 [solrui]: https://cwiki.apache.org/confluence/display/solr/Overview+of+the+Solr+Admin+UI "Apache Solr UI"
 [solrmanual]: https://cwiki.apache.org/confluence/display/solr/Apache+Solr+Reference+Guide "Apache Solr Manual"
 [nutchtutorial]: https://wiki.apache.org/nutch/NutchTutorial "Nutch Tutorial"
-[apachesolr]: https://github.com/apache/solr "Apache Solr"
+[apachesolr]: https://github.com/apache/lucene-solr "Apache Solr"
 [apachenutch]: https://github.com/apache/nutch "Apache Nutch"
 [repo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/web-search "Web Search GitHub Repo"
 [dhrepo]: https://hub.docker.com/r/cloudsuite/web-search/ "DockerHub Page"
