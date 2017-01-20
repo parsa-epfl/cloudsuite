@@ -46,7 +46,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 </ul>
 
 
-<h3>(Tentative) Agenda</h3>
+<h3>Agenda</h3>
 <table cellspacing="8" border="0">
 <tr id="row1"  >
 <td width="20%" align="center">Time Slot</td><td align="center"> Topic</td><td align="center">Material</td>
@@ -60,4 +60,3 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <tr align="center"><td>12:20 - 14:00</td><td><em>Lunch break</em></td><td></td>
 </tr>
 <tr align="center"><td>14:00 - 15:00</td><td>CloudSuite 3.0 Full-System Simulation</td><td>Introduction to Flexus and its interaction with the QEMU full-system simulator</td>
-</table> 
