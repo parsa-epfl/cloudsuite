@@ -5,6 +5,7 @@ backend
 balancer
 basedocker
 benchmarking
+CloudSuite
 cassandra
 cd
 clientdocker
@@ -67,6 +68,7 @@ txt
 usertable
 usr
 WebServer
+Wikimedia
 webserverdocker
 webserverdocker
 yaml

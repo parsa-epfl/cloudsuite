@@ -28,9 +28,8 @@ env:
 
   # Becnhmark Images
   # Data Analytics
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="base" DF_PATH="./benchmarks/data-analytics/base"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="master" DF_PATH="./benchmarks/data-analytics/master"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="slave" DF_PATH="./benchmarks/data-analytics/slave"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
 
   # Data Caching
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
