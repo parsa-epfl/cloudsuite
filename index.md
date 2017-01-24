@@ -60,7 +60,7 @@ To get a copy of these CloudSuite images, please send an email to cloudsuite-adm
 <h1>Usage and licenses of CloudSuite</h1>
 <p>CloudSuite is available for researchers interested in pursuing research in the field of cloud computing and datacenters. CloudSuite's software components are all available as open-source software. All of the software components are governed by their own licensing terms. Researchers interested in using CloudSuite are required to fully understand and abide by the licensing terms of the various components. For more information, please refer to the <a href="./licenses">license page</a>.</p>
 
-<p>For a microarchitectural characterization of the benchmarks, please see the following ASPLOS 2012 paper: <a href="./publications">"Clearing the Clouds: A Study of Emerging Scale-out Workloads on Modern Hardware"</a></p>
+<p>For a microarchitectural characterization of the benchmarks, please see the following ASPLOS 2012 paper: <a href="./publications/clearing-clouds.pdf">"Clearing the Clouds: A Study of Emerging Scale-out Workloads on Modern Hardware"</a></p>
 
 <br/>
 
