@@ -63,7 +63,7 @@ then
       git merge master --no-edit
       # Test if merge was successful
       result=$?
-      if [ $result -eq "1" ]
+      if [ $result != "0" ]
       then
         echo "Merge Failed"
         return 1
@@ -72,7 +72,7 @@ then
         # Update gh-pages branch
         git push -f origin gh-pages
         result=$?
-        if [ $result -eq "0" ]
+        if [ $result == "0" ]
         then
           echo "Successfully updated branch gh-pages"
         else

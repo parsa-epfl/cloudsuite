@@ -68,6 +68,6 @@ env:
 # Separate build for spellcheck in modified .md files and auto-updation of gh-pages branch
 script:
   - if [[ -z $Spell_Check ]];
-    then source ${TRAVIS_BUILD_DIR}/tests/travis.sh;
-    else source ${TRAVIS_BUILD_DIR}/tests/docs.sh;
+    then source ${TRAVIS_BUILD_DIR}/scripts/travis/travis.sh;
+    else source ${TRAVIS_BUILD_DIR}/scripts/travis/docs.sh;
     fi

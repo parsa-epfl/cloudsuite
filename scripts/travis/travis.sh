@@ -21,7 +21,7 @@ then
     travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
     #make sure build was successful
     result=$?
-    if [ $result -eq "1" ]
+    if [ $result != "0" ]
     then
         return 1
     fi
@@ -31,14 +31,14 @@ then
         docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
         # Pushing needs login, test if login was successful
         result=$?
-        if [ $result -eq "1" ]
+        if [ $result != "0" ]
         then
             return 1
         fi
         # Push if it logged in, test if push was successful
   	    travis_wait 40 docker push $DH_REPO
         result=$?
-        if [ $result -eq "1" ]
+        if [ $result != "0" ]
         then
             return 1
         fi
