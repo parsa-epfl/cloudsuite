@@ -22,3 +22,6 @@ gem 'github-pages-health-check', '0.6.0'
 gem 'jekyll-coffeescript', '1.0.1'
 gem 'jekyll-seo-tag', '0.1.4'
 gem 'rb-fsevent', '<= 0.9.4'
+gem 'classifier-reborn'
+gem 'rb-gsl'
+gem "html-proofer"

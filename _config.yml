@@ -1,30 +1,36 @@
-# Permalinks
-permalink:           pretty
-
-# Setup
-title:               CloudSuite
-tagline:             'A Benchmark Suite for Cloud Services'
-description:         'CloudSuite'
-url:                 http://cloudsuite.ch
-baseurl:             ''
-paginate:            5
-
-# About/contact
-author:
-  name:              CloudSuite
-  url:               https://cloudsuite.ch
-  email:             cloudsuite@listes.epfl.ch
-
 # Conversion
 markdown:           kramdown
 highlighter:        rouge
 kramdown:
   input:            GFM
 
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            CloudSuite
+tagline:          'A Benchmark Suite for Cloud Services'
+description:      'A Benchmark Suite for Cloud Services'
+url:              'http://cloudsuite.ch/'
+baseurl:          '/'
+
+author:
+  name:           'CloudSuite'
+  url:             http://cloudsuite.ch
+
+paginate:         3
+paginate_path:    blog/page:num
+
 # Custom vars
-version:             1.0.0
+version:          3.0
+blog_path:        blog/
+excerpt_separator: <!--more-->
+
+github:
+  repo:           https://github.com/ParsaLab/cloudsuite
 
 # Handling Reading
 exclude: 			 [old]
 
-gems:                [jekyll-paginate]
+gems: [jekyll-paginate, jekyll-gist]

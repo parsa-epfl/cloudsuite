@@ -7,48 +7,11 @@
 
     {% include sidebar.html %}
 
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
-    <div class="wrap">
-      <div class="masthead">
-        <div class="container">
-          <h3 class="masthead-title">
-            <a href="{{ site.url }}{{ site.baseurl }}" title="Home" display="none">{{ site.title }}</a>
-                <!-- <a href="{{ site.url }}{{ site.baseurl }}">
-                    <img alt="{{ site.title }}" src="{{ site.baseurl }}/public/cloudsuite-logo-color3.png" width="180em" height="30em" style="float: left; margin: 0rem 2rem 0rem 5rem;"></img>
-                </a> -->
-                <small>{{ site.tagline }}</small>
-          </h3>
-        </div>
-      </div>
-
-      <div class="container content">
-        {{ content }}
-        </div>
+    <div class="content container">
+      {{ content }}
+    </div>
 
     {% include footer.html %}
 
-      </div>
-    </div>
-
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
-
-    <script>
-      (function(document) {
-        var toggle = document.querySelector('.sidebar-toggle');
-        var sidebar = document.querySelector('#sidebar');
-        var checkbox = document.querySelector('#sidebar-checkbox');
-
-        document.addEventListener('click', function(e) {
-          var target = e.target;
-
-          if(!checkbox.checked ||
-             sidebar.contains(target) ||
-             (target === checkbox || target === toggle)) return;
-
-          checkbox.checked = false;
-        }, false);
-      })(document);
-    </script>
   </body>
 </html>

@@ -1,38 +1,56 @@
-<!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
-     styles, `#sidebar-checkbox` for behavior. -->
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" checked>
-<!-- <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox"> -->
+<div class="sidebar">
+  <div class="container ">
+    <div class="sidebar-about">
+      <h1>
+        <a href="{{ site.url }}">
+          <!--{{ site.title }}-->
+          <!--<center>-->
+            <img src="{{ site.url }}public/images/cloudsuite-logo-color1.png" alt="CloudSuite Logo" width="100%"> </img>
+          <!--</center>-->
+        </a>
+      </h1>
+      <p class="lead">{{ site.description }}</p>
+    </div>
 
-<!-- Toggleable sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-item">
-    <!-- <p>{{ site.description }}</p> -->
-    <img src="{{ site.baseurl }}/public/cloudsuite-logo-color2.png"> </img>
-  </div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.url }}">Home</a>
 
-  <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.url }}{{ site.baseurl }}">Home</a>
+      {% comment %}
+        The code below dynamically generates a sidebar nav of pages with
+        `layout: page` in the front-matter. See readme for usage.
+      {% endcomment %}
 
-    {% comment %}
-      The code below dynamically generates a sidebar nav of pages with
-      `layout: page` in the front-matter. See readme for usage.
-    {% endcomment %}
-
-    {% assign pages_list = site.pages | sort:"show_ord" %}
-    {% for node in pages_list %}
-      {% if node.title != null %}
-        {% if node.layout == "page" and node.sidebar == "true" %}
-          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ site.url }}{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+      {% assign pages_list = site.pages %}
+      {% for node in pages_list %}
+        {% if node.title != null %}
+          {% if node.layout == "page" and node.sidebar == "true" %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ site.url }}{{ node.url }}">{{ node.title }}</a>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
 
-  </nav>
+      <a class="sidebar-nav-item{% if page.url contains site.blog_path %} active{% endif %}" href="{{ site.url }}{{ site.blog_path }}">News Blog</a>
 
-  <div class="sidebar-item">
-    <p>
-      &copy; {{ site.time | date: '%Y' }}. All rights reserved.
-    </p>
+
+    <div class="external-links">
+        <a href="{{ site.url }}atom.xml" rel="alternate" type="application/rss+xml">
+          <img src="{{ site.url }}public/images/rss-icon-20.png" alt="Subscribe via RSS"/>
+        </a>
+
+        <a href="{{ site.github.repo }}">
+          <img src="{{ site.url }}public/images/github-mark-light-20.png" alt="GitHub"/>
+        </a>
+
+        <!--<a href="https://doi.org/10.5281/zenodo.266990">
+          <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.266990.svg" alt="DOI">
+        </a>-->
+
+    </div>
+
+      <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+    </nav>
+
+    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
   </div>
-
+  
 </div>
