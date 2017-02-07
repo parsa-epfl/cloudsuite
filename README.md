@@ -23,7 +23,6 @@ benchmarking across existing cloud-server systems.
 We encourage CloudSuite users to use GitHub issues for requests for enhacements or bug fixes.
 
 [csp]: http://cloudsuite.ch "CloudSuite Page"
-[csl]: http://cloudsuite.ch/licenses/ "CloudSuite License"
-[csb]: http://cloudsuite.ch/benchmarks/ "CloudSuite Benchmarks"
+[csl]: http://cloudsuite.ch/pages/license/ "CloudSuite License"
+[csb]: http://cloudsuite.ch/pages/download/ "CloudSuite Benchmarks"
 [pkb]: https://github.com/GoogleCloudPlatform/PerfKitBenchmarker "Google's PerfKit Benchmarker"
-
