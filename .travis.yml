@@ -13,7 +13,9 @@ addons:
     - libgsl0-dbg
 
 notifications:
-  slack: parsa-epfl:jY28s7BKfln7gmNdbtxoQWx7
+  email: false
+  slack: 
+    parsa-epfl:jY28s7BKfln7gmNdbtxoQWx7
 
 # Assume bundler is being used, therefore
 # the `install` step will run `bundle install` by default.
