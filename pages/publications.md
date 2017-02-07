@@ -49,4 +49,4 @@ P. Lotfi-Kamran, B. Grot, M. Ferdman, S. Volos, O. Kocberber, J. Picorel, A. Adi
 *Proceedings of the 39th Annual International Symposium on Computer Architecture, 2012.*
 [[Detailed record]](http://infoscience.epfl.ch/record/176330) - [[Bibtex]](http://infoscience.epfl.ch/export.py?recid=176330&fm=bibtex) - [[PDF]](http://infoscience.epfl.ch/record/176330/files/sop_isca12.pdf)
 
-**You can find the complete list of papers, which used or cited CloudSuite [here](https://scholar.google.ch/scholar?oi=bibs&amp;hl=en&amp;cites=668093864912588690).**
+**You can find the complete list of papers, which used or cited CloudSuite [here](https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=668093864912588690).**
