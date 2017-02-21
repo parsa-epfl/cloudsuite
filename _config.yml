@@ -28,7 +28,7 @@ blog_path:        blog/
 excerpt_separator: <!--more-->
 
 github:
-  repo:           https://github.com/ParsaLab/cloudsuite
+  repo:           https://github.com/parsa-epfl/cloudsuite
 
 # Handling Reading
 exclude: 			 [old]

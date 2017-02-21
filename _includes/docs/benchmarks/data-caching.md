@@ -18,7 +18,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`server`][serverdocker]: This represents the Memcached server running as a daemon.
  - [`client`][clientdocker]: This represents the client which requests to access the server's data.
 
-These images are automatically built using the mentioned Dockerfiles available on `ParsaLab/cloudsuite` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
 ### Preparing a network between the server(s) and the client
 
@@ -133,11 +133,11 @@ and the client on different sockets of the same machine
 
   [memcachedWeb]: http://memcached.org/ "Memcached Website"
 
-  [serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/ParsaLab/cloudsuite "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite/data-caching/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-caching.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-caching.svg "Go to DockerHub Page"

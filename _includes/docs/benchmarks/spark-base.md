@@ -15,7 +15,7 @@ Supported tags and their respective `Dockerfile` links:
 - [`spark-worker`][sparkworkerdocker] This builds an image with the Spark worker node. You may spawn clusters of several workers.
 - [`spark-client`][sparkclientdocker] This builds an image with the Spark client node. The client is used to start the benchmark.
 
-These images are automatically built using the mentioned Dockerfiles available on [`ParsaLab/cloudsuite`][repo].
+These images are automatically built using the mentioned Dockerfiles available on [`parsa-epfl/cloudsuite`][repo].
 
 ### Starting the volume images ###
 
@@ -68,11 +68,11 @@ To run the benchmark from the interactive container, use the following command:
 
     $ bash /benchmark/[benchmark-name]/run_benchmark.sh
 
-[sparkmasterdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
-[sparkworkerdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
-[sparkclientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
+[sparkmasterdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/spark-base/spark-master/Dockerfile "Spark Master Node Dockerfile"
+[sparkworkerdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/spark-base/spark-worker/Dockerfile "Spark Worker Dockerfile"
+[sparkclientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/spark-base/spark-client/Dockerfile "Spark Client Dockerfile"
 
-[repo]: https://github.com/ParsaLab/cloudsuite/ "GitHub Repo"
+[repo]: https://github.com/parsa-epfl/cloudsuite/ "GitHub Repo"
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/spark-base/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/spark-base.svg "Go to DockerHub Page"

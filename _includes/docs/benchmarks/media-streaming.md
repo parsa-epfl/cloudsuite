@@ -16,7 +16,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`client`][clientdocker]: This represents the httperf client.
  - [`dataset`][datasetdocker]: This represents the video files dataset for the streaming server.
 
-These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
 ### Dataset
 
@@ -61,13 +61,13 @@ To start the client container and connect it to the *streaming_network* network 
 
 The client will issue a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of client's execution, the resulting log files can be found under /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`.
 
-  [datasetdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
+  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/media-streaming "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"
