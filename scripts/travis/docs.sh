@@ -51,7 +51,7 @@ then
     then
       mkdir out;
       cd out
-      git clone https://github.com/ParsaLab/cloudsuite.git
+      git clone https://github.com/parsa-epfl/cloudsuite.git
       cd cloudsuite
       git checkout gh-pages
       # Credentials to allow a merge and push to auto-update documentation website through gh-pages branch 

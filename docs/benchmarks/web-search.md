@@ -16,7 +16,7 @@ Supported tags and their respective `Dockerfile` links:
 - [`server`][serverdocker] This builds an image for the Apache Solr index nodes. You may spawn several nodes.
 - [`client`][clientdocker] This builds an image with the client node. The client is used to start the benchmark and query the index nodes.
 
-These images are automatically built using the mentioned Dockerfiles available on [`https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/web-search`][repo].
+These images are automatically built using the mentioned Dockerfiles available on [`https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-search`][repo].
 
 ### Creating a network between the server(s) and the client(s)
 
@@ -88,15 +88,15 @@ The output results will show on the screen after the benchmark finishes.
 
 More information about Solr can be found [here][solrmanual].
 
-[datadocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-search/data/Dockerfile "Data volume Dockerfile"
-[serverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-search/server/Dockerfile "Server Dockerfile"
-[clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-search/client/Dockerfile "Client Dockerfile"
+[datadocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-search/data/Dockerfile "Data volume Dockerfile"
+[serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-search/server/Dockerfile "Server Dockerfile"
+[clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-search/client/Dockerfile "Client Dockerfile"
 [solrui]: https://cwiki.apache.org/confluence/display/solr/Overview+of+the+Solr+Admin+UI "Apache Solr UI"
 [solrmanual]: https://cwiki.apache.org/confluence/display/solr/Apache+Solr+Reference+Guide "Apache Solr Manual"
 [nutchtutorial]: https://wiki.apache.org/nutch/NutchTutorial "Nutch Tutorial"
 [apachesolr]: https://github.com/apache/solr "Apache Solr"
 [apachenutch]: https://github.com/apache/nutch "Apache Nutch"
-[repo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/web-search "Web Search GitHub Repo"
+[repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-search "Web Search GitHub Repo"
 [dhrepo]: https://hub.docker.com/r/cloudsuite/web-search/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-search.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-search.svg "Go to DockerHub Page"

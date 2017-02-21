@@ -17,7 +17,7 @@ Supported tags and their respective `Dockerfile` links:
  - [`db_server`][mysqlserverdocker]: This represents the database server, which runs MySQL.
  - [`faban_client`][clientdocker]: This represents the faban client.
 
-These images are automatically built using the mentioned Dockerfiles available on the `ParsaLab/cloudsuite` [GitHub repo][repo].
+These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -65,12 +65,12 @@ The last command has a mandatory parameter to set the IP of the web_server, and 
 
 The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 
-  [webserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
-  [memcacheserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
-  [mysqlserverdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
-  [clientdocker]: https://github.com/ParsaLab/cloudsuite/blob/master/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
+  [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
+  [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
+  [mysqlserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/ParsaLab/cloudsuite/tree/master/benchmarks/web-serving "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-serving "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite/web-serving/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-serving.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-serving.svg "Go to DockerHub Page"
