@@ -22,7 +22,7 @@ then
       then
         # Run spell check using aspell and find out file name and line no. of each misspelled words, sorting them acc. to line no.
         # Ignore certain selected words -  listed in /tests/.aspell.en.pws
-        <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./tests/.aspell.en.pws |
+        <$docs_file_modified aspell pipe list -d en_US --encoding utf-8 --personal=./scripts/travis/.aspell.en.pws |
         grep '[a-zA-Z]\+ [0-9]\+ [0-9]\+' -oh |
         grep '[a-zA-Z]\+' -o | sort | uniq |
         while read word; do
