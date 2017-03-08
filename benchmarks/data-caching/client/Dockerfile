@@ -6,10 +6,10 @@ RUN groupadd -r memcache && useradd -r -g memcache memcache
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y libevent-2.0-5 --no-install-recommends \
+RUN apt-get update && apt-get install -y libevent-2.0-5 vim --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN buildDeps='curl gcc libc6-dev vim libevent-dev make' \
+RUN buildDeps='curl gcc libc6-dev libevent-dev make' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \

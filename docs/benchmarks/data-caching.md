@@ -80,7 +80,7 @@ The client can simultaneously use multiple servers, one server with several ip a
     dc-server3, 11211
     dc-server4, 11211
 
-You can use the `vim.tiny` command for modifying this file inside the container.
+You can use the `vim` command for modifying this file inside the container.
 
 #### Scaling the dataset and warming up the server ####
 
