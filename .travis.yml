@@ -14,8 +14,9 @@ services:
 env:
   # Commons
   # Spark
-  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/1.5.1"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.1.0"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="2.1.0" DF_PATH="./commons/spark/2.1.0"
 
   # Hadoop
   - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.3"

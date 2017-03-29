@@ -8,8 +8,8 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
       openjdk-7-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
-ENV SPARK_VERSION 1.5.1
-ENV HADOOP_VERSION 2.6
+ENV SPARK_VERSION 2.1.0
+ENV HADOOP_VERSION 2.7
 ENV MIRROR  https://d3kbcqa49mib13.cloudfront.net/
 ENV SPARK_HOME /opt/spark-${SPARK_VERSION}
 
@@ -21,7 +21,7 @@ RUN BUILD_DEPS="curl openjdk-7-jdk" \
     && curl ${MIRROR}spark-${SPARK_VERSION}.tgz | tar -xzC /root \
     && export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") \
     && cd /root/spark-${SPARK_VERSION} \
-    && ./make-distribution.sh -Phadoop-${HADOOP_VERSION} -Pyarn -Pnetlib-lgpl >/dev/null \
+    && ./dev/make-distribution.sh -Phadoop-${HADOOP_VERSION} -Pyarn -Pnetlib-lgpl >/dev/null \
     && mv dist /opt/spark-${SPARK_VERSION} \
     && cd /root && rm -r .zinc .m2 spark-${SPARK_VERSION} \
     && apt-get purge -y --auto-remove ${BUILD_DEPS}
