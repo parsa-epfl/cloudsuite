@@ -4,7 +4,7 @@
 [![Stars on DockerHub][dhstars]][dhrepo]
 
 This repository contains a Docker image of Apache Spark. Currently we support
-Spark version 1.5.1. The lastest tag corresponds to version 1.5.1.
+Spark versions 1.5.1 and 2.1.0. The lastest tag corresponds to version 2.1.0.
 
 To obtain the image:
 
