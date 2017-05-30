@@ -1,4 +1,4 @@
-FROM aarch64/ubuntu:14.04
+FROM resin/aarch64-debian:latest
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 

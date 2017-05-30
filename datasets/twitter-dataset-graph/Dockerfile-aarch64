@@ -1,4 +1,4 @@
-FROM aarch64/ubuntu:14.04
+FROM resin/aarch64-debian:latest
 #socialcomputing.asu.edu/uploads/1296759055/Twitter-dataset.zip
 # Install packages
 RUN BUILD_DEPS="wget unzip" \
