@@ -1,4 +1,4 @@
-FROM aarch64/ubuntu:latest
+FROM resin/aarch64-debian:latest
 MAINTAINER Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>
 
 # This is based on the official memcached Dockerfile
