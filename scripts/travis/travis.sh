@@ -18,7 +18,14 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) ||
    ( grep -q ".travis.yml" <<<$modified_files )
 then
     # if modified, then rebuild their docker image
-    travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+    if [[ -z $ARM ]]
+    then
+        travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+    else # Build for aarch64
+        docker run --rm --privileged multiarch/qemu-user-static:register
+        travis_wait 40 docker build -t $DH_REPO:$IMG_TAG-aarch64 -f $DF_PATH/Dockerfile-aarch64 $DF_PATH
+    fi
+    
     #make sure build was successful
     result=$?
     if [ $result != "0" ]

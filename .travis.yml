@@ -15,53 +15,74 @@ env:
   # Commons
   # Spark
   - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.1.0"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.1.0" ARM="1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="2.1.0" DF_PATH="./commons/spark/2.1.0"
 
   # Hadoop
   - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.3"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.3" ARM="1"
   - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.3" DF_PATH="./commons/hadoop/2.7.3"
 
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset" ARM="1"
   - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
+  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph" ARM="1"
 
   # Becnhmark Images
   # Data Analytics
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0" ARM="1"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
 
   # Data Caching
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" ARM="1"
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client" ARM="1"
 
   # Data Serving
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server" ARM="1"
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client" ARM="1"
 
   # Graph Analytics
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0" ARM="1"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
 
   # In-memory Analytics
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0" ARM="1"
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
 
   # Media Streaming
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client" ARM="1"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server" ARM="1"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" ARM="1"
+
 
   # Web Search
   - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
   - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" ARM="1"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" ARM="1"
 
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server" ARM="1"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client" ARM="1"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server" ARM="1"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server" ARM="1"
 
   #Spell Check
   - Spell_Check="1"
