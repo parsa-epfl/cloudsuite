@@ -1,0 +1,8 @@
+FROM cloudsuite/spark-base:base-latest-aarch64
+
+RUN mkdir -p /benchmarks
+
+COPY entrypoint /root/entrypoint
+
+ENTRYPOINT ["/root/entrypoint"]
+
