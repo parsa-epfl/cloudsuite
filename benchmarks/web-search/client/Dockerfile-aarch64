@@ -1,4 +1,4 @@
-FROM cloudsuite/spark-base:base-latest-aarch64
+FROM cloudsuite/java:latest-aarch64
 MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 
 ENV FABAN_USER faban

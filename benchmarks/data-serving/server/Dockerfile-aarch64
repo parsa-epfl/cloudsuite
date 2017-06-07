@@ -1,17 +1,13 @@
-FROM resin/aarch64-debian:latest
+FROM cloudsuite/java:latest-aarch64
 
-ENV CASSANDRA_VERSION 2.1.12
+RUN apt-get update \
+	&& apt-get install wget \
+	&&  wget http://archive.apache.org/dist/cassandra/2.1.12/apache-cassandra-2.1.12-bin.tar.gz \
+	&& tar -xvzf apache-cassandra-2.1.12-bin.tar.gz
 
-ENV CASSANDRA_CONFIG /etc/cassandra
-
-RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57A16DD0047EC749D6EEC0353B12C \
-	&& echo 'deb http://www.apache.org/dist/cassandra/debian 21x main' >> /etc/apt/sources.list.d/cassandra.list \
-	&& apt-get update \
-    	&& apt-get install -y cassandra \
-    	&& rm -rf /var/lib/apt/lists/*
-
-# https://issues.apache.org/jira/browse/CASSANDRA-11661
-RUN sed -ri 's/^(JVM_PATCH_VERSION)=.*/\1=25/' /etc/cassandra/cassandra-env.sh
+ENV CASSANDRA_HOME apache-cassandra-2.1.12 
+ENV CASSANDRA_CONFIG $CASSANDRA_HOME/conf
+ENV PATH $PATH:$CASSANDRA_HOME/bin
 
 COPY setup_tables.txt /setup_tables.txt
 COPY docker-entrypoint.sh /docker-entrypoint.sh
