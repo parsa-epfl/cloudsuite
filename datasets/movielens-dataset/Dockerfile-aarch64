@@ -1,4 +1,4 @@
-FROM resin/aarch64-debian:latest
+FROM resin/aarch64-debian:jessie
 
 # Download datasets
 RUN BUILD_DEPS="curl unzip" \

@@ -1,4 +1,4 @@
-FROM resin/aarch64-debian:latest
+FROM resin/aarch64-debian:jessie
 MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
 
 ENV root_password root

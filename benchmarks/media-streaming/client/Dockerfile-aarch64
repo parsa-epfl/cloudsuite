@@ -1,4 +1,4 @@
-FROM resin/aarch64-debian:latest
+FROM resin/aarch64-debian:jessie
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
