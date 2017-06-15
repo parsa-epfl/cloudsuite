@@ -1,9 +1,8 @@
-FROM ubuntu:14.04
+FROM cloudsuite/java
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
       curl \
-      openjdk-7-jdk \
       rsync \
       ssh \
     && rm -rf /var/lib/apt/lists/*
