@@ -1,4 +1,4 @@
-FROM cloudsuite/spark-base:base
+FROM ubuntu:14.04
 MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 
 ENV SOLR_USER solr

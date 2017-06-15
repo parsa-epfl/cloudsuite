@@ -1,10 +1,10 @@
-FROM cloudsuite/spark-base:base
+FROM cloudsuite/java
 MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 
 ENV FABAN_USER faban
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet wget tar openjdk-7-jdk \
+	&& apt-get install -y --no-install-recommends telnet wget tar \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $FABAN_USER  \
 	&& useradd -r -g $FABAN_USER $FABAN_USER
