@@ -1,4 +1,4 @@
-FROM cloudsuite/java:latest-aarch64
+FROM cloudsuite/java:openjdk7-aarch64
 
 RUN apt-get update \
 	&& apt-get install wget \

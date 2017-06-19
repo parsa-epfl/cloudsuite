@@ -1,4 +1,4 @@
-FROM resin/aarch64-debian:latest
+FROM cloudsuite/java:openjdk7-aarch64
 MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 
 ENV SOLR_USER solr

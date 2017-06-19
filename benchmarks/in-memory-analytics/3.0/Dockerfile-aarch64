@@ -1,4 +1,4 @@
-FROM cloudsuite/spark:latest-aarch64
+FROM cloudsuite/spark:aarch64
 
 # Benchmark files
 COPY movielens-als /root/movielens-als

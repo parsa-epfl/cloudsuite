@@ -1,7 +1,9 @@
-FROM cloudsuite/hadoop:latest-aarch64
+FROM cloudsuite/hadoop:aarch64
 
 ENV MAHOUT_VERSION 0.12.2
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
+
+RUN apt-get update && apt-get install bzip2
 
 # Install Mahout
 RUN set -x \
@@ -11,7 +13,7 @@ RUN set -x \
     && mv /opt/apache-mahout-distribution-${MAHOUT_VERSION} ${MAHOUT_HOME}
 
 # Download dataset
-RUN curl https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles1.xml-p10p30302.bz2 | bunzip2 > /root/wiki
+RUN curl https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles1.xml-p10p30302.bz2 | bzip2 > /root/wiki
 
 COPY files/*-site.xml ${HADOOP_CONF_DIR}/
 COPY files/categories /root/
