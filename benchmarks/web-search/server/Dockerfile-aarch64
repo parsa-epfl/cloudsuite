@@ -4,7 +4,7 @@ MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 ENV SOLR_USER solr
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet lsof wget unzip \
+	&& apt-get install -y --no-install-recommends telnet lsof wget unzip telnet-tools\
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $SOLR_USER  \
 	&& useradd -r -g $SOLR_USER $SOLR_USER
