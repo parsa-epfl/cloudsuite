@@ -10,26 +10,28 @@ title: Overview
 <ul>
   {% for post in site.posts limit: 2%}
     <li>
-          <h4 class="post-title">
+          <h4 class="post-title" id="no-margin-here">
             <span class="recent-news-date">{{ post.date | date_to_string }} &raquo;</span>
             <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
           </h4>
-          {{ post.excerpt }}
+          <span class="no-margin-here"> {{ post.excerpt }} </span>
           {% capture content_words %} {{ post.content | number_of_words }} {% endcapture %}
           {% capture excerpt_words %} {{ post.excerpt | number_of_words }} {% endcapture %}
           {% if excerpt_words != content_words %}
-            <a href="{{ site.url }}{{ post.url }}">Read more...</a>
+            <a href="{{ site.url }}{{ post.url }}" class="no-margin-here">Read more...</a>
           {% endif %}
     </li>
-    <hr/>
+    <hr class="no-margin-here"/>
   {% endfor %}
 </ul>
 
+<span class="no-margin-here">
 For more news refer to our <a href="{{ site.url }}{{ site.blog_path }}" >blog</a>.
+</span>
 
 </div>
 
-------------
+<hr class="no-margin-here" />
 
 # Overview
 

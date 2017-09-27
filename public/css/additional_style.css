@@ -49,7 +49,6 @@
 
 /* Meta data line below post title */
 .recent-news-date {
-  /*display: block;*/
   margin-top: -.5rem;
   margin-bottom: 1rem;
   color: #9a9a9a;
@@ -61,4 +60,10 @@
 
 .external-links img {
     display: inline;
+}
+
+.no-margin-here,
+.no-margin-here p,
+ #no-margin-here{
+    margin: 0;
 }
