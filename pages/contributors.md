@@ -11,10 +11,12 @@ sidebar: "true"
 ## Students
 - [Alexandros Daglis](http://parsa.epfl.ch/~daglis/)
 - [Mario Drumond](http://parsa.epfl.ch/~drumond/)
-- [Nooshin Mirzadeh](http://parsa.epfl.ch/~mirzadeh/)
+- [Siddharth Gupta](https://people.epfl.ch/siddharth.gupta)
+- [Hussein Kassir](https://people.epfl.ch/hussein.kassir)
 - [Tapti Palit](http://compas.cs.stonybrook.edu/~tpalit/)
-- [Javier Picorel](http://parsa.epfl.ch/~picorel/)
 - [Arash Pourhabibi](http://parsa.epfl.ch/~pourhabi/)
+- [Mark Sutherland](https://sites.google.com/site/markjohnsutherland/)
+- [Zilu Tian](https://parsa.epfl.ch/~ztian/)
 - [Dmitrii Ustiugov](http://parsa.epfl.ch/~ustiugov/)
 
 ## Past Contributors
@@ -26,8 +28,10 @@ sidebar: "true"
 - Almutaz Adileh
 - Mohammad Alisafaee
 - Djordje Jevdjic
+- Nooshin Mirzadeh
 - Cansu Kaynak
 - Onur Kocberber
+- Javier Picorel
 - Adrian Popescu
 - Georgios Psaropoulos
 - Stavros Volos
