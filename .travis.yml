@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
     - gsl-bin
+    - libcurl4-openssl-dev # required to avoid SSL errors
     - libgsl0ldbl
     - libgsl0-dev
     - libgsl0-dbg
