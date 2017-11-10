@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
+LABEL maintainer="mark.sutherland@epfl.ch"
 
 ENV root_password root
 ENV web_host web_server 
