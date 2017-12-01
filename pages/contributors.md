@@ -13,7 +13,6 @@ sidebar: "true"
 - [Mario Drumond](http://parsa.epfl.ch/~drumond/)
 - [Siddharth Gupta](https://people.epfl.ch/siddharth.gupta)
 - [Hussein Kassir](https://people.epfl.ch/hussein.kassir)
-- [Tapti Palit](http://compas.cs.stonybrook.edu/~tpalit/)
 - [Arash Pourhabibi](http://parsa.epfl.ch/~pourhabi/)
 - [Mark Sutherland](https://sites.google.com/site/markjohnsutherland/)
 - [Zilu Tian](https://parsa.epfl.ch/~ztian/)
@@ -31,6 +30,7 @@ sidebar: "true"
 - Nooshin Mirzadeh
 - Cansu Kaynak
 - Onur Kocberber
+- Tapti Palit
 - Javier Picorel
 - Adrian Popescu
 - Georgios Psaropoulos
