@@ -60,7 +60,7 @@ allocated to be able to execute the benchmark in-memory, supply it with
 
     $ docker run --rm --volumes-from data cloudsuite/in-memory-analytics \
         /data/ml-latest /data/myratings.csv \
-        --driver-memory 1g --executor-memory 1g
+        --driver-memory 2g --executor-memory 2g
 
 ### Multi-node deployment
 
