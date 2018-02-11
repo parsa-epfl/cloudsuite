@@ -4,11 +4,12 @@ LABEL maintainer="mark.sutherland@epfl.ch"
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
-        curl \
+    curl \
 	openjdk-7-jdk \
 	wget
 
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV FABAN_HOME /faban
 
 # Setup Faban 
 

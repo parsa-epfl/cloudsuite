@@ -15,13 +15,13 @@
 			<fh:tools>NONE</fh:tools>
 			<fh:userCommands />
 		</fa:hostConfig>
-		<fa:scale>190</fa:scale>
+		<fa:scale>200</fa:scale>
 		<fa:runControl unit="time">
 			<fa:rampUp>30</fa:rampUp>
-			<fa:steadyState>50</fa:steadyState>
+			<fa:steadyState>300</fa:steadyState>
 			<fa:rampDown>30</fa:rampDown>
 		</fa:runControl>
-		<outputDir>/home/tpalit/Documents/elgg_output</outputDir>
+        <outputDir>/home/msutherl</outputDir>
 		<audit>false</audit>
 		<threadStart>
 		
@@ -59,8 +59,8 @@
 		</driverConfig>
 	</fa:runConfig>
 	<serverConfig>
-			<host>whitbread</host>
-			<port>80</port>
+			<host>192.168.2.129</host>
+			<port>8080</port>
 	</serverConfig>
 	
 </webbenchmark>
