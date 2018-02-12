@@ -1,21 +1,20 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 LABEL maintainer="mark.sutherland@epfl.ch"
 
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
     curl \
-	openjdk-7-jdk \
+	openjdk-8-jdk \
 	wget
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV FABAN_HOME /faban
 
 # Setup Faban 
 
 RUN wget http://faban.org/downloads/faban-kit-latest.tar.gz
-RUN tar zxvf faban-kit-latest.tar.gz
-
+RUN tar zxvf faban-kit-latest.tar.gz 
 COPY files/web20_benchmark /web20_benchmark
 
 WORKDIR /web20_benchmark
