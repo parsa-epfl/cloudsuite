@@ -108,7 +108,7 @@ public class UserGenerator {
 		headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		headers.put("Accept-Language", "en-US,en;q=0.5");
 		headers.put("Accept-Encoding", "gzip, deflate");
-		headers.put("Referer", hostURL+"/admin/users/add");
+		// TODO: mark removed headers.put("Referer", hostURL+"/admin/users/add");
 		headers.put("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 
 		sb = http.fetchURL(hostURL+"/action/login", loginPostRequest, headers);

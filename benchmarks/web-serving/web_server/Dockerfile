@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
+LABEL maintainer="mark.sutherland@epfl.ch"
 
 USER root
 
