@@ -14,8 +14,9 @@ services:
 env:
   # Commons
   # Java
-  - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk7"
+  - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk8"
   - DH_REPO="cloudsuite/java" IMG_TAG="openjdk7" DF_PATH="./commons/java/openjdk7"
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk8" DF_PATH="./commons/java/openjdk8"
 
   # Hadoop
   - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.3"
