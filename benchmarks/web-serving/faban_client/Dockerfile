@@ -13,8 +13,8 @@ ENV FABAN_HOME /faban
 
 # Setup Faban 
 
-RUN wget http://faban.org/downloads/faban-kit-latest.tar.gz
-RUN tar zxvf faban-kit-latest.tar.gz 
+RUN wget http://faban.org/downloads/faban-kit-1.4.tar.gz
+RUN tar zxvf faban-kit-1.4.tar.gz 
 COPY files/web20_benchmark /web20_benchmark
 
 WORKDIR /web20_benchmark
