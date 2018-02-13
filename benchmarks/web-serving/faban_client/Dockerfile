@@ -1,14 +1,11 @@
-FROM ubuntu:14.04
+FROM cloudsuite/java
 MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
 
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
         curl \
-	openjdk-7-jdk \
 	wget
-
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 # Setup Faban 
 
@@ -18,6 +15,7 @@ RUN tar zxvf faban-kit-latest.tar.gz
 COPY files/web20_benchmark /web20_benchmark
 
 WORKDIR /web20_benchmark
+
 
 # Build the Faban benchmark and the user-generation tool
 RUN ant deploy.jar

@@ -1,9 +1,8 @@
-FROM ubuntu:14.04
+FROM cloudsuite/java
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
       curl \
-      openjdk-7-jdk \
       rsync \
       ssh \
     && rm -rf /var/lib/apt/lists/*
@@ -11,7 +10,6 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 ENV HADOOP_VERSION 2.7.3
 ENV HADOOP_PREFIX /opt/hadoop-${HADOOP_VERSION}
 ENV HADOOP_CONF_DIR ${HADOOP_PREFIX}/etc/hadoop
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 # Install Hadoop
 RUN set -x \
