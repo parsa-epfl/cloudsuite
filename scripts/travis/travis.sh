@@ -28,7 +28,7 @@ then
     # Push if this file was triggerred by a push command (not a pull request)
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]
     then
-        docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"
+        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
         # Pushing needs login, test if login was successful
         result=$?
         if [ $result != "0" ]
