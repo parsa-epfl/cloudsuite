@@ -7,8 +7,6 @@ RUN apt-get update && apt-get install -y \
         curl \
 	wget
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-
 # Setup Faban 
 
 RUN wget http://faban.org/downloads/faban-kit-latest.tar.gz

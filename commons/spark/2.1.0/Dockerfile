@@ -16,7 +16,6 @@ ENV SPARK_HOME /opt/spark-${SPARK_VERSION}
 # Install Spark
 RUN set -x \
     && curl ${MIRROR}spark-${SPARK_VERSION}.tgz | tar -xzC /root \
-    && export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") \
     && cd /root/spark-${SPARK_VERSION} \
     && ./dev/make-distribution.sh -Phadoop-${HADOOP_VERSION} -Pyarn -Pnetlib-lgpl >/dev/null \
     && mv dist /opt/spark-${SPARK_VERSION} \
