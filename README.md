@@ -20,7 +20,7 @@ benchmarking across existing cloud-server systems.
 
 # Support #
 
-We encourage CloudSuite users to use GitHub issues for requests for enhacements, questions or bug fixes.
+We encourage CloudSuite users to use GitHub issues for requests for enhancements, questions or bug fixes.
 
 [csp]: http://cloudsuite.ch "CloudSuite Page"
 [csl]: http://cloudsuite.ch/pages/license/ "CloudSuite License"
