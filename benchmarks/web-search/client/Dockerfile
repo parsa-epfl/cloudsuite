@@ -4,7 +4,7 @@ MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
 ENV FABAN_USER faban
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet wget tar \
+	&& apt-get install -y --no-install-recommends telnet wget tar curl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $FABAN_USER  \
 	&& useradd -r -g $FABAN_USER $FABAN_USER
