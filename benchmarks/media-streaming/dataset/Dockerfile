@@ -1,13 +1,23 @@
 FROM ubuntu:14.04
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      build-essential \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && \
+	apt-get install -y --force-yes software-properties-common && \
+	apt-add-repository "ppa:mc3man/trusty-media" && \
+	add-apt-repository ppa:deadsnakes/ppa && \
+	apt-get update -y && \
+	apt-get install -y --no-install-recommends \
+	build-essential \
+	python3.5 \
+	ffmpeg \
+	&& rm -rf /var/lib/apt/lists/*
 
 COPY files /root/
 
-RUN mkdir /videos
-RUN cd /root/filegen && make && ./generate_video_files_and_logs.sh /videos
+ADD bootstrap.sh /root/bootstrap.sh
+RUN chown root:root /root/bootstrap.sh
+RUN chmod 700 /root/bootstrap.sh
 
 VOLUME ["/videos"]
+
+ENTRYPOINT ["/root/bootstrap.sh"]
