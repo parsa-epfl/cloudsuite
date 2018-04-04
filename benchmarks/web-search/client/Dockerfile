@@ -1,5 +1,5 @@
 FROM cloudsuite/java
-LABEL maintainer="sidharth.gupta@epfl.ch"
+LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
 
