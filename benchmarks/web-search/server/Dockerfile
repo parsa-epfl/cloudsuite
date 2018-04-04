@@ -1,5 +1,5 @@
 FROM cloudsuite/java
-MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
+MAINTAINER Sidharth Gupta <sidharth.gupta@epfl.ch>
 
 ENV SOLR_USER solr
 

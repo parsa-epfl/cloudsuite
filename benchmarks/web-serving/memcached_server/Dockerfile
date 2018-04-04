@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Nooshin Mirzadeh <nooshin.mirzadeh@epfl.ch>
+MAINTAINER Arash Pourhabibi <arash.pourhabibi@epfl.ch>
 
 ENV memcache_mem_limit 65535
 ENV memcache_num_threads 4
