@@ -1,5 +1,5 @@
 FROM cloudsuite/java
-MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
+LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
 
