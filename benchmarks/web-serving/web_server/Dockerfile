@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-LABEL maintainer="mark.sutherland@epfl.ch"
+LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 USER root
 
