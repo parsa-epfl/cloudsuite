@@ -1,5 +1,5 @@
 FROM cloudsuite/java
-MAINTAINER Sidharth Gupta <sidharth.gupta@epfl.ch>
+LABEL maintainer="sidharth.gupta@epfl.ch"
 
 ENV SOLR_USER solr
 
