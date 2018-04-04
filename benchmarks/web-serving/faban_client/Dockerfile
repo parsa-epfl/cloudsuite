@@ -1,5 +1,5 @@
 FROM cloudsuite/java
-MAINTAINER Mark Sutherland <mark.sutherland@epfl.ch>
+LABEL maintainer="mark.sutherland@epfl.ch"
 
 RUN apt-get update && apt-get install -y \
 	ant \
