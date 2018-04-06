@@ -35,7 +35,7 @@ To ease the deployment of CloudSuite into private and public cloud systems, the 
 <h3>Organizers</h3>
 <ul>
 <li><a href="http://parsa.epfl.ch/~daglis">Alexandros Daglis</a> is a fourth year PhD student that works at EPFL under the supervision of Babak Falsafi. His research interests include rack-scale computing and datacenter architectures. His current focus is on system design for high performance remote memory access.</li>
-<li><a href="http://parsa.epfl.ch/~picorel">Javier Picorel</a> is a fifth year PhD student working at EPFL under the supervision of Babak Falsafi. His research interests are in computer architecture, especially architectures and system support for processing-in-memory systems.</li>
+<li><a href="">Javier Picorel</a> is a fifth year PhD student working at EPFL under the supervision of Babak Falsafi. His research interests are in computer architecture, especially architectures and system support for processing-in-memory systems.</li>
 <li><a href="http://parsa.epfl.ch/~drumond">Mario Drumond</a> is a second year PhD student that works at EPFL under the supervision of Babak Falsafi. His research interests include reconfigurable computing and computer architecture. His current focus is on using FPGAs to acelerate machine learning algorithms.</li>
 <!--
 <li> <a href="http://parsa.epfl.ch/~jevdjic">Djordje Jevdjic</a> is a fifth-year PhD candidate in the Parallel Systems Architecture Laboratory at EPFL, advised by Prof. Babak Falsafi. Djordje works on high-performance memory systems for servers, including on-chip DRAM caches and 3D-die stacking, with emphasis on locality and energy-efficiency.</li>
