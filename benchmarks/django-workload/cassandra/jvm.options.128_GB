@@ -1,0 +1,56 @@
+-XX:+UseThreadPriorities
+-XX:ThreadPriorityPolicy=42
+
+# Heap size (Xms, Xmx) and young generation size (Xmn) should be set depending
+# on the amount of available memory. These settings work for a memory size of 128GB
+-Xms4G
+-Xmx4G
+-Xmn2G
+
+-XX:+HeapDumpOnOutOfMemoryError
+-Xss256k
+-XX:StringTableSize=1000003
+
+# CMS settings
+-XX:+UseParNewGC
+-XX:+UseConcMarkSweepGC
+-XX:+CMSParallelRemarkEnabled
+-XX:SurvivorRatio=4
+-XX:MaxTenuringThreshold=1
+-XX:CMSInitiatingOccupancyFraction=60
+-XX:+UseCMSInitiatingOccupancyOnly
+
+-XX:+CMSScavengeBeforeRemark
+-XX:CMSMaxAbortablePrecleanTime=60000
+
+-XX:CMSWaitDuration=30000
+-XX:+CMSParallelInitialMarkEnabled
+-XX:+CMSEdenChunksRecordAlways
+-XX:+CMSClassUnloadingEnabled
+
+# Additional settings
+-XX:+UseCondCardMark
+-XX:MaxTenuringThreshold=2
+-XX:-UseBiasedLocking
+-XX:+UseTLAB
+-XX:+ResizeTLAB
+-XX:+PerfDisableSharedMem
+-XX:+AlwaysPreTouch
+-XX:+UnlockDiagnosticVMOptions
+-XX:ParGCCardsPerStrideChunk=4096
+
+# If needed, logging can be enabled for Cassandra by uncommenting the following flags:
+
+############## Logging ###############
+# -XX:+PrintGCDetails
+# -XX:+PrintGCDateStamps
+# -XX:+PrintTenuringDistribution
+# -XX:+PrintGCApplicationStoppedTime
+# -XX:+PrintPromotionFailure
+# -XX:+PrintClassHistogramBeforeFullGC
+# -XX:+PrintClassHistogramAfterFullGC
+# -Xloggc:/var/log/cassandra/gc.log
+# -XX:+UseGCLogFileRotation
+# -XX:NumberOfGCLogFiles=2
+# -XX:GCLogFileSize=10M
+############## Logging ###############
