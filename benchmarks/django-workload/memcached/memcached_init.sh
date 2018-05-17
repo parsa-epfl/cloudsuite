@@ -20,6 +20,7 @@ cat > /etc/memcached.conf <<- EOF
 	-u "$USER"
 	-l "$LISTEN"
 	-t "$THREADS"
+	-n "$MIN_BYTES"
 EOF
 
 service memcached start  \

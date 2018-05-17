@@ -4,7 +4,7 @@ set -x
 
 if [ "$1" = '-rps' ]; then
 	# default configuration
-	echo "dc-server, 11211" > "/usr/src/memcached/memcached_client/servers.txt"
+	echo "dc-server, 11811" > "/usr/src/memcached/memcached_client/servers.txt"
 	/usr/src/memcached/memcached_client/loader \
 		-a /usr/src/memcached/twitter_dataset/twitter_dataset_unscaled \
 		-o /usr/src/memcached/twitter_dataset/twitter_dataset_5x \
