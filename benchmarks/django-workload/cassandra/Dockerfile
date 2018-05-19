@@ -4,6 +4,8 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port
 #ENV https_proxy https://proxy-address:proxy-port
 
+ENV CASSANDRA_CONFIG /etc/cassandra
+
 RUN apt-get update                                                                     \
     && mkdir /scripts                                                                  \
     && apt-get install -y curl                                                         \
@@ -20,11 +22,13 @@ RUN apt-get update                                                              
     && apt-get update                                                                  \
     && apt-get install -y oracle-java8-installer cassandra
 
-COPY set_sysctl.conf init_config.sh /scripts/
+COPY files/* /scripts/
 
-COPY jvm.options.128_GB /etc/cassandra/jvm.options
+COPY files/jvm.options.128_GB /etc/cassandra/jvm.options
 
-RUN /scripts/init_config.sh cassandra
+#RUN /scripts/bootstrap.sh
+
+#RUN /scripts/init_config.sh cassandra
 
 RUN echo "Add nf_conntrack to modules ...\n"\
     && echo "nf_conntrack" >> /etc/modules \
@@ -36,5 +40,7 @@ RUN cp /scripts/set_sysctl.conf /etc/sysctl.conf
 
 ENV DEBIAN_FRONTEND teletype
 
-CMD service cassandra start \
-    && tail -f /dev/null
+ENTRYPOINT ["/scripts/bootstrap.sh"]
+#CMD ["cassandra"]
+#CMD service cassandra start \
+ #   && tail -f /dev/null

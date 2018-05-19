@@ -20,4 +20,6 @@ RUN cp /scripts/set_sysctl.conf /etc/sysctl.conf
 
 ENV DEBIAN_FRONTEND teletype
 
-CMD /scripts/memcached_init.sh
+ENTRYPOINT ["/scripts/memcached_init.sh"]
+
+CMD ["-t", "16", "-m", "5520", "-n", "550"]
