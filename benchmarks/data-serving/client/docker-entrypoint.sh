@@ -11,6 +11,6 @@ if [ ! -z "$OPERATIONCOUNT" ]; then
     OPERATIONCOUNT="-p operationcount=$OPERATIONCOUNT"
 fi
 
-/ycsb/bin/ycsb load cassandra-10 -p hosts=$1 -P /ycsb/workloads/workloada $RECORDCOUNT > /dev/null
+/ycsb/bin/ycsb load cassandra2-cql -p hosts=$1 -P /ycsb/workloads/workloada $RECORDCOUNT > /dev/null
 
-/ycsb/bin/ycsb run cassandra-10 -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT
+/ycsb/bin/ycsb run cassandra2-cql -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT
