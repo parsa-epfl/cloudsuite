@@ -14,7 +14,6 @@ export SCALE=$2 \
   && export STEADY_STATE=$5
 
 #PREPARE
-export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 $FABAN_HOME/master/bin/startup.sh
 
 #RUN

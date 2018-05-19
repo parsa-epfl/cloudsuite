@@ -3,6 +3,11 @@ FROM cloudsuite/hadoop
 ENV MAHOUT_VERSION 0.12.2
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
 
+# Install dependencies
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+      bzip2 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Mahout
 RUN set -x \
     && MIRROR=$(curl -s http://www.apache.org/dyn/closer.lua?as_json=1 | grep preferred | awk '{print $2}' | sed -e 's/"//g') \
