@@ -4,11 +4,16 @@ title: Contributors
 sidebar: "true"
 ---
 
-## Faculty
+## Current Contributors
+
+### Faculty
 - [Babak Falsafi](http://parsa.epfl.ch/~falsafi/)
 - [Mike Ferdman](http://compas.cs.stonybrook.edu/~mferdman/)
 
-## Students
+### Software Engineers
+- [Hossein Ajallooiean](https://people.epfl.ch/hossein.ajallooiean?lang=en)
+
+### Students
 - [Alexandros Daglis](http://parsa.epfl.ch/~daglis/)
 - [Mario Drumond](http://parsa.epfl.ch/~drumond/)
 - [Siddharth Gupta](https://people.epfl.ch/siddharth.gupta)
