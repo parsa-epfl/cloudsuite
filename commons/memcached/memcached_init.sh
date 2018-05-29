@@ -3,9 +3,10 @@
 # This script will configure and start the memcached service inside a docker
 # container
 
-MEMORY=$2
-MIN_BYTES=$3
-THREADS=$1
+THREADS=$2
+MEMORY=$4
+MIN_BYTES=$6
+
 if [ -f /etc/memcached.conf ]; then
     mv /etc/memcached.conf /etc/memcached.conf.old
     echo -e "\n\nBackup /etc/memcached.conf to /etc/memcached.conf.old"

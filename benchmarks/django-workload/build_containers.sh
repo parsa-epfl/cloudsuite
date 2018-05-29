@@ -48,7 +48,7 @@ fi
 
 if [[ "$UWSGI_ONLY" != "1" ]]
 then
-    DOCKER_LOCATIONS="cassandra graphite memcached siege"
+    DOCKER_LOCATIONS="graphite siege"
     for d in $DOCKER_LOCATIONS
     do
         cd "$d"

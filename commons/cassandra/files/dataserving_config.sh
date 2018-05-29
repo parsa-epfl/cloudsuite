@@ -69,14 +69,15 @@ fi
 #exec "$@"
 service cassandra start
 apt-get install -y netcat > /dev/null 2>&1
+
 wait_port() {
   while ! netcat -w 5 "$1" "$2" > /dev/null 2>&1; do
     echo "Waiting for $3 ..."
     sleep 3
   done
 }
+
 wait_port 127.0.0.1 9042 cassandra
-#sleep 5000
 
 
 exit=0

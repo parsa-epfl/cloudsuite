@@ -18,12 +18,12 @@ echo "Staring memcached container"
 docker run -tid -h memcached --name memcached_container --network              \
        django_network --ip 10.10.10.10 memcached-webtier
 
-wait_port 10.10.10.10 11811 memcached
+wait_port 10.10.10.10 11211 memcached
 echo "Memcached is up and running!"
 
 # Start cassandra container
 echo "Starting cassandra container"
-docker run -tid --privileged -h cassandra --name cassandra_container           \
+docker run -tid --privileged -h cassandra -e WORKLOAD=django --name cassandra_container           \
            --network django_network --ip 10.10.10.11 cassandra-webtier
 
 wait_port 10.10.10.11 9042 cassandra
@@ -42,7 +42,7 @@ echo "Starting uwsgi container"
 docker run -tid -h uwsgi --name uwsgi_container --network django_network        \
            --ip 10.10.10.13 -e GRAPHITE_ENDPOINT=10.10.10.12                    \
            -e CASSANDRA_ENDPOINT=10.10.10.11                                    \
-           -e MEMCACHED_ENDPOINT="10.10.10.10:11811"                            \
+           -e MEMCACHED_ENDPOINT="10.10.10.10:11211"                            \
            -e SIEGE_ENDPOINT=10.10.10.14 uwsgi-webtier
 
 wait_port 10.10.10.13 8000 uwsgi

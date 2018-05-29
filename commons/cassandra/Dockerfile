@@ -26,10 +26,6 @@ COPY files/* /scripts/
 
 COPY files/jvm.options.128_GB /etc/cassandra/jvm.options
 
-#RUN /scripts/bootstrap.sh
-
-#RUN /scripts/init_config.sh cassandra
-
 RUN echo "Add nf_conntrack to modules ...\n"\
     && echo "nf_conntrack" >> /etc/modules \
     && echo "Add limits settings ...\n"\
@@ -41,6 +37,3 @@ RUN cp /scripts/set_sysctl.conf /etc/sysctl.conf
 ENV DEBIAN_FRONTEND teletype
 
 ENTRYPOINT ["/scripts/bootstrap.sh"]
-#CMD ["cassandra"]
-#CMD service cassandra start \
- #   && tail -f /dev/null
