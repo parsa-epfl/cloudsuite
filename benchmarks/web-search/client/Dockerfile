@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk7
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
@@ -33,8 +33,8 @@ ENV AGENT_ID 1
 ENV NUM_AGENTS 1
 
 RUN cd $BASE_PATH \
-	&& wget "faban.org/downloads/faban-kit-latest.tar.gz" \
-	&& tar -xzf faban-kit-latest.tar.gz
+	&& wget "faban.org/downloads/faban-kit-1.3.tar.gz" \
+	&& tar -xzf faban-kit-1.3.tar.gz
 
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
