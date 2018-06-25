@@ -1,17 +1,12 @@
-FROM cloudsuite/java:openjdk7
+FROM clousuite/faban
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
 
-RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet wget tar curl \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& groupadd -r $FABAN_USER  \
-	&& useradd -r -g $FABAN_USER $FABAN_USER
 
-ENV BASE_PATH /usr/src
-ENV FABAN_HOME $BASE_PATH/faban
-ENV FABAN_VERSION 1.3
+
+
+
 ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
@@ -32,10 +27,6 @@ ENV STEADY_STATE 60
 ENV SCALE 50
 ENV AGENT_ID 1
 ENV NUM_AGENTS 1
-
-RUN cd $BASE_PATH \
-	&& wget "faban.org/downloads/faban-kit-$FABAN_VERSION.tar.gz" \
-	&& tar -xzf faban-kit-$FABAN_VERSION.tar.gz
 
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
