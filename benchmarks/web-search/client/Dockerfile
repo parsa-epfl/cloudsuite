@@ -11,6 +11,7 @@ RUN apt-get update -y \
 
 ENV BASE_PATH /usr/src
 ENV FABAN_HOME $BASE_PATH/faban
+ENV FABAN_VERSION 1.3
 ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
@@ -33,8 +34,8 @@ ENV AGENT_ID 1
 ENV NUM_AGENTS 1
 
 RUN cd $BASE_PATH \
-	&& wget "faban.org/downloads/faban-kit-1.3.tar.gz" \
-	&& tar -xzf faban-kit-1.3.tar.gz
+	&& wget "faban.org/downloads/faban-kit-$FABAN_VERSION.tar.gz" \
+	&& tar -xzf faban-kit-$FABAN_VERSION.tar.gz
 
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
