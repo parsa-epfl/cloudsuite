@@ -15,3 +15,4 @@ RUN cd $BASE_PATH \
 	&& wget "faban.org/downloads/faban-kit-$FABAN_VERSION.tar.gz" \
 	&& tar -xzf faban-kit-$FABAN_VERSION.tar.gz
 
+ENV FABAN_USER faban

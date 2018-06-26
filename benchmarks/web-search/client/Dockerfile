@@ -1,12 +1,6 @@
 FROM cloudsuite/faban:1.4
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
-ENV FABAN_USER faban
-
-
-
-
-
 ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
