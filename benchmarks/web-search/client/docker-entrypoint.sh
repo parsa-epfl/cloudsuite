@@ -4,7 +4,7 @@
 export IP=$1
 
 #Read local IP
-export HOST_IP=localhost \
+export HOST_IP=$(echo `hostname`) \
   && export AGENTS=$HOST_IP:$NUM_AGENTS
 
 #Read client parameters

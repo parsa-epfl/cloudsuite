@@ -1,4 +1,4 @@
-FROM clousuite/faban:1.4
+FROM cloudsuite/faban:1.4
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
