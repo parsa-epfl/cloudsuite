@@ -1,4 +1,4 @@
-FROM clousuite/faban
+FROM clousuite/faban:1.4
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
@@ -12,7 +12,7 @@ ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
 ENV ANT_VERSION 1.9.6
 ENV ANT_HOME $BASE_PATH/ant
-ENV FABAN_OUTPUT_DIR $BASE_PATH/outputFaban
+
 ENV CLIENT_HEAP_SIZE 2g
 ENV DRIVER_DIR $FABAN_HOME/search
 ENV POLICY_PATH $DRIVER_DIR/config/security/driver.policy
