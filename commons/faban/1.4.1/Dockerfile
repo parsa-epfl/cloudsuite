@@ -1,6 +1,6 @@
-FROM cloudsuite/java:openjdk7
+FROM cloudsuite/java:openjdk8
 ENV FABAN_USER faban
-ENV FABAN_VERSION 1.3
+ENV FABAN_VERSION 1.4.1
 RUN apt-get update -y \
 	&& apt-get install -y --no-install-recommends telnet wget tar curl \
 	&& rm -rf /var/lib/apt/lists/* \
