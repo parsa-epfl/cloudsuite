@@ -15,7 +15,7 @@ wget -O - $INDEX_URL \
   | tar zxvf - -C $SOLR_CORE_DIR/cloudsuite_web_search*
 
 echo "================================="
-echo "Index Node IP Address: "`ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
+echo "Index Node IP Address: "`hostname -i`
 echo "================================="
   
 #Run Solr  
