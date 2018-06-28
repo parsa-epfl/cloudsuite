@@ -53,7 +53,7 @@ public class UserGenerator {
 		properties = new Properties();
 		String propFileName = "usersetup.properties";
 		
-		InputStream inputStream = new FileInputStream("/faban/"+propFileName);
+		InputStream inputStream = new FileInputStream(System.getenv("FABAN_HOME")+'/'+propFileName);
 		
 		if (null != inputStream) {
 			properties.load(inputStream);
@@ -149,7 +149,7 @@ public class UserGenerator {
 	}
 
 	private void writeUserFile() throws FileNotFoundException {
-		String outputFile = "/faban/"+properties.getProperty("output_file").trim();
+	        String outputFile = System.getenv("FABAN_HOME")+"/"+properties.getProperty("output_file").trim();
 		
 		
 		PrintWriter pw = new PrintWriter(outputFile);
