@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 LABEL maintainer="Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>"
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
