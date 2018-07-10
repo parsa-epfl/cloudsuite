@@ -34,6 +34,10 @@ env:
   - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4"
 
   
+  # Memcached
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.9"
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.9" DF_PATH="./commons/memcached/1.5.9"
+
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
