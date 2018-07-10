@@ -4,7 +4,7 @@
 export IP=$1
 
 #Read local IP
-export HOST_IP=$(echo `ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`) \
+export HOST_IP=$(echo `hostname`) \
   && export AGENTS=$HOST_IP:$NUM_AGENTS
 
 #Read client parameters
