@@ -65,9 +65,7 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 	done
 fi
 
-#exec "$@"
-cassandra
-sleep 5
+"$@"
 
 exit=0
 
@@ -76,12 +74,14 @@ if [ $NEED_INIT -eq 1 ]; then
     echo Create a usertable for the seed server
     echo ======================================================
     while [ $exit -eq 0 ]; do
-        out=`cassandra-cli --host localhost -f /setup_tables.txt`
-        if [[ "$out" =~ "Connected to" ]]; then
+        set +e
+        cqlsh -f /setup_tables.txt localhost
+        if [[ "$?" -eq 0 ]]; then
             exit=1
         else
             echo Cannot connect to the seed server. Trying again...
         fi
+        set -e
         sleep 5
     done
 
@@ -91,5 +91,5 @@ else
 fi
 
 while true; do
-    sleep 100;
+    sleep 1;
 done

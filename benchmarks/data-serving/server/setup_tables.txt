@@ -1,4 +1,3 @@
-create keyspace usertable;
-use usertable;
-create column family data;
+create keyspace ycsb with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
+use ycsb;
 exit;
