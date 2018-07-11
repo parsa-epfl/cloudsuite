@@ -21,7 +21,7 @@ We will attach the launched containers to this newly created docker network.
 Start the server container that will run cassandra server and installs a default keyspace usertable:
 
 ```bash
-$ docker run --name cassandra-server --net serving_network cloudsuite/data-serving:server cassandra
+$ docker run --name cassandra-server --net serving_network cloudsuite/data-serving:server
 ```
 ### Multiple Server Containers
 
