@@ -5,6 +5,7 @@ branches:
   only:
     - master
     - dev
+    - check-if-images-need-what-kind-of-java
 
 language: bash
 
