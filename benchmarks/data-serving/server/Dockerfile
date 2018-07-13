@@ -12,11 +12,10 @@ RUN apt-get update \
     	&& apt-get install -y cassandra=$CASSANDRA_VERSION \
     	&& rm -rf /var/lib/apt/lists/*
 
-COPY setup_tables.txt /setup_tables.txt
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["cassandra", "-R"]
+CMD ["cassandra", "-R", "-f"]
 
 EXPOSE 7000 7001 7199 9042 9160

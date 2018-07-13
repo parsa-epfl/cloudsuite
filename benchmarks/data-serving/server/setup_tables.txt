@@ -1,3 +1,0 @@
-create keyspace ycsb with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
-use ycsb;
-exit;

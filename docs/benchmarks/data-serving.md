@@ -41,6 +41,8 @@ $ docker run --name cassandra-server(id) --net serving_network -e CASSANDRA_SEED
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
 
+Make sure all non seed servers are stablished - adding them concurrently may lead to problem.
+
 ### Client Container
 After successfully creating the aforementioned schema, you are ready to benchmark with YCSB.
 Start the client container specifying server name(s), or IP address(es), separated with commas, as the last command argument:

@@ -66,30 +66,3 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 fi
 
 "$@"
-
-exit=0
-
-if [ $NEED_INIT -eq 1 ]; then
-    echo ======================================================
-    echo Create a usertable for the seed server
-    echo ======================================================
-    while [ $exit -eq 0 ]; do
-        set +e
-        cqlsh -f /setup_tables.txt localhost
-        if [[ "$?" -eq 0 ]]; then
-            exit=1
-        else
-            echo Cannot connect to the seed server. Trying again...
-        fi
-        set -e
-        sleep 5
-    done
-
-    printf "========\n--------------Keyspace usertable was created--------------\n========\n"
-else
-    echo "Cassandra seed server exists"
-fi
-
-while true; do
-    sleep 1;
-done
