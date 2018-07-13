@@ -225,7 +225,7 @@ public class Web20Driver {
 		}
 		*/
 	
-		File usersFile = new File("/faban/users.list");
+		File usersFile = new File(System.getenv("FABAN_HOME")+'/'+"/users.list");
 		BufferedReader bw = new BufferedReader(new FileReader(usersFile));
 		String line;
 		while ((line = bw.readLine()) != null) {
