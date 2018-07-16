@@ -14,7 +14,7 @@ fi
 
 # first arg is `-f` or `--some-option`
 if [ "${1:0:1}" = '-' ]; then
-	set -- cassandra -f "$@"
+	set -- cassandra -f -R "$@"
 fi
 
 if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
@@ -65,4 +65,4 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 	done
 fi
 
-"$@"
+exec "$@"
