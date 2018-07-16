@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk8
 
 ENV CASSANDRA_VERSION 3.11.2
 
