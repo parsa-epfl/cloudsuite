@@ -29,8 +29,6 @@ case $1 in
     $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_PREFIX/etc/hadoop --script hdfs start namenode
     $HADOOP_PREFIX/sbin/yarn-daemon.sh --config $HADOOP_PREFIX/etc/hadoop start resourcemanager
     $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh --config $HADOOP_PREFIX/etc/hadoop start historyserver
-    # keep container running
-    tail -f /var/log/dmesg
     ;;
   slave)
     # start sshd
@@ -48,10 +46,11 @@ case $1 in
     # start Hadoop daemons
     $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_PREFIX/etc/hadoop --script hdfs start datanode
     $HADOOP_PREFIX/sbin/yarn-daemon.sh --config $HADOOP_PREFIX/etc/hadoop start nodemanager
-    # keep container running
-    tail -f /var/log/dmesg
     ;;
   *)
     echo "$USAGE"
     ;;
 esac
+
+# keep container running and show logs
+tail -f $HADOOP_LOG_DIR/*

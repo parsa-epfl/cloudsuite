@@ -10,6 +10,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 ENV HADOOP_VERSION 2.7.6
 ENV HADOOP_PREFIX /opt/hadoop-${HADOOP_VERSION}
 ENV HADOOP_CONF_DIR ${HADOOP_PREFIX}/etc/hadoop
+ENV HADOOP_LOG_DIR ${HADOOP_PREFIX}/logs
 
 # Install Hadoop
 RUN set -x \
