@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo server\'s IP is $1
-echo ==================
 
 if [ ! -z "$RECORDCOUNT" ]; then
     RECORDCOUNT="-p recordcount=$RECORDCOUNT"
@@ -11,6 +10,31 @@ if [ ! -z "$OPERATIONCOUNT" ]; then
     OPERATIONCOUNT="-p operationcount=$OPERATIONCOUNT"
 fi
 
-/ycsb/bin/ycsb load cassandra-10 -p hosts=$1 -P /ycsb/workloads/workloada $RECORDCOUNT > /dev/null
 
-/ycsb/bin/ycsb run cassandra-10 -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT
+
+echo '======================================================'
+echo 'Creating a usertable for the seed server'
+echo '======================================================'
+
+first_server=$(cut -d',' -f1 <<< "$1")
+
+exit=0
+while [ $exit -eq 0 ]; do
+    set +e
+    cqlsh -f /setup_tables.txt $first_server
+    if [[ "$?" -eq 0 ]]; then
+        exit=1
+    else
+        echo 'Cannot connect to the seed server. Trying again...'
+    fi
+    set -e
+    sleep 5
+done
+
+
+echo '======================================================'
+echo 'Keyspace usertable was created'
+echo '======================================================'
+
+/ycsb/bin/ycsb load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada $RECORDCOUNT
+/ycsb/bin/ycsb run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT
