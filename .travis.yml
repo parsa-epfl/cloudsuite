@@ -20,13 +20,15 @@ env:
   - DH_REPO="cloudsuite/java" IMG_TAG="openjdk8" DF_PATH="./commons/java/openjdk8"
 
   # Hadoop
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.7.6"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.1"
   - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.1" DF_PATH="./commons/hadoop/2.9.1"
 
   # Spark
-  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.1.0"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
   - DH_REPO="cloudsuite/spark" IMG_TAG="2.1.0" DF_PATH="./commons/spark/2.1.0"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="2.3.1" DF_PATH="./commons/spark/2.3.1"
 
   # Faban
   - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
