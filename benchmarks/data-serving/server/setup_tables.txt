@@ -1,4 +1,0 @@
-create keyspace usertable;
-use usertable;
-create column family data;
-exit;

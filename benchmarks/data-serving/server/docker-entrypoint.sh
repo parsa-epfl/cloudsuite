@@ -14,7 +14,7 @@ fi
 
 # first arg is `-f` or `--some-option`
 if [ "${1:0:1}" = '-' ]; then
-	set -- cassandra -f "$@"
+	set -- cassandra -f -R "$@"
 fi
 
 if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
@@ -65,31 +65,4 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 	done
 fi
 
-#exec "$@"
-cassandra
-sleep 5
-
-exit=0
-
-if [ $NEED_INIT -eq 1 ]; then
-    echo ======================================================
-    echo Create a usertable for the seed server
-    echo ======================================================
-    while [ $exit -eq 0 ]; do
-        out=`cassandra-cli --host localhost -f /setup_tables.txt`
-        if [[ "$out" =~ "Connected to" ]]; then
-            exit=1
-        else
-            echo Cannot connect to the seed server. Trying again...
-        fi
-        sleep 5
-    done
-
-    printf "========\n--------------Keyspace usertable was created--------------\n========\n"
-else
-    echo "Cassandra seed server exists"
-fi
-
-while true; do
-    sleep 100;
-done
+exec "$@"
