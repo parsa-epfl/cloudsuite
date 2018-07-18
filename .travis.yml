@@ -52,12 +52,24 @@ env:
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
 
   # Data Caching
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server-v4"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client-v4"
+
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server-v4" DF_PATH="./benchmarks/data-caching/server-v4"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client-v4" DF_PATH="./benchmarks/data-caching/client-v4"
+
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server-v3" DF_PATH="./benchmarks/data-caching/server-v3"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client-v3" DF_PATH="./benchmarks/data-caching/client-v3"
 
   # Data Serving
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server-v4"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client-v4"
+
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server-v4" DF_PATH="./benchmarks/data-serving/server-v4"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client-v4" DF_PATH="./benchmarks/data-serving/client-v4"
+
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server-v3" DF_PATH="./benchmarks/data-serving/server-v3"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client-v3" DF_PATH="./benchmarks/data-serving/client-v3"
 
   # Graph Analytics
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
@@ -68,19 +80,43 @@ env:
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
 
   # Media Streaming
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client-v4"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server-v4"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset-v4"
+
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client-v4" DF_PATH="./benchmarks/media-streaming/client-v4"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server-v4" DF_PATH="./benchmarks/media-streaming/server-v4"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset-v4" DF_PATH="./benchmarks/media-streaming/dataset-v4"
+
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client-v3" DF_PATH="./benchmarks/media-streaming/client-v3"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server-v3" DF_PATH="./benchmarks/media-streaming/server-v3"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset-v3" DF_PATH="./benchmarks/media-streaming/dataset-v3"
 
   # Web Search
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server-v4"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client-v4"
+
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server-v4" DF_PATH="./benchmarks/web-search/server-v4"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client-v4" DF_PATH="./benchmarks/web-search/client-v4"
+
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server-v3" DF_PATH="./benchmarks/web-search/server-v3"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client-v3" DF_PATH="./benchmarks/web-search/client-v3"
 
   # Web Serving
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server-v4"
+
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server-v4" DF_PATH="./benchmarks/web-serving/db_server-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client-v4" DF_PATH="./benchmarks/web-serving/faban_client-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server-v4" DF_PATH="./benchmarks/web-serving/web_server-v4"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server-v4" DF_PATH="./benchmarks/web-serving/memcached_server-v4"
+
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server-v3" DF_PATH="./benchmarks/web-serving/db_server-v3"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client-v3" DF_PATH="./benchmarks/web-serving/faban_client-v3"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server-v3" DF_PATH="./benchmarks/web-serving/web_server-v3"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server-v3" DF_PATH="./benchmarks/web-serving/memcached_server-v3"
 
   #Spell Check
   - Spell_Check="1"
