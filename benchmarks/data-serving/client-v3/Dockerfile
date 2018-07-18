@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk7
 
 RUN apt-get update \
  && apt-get install software-properties-common wget -y \

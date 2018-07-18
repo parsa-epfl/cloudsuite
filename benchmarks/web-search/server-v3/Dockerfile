@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk7
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV SOLR_USER solr
