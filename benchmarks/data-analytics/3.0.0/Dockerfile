@@ -1,6 +1,6 @@
-FROM cloudsuite/hadoop
+FROM cloudsuite/hadoop:2.9.1
 
-ENV MAHOUT_VERSION 0.12.2
+ENV MAHOUT_VERSION 0.13.0
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
 
 # Install dependencies
