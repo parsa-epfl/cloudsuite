@@ -1,4 +1,4 @@
-FROM cloudsuite/spark
+FROM cloudsuite/spark:2.1.0
 
 # Copy files
 COPY benchmark /root/benchmark

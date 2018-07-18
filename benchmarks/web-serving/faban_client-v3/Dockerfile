@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk7
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 RUN apt-get update && apt-get install -y \

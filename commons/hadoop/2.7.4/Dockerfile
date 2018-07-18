@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk7
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
