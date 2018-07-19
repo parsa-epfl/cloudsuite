@@ -60,7 +60,7 @@
 	</fa:runConfig>
 	<serverConfig>
 			<host>whitbread</host>
-			<port>8080</port>
+			<port>80</port>
 	</serverConfig>
 	
 </webbenchmark>
