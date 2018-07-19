@@ -21,7 +21,7 @@
 			<fa:steadyState>300</fa:steadyState>
 			<fa:rampDown>30</fa:rampDown>
 		</fa:runControl>
-        <outputDir>/home/msutherl</outputDir>
+		<outputDir>/faban/output</outputDir>
 		<audit>false</audit>
 		<threadStart>
 		
@@ -59,7 +59,7 @@
 		</driverConfig>
 	</fa:runConfig>
 	<serverConfig>
-			<host>192.168.2.129</host>
+			<host>whitbread</host>
 			<port>8080</port>
 	</serverConfig>
 	
