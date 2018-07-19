@@ -1,0 +1,23 @@
+Timer info can be found looking for timer_now()
+
+Parameters for figuring out if a connection should be counted:
+
+1. test_time_start - global for start of expt.
+2. s->basic.time_connect_start - time that session (connection?) started
+3. param.wsesslog.num_sessions - number of sessions from command line
+4. param.timeout - command line argument
+5. param.rate.rate_param - command line argument (--rate)
+
+expt_length = param.wsesslog.num_sessions / param.rate.rate_param
+check if expt_length > 2 * timeout!
+
+steady_state_start = test_time_start + timeout
+steady_state_end = test_time_start + expt_length - timeout
+
+HOW TO:
+1. initialize steady_state_start and end
+2. when a connection starts, check against steady_state_start & end, and set flag accordingly.
+3. When statistics are counted/accumulated, check flag for which stats to produce.
+
+stats stuff is all in stats/basic.c?
+

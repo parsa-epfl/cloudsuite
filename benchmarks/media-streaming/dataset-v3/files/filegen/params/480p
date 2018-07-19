@@ -1,0 +1,4 @@
+library_size=10
+num_log_files=1
+num_log_sessions=5
+video_quality=480p

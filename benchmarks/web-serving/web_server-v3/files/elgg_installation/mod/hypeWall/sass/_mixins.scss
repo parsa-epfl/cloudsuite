@@ -1,0 +1,242 @@
+@mixin clearfix {
+	*zoom:1;
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}
+
+@mixin loader($active-class: elgg-state-loading, $size: 50px) {
+	&.#{$active-class}:before {
+		display: block;
+		width: $size;
+		height: $size;
+		position: fixed;
+		top: 50%;
+		left: 0;
+		right: 0;
+		margin: -$size/2 auto 0;
+		z-index: 10000;
+		content: $fa-var-spinner;
+		color: $primary-color;
+		font-size: $size;
+		line-height: $size;
+		@include icon-spin;
+		@include icon;
+	}
+}
+
+@mixin modal {
+	&.ui-dialog {
+		position: absolute;
+		top: 0;
+		left: 0;
+		outline: 0;
+		border: 1px solid $border-color;
+		background: #FFF;
+		padding: 0;
+		@include box-shadow(0 0 10px rgba(#000,.4));
+		@include box-sizing(border-box);
+		@include border-radius(5px);
+		font-size: 14px;
+		max-width: 100%;
+		.ui-dialog-titlebar {
+			margin: 0;
+			padding: 10px;
+			background: none;
+			border: none;
+			border-bottom: 1px solid $border-color;
+			@include border-radius(0);
+			.ui-dialog-title {
+				margin: 0;
+			}
+		}
+		.ui-dialog-titlebar-close {
+			position: absolute;
+			right: 0;
+			top: 0;
+			margin: 0;
+			padding: 0;
+			border: none;
+			background: none;
+			height: 35px;
+			width: 40px;
+			display: block;
+			.ui-icon-closethick {
+				text-indent: 0;
+				color: transparent;
+				position: relative;
+				@include icon;
+				background: none;
+				border: 0;
+				margin: 0 auto;
+				left: 0;
+				right: 0;
+				width: 40px;
+				height: 35px;
+				border-left: 1px solid $border-color;
+				&:after {
+					position: absolute;
+					top: 0;
+					right: 0;
+					content: $fa-var-times;
+					text-align: center;
+					font-size: 16px;
+					line-height: 35px;
+					color: darken($border-color, 8%);
+					padding: 0 12px;
+				}
+			}
+		}
+	}
+}
+
+@mixin modal-bg {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	background: rgba(#000, .45);
+	top: 0;
+}
+
+@mixin icon {
+	display: inline-block;
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin icon-spin {
+	-webkit-animation: spin 2s infinite linear;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+}
+
+@mixin speech-bubble($border-color: $border-color) {
+	background: #ffffff;
+	position: relative;
+	margin-left: 15px;
+	border:1px solid $border-color;
+	&:before {
+		content: " ";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 0px;  height: 0px;  border-style: solid;
+		border-width: 0 15px 15px 0;
+		border-color: transparent $border-color transparent transparent;
+		margin-left: -16px;
+		margin-top: -1px;
+		z-index: 1;
+	}
+	&:after {
+		content: " ";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 0px;  height: 0px;  border-style: solid;
+		border-width: 0 15px 15px 0;
+		border-color: transparent #ffffff transparent transparent;
+		margin-left: -14px;
+		margin-top: 0;
+		z-index: 5;
+	}
+}
+
+@mixin speech-bubble-alt($border-color: $border-color) {
+	background: #ffffff;
+	position: relative;
+	margin-right: 15px;
+	border:1px solid $border-color;
+	&:before {
+		content: " ";
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 0px;  height: 0px;  border-style: solid;
+		border-width: 15px 15px 0 0;
+		border-color: $border-color transparent transparent transparent;
+		margin-right: -16px;
+		margin-top: -1px;
+		z-index: 1;
+	}
+	&:after {
+		content: " ";
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 0px;  height: 0px;  border-style: solid;
+		border-width: 15px 15px 0 0;
+		border-color: #fff transparent transparent transparent;
+		margin-right: -14px;
+		margin-top: 0;
+		z-index: 5;
+	}
+}
+
+@mixin photo($border-width: 1px, $border-color: $border-color, $box-shadow: none, $box-shadow-hover: 0 0 6px 1px rgba($primary-color,0.5)) {
+	display: inline-block;
+	border: solid $border-width $border-color;
+	@include box-shadow($box-shadow);
+	&:hover,
+	&:focus,
+	&.elgg-state-selected {
+		@include box-shadow($box-shadow-hover);
+	}
+}
+
+// slightly modified grid-column mixin (to allow us define total number columns)
+@mixin elgg-col($columns:false, $last-column:false, $center:false, $offset:false, $push:false, $pull:false, $collapse:false, $float:true, $include-position-relative: false, $total-columns: 12) {
+
+	$column-gutter: 30px;
+	$default-float: left;
+	$opposite-direction: right;
+
+	// If collapsed, get rid of gutter padding
+	@if $collapse {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	// Gutter padding whenever a column isn't set to collapse
+	// (use $collapse:null to do nothing)
+	@else if $collapse == false {
+		padding-left: $column-gutter / 2;
+		padding-right: $column-gutter / 2;
+	}
+
+	// If a column number is given, calculate width
+	@if $columns {
+		width: percentage($columns / $total-columns);
+
+		// If last column, float naturally instead of to the right
+		@if $last-column { float: $opposite-direction; }
+	}
+
+	// If offset, calculate appropriate margins
+	@if $offset { margin-#{$default-float}: percentage($offset / $total-columns); }
+
+	// Source Ordering, adds left/right depending on which you use.
+	@if $push { #{$default-float}: percentage($push / $total-columns); #{$opposite-direction}: auto; }
+	@if $pull { #{$opposite-direction}: percentage($pull / $total-columns); #{$default-float}: auto; }
+
+	// If centered, get rid of float and add appropriate margins
+	@if $center {
+		margin-#{$default-float}: auto;
+		margin-#{$opposite-direction}: auto;
+		float: none !important;
+	}
+
+	@if $float {
+		@if $float == left or $float == true { float: $default-float; }
+		@else if $float == right { float: $opposite-direction; }
+		@else { float: none; }
+	}
+
+	// This helps us not need to repeat "position:relative" everywehere
+	@if $include-position-relative { position: relative; }
+
+}

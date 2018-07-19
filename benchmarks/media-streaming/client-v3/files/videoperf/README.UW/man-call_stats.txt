@@ -1,0 +1,89 @@
+Examples of httperf used with call stats:
+
+httperf --port=6800 --num-calls=4 --num-conns=2 --uri=/docs/10K.txt --call-stats=6 --call-stats-file=call_stats.in --timeout=1
+	This will track the first 6 of 8 calls (2 connections, each with 4 calls) made to the server, using call_stats.in to determine the size(s) of the file(s) requested.
+
+httperf --port=6800 --wsesslog=3,0,input.log --call-stats=0 --timeout=1
+	This will use the input.log file to generate the workload and print the statistics for each call as it is completed.
+
+
+The call stats options are used as follows:
+
+--call-stats=X
+	This will cause httperf to track statistics for the first X calls made to the server, where X>0. If X=0 then statistics will be printed on the fly, as the calls complete. This option needs to be used in combination with --call-stats-file or --wsesslog so that the proper file size can be determined. If a file is requested, who's size has not been specified, it will be assigned a size of -2 bytes so that it can be easily identified.
+	
+--call-stats-file=S
+	This will inform httperf to use the file S to determine the sizes of the files requested from the server
+
+	The first line of the file S must be a number N, which indicates the number of (URI, file size) mappings. The next N lines consist of a URI and an integer seperated by a single space. The integer is the size of the file in bytes. 
+
+	A sample call-stats-file is as follows:
+
+		13
+		/docs/1B.txt 1
+		/docs/2B.txt 2
+		/docs/10B.txt 10
+		/docs/960B.txt 960
+		/docs/14900B.txt 14900
+		/docs/1K.txt 1024
+		/docs/2K.txt 2048
+		/docs/3K.txt 3072
+		/docs/4K.txt 4096
+		/docs/5K.txt 5120
+		/docs/10K.txt 10240
+		/docs/100K.txt 102400
+		/docs/1M.txt 1048576	
+
+
+Sample output:
+
+$ httperf --port=6800 --num-calls=4 --num-conns=2 --uri=/docs/10K.txt --call-stats=6 --call-stats-file=call_stats.in --timeout=1
+httperf: Collecting call stats buffer size = 6
+httperf: file sizes from = call_stats.in
+httperf --timeout=1 --client=0/1 --server=localhost --port=6800 --uri=/docs/10K.txt --send-buffer=4096 --recv-buffer=16384 --call-stats=6 --call-stats-file=call_stats.in --num-conns=2 --num-calls=4
+Run on hostname: scsltxxx
+Run at: Wed Aug 11 10:29:47 2010
+
+Effective CPU mask: 0x3
+hash_enter: localhost 6800
+stat basic init: using maximum errno = 500
+Maximum connect burst length: 1
+
+Total: connections 2 requests 8 replies 8 test-duration 1.100 s
+Number of connected connections is currently = 0
+
+Connection rate: 1.8 conn/s (550.1 ms/conn, <=1 concurrent connections)
+Connected connection rate: 1.8 conn/s (550.1 ms/conn, <=1 concurrent connected connections)
+Connection time [ms]: min 382.9 avg 550.1 max 717.2 median 382.5 stddev 236.4
+Connection time [ms]: connect 0.5
+Connection length [replies/conn]: 4.000
+
+Response time (no timeouts) [ms]: 137.5
+Response time (only timeouts) [ms]: nan
+Response time (all) [ms]: 137.5
+Request rate: 7.3 req/s (137.5 ms/req)
+Request size [B]: 74.0
+
+Overall reply rate: 7.3 replies/sec
+Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
+Reply time [ms]: response 18.7 transfer 118.7
+Reply size [B]: header 71.0 content 10240.0 footer 0.0 (total 10311.0)
+Reply status: 1xx=0 2xx=8 3xx=0 4xx=0 5xx=0
+
+CPU time [s]: user 0.86 system 0.20 (user 77.8% system 18.2% total 96.0%)
+Net I/O: 73.7 KB/s (0.6*10^6 bps)
+
+Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+Errors: fd-unavail 0 addrunavail 0 ftab-full 0 addrinuse 0 other 0
+Unconnected timeouts 0 connected timeouts 0 total (0) client_timeouts 0
+
+Call Statistics (buffer filled):
+
+call number  conn number  request size  response size  % bytes recvd  byte rate  conn time  response time  total time  HTTP status  time limit timed out  file requested
+                          (bytes)       (bytes)                       (Mbps)     (s)        (s)            (s)                      (s)                   
+0            0            10240         10240          100.00         1.6        0.0001609  0.0499520      0.0501130   200          1.0000000  no         /docs/10K.txt
+1            0            10240         10240          100.00         2.5        0.0000000  0.0331109      0.0331109   200          1.0000000  no         /docs/10K.txt
+2            0            10240         10240          100.00         0.8        0.0000000  0.0980442      0.0980442   200          1.0000000  no         /docs/10K.txt
+3            0            10240         10240          100.00         0.4        0.0000000  0.2016768      0.2016768   200          1.0000000  no         /docs/10K.txt
+4            1            10240         10240          100.00         0.4        0.0008731  0.2034709      0.2043440   200          1.0000000  no         /docs/10K.txt
+5            1            10240         10240          100.00         0.4        0.0000000  0.1899390      0.1899390   200          1.0000000  no         /docs/10K.txt

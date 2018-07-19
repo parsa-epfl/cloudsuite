@@ -1,0 +1,5 @@
+FILE QUARANTINED
+
+Microsoft Forefront Protection for Exchange Server (edge1) removed a file since it was found to match a filter.
+File name: "httperf-new.tgz->->httperf/lib/COPYING.LIB"
+Filter name: "FILE FILTER= SBCS extension filtering: *.lib*"

@@ -1,0 +1,93 @@
+OVERVIEW
+--------
+call_stats is a statistics module in httperf. The purpose of this
+module is to gather statistics on a per call basis. The statistics
+reported by the call_stats module can either be filled into a
+pre-sized buffer or displayed on the fly as the requests are completed.
+Using a buffer is the recommended means of gathering statistics, due
+to the reduced overhead during execution.
+
+Currently, call_stats can only be used when the workload is generated
+by the --wsesslog or --uri parameter.  Using call_stats in combination
+with any other workload generation method will produce unknown
+results. Additionaly, call_stats can not be used in combination with a
+--wsesslog specifies workload containing bursts.
+
+The statistics gathered by the call_stats module are as follows:
+(1)		call number
+				-internal unique identifier
+				-sent as HTTP header to server so that they can be paired
+(2)		connection number
+				-internal unique identifier
+				-sent as HTTP header to server so that they can be paired
+(3)		request size 
+				-measured in bytes
+(4)		response size 
+				-measured in bytes
+(5)		percentage received
+(6)		byte rate 
+				-[ (4) / (8) ] * 8 / 1000000
+(7)		connection time 
+				-measured in seconds
+				-if multiple requests are sent, the first request records the
+				connection time
+(8)		response time 
+				-measured in seconds
+				-measured from when the request it sent, to when the last byte
+				is received
+(9)		total time 
+				-measured in seconds
+(10)	HTTP status
+				-if the status has been received it will be reported, even if
+				the request times out before all of the data is received
+(11)	time limit 
+				-measured in seconds
+(12)	timed out 
+				-no => request completed successfully
+				-yes-NC => the request timed out before the connection was
+				established
+				-yes-C => the request timed out after the connection was 
+				established
+(13)	file requested
+				-uri requested
+
+Some of the statistics reported by the call_stats module rely on
+knowing the size of the file being requested. If call_stats is used in
+combination with the --wsesslog parameter, the file sizes are
+specified in the input log file. If call_stats is used in combination
+with the --uri parameter, then the --call-stats-file parameter must
+also be used.
+
+
+IMPLEMENTATION DETAILS
+----------------------
+There are three points where call_stats gathers information:
+	-when a request is sent
+	-when a request receives the last byte of data
+	-when a connection times out
+
+When any of these events occur, the appropriate call_stats function is
+triggered. 
+
+If the call_stats module is used with a pre-set buffer, then all of the
+statistics gathered throughout the execution period are displayed
+after all of the requests have completed. If the call_stats module is
+not used with the pre-set buffer then each request's statistics are
+displayed once it has completed, either by receiving its last byte or
+by timing out.
+
+When a requests completes successfully, all of the statistics are
+filled in. However, if a request times out, it will only report those
+statistics that are relevant, depending on what point it timed out at.
+
+The challenge comes when a request is scheduled by the workload
+generator, but never actually gets created. This can occur under the
+following circumstances:
+	-a request times out before the connection is established
+	-a request times out before all of the requests in a connection
+	are sent
+
+In these cases, the call_stats module insures that the unique
+identifiers for these calls do not get used by other calls, so
+that it is able to report which calls did not happen. These entries 
+only report statistics (1)-(3), and (11)-(13).

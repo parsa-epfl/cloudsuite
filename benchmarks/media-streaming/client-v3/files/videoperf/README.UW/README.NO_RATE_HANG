@@ -1,0 +1,137 @@
+The Problem:
+	1)a connection times out
+	2)core.c conn_timeout is called by the timer
+	3)this function signals the EV_CONN_TIMEOUT
+	4)gen/session conn_timeout is triggered 
+	5)this function calls sess.c sess_failure
+	6)this function decrements the session object counter
+	7)there are not longer any ref's for the session
+	8)this causes event EV_SESS_DESTROYED 
+  9)gen/session sess_destroyed is triggered
+	10)during clean up of the session it notices the conn
+	11)the function "helps" by calling core_close on the conn
+	12)A new connection is created in the place of the old one (httperf recycles space)
+	13)now return to core.c conn_timeout
+	14)call core_close on the conn, notice that this is the new connection
+	15)core_close destroys both the timer and frees the socket
+	16)left sitting waiting for an event that will never happen
+
+
+Sample:
+
+stszepes@scsltxxx:~/httperf-timout/build$ ./httperf --port=6800 --wsesslog=3,0,test5.log --call-stats=3 --timeout=0.0001 --print-request --print-reply --client=3/4
+httperf: Collecting call stats buffer size = 3
+httperf --print-reply --print-request --timeout=0.0001 --client=3/4 --server=localhost --port=6800 --uri=/ --send-buffer=4096 --recv-buffer=16384 --call-stats=3 --call-stats-file= --wsesslog=3,0.000,test5.log
+Run on hostname: scsltxxx
+Run at: Tue Jun 15 16:08:54 2010
+
+Effective CPU mask: 0x3
+hash_enter: localhost 6800
+stat basic init: using maximum errno = 500
+httperf main perf_sample timer_schedule
+timer_SCHEDULE called, delay = 5.000000
+conn id = 0, core_connect interested_in_writing
+conn id = 0, interested_in_writing
+conn id = 0, core_connect timer_schedule
+timer_SCHEDULE called, delay = 0.000100
+conn id = 0, core_loop_handle_socket timer_cancel
+timer_CANCEL called
+conn id = 0, core_send interested_in_writing
+conn id = 0, interested_in_writing
+conn id = 0, schedule_timeouts timer_schedule
+timer_SCHEDULE called, delay = 0.000100
+conn id = 0, core_loop_handle_socket timer_cancel
+timer_CANCEL called
+SH0:GET /docs/1B.txt HTTP/1.1
+SH0:User-Agent: httperf/0.8.4
+SH0:Host: localhost
+SH0:Client-Id: 3 0
+SH0:
+SS0: header 89 content 0
+conn id = 0, do_send interested_in_reading
+conn id = 0, interested_in_reading
+conn id = 0, schedule_timeouts timer_schedule
+timer_SCHEDULE called, delay = 0.000100
+conn id = 0, conn_timeout																*******timeout occurs*******
+x value = 0
+conn id = 0, conn_timeout EV_CONN_TIMEOUT
+x value = 0, timed_out = 0
+conn id = 0, sess_destroyed core_close									*******sess_destroyed being "helpfull"*******
+conn id = 0, core_close...
+conn id = 0, core_close executing...
+conn id = 1, core_connect interested_in_writing					*******new connection created*******
+conn id = 1, interested_in_writing
+conn id = 1, core_connect timer_schedule
+timer_SCHEDULE called, delay = 0.000100
+conn id = 1, conn_timeout core_close
+x value = 0, timed_out = 0															*******closing the new connection(cont. on next line)*******
+conn id = 1, core_close...															*******x value should match the conn id and timed_out should be 1 if this was the correct conn*******
+conn id = 1, core_close executing...
+conn id = 1, core_close timer_cancel
+timer_CANCEL called																			*******now the timer and the listening conn are gone*******
+perf_sample timer_schedule
+timer_SCHEDULE called, delay = 5.000000
+perf_sample timer_schedule
+timer_SCHEDULE called, delay = 5.000000
+perf_sample timer_schedule
+timer_SCHEDULE called, delay = 5.000000
+...																											*******this will continue untill interupted*******
+Maximum connect burst length: 1
+
+Total: connections 2 requests 1 replies 0 test-duration 15.651 s
+Number of connected connections is currently = 0
+
+Connection rate: 0.1 conn/s (7825.5 ms/conn, <=1 concurrent connections)
+Connected connection rate: 0.1 conn/s (7825.5 ms/conn, <=1 concurrent connected connections)
+Connection time [ms]: min 0.0 avg 0.0 max 0.0 median 0.0 stddev 0.0
+Connection time [ms]: connect 0.2
+Connection length [replies/conn]: 0.000
+
+Response time (no timeouts) [ms]: nan
+Response time (only timeouts) [ms]: inf
+Response time (all) [ms]: inf
+Request rate: 0.1 req/s (15651.0 ms/req)
+Request size [B]: 89.0
+
+Overall reply rate: 0.0 replies/sec
+Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (3 samples)
+Reply time [ms]: response 0.0 transfer 0.0
+Reply size [B]: header 0.0 content 0.0 footer 0.0 (total 0.0)
+Reply status: 1xx=0 2xx=0 3xx=0 4xx=0 5xx=0
+
+CPU time [s]: user 11.44 system 4.20 (user 73.1% system 26.9% total 100.0%)
+Net I/O: 0.0 KB/s (0.0*10^6 bps)
+
+Errors: total 1 client-timo 1 socket-timo 0 connrefused 0 connreset 0
+Errors: fd-unavail 0 addrunavail 0 ftab-full 0 addrinuse 0 other 0
+Unconnected timeouts 0 connected timeouts 1 total (1) client_timeouts 1
+
+Call Statistics:
+
+call number  conn number  request size  response size  % bytes recvd  byte rate  conn time  response time  total time  HTTP status  time limit timed out  file requested
+                          (bytes)       (bytes)                       (Mbps)     (s)        (s)            (s)                      (s)                   
+0            0            1             0              0.00           0.0        0.0002260  0.0018110      0.0020370   0            0.0001000  yes-C      /docs/1B.txt
+1            0            -1            0              -0.00          nan        0.0000000  0.0000000      0.0000000   0            0.0000000  NA         --
+
+Session rate [sess/s]: min 0.00 avg 0.00 max 0.00 stddev 0.00 (0/1)
+Session: avg 0.00 connections/session
+Session lifetime [s]: 0.0
+Session failtime [s]: 0.0
+Session length histogram: 1
+
+Solutions:
+Two (easy) ways:
+	1)stop the sess_destroyed function from being so "helpfull"
+		-if a rate has not been specified by the user, don't make the call to core_close
+	2)recognize that the sess_destroyed function has already done the work
+		-when core.c conn_timeout is called store a local copy of the conn id
+		-before calling the core_close function make sure they match
+
+Suggestion:
+Use solution 2
+	-it is very simple
+	-solution 1 is more of a bandaid
+		>it is not clear if this will actually solve the underlying problem
+		>it may have unknow affects
+	-beyond this problem solution 2 it is a good thing
+		>should be sure what you are operating on is what you think it is

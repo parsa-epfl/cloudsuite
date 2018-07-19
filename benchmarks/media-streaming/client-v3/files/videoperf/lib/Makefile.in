@@ -1,0 +1,51 @@
+SHELL=/bin/sh
+
+VPATH = @srcdir@
+top_srcdir = @top_srcdir@
+top_builddir = ..
+
+prefix = @prefix@
+bindir = @bindir@
+mandir = @mandir@
+
+CC = @CC@
+RANLIB = @RANLIB@
+
+INCLUDES = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/lib \
+		$(SSL_INCLUDES) -I/usr/kerberos/include
+
+DEFS = @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CFLAGS = @CFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+
+CPPFLAGS	+= -DBIG_FD_SETSIZE
+
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -static -static-libgcc
+LINK = $(CC) $(LDFLAGS) -static -static-libgcc -o $@
+
+@SET_MAKE@
+
+.c.o:
+	$(COMPILE) $<
+
+LIBUTIL_OBJS = getopt.o getopt1.o ssl_writev.o
+
+all: libutil.a
+
+libutil.a: $(LIBUTIL_OBJS)
+	ar r $@ $(LIBUTIL_OBJS)
+	$(RANLIB) $@
+
+depend:
+
+install:
+
+clean:
+	rm -f libutil.a $(LIBUTIL_OBJS)
+
+distclean: clean
+	rm -f *~
+
+.PHONY: all install clean distclean depend

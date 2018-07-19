@@ -1,0 +1,19 @@
+The DYNOUT feature allows the timeout to be set separately for
+each request.
+
+It is set by adding a timeout specification after the request filename
+in the log file, like this example that sets a 10 second timeout:
+
+/affinity_set_small4/512KB-54694.txt timeout=10
+
+The normal timeout, specified on the command line, applies to all
+requests (or maybe sessions).  The global value set on the command
+line will be used if a individual timeout is not set for a request.
+
+Code changes required for this feature can be enabled by defining
+DYNOUT.  It is implemented by adding an extra field to the request
+data structure to record any timeout specific to that request.  It
+requires changes to gen/wsesslog.c to parse and record the timeout
+values from the wsesslog file.  It requires changes to stat/call_stats.c,
+call.c, and core.c to use the individual timeouts rather than the
+global session timeout.
