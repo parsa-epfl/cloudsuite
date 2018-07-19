@@ -1,0 +1,58 @@
+The log file specified by the --wsesslog option is used to generate
+the workload created by httperf. This log file consists of a set of
+sessions, where a session is a set of requests sent to a web server.
+The connection settings for the web server is set by the command line
+options --server, --port and --ssl. In order to allow individual 
+sessions to use different connection settings (for example some
+sessions use ssl and others don't), the ability to specify these
+settings for individual sessions has been added. If the log file does
+not specify the connection settings, the command line options are used
+as a default.
+
+To specify connections settings for an individual session in the
+wsesslog file, an additional line must be added, before the set of
+requests. This line is structered as follows:
+
+		session [port=X] [server=Y] [ssl=Z]
+		/uri
+		/uri
+		...
+
+The individual parameters can be listed in any order, however the
+first item must be the word 'session' followed by whitespace.
+Additionaly, none of the parameters are manditory. 
+
+
+In order to allow the call_stats statistics module to work with a
+wsesslog specified workload, a new request parameter was added to
+specify the size of the request. If this parameter is not set then the
+call_stats module has no way of knowing the size of the request, and
+will assign it a value of -2.
+
+The following is an example of a log file that can be used with the
+call_stats module, which includes some sample uses of session specific
+connection settings: 
+
+		session ssl=off server=localhost port=6800
+		/docs/10K.txt size=10240
+		/docs/100K.txt size=102400
+		/docs/10K.txt size=10240
+		/docs/100K.txt size=102400
+
+		session ssl=on port=6444 server=129.97.169.14
+		/docs/10B.txt size=10
+		/docs/1M.txt size=1048576
+		/docs/1K.txt size=1024
+		/docs/10K.txt size=10240
+
+		session ssl=off port=6801
+		/docs/10K.txt size=10240
+		/docs/100K.txt size=102400
+		/docs/10K.txt size=10240
+		/docs/100K.txt size=102400
+
+		session ssl=on port=6443 server=localhost
+		/docs/10B.txt size=10
+		/docs/1M.txt size=1048576
+		/docs/1K.txt size=1024
+		/docs/10K.txt size=10240

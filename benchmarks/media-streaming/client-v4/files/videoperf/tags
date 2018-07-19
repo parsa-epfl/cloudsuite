@@ -1,0 +1,1180 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ALIGN	object.c	38;"	d	file:
+Any_Type	httperf.h	/^Any_Type;$/;"	t	typeref:union:__anon8
+BIG_FD_CLR	core.c	/^void BIG_FD_CLR(int fd, big_fd_set *fdsetp) $/;"	f
+BIG_FD_ISSET	core.c	/^int  BIG_FD_ISSET(int fd, big_fd_set *fdsetp)$/;"	f
+BIG_FD_SET	core.c	/^void BIG_FD_SET(int fd, big_fd_set *fdsetp)$/;"	f
+BIN_WIDTH	stat/basic.c	54;"	d	file:
+BITSPERLONG	core.c	62;"	d	file:
+BURST	gen/videosesslog.c	/^typedef struct burst BURST;$/;"	t	typeref:struct:burst	file:
+CALL_PRIVATE_DATA	gen/sess_cookie.c	52;"	d	file:
+CALL_PRIVATE_DATA	gen/session.c	75;"	d	file:
+CALL_PRIVATE_DATA	gen/uri_wset.c	38;"	d	file:
+CALL_PRIVATE_DATA	gen/wsesspage.c	48;"	d	file:
+CALL_PRIVATE_DATA	stat/print_reply.c	47;"	d	file:
+CC	Makefile	/^CC = gcc$/;"	m
+CC	gen/Makefile	/^CC = gcc$/;"	m
+CC	lib/Makefile	/^CC = gcc$/;"	m
+CC	stat/Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g -O2 -Wall $/;"	m
+CFLAGS	gen/Makefile	/^CFLAGS = -g -O2 -Wall $/;"	m
+CFLAGS	lib/Makefile	/^CFLAGS = -g -O2 -Wall $/;"	m
+CFLAGS	stat/Makefile	/^CFLAGS = -g -O2 -Wall $/;"	m
+CHAR_TO_INT	stat/spec_stats.c	40;"	d	file:
+CLASS_INDEX	stat/spec_stats.c	478;"	d	file:
+COMPILE	Makefile	/^COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $/;"	m
+COMPILE	gen/Makefile	/^COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -static -static-libgcc$/;"	m
+COMPILE	lib/Makefile	/^COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -static -static-libgcc$/;"	m
+COMPILE	stat/Makefile	/^COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -static -static-libgcc$/;"	m
+CONN_ERR_COUNT	httperf.h	277;"	d
+CONN_ERR_HASH_LOOKUP_FAILED	httperf.h	274;"	d
+CONN_ERR_NOT_SET	httperf.h	272;"	d
+CONN_ERR_NO_MORE_PORTS	httperf.h	273;"	d
+CONN_ERR_STATE_PAST_CLOSING	httperf.h	275;"	d
+CONN_PRIVATE_DATA	gen/call_seq.c	35;"	d	file:
+CONN_PRIVATE_DATA	gen/session.c	72;"	d	file:
+CPPFLAGS	Makefile	/^CPPFLAGS =  -DNDEBUG -D_GNU_SOURCE -D_XOPEN_SOURCE$/;"	m
+CPPFLAGS	gen/Makefile	/^CPPFLAGS =  -DNDEBUG -D_GNU_SOURCE -D_XOPEN_SOURCE$/;"	m
+CPPFLAGS	lib/Makefile	/^CPPFLAGS =  -DNDEBUG -D_GNU_SOURCE -D_XOPEN_SOURCE$/;"	m
+CPPFLAGS	stat/Makefile	/^CPPFLAGS =  -DNDEBUG -D_GNU_SOURCE -D_XOPEN_SOURCE$/;"	m
+Call	call.h	/^Call;$/;"	t	typeref:struct:Call
+Call	call.h	/^typedef struct Call$/;"	s
+Call_Private_Data	gen/sess_cookie.c	/^Call_Private_Data;$/;"	t	typeref:struct:Call_Private_Data	file:
+Call_Private_Data	gen/sess_cookie.c	/^typedef struct Call_Private_Data$/;"	s	file:
+Call_Private_Data	gen/session.c	/^Call_Private_Data;$/;"	t	typeref:struct:Call_Private_Data	file:
+Call_Private_Data	gen/session.c	/^typedef struct Call_Private_Data$/;"	s	file:
+Call_Private_Data	gen/wsesspage.c	/^Call_Private_Data;$/;"	t	typeref:struct:Call_Private_Data	file:
+Call_Private_Data	gen/wsesspage.c	/^typedef struct Call_Private_Data$/;"	s	file:
+Call_Private_Data	stat/print_reply.c	/^Call_Private_Data;$/;"	t	typeref:struct:Call_Private_Data	file:
+Call_Private_Data	stat/print_reply.c	/^typedef struct Call_Private_Data$/;"	s	file:
+Cmdline_Params	httperf.h	/^Cmdline_Params;$/;"	t	typeref:struct:Cmdline_Params
+Cmdline_Params	httperf.h	/^typedef struct Cmdline_Params$/;"	s
+Conn	conn.h	/^Conn;$/;"	t	typeref:struct:Conn
+Conn	conn.h	/^typedef struct Conn$/;"	s
+Conn_Info	gen/session.c	/^	struct Conn_Info$/;"	s	struct:Sess_Private_Data	file:
+Conn_Private_Data	gen/call_seq.c	/^Conn_Private_Data;$/;"	t	typeref:struct:Conn_Private_Data	file:
+Conn_Private_Data	gen/call_seq.c	/^typedef struct Conn_Private_Data$/;"	s	file:
+Conn_Private_Data	gen/session.c	/^Conn_Private_Data;$/;"	t	typeref:struct:Conn_Private_Data	file:
+Conn_Private_Data	gen/session.c	/^typedef struct Conn_Private_Data$/;"	s	file:
+Conn_State	conn.h	/^Conn_State;$/;"	t	typeref:enum:Conn_State
+Conn_State	conn.h	/^typedef enum Conn_State$/;"	g
+DBG	httperf.h	258;"	d
+DBG	httperf.h	260;"	d
+DEFAULT_METHOD	call.c	49;"	d	file:
+DEFS	Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEFS	gen/Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEFS	lib/Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEFS	stat/Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DETERMINISTIC	httperf.h	/^	DETERMINISTIC,	\/* also called fixed-rate *\/$/;"	e	enum:Dist_Type
+Dist_Type	httperf.h	/^Dist_Type;$/;"	t	typeref:enum:Dist_Type
+Dist_Type	httperf.h	/^typedef enum Dist_Type$/;"	g
+EV_CALL_DESTROYED	event.h	/^    EV_CALL_DESTROYED,$/;"	e	enum:Event_Type
+EV_CALL_ISSUE	event.h	/^    EV_CALL_ISSUE,$/;"	e	enum:Event_Type
+EV_CALL_NEW	event.h	/^    EV_CALL_NEW,$/;"	e	enum:Event_Type
+EV_CALL_RECV_DATA	event.h	/^    EV_CALL_RECV_DATA,$/;"	e	enum:Event_Type
+EV_CALL_RECV_FOOTER	event.h	/^    EV_CALL_RECV_FOOTER,$/;"	e	enum:Event_Type
+EV_CALL_RECV_HDR	event.h	/^    EV_CALL_RECV_HDR,$/;"	e	enum:Event_Type
+EV_CALL_RECV_RAW_DATA	event.h	/^    EV_CALL_RECV_RAW_DATA,$/;"	e	enum:Event_Type
+EV_CALL_RECV_START	event.h	/^    EV_CALL_RECV_START,$/;"	e	enum:Event_Type
+EV_CALL_RECV_STOP	event.h	/^    EV_CALL_RECV_STOP,$/;"	e	enum:Event_Type
+EV_CALL_SEND_RAW_DATA	event.h	/^    EV_CALL_SEND_RAW_DATA,$/;"	e	enum:Event_Type
+EV_CALL_SEND_START	event.h	/^    EV_CALL_SEND_START,$/;"	e	enum:Event_Type
+EV_CALL_SEND_STOP	event.h	/^    EV_CALL_SEND_STOP,$/;"	e	enum:Event_Type
+EV_CONN_CLOSE	event.h	/^    EV_CONN_CLOSE,		\/* connection closed *\/$/;"	e	enum:Event_Type
+EV_CONN_CONNECTED	event.h	/^    EV_CONN_CONNECTED,$/;"	e	enum:Event_Type
+EV_CONN_CONNECTING	event.h	/^    EV_CONN_CONNECTING,$/;"	e	enum:Event_Type
+EV_CONN_DESTROYED	event.h	/^    EV_CONN_DESTROYED,$/;"	e	enum:Event_Type
+EV_CONN_FAILED	event.h	/^    EV_CONN_FAILED,		\/* failed for reasons other than timeout *\/$/;"	e	enum:Event_Type
+EV_CONN_NEW	event.h	/^    EV_CONN_NEW,$/;"	e	enum:Event_Type
+EV_CONN_TIMEOUT	event.h	/^    EV_CONN_TIMEOUT,$/;"	e	enum:Event_Type
+EV_DUMP_STATS	event.h	/^    EV_DUMP_STATS,$/;"	e	enum:Event_Type
+EV_HOSTNAME_LOOKUP_START	event.h	/^    EV_HOSTNAME_LOOKUP_START,$/;"	e	enum:Event_Type
+EV_HOSTNAME_LOOKUP_STOP	event.h	/^    EV_HOSTNAME_LOOKUP_STOP,$/;"	e	enum:Event_Type
+EV_NUM_EVENT_TYPES	event.h	/^    EV_NUM_EVENT_TYPES$/;"	e	enum:Event_Type
+EV_PERF_SAMPLE	event.h	/^    EV_PERF_SAMPLE,$/;"	e	enum:Event_Type
+EV_SESS_DESTROYED	event.h	/^    EV_SESS_DESTROYED,$/;"	e	enum:Event_Type
+EV_SESS_FAILED	event.h	/^    EV_SESS_FAILED,$/;"	e	enum:Event_Type
+EV_SESS_NEW	event.h	/^    EV_SESS_NEW,$/;"	e	enum:Event_Type
+EXPONENTIAL	httperf.h	/^	EXPONENTIAL		\/* with mean mean_iat *\/$/;"	e	enum:Dist_Type
+Event	event.h	/^Event;$/;"	t	typeref:struct:Event
+Event	event.h	/^typedef struct Event$/;"	s
+Event_Action	event.c	/^Event_Action;$/;"	t	typeref:struct:Event_Action	file:
+Event_Action	event.c	/^typedef struct Event_Action$/;"	s	file:
+Event_Handler	event.h	/^typedef void (*Event_Handler) (Event_Type type, Object *obj,$/;"	t
+Event_Type	event.h	/^Event_Type;$/;"	t	typeref:enum:Event_Type
+Event_Type	event.h	/^typedef enum Event_Type$/;"	g
+FALSE	gen/videosesslog.c	101;"	d	file:
+HASH_TABLE_SIZE	core.c	59;"	d	file:
+HAVE_ALLOCA	config.h	15;"	d
+HAVE_ALLOCA_H	config.h	18;"	d
+HAVE_FCNTL_H	config.h	78;"	d
+HAVE_GETPAGESIZE	config.h	51;"	d
+HAVE_GETTIMEOFDAY	config.h	54;"	d
+HAVE_LIBCRYPTO	config.h	93;"	d
+HAVE_LIBM	config.h	96;"	d
+HAVE_LIBSSL	config.h	99;"	d
+HAVE_MMAP	config.h	24;"	d
+HAVE_OPENSSL_SSL_H	config.h	81;"	d
+HAVE_SELECT	config.h	57;"	d
+HAVE_SOCKET	config.h	60;"	d
+HAVE_SSL	config.h	102;"	d
+HAVE_STRDUP	config.h	63;"	d
+HAVE_STRERROR	config.h	66;"	d
+HAVE_STRTOD	config.h	69;"	d
+HAVE_STRTOL	config.h	72;"	d
+HAVE_STRTOUL	config.h	75;"	d
+HAVE_SYS_IOCTL_H	config.h	84;"	d
+HAVE_SYS_TIME_H	config.h	87;"	d
+HAVE_UNISTD_H	config.h	90;"	d
+HAVE_VPRINTF	config.h	27;"	d
+HM_DELETE	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_GET	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_HEAD	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_LEN	gen/videosesslog.c	/^	HM_LEN$/;"	e	enum:__anon7	file:
+HM_OPTIONS	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_POST	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_PUT	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HM_TRACE	gen/videosesslog.c	/^	HM_DELETE, HM_GET, HM_HEAD, HM_OPTIONS, HM_POST, HM_PUT, HM_TRACE,$/;"	e	enum:__anon7	file:
+HTTPERF_OBJS	Makefile	/^HTTPERF_OBJS = httperf.o object.o call.o conn.o sess.o core.o event.o \\$/;"	m
+IE_BLANK	call.h	/^	IE_BLANK,		\/* space separating method from location *\/$/;"	e	enum:IOV_Element
+IE_CONTENT	call.h	/^	IE_CONTENT,$/;"	e	enum:IOV_Element
+IE_FIRST_HEADER	call.h	/^	IE_FIRST_HEADER,$/;"	e	enum:IOV_Element
+IE_HOST	call.h	/^	IE_HOST,		\/* for the "Host:" header *\/$/;"	e	enum:IOV_Element
+IE_LAST_HEADER	call.h	/^	IE_LAST_HEADER = IE_FIRST_HEADER + MAX_EXTRA_HEADERS - 1,$/;"	e	enum:IOV_Element
+IE_LEN	call.h	/^	IE_LEN		\/* must be last *\/$/;"	e	enum:IOV_Element
+IE_LOC	call.h	/^	IE_LOC,		\/* for proxy requests only *\/$/;"	e	enum:IOV_Element
+IE_METHOD	call.h	/^	IE_METHOD,$/;"	e	enum:IOV_Element
+IE_NEWLINE1	call.h	/^	IE_NEWLINE1,$/;"	e	enum:IOV_Element
+IE_NEWLINE2	call.h	/^	IE_NEWLINE2,$/;"	e	enum:IOV_Element
+IE_PROTL	call.h	/^	IE_PROTL,$/;"	e	enum:IOV_Element
+IE_URI	call.h	/^	IE_URI,$/;"	e	enum:IOV_Element
+INCLUDES	Makefile	/^INCLUDES = -I$(top_srcdir)\/include -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)\/lib -I\/usr\/kerberos\/include$/;"	m
+INCLUDES	gen/Makefile	/^INCLUDES = -I$(top_builddir) -I$(srcdir) -I$(top_srcdir) -I$(top_srcdir)\/lib \\$/;"	m
+INCLUDES	lib/Makefile	/^INCLUDES = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)\/lib \\$/;"	m
+INCLUDES	stat/Makefile	/^INCLUDES = -I$(top_builddir) -I$(srcdir) -I$(top_srcdir) -I$(top_srcdir)\/lib \\$/;"	m
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+IOV_Element	call.h	/^IOV_Element;$/;"	t	typeref:enum:IOV_Element
+IOV_Element	call.h	/^typedef enum IOV_Element$/;"	g
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LDFLAGS	gen/Makefile	/^LDFLAGS = $/;"	m
+LDFLAGS	lib/Makefile	/^LDFLAGS = $/;"	m
+LDFLAGS	stat/Makefile	/^LDFLAGS = $/;"	m
+LIBGEN_OBJS	gen/Makefile	/^LIBGEN_OBJS = call_seq.o conn_rate.o misc.o rate.o session.o \\$/;"	m
+LIBS	Makefile	/^LIBS = -lssl -lcrypto -lm $/;"	m
+LIBS	gen/Makefile	/^LIBS = -lssl -lcrypto -lm $/;"	m
+LIBS	lib/Makefile	/^LIBS = -lssl -lcrypto -lm $/;"	m
+LIBS	stat/Makefile	/^LIBS = -lssl -lcrypto -lm $/;"	m
+LIBSTAT_OBJS	stat/Makefile	/^LIBSTAT_OBJS = basic.o sess_stat.o print_reply.o spec_stats.o call_stats.o$/;"	m
+LIBUTIL_OBJS	lib/Makefile	/^LIBUTIL_OBJS = getopt.o getopt1.o ssl_writev.o$/;"	m
+LINK	Makefile	/^LINK = $(CC) $(LDFLAGS) -o $@$/;"	m
+LINK	gen/Makefile	/^LINK = $(CC) $(LDFLAGS) -static -static-libgcc -o $@$/;"	m
+LINK	lib/Makefile	/^LINK = $(CC) $(LDFLAGS) -static -static-libgcc -o $@$/;"	m
+LINK	stat/Makefile	/^LINK = $(CC) $(LDFLAGS) -static -static-libgcc -o $@$/;"	m
+Load_Generator	httperf.h	/^Load_Generator;$/;"	t	typeref:struct:Load_Generator
+Load_Generator	httperf.h	/^typedef struct Load_Generator$/;"	s
+MAX_CONN	gen/session.c	66;"	d	file:
+MAX_COOKIE_LEN	gen/sess_cookie.c	47;"	d	file:
+MAX_ERRNO	stat/basic.c	67;"	d	file:
+MAX_EXTRA_HEADERS	call.h	35;"	d
+MAX_HDR_LINE_LEN	conn.h	43;"	d
+MAX_HOSTNAME_LEN	httperf.c	83;"	d	file:
+MAX_IP_PORT	core.c	61;"	d	file:
+MAX_LIFETIME	stat/basic.c	53;"	d	file:
+MAX_LOG_FILES	httperf.h	47;"	d
+MAX_NUM_OPS	event.c	33;"	d	file:
+MAX_PIPED	gen/session.c	67;"	d	file:
+MAX_SESSION	stat/spec_stats.c	44;"	d	file:
+MAX_SESSION_TEMPLATES	gen/videosesslog.c	95;"	d	file:
+MAX_SVR_PORTS	httperf.h	116;"	d
+MAX_URI_LEN	gen/uri_wset.c	37;"	d	file:
+MIN	gen/call_seq.c	38;"	d	file:
+MIN_IP_PORT	core.c	60;"	d	file:
+MKDIR	Makefile	/^MKDIR = $(top_srcdir)\/mkinstalldirs$/;"	m
+NELEMS	httperf.h	40;"	d
+NONOPTION_P	lib/getopt.c	446;"	d	file:
+NULL	lib/getopt1.c	59;"	d	file:
+NUM_BINS	stat/basic.c	58;"	d	file:
+NUM_BINS	stat/basic.c	62;"	d	file:
+NUM_INDEX	stat/spec_stats.c	479;"	d	file:
+NUM_RATES	httperf.h	44;"	d
+NUM_SPEC_FILES	stat/spec_stats.c	43;"	d	file:
+OBJ_CALL	object.h	/^    OBJ_CALL,			\/* call object *\/$/;"	e	enum:Object_Type
+OBJ_CONN	object.h	/^    OBJ_CONN,			\/* connection object *\/$/;"	e	enum:Object_Type
+OBJ_NUM_TYPES	object.h	/^    OBJ_NUM_TYPES$/;"	e	enum:Object_Type
+OBJ_SESS	object.h	/^    OBJ_SESS,			\/* session object *\/$/;"	e	enum:Object_Type
+Object	object.h	/^Object;$/;"	t	typeref:struct:Object
+Object	object.h	/^typedef struct Object$/;"	s
+Object_Type	object.h	/^Object_Type;$/;"	t	typeref:enum:Object_Type
+Object_Type	object.h	/^typedef enum Object_Type$/;"	g
+PATHLEN	http.c	365;"	d	file:
+PERMUTE	lib/getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon12	file:
+PRINT_BODY	httperf.h	114;"	d
+PRINT_HEADER	httperf.h	113;"	d
+P_CMD	gen/wsesspage.c	/^	P_CMD,		\/* we saw a `<' and are scanning for the end of CMD *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_DASH_ONE	gen/wsesspage.c	/^	P_DASH_ONE,	\/* looking for the first dash of a comment close *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_DASH_TWO	gen/wsesspage.c	/^	P_DASH_TWO,	\/* looking for the second dash of a comment close *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_DATA	gen/wsesspage.c	/^	P_DATA,		\/* we're looking for "data" *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_HTML	gen/wsesspage.c	/^	P_HTML,$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_INITIAL	gen/wsesspage.c	/^	P_INITIAL,$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_LQUOTE	gen/wsesspage.c	/^	P_LQUOTE,	\/* we're looking for the left quote of a URI *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_NAKED_URI	gen/wsesspage.c	/^	P_NAKED_URI,	\/* we're looking for an unquoted URI *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_QUOTED_URI	gen/wsesspage.c	/^	P_QUOTED_URI	\/* we're looking for a quoted URI *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_RANGLE	gen/wsesspage.c	/^	P_RANGLE,	\/* looking for '>' *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+P_SRC	gen/wsesspage.c	/^	P_SRC,		\/* we're looking for "src" *\/$/;"	e	enum:Call_Private_Data::__anon6	file:
+RANLIB	Makefile	/^RANLIB = ranlib$/;"	m
+RANLIB	gen/Makefile	/^RANLIB = ranlib$/;"	m
+RANLIB	lib/Makefile	/^RANLIB = ranlib$/;"	m
+RANLIB	stat/Makefile	/^RANLIB = ranlib$/;"	m
+RATE_INTERVAL	httperf.c	80;"	d	file:
+REQ	gen/videosesslog.c	/^typedef struct req REQ;$/;"	t	typeref:struct:req	file:
+REQUIRE_ORDER	lib/getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon12	file:
+RETSIGTYPE	config.h	30;"	d
+RETURN_IN_ORDER	lib/getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon12	file:
+Rate_Generator	gen/rate.h	/^Rate_Generator;$/;"	t	typeref:struct:Rate_Generator
+Rate_Generator	gen/rate.h	/^typedef struct Rate_Generator$/;"	s
+Rate_Info	httperf.h	/^Rate_Info;$/;"	t	typeref:struct:Rate_Info
+Rate_Info	httperf.h	/^typedef struct Rate_Info$/;"	s
+SC_BIND	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_CONNECT	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_EPOLL_CREATE	core.c	/^	SC_EPOLL_CREATE, SC_EPOLL_CTL, SC_EPOLL_WAIT,$/;"	e	enum:Syscalls	file:
+SC_EPOLL_CTL	core.c	/^	SC_EPOLL_CREATE, SC_EPOLL_CTL, SC_EPOLL_WAIT,$/;"	e	enum:Syscalls	file:
+SC_EPOLL_WAIT	core.c	/^	SC_EPOLL_CREATE, SC_EPOLL_CTL, SC_EPOLL_WAIT,$/;"	e	enum:Syscalls	file:
+SC_NUM_SYSCALLS	core.c	/^	SC_NUM_SYSCALLS$/;"	e	enum:Syscalls	file:
+SC_READ	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_SELECT	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_SOCKET	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_SSL_READ	core.c	/^	SC_SSL_READ, SC_SSL_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_SSL_WRITEV	core.c	/^	SC_SSL_READ, SC_SSL_WRITEV,$/;"	e	enum:Syscalls	file:
+SC_WRITEV	core.c	/^	SC_BIND, SC_CONNECT, SC_READ, SC_SELECT, SC_SOCKET, SC_WRITEV,$/;"	e	enum:Syscalls	file:
+SESS_PRIVATE_DATA	gen/sess_cookie.c	49;"	d	file:
+SESS_PRIVATE_DATA	gen/session.c	69;"	d	file:
+SESS_PRIVATE_DATA	gen/videosesslog.c	104;"	d	file:
+SESS_PRIVATE_DATA	gen/wsess.c	43;"	d	file:
+SESS_PRIVATE_DATA	gen/wsesspage.c	50;"	d	file:
+SESS_PRIVATE_DATA	stat/sess_stat.c	63;"	d	file:
+SHELL	Makefile	/^SHELL=\/bin\/sh$/;"	m
+SHELL	gen/Makefile	/^SHELL=\/bin\/sh$/;"	m
+SHELL	lib/Makefile	/^SHELL=\/bin\/sh$/;"	m
+SHELL	stat/Makefile	/^SHELL=\/bin\/sh$/;"	m
+SIZEOF_LONG	config.h	105;"	d
+SOL_TCP	core.c	93;"	d	file:
+SPEC_CLASSES	stat/spec_stats.c	41;"	d	file:
+SPEC_HEADER	stat/spec_stats.c	45;"	d	file:
+SPEC_SIZES	stat/spec_stats.c	42;"	d	file:
+SPEC_STATS	stat/spec_stats.h	26;"	d
+SQUARE	stat/stats.h	30;"	d
+SSL_version	configure	/^SSL_version()$/;"	f
+SSL_writev	lib/ssl_writev.c	/^SSL_writev (SSL *ssl, const struct iovec *vector, int count)$/;"	f
+STATS_INTERVAL	httperf.c	81;"	d	file:
+STDC_HEADERS	config.h	45;"	d
+STDDEV	stat/stats.h	32;"	d
+SUBDIRS	Makefile	/^SUBDIRS	= lib gen stat$/;"	m
+SYSCALL	core.c	110;"	d	file:
+SYSCALL	core.c	142;"	d	file:
+SYS_SCHED_AFFINITY_H	sys_sched_affinity.h	2;"	d
+S_CLOSING	conn.h	/^	S_CLOSING,$/;"	e	enum:Conn_State
+S_CONNECTED	conn.h	/^	S_CONNECTED,$/;"	e	enum:Conn_State
+S_CONNECTING	conn.h	/^	S_CONNECTING,$/;"	e	enum:Conn_State
+S_FREE	conn.h	/^	S_FREE$/;"	e	enum:Conn_State
+S_INITIAL	conn.h	/^	S_INITIAL,$/;"	e	enum:Conn_State
+S_REPLY_CHUNKED	conn.h	/^	S_REPLY_CHUNKED,$/;"	e	enum:Conn_State
+S_REPLY_CONTINUE	conn.h	/^	S_REPLY_CONTINUE,$/;"	e	enum:Conn_State
+S_REPLY_DATA	conn.h	/^	S_REPLY_DATA,$/;"	e	enum:Conn_State
+S_REPLY_DONE	conn.h	/^	S_REPLY_DONE,$/;"	e	enum:Conn_State
+S_REPLY_FOOTER	conn.h	/^	S_REPLY_FOOTER,$/;"	e	enum:Conn_State
+S_REPLY_HEADER	conn.h	/^	S_REPLY_HEADER,$/;"	e	enum:Conn_State
+S_REPLY_STATUS	conn.h	/^	S_REPLY_STATUS,$/;"	e	enum:Conn_State
+Sess	sess.h	/^Sess;$/;"	t	typeref:struct:Sess
+Sess	sess.h	/^typedef struct Sess$/;"	s
+Sess_Private_Data	gen/sess_cookie.c	/^Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	gen/sess_cookie.c	/^typedef struct Sess_Private_Data$/;"	s	file:
+Sess_Private_Data	gen/session.c	/^Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	gen/session.c	/^typedef struct Sess_Private_Data$/;"	s	file:
+Sess_Private_Data	gen/videosesslog.c	/^struct Sess_Private_Data$/;"	s	file:
+Sess_Private_Data	gen/videosesslog.c	/^typedef struct Sess_Private_Data Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	gen/wsess.c	/^Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	gen/wsess.c	/^typedef struct Sess_Private_Data$/;"	s	file:
+Sess_Private_Data	gen/wsesspage.c	/^Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	gen/wsesspage.c	/^typedef struct Sess_Private_Data$/;"	s	file:
+Sess_Private_Data	stat/sess_stat.c	/^Sess_Private_Data;$/;"	t	typeref:struct:Sess_Private_Data	file:
+Sess_Private_Data	stat/sess_stat.c	/^typedef struct Sess_Private_Data$/;"	s	file:
+Session_Log_Desc	gen/videosesslog.c	/^struct Session_Log_Desc$/;"	s	file:
+Session_Log_Desc	gen/videosesslog.c	/^typedef struct Session_Log_Desc Session_Log_Desc;$/;"	t	typeref:struct:Session_Log_Desc	file:
+Stat_Collector	httperf.h	/^Stat_Collector;$/;"	t	typeref:struct:Stat_Collector
+Stat_Collector	httperf.h	/^typedef struct Stat_Collector$/;"	s
+Syscalls	core.c	/^	enum Syscalls$/;"	g	file:
+TIMER_INTERVAL	timer.h	32;"	d
+TIME_BEGIN	core.c	102;"	d	file:
+TIME_BEGIN	core.c	105;"	d	file:
+TIME_END	core.c	103;"	d	file:
+TIME_END	core.c	106;"	d	file:
+TIME_WITH_SYS_TIME	config.h	48;"	d
+TRUE	gen/videosesslog.c	98;"	d	file:
+TTEST_OBJS	Makefile	/^TTEST_OBJS = ttest.o timer.o$/;"	m
+TV_TO_SEC	httperf.h	41;"	d
+Time	httperf.h	/^typedef double Time;$/;"	t
+Timer	timer.h	/^Timer;$/;"	t	typeref:struct:Timer
+Timer	timer.h	/^typedef struct Timer$/;"	s
+Timer_Callback	timer.h	/^typedef void (*Timer_Callback) (struct Timer *t, Any_Type arg);$/;"	t
+Timer_Queue	timer.h	/^Timer_Queue;$/;"	t	typeref:struct:Timer_Queue
+Timer_Queue	timer.h	/^typedef struct Timer_Queue$/;"	s
+UNIFORM	httperf.h	/^	UNIFORM,		\/* over interval [min_iat,max_iat) *\/$/;"	e	enum:Dist_Type
+URI_COMMAND	stat/spec_stats.c	48;"	d	file:
+URI_DYN_GET	stat/spec_stats.c	51;"	d	file:
+URI_INVALID	stat/spec_stats.c	47;"	d	file:
+URI_POST	stat/spec_stats.c	49;"	d	file:
+URI_SIZE	stat/call_stats.c	42;"	d	file:
+URI_STATIC_GET	stat/spec_stats.c	50;"	d	file:
+VAR	stat/stats.h	31;"	d
+VARIABLE	httperf.h	/^	VARIABLE,           \/* allows varying input load *\/$/;"	e	enum:Dist_Type
+VARIABLE_EXP	httperf.h	/^	VARIABLE_EXP,       \/* varying input load with exponential distribution *\/$/;"	e	enum:Dist_Type
+VERSION	httperf.h	36;"	d
+WHEEL_SIZE	timer.c	36;"	d	file:
+WSESSLOG_HEADERS	gen/videosesslog.c	91;"	d	file:
+_	lib/getopt.c	88;"	d	file:
+_	lib/getopt.c	90;"	d	file:
+_CALL_STATS_H_	stat/call_stats.h	26;"	d
+_GETOPT_H	lib/getopt.h	23;"	d
+_NO_PROTO	lib/getopt.c	30;"	d	file:
+_WSESSLOG_H_	gen/videosesslog.h	26;"	d
+__BIG_FD_SETSIZE	core.h	32;"	d
+__BIG_NFDBITS	core.h	33;"	d
+_doprnt	configure	/^_doprnt();$/;"	f
+_getopt_initialize	lib/getopt.c	/^_getopt_initialize (optstring)$/;"	f	file:
+_getopt_internal	lib/getopt.c	/^_getopt_internal (argc, argv, optstring, longopts, longind, long_only)$/;"	f
+action	event.c	/^static Event_Action action[EV_NUM_EVENT_TYPES] = {{0, }};$/;"	v	file:
+added_to_epoll	conn.h	/^	int added_to_epoll;		\/* has the sd been added to epoll event set? *\/$/;"	m	struct:Conn
+additional_header	httperf.h	/^	const char *additional_header;	\/* additional request header(s) *\/$/;"	m	struct:Cmdline_Params
+all_conns_issued	stat/basic.c	/^	u_int all_conns_issued;	\/* total # of connections issued *\/$/;"	m	struct:__anon13	file:
+all_footer_bytes_received	stat/basic.c	/^	u_wide all_footer_bytes_received;   \/* sum of all footer bytes *\/$/;"	m	struct:__anon13	file:
+all_hdr_bytes_received	stat/basic.c	/^	u_wide all_hdr_bytes_received;      \/* sum of all header bytes *\/$/;"	m	struct:__anon13	file:
+all_lifetime_max	stat/basic.c	/^	Time all_lifetime_max;		\/* maximum connection lifetime *\/$/;"	m	struct:__anon13	file:
+all_lifetime_min	stat/basic.c	/^	Time all_lifetime_min;		\/* minimum connection lifetime *\/$/;"	m	struct:__anon13	file:
+all_lifetime_sum	stat/basic.c	/^	Time all_lifetime_sum;		\/* sum of connection lifetimes *\/$/;"	m	struct:__anon13	file:
+all_lifetime_sum2	stat/basic.c	/^	Time all_lifetime_sum2;		\/* sum of connection lifetimes squared *\/$/;"	m	struct:__anon13	file:
+all_lifetime_sum_notm	stat/basic.c	/^	Time all_lifetime_sum_notm; 	\/* sum of conn lifetimes for conns that don't time out *\/$/;"	m	struct:__anon13	file:
+all_lifetime_sum_tm	stat/basic.c	/^	Time all_lifetime_sum_tm;   	\/* sum of conn lifetimes for conns that do time out *\/$/;"	m	struct:__anon13	file:
+all_no_timeout_replies	stat/basic.c	/^	int all_no_timeout_replies;      \/* num replies recvd from conns tha did not time out *\/$/;"	m	struct:__anon13	file:
+all_num_lifetimes	stat/basic.c	/^	u_int all_num_lifetimes;$/;"	m	struct:__anon13	file:
+all_reply_bytes_received	stat/basic.c	/^	u_wide all_reply_bytes_received;    \/* sum of all data bytes *\/$/;"	m	struct:__anon13	file:
+all_timeout_replies	stat/basic.c	/^	int all_timeout_replies;         \/* num replies recvd from conns that eventually timed out *\/$/;"	m	struct:__anon13	file:
+alloced_sd_to_conn	core.c	/^static int min_sd = 0x7fffffff, max_sd = 0, alloced_sd_to_conn = 0;$/;"	v	file:
+arg	event.c	/^	Any_Type arg;$/;"	m	struct:Event_Action::closure	file:
+arg	event.h	/^    Any_Type arg;$/;"	m	struct:Event
+arg	gen/rate.h	/^    Any_Type arg;$/;"	m	struct:Rate_Generator
+arg	timer.h	/^    Any_Type arg;$/;"	m	struct:Timer
+basic	call.h	/^	basic;$/;"	m	struct:Call	typeref:struct:Call::__anon1
+basic	conn.h	/^	basic;			\/* maintained by stat\/stats_basic.c *\/$/;"	m	struct:Conn	typeref:struct:Conn::__anon4
+basic	stat/basic.c	/^basic;$/;"	v	typeref:struct:__anon13	file:
+big_fd_set	core.h	/^} big_fd_set;$/;"	t	typeref:struct:__anon5
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+bindir	gen/Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+bindir	lib/Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+bindir	stat/Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+birth_time	stat/sess_stat.c	/^	Time birth_time;		\/* when this session got created *\/$/;"	m	struct:Sess_Private_Data	file:
+buf	core.c	/^char buf[1048576];$/;"	v
+buf	gen/wsesspage.c	/^    char buf[1024];$/;"	m	struct:Call_Private_Data	file:
+buf_len	gen/wsesspage.c	/^    int buf_len;$/;"	m	struct:Call_Private_Data	file:
+buf_size	stat/call_stats.c	/^int buf_size = 0; $/;"	v
+build_fsize	stat/call_stats.c	/^void build_fsize ()$/;"	f
+build_request_mix_cdf	gen/videosesslog.c	/^build_request_mix_cdf(void)$/;"	f	file:
+burst	gen/videosesslog.c	/^struct burst$/;"	s	file:
+burst_len	httperf.h	/^	int burst_len;	\/* # of calls to burst back-to-back *\/$/;"	m	struct:Cmdline_Params
+bytes_received	stat/basic.c	/^static u_wide bytes_received;	\/* number of bytes received in this interval *\/$/;"	v	file:
+bytes_recvd	stat/spec_stats.c	/^  int bytes_recvd;    \/* Number of bytes received over all requests  *\/$/;"	m	struct:__anon17	file:
+bytes_recvd	stat/spec_stats.c	/^  unsigned int bytes_recvd; \/* Number of bytes recv'd when files of this type were requested *\/$/;"	m	struct:__anon16	file:
+bytes_reqd	stat/spec_stats.c	/^  int bytes_reqd;     \/* Number of bytes requested over all requests *\/$/;"	m	struct:__anon17	file:
+c	httperf.h	/^	char c;$/;"	m	union:__anon8
+c_byte_rate	stat/call_stats.c	/^	double c_byte_rate; \/* rate of receiving bytes *\/$/;"	m	struct:__anon14	file:
+c_bytes_recvd	stat/call_stats.c	/^	int c_bytes_recvd; \/* bytes received *\/$/;"	m	struct:__anon14	file:
+c_call_id	stat/call_stats.c	/^	u_long c_call_id; \/* call id *\/$/;"	m	struct:__anon14	file:
+c_conn_id	stat/call_stats.c	/^	u_long c_conn_id; \/* connection id *\/$/;"	m	struct:__anon14	file:
+c_conn_time	stat/call_stats.c	/^	double c_conn_time; \/* time to connect *\/$/;"	m	struct:__anon14	file:
+c_name	stat/call_stats.c	/^	char c_name[URI_SIZE]; \/* file name *\/$/;"	m	struct:__anon14	file:
+c_perc_recvd	stat/call_stats.c	/^	double c_perc_recvd; \/* percentage of bytes received *\/$/;"	m	struct:__anon14	file:
+c_resp_time	stat/call_stats.c	/^	double c_resp_time; \/* time to receive *\/$/;"	m	struct:__anon14	file:
+c_size	stat/call_stats.c	/^	int c_size; \/* file size *\/$/;"	m	struct:__anon14	file:
+c_status	stat/call_stats.c	/^	int c_status; \/* HTTP status *\/$/;"	m	struct:__anon14	file:
+c_time_lim	stat/call_stats.c	/^	double c_time_lim; \/* time limit *\/$/;"	m	struct:__anon14	file:
+c_timeout	stat/call_stats.c	/^	int c_timeout; \/* timed out? *\/$/;"	m	struct:__anon14	file:
+c_total_time	stat/call_stats.c	/^	double c_total_time; \/*total time *\/$/;"	m	struct:__anon14	file:
+call	gen/session.c	/^		Call *call[MAX_PIPED];$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+call_append_request_header	call.c	/^call_append_request_header (Call *c, const char *hdr, size_t len)$/;"	f
+call_created	gen/misc.c	/^call_created (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type arg)$/;"	f	file:
+call_data	stat/call_stats.c	/^} call_data;$/;"	t	typeref:struct:__anon14	file:
+call_dec_ref	call.h	127;"	d
+call_deinit	call.c	/^call_deinit (Call *call)$/;"	f
+call_destroyed	gen/call_seq.c	/^call_destroyed (Event_Type et, Call *call)$/;"	f	file:
+call_destroyed	gen/videosesslog.c	/^call_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_destroyed	gen/wsess.c	/^call_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_destroyed	gen/wsesspage.c	/^call_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_destroyed	stat/print_reply.c	/^call_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_done	gen/call_seq.c	/^call_done (Event_Type et, Call *call)$/;"	f	file:
+call_done	gen/session.c	/^call_done (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_done	stat/sess_stat.c	/^call_done (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_h	call.h	25;"	d
+call_inc_ref	call.h	126;"	d
+call_init	call.c	/^call_init (Call *c)$/;"	f
+call_issue	gen/sess_cookie.c	/^call_issue (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_method_name	gen/videosesslog.c	/^static const char *call_method_name[] =$/;"	v	file:
+call_new	call.h	125;"	d
+call_private_data_offset	gen/sess_cookie.c	/^static size_t call_private_data_offset = -1;$/;"	v	file:
+call_private_data_offset	gen/session.c	/^static size_t call_private_data_offset = -1;$/;"	v	file:
+call_private_data_offset	gen/uri_wset.c	/^static size_t call_private_data_offset;$/;"	v	file:
+call_private_data_offset	gen/wsesspage.c	/^static size_t call_private_data_offset;$/;"	v	file:
+call_private_data_offset	stat/print_reply.c	/^static size_t call_private_data_offset = -1;$/;"	v	file:
+call_recv_data	gen/wsesspage.c	/^call_recv_data (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_recv_hdr	gen/sess_cookie.c	/^call_recv_hdr (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_recv_hdr	gen/wsesspage.c	/^call_recv_hdr (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+call_response_sum	stat/basic.c	/^	Time call_response_sum;	\/* sum of response times *\/$/;"	m	struct:__anon13	file:
+call_seq	gen/call_seq.c	/^Load_Generator call_seq =$/;"	v
+call_set_contents	call.h	161;"	d
+call_set_location	call.h	145;"	d
+call_set_method	call.h	137;"	d
+call_set_uri	call.h	153;"	d
+call_set_version	call.h	135;"	d
+call_stats	httperf.h	/^	int call_stats;      \/* Should we gather call specific statistics?  *\/$/;"	m	struct:Cmdline_Params
+call_stats	stat/call_stats.c	/^call_data *call_stats;$/;"	v
+call_stats_file	httperf.h	/^	char *call_stats_file;      \/* file containing file sizes used for call_stats *\/$/;"	m	struct:Cmdline_Params
+call_stats_init	stat/call_stats.c	/^void call_stats_init()$/;"	f
+call_xfer_sum	stat/basic.c	/^	Time call_xfer_sum;		\/* sum of response times *\/$/;"	m	struct:__anon13	file:
+ci	gen/session.c	/^	struct Conn_Info *ci;	\/* pointer to relevant conn-info *\/$/;"	m	struct:Conn_Private_Data	typeref:struct:Conn_Private_Data::Conn_Info	file:
+classify_uri	stat/spec_stats.c	/^classify_uri(char *uri)$/;"	f
+client	httperf.h	/^	client;$/;"	m	struct:Cmdline_Params	typeref:struct:Cmdline_Params::__anon9
+close_with_reset	httperf.h	/^	int close_with_reset; \/* close connections with TCP RESET? *\/$/;"	m	struct:Cmdline_Params
+closure	event.c	/^    closure[MAX_NUM_OPS];$/;"	m	struct:Event_Action	typeref:struct:Event_Action::closure	file:
+closure	event.c	/^    struct closure$/;"	s	struct:Event_Action	file:
+conn	call.h	/^	struct Conn *conn;$/;"	m	struct:Call	typeref:struct:Call::Conn
+conn	gen/session.c	/^		Conn *conn;		\/* connection or NULL *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+conn_close	stat/basic.c	/^conn_close(Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+conn_connect_sum	stat/basic.c	/^	Time conn_connect_sum;	\/* sum of connect times *\/$/;"	m	struct:__anon13	file:
+conn_connected	gen/call_seq.c	/^conn_connected (Event_Type et, Conn *conn)$/;"	f	file:
+conn_connected	gen/session.c	/^conn_connected (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+conn_connected	stat/basic.c	/^conn_connected (Event_Type et, Object *obj, Any_Type reg_arg,$/;"	f	file:
+conn_connected	stat/sess_stat.c	/^conn_connected (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+conn_connecting	stat/basic.c	/^conn_connecting (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type c_arg)$/;"	f	file:
+conn_created	stat/basic.c	/^conn_created (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type c_arg)$/;"	f	file:
+conn_dec_ref	conn.h	132;"	d
+conn_deinit	conn.c	/^conn_deinit (Conn *conn)$/;"	f
+conn_destroyed	stat/basic.c	/^conn_destroyed (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type c_arg)$/;"	f	file:
+conn_fail	stat/basic.c	/^conn_fail (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+conn_failed	gen/session.c	/^conn_failed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+conn_failure	core.c	/^conn_failure (Conn *s, int err)$/;"	f	file:
+conn_h	conn.h	25;"	d
+conn_inc_ref	conn.h	131;"	d
+conn_info	gen/session.c	/^	conn_info[MAX_CONN];$/;"	m	struct:Sess_Private_Data	typeref:struct:Sess_Private_Data::Conn_Info	file:
+conn_init	conn.c	/^conn_init (Conn *conn)$/;"	f
+conn_lifetime_hist	stat/basic.c	/^	u_int conn_lifetime_hist[NUM_BINS];	\/* histogram of connection lifetimes *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_max	stat/basic.c	/^	Time conn_lifetime_max;	\/* maximum connection lifetime *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_min	stat/basic.c	/^	Time conn_lifetime_min;	\/* minimum connection lifetime *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_sum	stat/basic.c	/^	Time conn_lifetime_sum;	\/* sum of connection lifetimes *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_sum2	stat/basic.c	/^	Time conn_lifetime_sum2;	\/* sum of connection lifetimes squared *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_sum_notm	stat/basic.c	/^	Time conn_lifetime_sum_notm; \/* sum of conn lifetimes for conns that don't time out *\/$/;"	m	struct:__anon13	file:
+conn_lifetime_sum_tm	stat/basic.c	/^	Time conn_lifetime_sum_tm;   \/* sum of conn lifetimes for conns that do time out *\/$/;"	m	struct:__anon13	file:
+conn_new	conn.h	130;"	d
+conn_private_data_offset	gen/call_seq.c	/^static size_t conn_private_data_offset;$/;"	v	file:
+conn_private_data_offset	gen/session.c	/^static size_t conn_private_data_offset = -1;$/;"	v	file:
+conn_rate	gen/conn_rate.c	/^Load_Generator conn_rate =$/;"	v
+conn_timeout	core.c	/^conn_timeout (Timer *t, Any_Type arg)$/;"	f	file:
+conn_timeout	gen/session.c	/^conn_timeout (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+conn_timeout	stat/basic.c	/^conn_timeout (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+const	lib/getopt.c	44;"	d	file:
+const	lib/getopt1.c	33;"	d	file:
+content	call.h	/^		char * content;         \/* Used for reply-verification only *\/$/;"	m	struct:Call::__anon3
+content_bytes	call.h	/^		size_t content_bytes;	\/* # of reply data bytes received so far *\/$/;"	m	struct:Call::__anon3
+content_length	conn.h	/^	size_t content_length;	\/* content length (or INF if unknown) *\/$/;"	m	struct:Conn
+contents	gen/videosesslog.c	/^	char *contents;$/;"	m	struct:req	file:
+contents_len	gen/videosesslog.c	/^	int contents_len;$/;"	m	struct:req	file:
+cookie	gen/sess_cookie.c	/^    char cookie[MAX_COOKIE_LEN];$/;"	m	struct:Call_Private_Data	file:
+cookie	gen/sess_cookie.c	/^    char cookie[MAX_COOKIE_LEN];$/;"	m	struct:Sess_Private_Data	file:
+cookie	gen/videosesslog.c	/^	char *cookie;$/;"	m	struct:req	file:
+cookie_len	gen/sess_cookie.c	/^    size_t cookie_len;$/;"	m	struct:Sess_Private_Data	file:
+cookie_len	gen/videosesslog.c	/^	int cookie_len;$/;"	m	struct:req	file:
+cookie_present	gen/sess_cookie.c	/^    u_int cookie_present;	\/* non-zero if cookie has been set already *\/$/;"	m	struct:Call_Private_Data	file:
+core_addr_intern	core.c	/^core_addr_intern (const char *server, size_t server_len, int port)$/;"	f
+core_close	core.c	/^core_close (Conn *conn)$/;"	f
+core_connect	core.c	/^core_connect (Conn *s)$/;"	f
+core_exit	core.c	/^core_exit (void)$/;"	f
+core_h	core.h	25;"	d
+core_init	core.c	/^core_init (void)$/;"	f
+core_loop	core.c	/^core_loop (void)$/;"	f
+core_loop_epoll	core.c	/^core_loop_epoll (void)$/;"	f	file:
+core_loop_handle_socket	core.c	/^core_loop_handle_socket (int sd, int is_readable, int is_writable)$/;"	f	file:
+core_loop_select	core.c	/^core_loop_select (void)$/;"	f
+core_loop_timer_start	core.c	/^	static Time core_loop_timer_start;$/;"	v	file:
+core_send	core.c	/^core_send (Conn *conn, Call *call)$/;"	f
+core_ssl_connect	core.c	/^core_ssl_connect (Conn *s)$/;"	f
+count	stat/spec_stats.c	/^  int count;          \/* Number of sessions of this length that were initiated *\/$/;"	m	struct:__anon17	file:
+cpu_mask	httperf.h	/^	unsigned long cpu_mask; \/* mask of schedulable CPUs (if supported) *\/$/;"	m	struct:Cmdline_Params
+create_conn	gen/session.c	/^create_conn (Sess *sess, struct Conn_Info *ci)$/;"	f	file:
+cur_missed_bur	gen/videosesslog.c	/^	BURST *cur_missed_bur;$/;"	m	struct:Sess_Private_Data	file:
+cur_missed_req	gen/videosesslog.c	/^	REQ *cur_missed_req;$/;"	m	struct:Sess_Private_Data	file:
+cur_port	httperf.h	/^		int cur_port;$/;"	m	struct:Cmdline_Params::__anon10
+curr	timer.c	/^static Timer_Queue wheel[WHEEL_SIZE], *curr = 0;$/;"	v	file:
+current_burst	gen/videosesslog.c	/^	BURST *current_burst;	\/* the current burst we're working on *\/$/;"	m	struct:Sess_Private_Data	file:
+current_rate	gen/rate.c	/^int current_rate = 0;$/;"	v
+current_req	gen/videosesslog.c	/^	REQ *current_req;		\/* the current request we're working on *\/$/;"	m	struct:Sess_Private_Data	file:
+cvp	httperf.h	/^	const void *cvp;$/;"	m	union:__anon8
+d	httperf.h	/^	double d;$/;"	m	union:__anon8
+data_blank	stat/call_stats.c	/^	char *data_blank; \/* used for printing a blank data entry, use with hdr_frmt *\/$/;"	m	struct:print_stats	file:
+data_frmt	stat/call_stats.c	/^	char *data_frmt;\/* format used for data, should be the same width as above *\/$/;"	m	struct:print_stats	file:
+debug_level	httperf.c	/^int debug_level;$/;"	v
+delta	timer.h	/^    u_long delta;$/;"	m	struct:Timer
+destroyed	gen/conn_rate.c	/^destroyed (void)$/;"	f	file:
+dist	httperf.h	/^	Dist_Type dist;		\/* interarrival distribution *\/$/;"	m	struct:Rate_Info
+do_recv	core.c	/^do_recv (Conn *s)$/;"	f	file:
+do_send	core.c	/^do_send (Conn *conn)$/;"	f	file:
+done	gen/rate.c	/^done (Event_Type type, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+done	gen/rate.h	/^    int done;$/;"	m	struct:Rate_Generator
+done	timer.c	/^done (Timer *t)$/;"	f	file:
+done_with_reply_hdr	stat/print_reply.c	/^    int done_with_reply_hdr; \/* are we done printing reply header? *\/$/;"	m	struct:Call_Private_Data	file:
+dump	httperf.h	/^	void (*dump) (void);$/;"	m	struct:Stat_Collector
+dump	stat/basic.c	/^dump (void)$/;"	f	file:
+dump	stat/sess_stat.c	/^dump (void)$/;"	f	file:
+dump_stats	httperf.c	/^dump_stats (Timer *t, Any_Type regarg)$/;"	f	file:
+dump_stats	stat/basic.c	/^dump_stats (Event_Type et, Object *obj, Any_Type req_arg, Any_Type call_arg)$/;"	f	file:
+dump_stats	stat/sess_stat.c	/^dump_stats (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+dump_stats_start	httperf.c	/^Time dump_stats_start;$/;"	v
+duration	httperf.h	/^	Time duration[NUM_RATES];$/;"	m	struct:Rate_Info
+duration_in_current_rate	gen/rate.c	/^Time duration_in_current_rate = 0;$/;"	v
+epoll_events	core.c	/^static struct epoll_event *epoll_events;$/;"	v	typeref:struct:epoll_event	file:
+epoll_fd	core.c	/^static int epoll_fd;$/;"	v	file:
+epoll_max_events	core.c	/^static int epoll_max_events;$/;"	v	file:
+epoll_timeout	core.c	/^static int epoll_timeout;$/;"	v	file:
+err_report_init	stat/basic.c	/^err_report_init(void)$/;"	f	file:
+errno_errs_reported	stat/basic.c	/^unsigned int *errno_errs_reported   = 0;$/;"	v
+event_h	event.h	26;"	d
+event_name	event.c	/^static const char * const event_name[EV_NUM_EVENT_TYPES] =$/;"	v	file:
+event_register_handler	event.c	/^event_register_handler (Event_Type et, Event_Handler handler, Any_Type arg)$/;"	f
+event_signal	event.c	/^event_signal (Event_Type type, Object *obj, Any_Type arg)$/;"	f
+exchange	lib/getopt.c	/^exchange (argv)$/;"	f	file:
+expire	ttest.c	/^expire (struct Timer *t)$/;"	f
+extra	gen/misc.c	/^static const char *extra;$/;"	v	file:
+extra_hdrs	gen/videosesslog.c	/^	char extra_hdrs[16384]; \/* plenty for "Content-length: 1234567890" + custom headers *\/$/;"	m	struct:req	file:
+extra_hdrs	gen/videosesslog.c	/^	char extra_hdrs[50];	\/* plenty for "Content-length: 1234567890" *\/$/;"	m	struct:req	file:
+extra_hdrs_len	gen/videosesslog.c	/^	int extra_hdrs_len;$/;"	m	struct:req	file:
+extra_len	gen/misc.c	/^static size_t extra_len;$/;"	v	file:
+f	httperf.h	/^	float f;$/;"	m	union:__anon8
+f_size	stat/call_stats.c	/^	int f_size;$/;"	m	struct:f_uri_size	file:
+f_sizes	stat/call_stats.c	/^struct f_uri_size *f_sizes;$/;"	v	typeref:struct:f_uri_size
+f_uri	stat/call_stats.c	/^	char f_uri[URI_SIZE];$/;"	m	struct:f_uri_size	file:
+f_uri_size	stat/call_stats.c	/^struct f_uri_size {$/;"	s	file:
+failed	sess.h	/^	u_int failed : 1;	\/* did session fail? *\/$/;"	m	struct:Sess
+failtime_sum	stat/sess_stat.c	/^	Time failtime_sum;$/;"	m	struct:__anon15	file:
+failure_status	httperf.h	/^	int failure_status;	\/* status code that should be considered failure *\/$/;"	m	struct:Cmdline_Params
+fbase	gen/uri_wlog.c	/^static char *fbase, *fend, *fcurrent;$/;"	v	file:
+fcurrent	gen/uri_wlog.c	/^static char *fbase, *fend, *fcurrent;$/;"	v	file:
+fds_bits	core.h	/^	unsigned long fds_bits[__BIG_FD_SETSIZE \/ (8 * sizeof (unsigned long))];$/;"	m	struct:__anon5
+fend	gen/uri_wlog.c	/^static char *fbase, *fend, *fcurrent;$/;"	v	file:
+fetch_uri	gen/wsesspage.c	/^fetch_uri (Sess *sess, Sess_Private_Data *priv, Call_Private_Data *cpriv,$/;"	f	file:
+file	httperf.h	/^		char file[MAX_LOG_FILES][1024];		\/* File names of session logs *\/$/;"	m	struct:Cmdline_Params::__anon11
+file_num	gen/uri_wset.c	/^static unsigned file_num;$/;"	v	file:
+file_size	call.h	/^	int file_size;$/;"	m	struct:Call
+file_size	gen/videosesslog.c	/^	int file_size;$/;"	m	struct:req	file:
+file_sizes	stat/spec_stats.c	/^int file_sizes[NUM_SPEC_FILES] = {$/;"	v
+file_stats	stat/spec_stats.c	/^spec_file_data file_stats[NUM_SPEC_FILES];$/;"	v
+find_stack_direction	configure	/^find_stack_direction ()$/;"	f
+first_nonopt	lib/getopt.c	/^static int first_nonopt;$/;"	v	file:
+flag	lib/getopt.h	/^  int *flag;$/;"	m	struct:option
+flush_print_buf	stat/print_reply.c	/^flush_print_buf (Call *call, const char *prefix)$/;"	f	file:
+footer_bytes	call.h	/^		size_t footer_bytes;	\/* # of footer bytes received so far *\/$/;"	m	struct:Call::__anon3
+footer_bytes_received	stat/basic.c	/^	u_wide footer_bytes_received;	\/* sum of all footer bytes *\/$/;"	m	struct:__anon13	file:
+fqdname	conn.h	/^	const char *fqdname;	\/* fully qualified server name (or 0) *\/$/;"	m	struct:Conn
+fqdname_len	conn.h	/^	size_t fqdname_len;$/;"	m	struct:Conn
+free_list	object.c	/^static struct free_list_el *free_list[OBJ_NUM_TYPES];$/;"	v	typeref:struct:free_list_el	file:
+free_list_el	object.c	/^struct free_list_el$/;"	s	file:
+func	timer.h	/^    Timer_Callback func;$/;"	m	struct:Timer
+get_call_next_id	call.c	/^int get_call_next_id ()$/;"	f
+get_call_total_conn_time	stat/call_stats.c	/^double get_call_total_conn_time( Call *cur_call )$/;"	f
+get_f_size	stat/call_stats.c	/^int get_f_size (char uri[URI_SIZE])$/;"	f
+get_file_index	stat/spec_stats.c	/^get_file_index(char *str)$/;"	f
+get_index	stat/call_stats.c	/^int get_index (Call * c)$/;"	f
+get_line	http.c	/^get_line (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+get_next_missed_size	gen/videosesslog.c	/^get_next_missed_size(Conn *conn)$/;"	f
+get_next_missed_timelimit	gen/videosesslog.c	/^get_next_missed_timelimit(Conn *conn)$/;"	f
+get_next_missed_uri	gen/videosesslog.c	/^get_next_missed_uri(Conn *conn)$/;"	f
+get_spec_index	stat/spec_stats.c	/^int get_spec_index( Call * c ) {$/;"	f
+getopt	lib/getopt.c	/^getopt (argc, argv, optstring)$/;"	f
+getopt_long	lib/getopt1.c	/^getopt_long (argc, argv, options, long_options, opt_index)$/;"	f
+getopt_long_only	lib/getopt1.c	/^getopt_long_only (argc, argv, options, long_options, opt_index)$/;"	f
+getpid	lib/getopt.c	80;"	d	file:
+has_arg	lib/getopt.h	/^  int has_arg;$/;"	m	struct:option
+has_body	conn.h	/^	u_int has_body : 1;		\/* does reply have a body? *\/$/;"	m	struct:Conn
+hash_code	core.c	/^hash_code (const char *server, size_t server_len, int port)$/;"	f	file:
+hash_enter	core.c	/^hash_enter (const char *server, size_t server_len, int port,$/;"	f	file:
+hash_entry	core.c	/^struct hash_entry$/;"	s	file:
+hash_lookup	core.c	/^hash_lookup (const char *server, size_t server_len, int port)$/;"	f
+hash_table	core.c	/^hash_table[HASH_TABLE_SIZE];$/;"	v	typeref:struct:hash_entry
+hdr	stat/call_stats.c	/^	char *hdr;		\/* header *\/$/;"	m	struct:print_stats	file:
+hdr_bytes_received	stat/basic.c	/^	u_wide hdr_bytes_received;	\/* sum of all header bytes *\/$/;"	m	struct:__anon13	file:
+hdr_frmt	stat/call_stats.c	/^	char *hdr_frmt;	\/* format used for header and units*\/$/;"	m	struct:print_stats	file:
+header_bytes	call.h	/^		size_t header_bytes;	\/* # of header bytes received so far *\/$/;"	m	struct:Call::__anon3
+hog	httperf.h	/^	int hog;		\/* client may hog as much resources as possible *\/$/;"	m	struct:Cmdline_Params
+hostname	conn.h	/^	const char *hostname;	\/* server's hostname (or 0 for default) *\/$/;"	m	struct:Conn
+hostname	core.c	/^	const char *hostname;$/;"	m	struct:hash_entry	file:
+hostname_len	conn.h	/^	size_t hostname_len;$/;"	m	struct:Conn
+http10req	core.c	/^	static char http10req[] =$/;"	v	file:
+http10req_nohost	core.c	/^	static char http10req_nohost[] =$/;"	v	file:
+http11req	core.c	/^	static char http11req[] =$/;"	v	file:
+http11req_nohost	core.c	/^	static char http11req_nohost[] =$/;"	v	file:
+http_h	http.h	26;"	d
+http_process_reply_bytes	http.c	/^http_process_reply_bytes (Call *c, char **bufp, size_t *buf_lenp)$/;"	f
+http_version	gen/videosesslog.c	/^	int http_version;		\/* HTTP version number *\/$/;"	m	struct:Sess_Private_Data	file:
+http_version	httperf.h	/^	int http_version;	\/* (default) HTTP protocol version *\/$/;"	m	struct:Cmdline_Params
+httperf_errs_reported	stat/basic.c	/^unsigned int *httperf_errs_reported = 0;$/;"	v
+httperf_h	httperf.h	26;"	d
+i	httperf.h	/^	int i;$/;"	m	union:__anon8
+iat	httperf.h	/^	Time iat[NUM_RATES];$/;"	m	struct:Rate_Info
+id	call.h	/^	u_long id;			\/* unique id *\/$/;"	m	struct:Call
+id	conn.h	/^	u_long id;$/;"	m	struct:Conn
+id	httperf.h	/^		u_int id;$/;"	m	struct:Cmdline_Params::__anon9
+id_hdr	call.h	/^	char id_hdr[28]; $/;"	m	struct:Call
+idle_conns	httperf.h	/^	int idle_conns;	\/* idle # of connections per session *\/$/;"	m	struct:Cmdline_Params
+idleconn	httperf.h	/^	char* idleconn;	\/* idleconn binary path *\/$/;"	m	struct:Cmdline_Params
+inc_call_next_id	call.c	/^int inc_call_next_id(int n)$/;"	f
+init	gen/call_seq.c	/^init (void)$/;"	f	file:
+init	gen/conn_rate.c	/^init (void)$/;"	f	file:
+init	gen/misc.c	/^init (void)$/;"	f	file:
+init	gen/sess_cookie.c	/^init (void)$/;"	f	file:
+init	gen/uri_fixed.c	/^init (void)$/;"	f	file:
+init	gen/uri_wset.c	/^init (void)$/;"	f	file:
+init	gen/videosesslog.c	/^init (void)$/;"	f	file:
+init	gen/wsess.c	/^init (void)$/;"	f	file:
+init	gen/wsesspage.c	/^init (void)$/;"	f	file:
+init	httperf.h	/^	void (*init) (void);$/;"	m	struct:Load_Generator
+init	httperf.h	/^	void (*init) (void);$/;"	m	struct:Stat_Collector
+init	stat/basic.c	/^init (void)$/;"	f	file:
+init	stat/print_reply.c	/^init (void)$/;"	f	file:
+init	stat/sess_stat.c	/^init (void)$/;"	f	file:
+init_epoll	core.c	/^init_epoll (void)$/;"	f	file:
+init_wlog	gen/uri_wlog.c	/^init_wlog (void)$/;"	f
+interested_in_reading	core.c	/^interested_in_reading (Conn *s)$/;"	f	file:
+interested_in_reading_no_timeout	core.c	/^interested_in_reading_no_timeout (Conn *s)$/;"	f	file:
+interested_in_writing	core.c	/^interested_in_writing (Conn *s)$/;"	f	file:
+iov	call.h	/^		struct iovec iov[IE_LEN];$/;"	m	struct:Call::__anon2	typeref:struct:Call::__anon2::iovec
+iov_index	call.h	/^		int iov_index;		\/* first iov element that has data *\/$/;"	m	struct:Call::__anon2
+iov_saved	call.h	/^		struct iovec iov_saved;	\/* saved copy of iov[iov_index] *\/$/;"	m	struct:Call::__anon2	typeref:struct:Call::__anon2::iovec
+is_chunked	conn.h	/^	u_int is_chunked : 1;	\/* is the reply chunked? *\/$/;"	m	struct:Conn
+is_connected	gen/session.c	/^		u_int is_connected : 1;	\/* is connection ready for use? *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+is_stable	conn.h	/^		u_int is_stable;	\/* true when not ramping up or ramping down *\/$/;"	m	struct:Conn::__anon4
+is_stable	stat/basic.c	/^	u_int is_stable;			\/* true when not ramping up or ramping down *\/$/;"	m	struct:__anon13	file:
+is_successful	gen/session.c	/^		u_int is_successful : 1; \/* got at least one reply on this conn? *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+issue_calls	gen/call_seq.c	/^issue_calls (Conn *conn)$/;"	f	file:
+issue_calls	gen/videosesslog.c	/^issue_calls (Sess *sess, Sess_Private_Data *priv)$/;"	f	file:
+issue_calls	gen/wsess.c	/^issue_calls (Sess *sess, Sess_Private_Data *priv)$/;"	f	file:
+issue_calls	gen/wsesspage.c	/^issue_calls (Sess *sess, Sess_Private_Data *priv)$/;"	f	file:
+iteration	core.c	/^static int iteration;$/;"	v	file:
+l	httperf.h	/^	long l;$/;"	m	union:__anon8
+last_nonopt	lib/getopt.c	/^static int last_nonopt;$/;"	v	file:
+lb_ports	httperf.h	/^	lb_ports;$/;"	m	struct:Cmdline_Params	typeref:struct:Cmdline_Params::__anon10
+ldbg	stat/basic.c	75;"	d	file:
+ldbg	stat/basic.c	84;"	d	file:
+len	stat/print_reply.c	/^    size_t len;		\/* current length of line buffer *\/$/;"	m	struct:Call_Private_Data	file:
+len_hist	stat/sess_stat.c	/^	u_int *len_hist;$/;"	m	struct:__anon15	file:
+len_hist_alloced	stat/sess_stat.c	/^	u_int len_hist_alloced;$/;"	m	struct:__anon15	file:
+lffs	core.c	/^lffs (long w)$/;"	f	file:
+lifetime_sum	stat/sess_stat.c	/^	Time lifetime_sum;$/;"	m	struct:__anon15	file:
+line	conn.h	/^	struct iovec line;		\/* buffer used to parse reply headers *\/$/;"	m	struct:Conn	typeref:struct:Conn::iovec
+line	stat/print_reply.c	/^    char *line;		\/* line buffer *\/$/;"	m	struct:Call_Private_Data	file:
+line_buf	conn.h	/^	char line_buf[MAX_HDR_LINE_LEN];	\/* default line buffer *\/$/;"	m	struct:Conn
+local_ip	conn.h	/^	char local_ip[16];		\/* The local-ip to bind this connection to. *\/$/;"	m	struct:Conn
+local_ip	gen/videosesslog.c	/^	char local_ip[16];$/;"	m	struct:Sess_Private_Data	file:
+local_ip	httperf.h	/^		char local_ip[MAX_LOG_FILES][16];	\/* The local-ip addresses to bind to. *\/$/;"	m	struct:Cmdline_Params::__anon11
+local_ip	sess.h	/^	char local_ip[16];$/;"	m	struct:Sess
+longest_session	stat/sess_stat.c	/^	u_int longest_session;$/;"	m	struct:__anon15	file:
+longopts	httperf.c	/^static struct option longopts[] =$/;"	v	typeref:struct:option	file:
+main	config.guess	/^		main()$/;"	f
+main	config.guess	/^	main ()$/;"	f
+main	config.guess	/^main ()$/;"	f
+main	httperf.c	/^main (int argc, char **argv)$/;"	f
+main	idleconn.c	/^main (int argc, char **argv)$/;"	f
+main	lib/getopt.c	/^main (argc, argv)$/;"	f
+main	lib/getopt1.c	/^main (argc, argv)$/;"	f
+main	ttest.c	/^main (int argc, char **argv)$/;"	f
+make_conn	gen/conn_rate.c	/^make_conn (Any_Type arg)$/;"	f	file:
+mandir	Makefile	/^mandir = ${prefix}\/man$/;"	m
+mandir	gen/Makefile	/^mandir = ${prefix}\/man$/;"	m
+mandir	lib/Makefile	/^mandir = ${prefix}\/man$/;"	m
+mandir	stat/Makefile	/^mandir = ${prefix}\/man$/;"	m
+max_all_conns	stat/basic.c	/^	int max_all_conns;  	\/* max # of concurrent connected connections *\/$/;"	m	struct:__anon13	file:
+max_burst_len	core.c	/^static u_long max_burst_len;$/;"	v	file:
+max_connected_conns	stat/basic.c	/^	int max_connected_conns;  \/* max # of concurrent connected connections *\/$/;"	m	struct:__anon13	file:
+max_conns	httperf.h	/^	int max_conns;	\/* max # of connections per session *\/$/;"	m	struct:Cmdline_Params
+max_conns	stat/basic.c	/^	u_int max_conns;		\/* max # of concurrent connections *\/$/;"	m	struct:__anon13	file:
+max_iat	httperf.h	/^	Time max_iat;	        \/* max interarrival time (for UNIFORM) *\/$/;"	m	struct:Rate_Info
+max_piped	httperf.h	/^	int max_piped;	\/* max # of piped calls per connection *\/$/;"	m	struct:Cmdline_Params
+max_qlen	gen/session.c	/^static size_t max_qlen;$/;"	v	file:
+max_sd	core.c	/^static int min_sd = 0x7fffffff, max_sd = 0, alloced_sd_to_conn = 0;$/;"	v	file:
+mean_iat	httperf.h	/^	Time mean_iat;		\/* mean interarrival time *\/$/;"	m	struct:Rate_Info
+method	gen/videosesslog.c	/^	int method;$/;"	m	struct:req	file:
+method	httperf.h	/^	const char *method;	\/* default call method *\/$/;"	m	struct:Cmdline_Params
+method_len	gen/misc.c	/^static size_t method_len;$/;"	v	file:
+min	lib/ssl_writev.c	73;"	d	file:
+min_iat	httperf.h	/^	Time min_iat;		\/* min interarrival time (for UNIFORM) *\/$/;"	m	struct:Rate_Info
+min_sd	core.c	/^static int min_sd = 0x7fffffff, max_sd = 0, alloced_sd_to_conn = 0;$/;"	v	file:
+misc	gen/misc.c	/^Load_Generator misc =$/;"	v
+miss_prob	gen/uri_wset.c	/^static double miss_prob;$/;"	v	file:
+missing_bytes	stat/spec_stats.c	/^  int missing_bytes; \/* Number of requests that completed, but had missing bytes *\/$/;"	m	struct:__anon16	file:
+my_index	lib/getopt.c	/^my_index (str, chr)$/;"	f	file:
+my_index	lib/getopt.c	196;"	d	file:
+myaddr	core.c	/^static struct sockaddr_in myaddr;$/;"	v	typeref:struct:sockaddr_in	file:
+myport	conn.h	/^	int myport;			\/* local port number or -1 *\/$/;"	m	struct:Conn
+name	httperf.h	/^	const char *name;$/;"	m	struct:Load_Generator
+name	httperf.h	/^	const char *name;$/;"	m	struct:Stat_Collector
+name	lib/getopt.h	/^  const char *name;$/;"	m	struct:option
+new_burst	gen/videosesslog.c	/^new_burst (REQ *r)$/;"	f	file:
+new_request	gen/videosesslog.c	/^new_request (char *uristr)$/;"	f	file:
+next	conn.h	/^	struct Conn *next;$/;"	m	struct:Conn	typeref:struct:Conn::Conn
+next	gen/videosesslog.c	/^	BURST *next;$/;"	m	struct:burst	file:
+next	gen/videosesslog.c	/^	REQ *next;$/;"	m	struct:req	file:
+next	gen/wsesspage.c	/^	struct uri_list *next;$/;"	m	struct:Sess_Private_Data::uri_list	typeref:struct:Sess_Private_Data::uri_list::uri_list	file:
+next	object.c	/^    struct free_list_el *next;$/;"	m	struct:free_list_el	typeref:struct:free_list_el::free_list_el	file:
+next	timer.h	/^    struct Timer *next;$/;"	m	struct:Timer_Queue	typeref:struct:Timer_Queue::Timer
+next_arrival_time_det	gen/rate.c	/^next_arrival_time_det (Rate_Generator *rg)$/;"	f	file:
+next_arrival_time_exp	gen/rate.c	/^next_arrival_time_exp (Rate_Generator *rg)$/;"	f	file:
+next_arrival_time_uniform	gen/rate.c	/^next_arrival_time_uniform (Rate_Generator *rg)$/;"	f	file:
+next_arrival_time_variable	gen/rate.c	/^next_arrival_time_variable (Rate_Generator *rg)$/;"	f	file:
+next_arrival_time_variable_exp	gen/rate.c	/^next_arrival_time_variable_exp (Rate_Generator *rg)$/;"	f	file:
+next_id	call.c	/^static u_long next_id = 0;$/;"	v	file:
+next_interarrival_time	gen/rate.h	/^    Time (*next_interarrival_time) (struct Rate_Generator *rg);$/;"	m	struct:Rate_Generator
+next_session_template	gen/videosesslog.c	/^	int next_session_template;$/;"	m	struct:Session_Log_Desc	file:
+next_tick	timer.c	/^static Time next_tick;$/;"	v	file:
+next_time	gen/rate.h	/^    Time next_time;$/;"	m	struct:Rate_Generator
+nextchar	lib/getopt.c	/^static char *nextchar;$/;"	v	file:
+no_argument	lib/getopt.h	97;"	d
+no_host_hdr	httperf.h	/^	int no_host_hdr;	 \/* don't send Host: header in request *\/$/;"	m	struct:Cmdline_Params
+no_op	httperf.c	/^no_op (void)$/;"	f
+no_timeout_replies	stat/basic.c	/^	int no_timeout_replies;      \/* num replies recvd from conns tha did not time out *\/$/;"	m	struct:__anon13	file:
+nonoption_flags	lib/getopt.c	/^static const char *nonoption_flags;$/;"	v	file:
+nonoption_flags_len	lib/getopt.c	/^static int nonoption_flags_len;$/;"	v	file:
+now	timer.c	/^static Time now;$/;"	v	file:
+numRates	httperf.h	/^	int numRates;               \/* number of rates we want to use *\/$/;"	m	struct:Rate_Info
+num_active_conns	stat/basic.c	/^	u_int num_active_conns;$/;"	m	struct:__anon13	file:
+num_active_conns	stat/basic.c	/^static u_int num_active_conns;$/;"	v	file:
+num_all_replies	stat/basic.c	/^	u_int num_all_replies;	\/* completion count for all connections *\/$/;"	m	struct:__anon13	file:
+num_all_sent	stat/basic.c	/^	u_int num_all_sent;		\/* # of requests sent *\/$/;"	m	struct:__anon13	file:
+num_calls	conn.h	/^		u_int num_calls;                \/* # of calls that should be completed *\/$/;"	m	struct:Conn::__anon4
+num_calls	gen/call_seq.c	/^    int num_calls;$/;"	m	struct:Conn_Private_Data	file:
+num_calls	httperf.h	/^	int num_calls;	\/* # of calls to generate per connection *\/$/;"	m	struct:Cmdline_Params
+num_calls_completed	conn.h	/^		u_int num_calls_completed;	\/* # of calls that completed *\/$/;"	m	struct:Conn::__anon4
+num_calls_completed	stat/sess_stat.c	/^	u_int num_calls_completed;	\/* how many calls completed? *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_destroyed	gen/videosesslog.c	/^	u_int num_calls_destroyed;	\/* # of calls destroyed so far *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_destroyed	gen/wsess.c	/^    u_int num_calls_destroyed;	\/* # of calls destroyed so far *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_in_this_burst	gen/videosesslog.c	/^	u_int num_calls_in_this_burst; \/* # of calls created for this burst *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_in_this_burst	gen/wsess.c	/^    u_int num_calls_in_this_burst; \/* # of calls created for this burst *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_target	gen/videosesslog.c	/^	u_int num_calls_target;	\/* total # of calls desired *\/$/;"	m	struct:Sess_Private_Data	file:
+num_calls_target	gen/wsess.c	/^    u_int num_calls_target;	\/* total # of calls desired *\/$/;"	m	struct:Sess_Private_Data	file:
+num_client_connected_timeouts	stat/basic.c	/^	int num_client_connected_timeouts;    \/* timeout happened after  connection was established *\/$/;"	m	struct:__anon13	file:
+num_client_timeouts	stat/basic.c	/^	u_int num_client_timeouts;	\/* # of client timeouts *\/$/;"	m	struct:__anon13	file:
+num_client_unconnected_timeouts	stat/basic.c	/^	int num_client_unconnected_timeouts;  \/* timeout happened before connection was established *\/$/;"	m	struct:__anon13	file:
+num_clients	httperf.h	/^		u_int num_clients;$/;"	m	struct:Cmdline_Params::__anon9
+num_closed	idleconn.c	/^unsigned long num_conn, num_closed;$/;"	v
+num_completed	gen/call_seq.c	/^    int num_completed;$/;"	m	struct:Conn_Private_Data	file:
+num_completed	stat/sess_stat.c	/^	u_int num_completed;$/;"	m	struct:__anon15	file:
+num_completed_since_last_sample	stat/sess_stat.c	/^	u_int num_completed_since_last_sample;$/;"	m	struct:__anon15	file:
+num_conn	idleconn.c	/^unsigned long num_conn, num_closed;$/;"	v
+num_connected_conns	stat/basic.c	/^	int num_connected_conns;  \/* # of concurrent connected connections *\/$/;"	m	struct:__anon13	file:
+num_connects	stat/basic.c	/^	u_int num_connects;		\/* # of completed connect()s *\/$/;"	m	struct:__anon13	file:
+num_conns	httperf.h	/^	int num_conns;	\/* # of connections to generate *\/$/;"	m	struct:Cmdline_Params
+num_conns	stat/sess_stat.c	/^	u_int num_conns;		\/* # of connections on this session *\/$/;"	m	struct:Sess_Private_Data	file:
+num_conns	stat/sess_stat.c	/^	u_int num_conns;	\/* total # of connections on successful sessions *\/$/;"	m	struct:__anon15	file:
+num_conns_destroyed	gen/conn_rate.c	/^static int num_conns_destroyed;$/;"	v	file:
+num_conns_generated	gen/conn_rate.c	/^static int num_conns_generated;$/;"	v	file:
+num_conns_issued	stat/basic.c	/^	u_int num_conns_issued;	\/* total # of connections issued *\/$/;"	m	struct:__anon13	file:
+num_created	gen/wsesspage.c	/^    u_int num_created;		\/* # of calls created in this burst *\/$/;"	m	struct:Sess_Private_Data	file:
+num_destroyed	gen/call_seq.c	/^    int num_destroyed;$/;"	m	struct:Conn_Private_Data	file:
+num_destroyed	gen/wsesspage.c	/^    u_int num_destroyed;	\/* # of calls destroyed in this burst *\/$/;"	m	struct:Sess_Private_Data	file:
+num_extra_hdrs	call.h	/^		u_int num_extra_hdrs;	\/* number of additional headers in use *\/$/;"	m	struct:Call::__anon2
+num_failed	stat/sess_stat.c	/^	u_int num_failed;$/;"	m	struct:__anon15	file:
+num_files	stat/call_stats.c	/^int num_files;$/;"	v
+num_lifetimes	stat/basic.c	/^	u_int num_lifetimes;$/;"	m	struct:__anon13	file:
+num_logs	httperf.h	/^		u_int num_logs;				\/* # of session logs *\/$/;"	m	struct:Cmdline_Params::__anon11
+num_missed_calls	gen/videosesslog.c	/^num_missed_calls (Conn *conn)$/;"	f
+num_ops	event.c	/^    int num_ops;$/;"	m	struct:Event_Action	file:
+num_other_errors	stat/basic.c	/^	u_int num_other_errors;	\/* # of other errors *\/$/;"	m	struct:__anon13	file:
+num_pending	gen/session.c	/^		u_int num_pending;	\/* # of calls pending *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+num_ports	httperf.h	/^		int num_ports;$/;"	m	struct:Cmdline_Params::__anon10
+num_rate_samples	stat/sess_stat.c	/^	u_int num_rate_samples;$/;"	m	struct:__anon15	file:
+num_replies	stat/basic.c	/^	u_int num_replies[6];	\/* completion count per status class *\/$/;"	m	struct:__anon13	file:
+num_replies	stat/basic.c	/^static u_int num_replies;	\/* # of replies received in this interval *\/$/;"	v	file:
+num_reply_samples	stat/basic.c	/^	u_int num_reply_samples;$/;"	m	struct:__anon13	file:
+num_reqs	gen/videosesslog.c	/^	int num_reqs;$/;"	m	struct:burst	file:
+num_reqs_completed	gen/wsesspage.c	/^    u_int num_reqs_completed;	\/* # of user reqs completed *\/$/;"	m	struct:Sess_Private_Data	file:
+num_requests	sess.h	/^	int num_requests;   \/* The number of requests in this session*\/$/;"	m	struct:Sess
+num_responses	stat/basic.c	/^	u_int num_responses;$/;"	m	struct:__anon13	file:
+num_sent	gen/session.c	/^		u_int num_sent;		\/* # of calls sent so far *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+num_sent	stat/basic.c	/^	u_int num_sent;		\/* # of requests sent *\/$/;"	m	struct:__anon13	file:
+num_sessions	httperf.h	/^		u_int num_sessions;			\/* # of user-sessions *\/$/;"	m	struct:Cmdline_Params::__anon11
+num_sessions_destroyed	gen/videosesslog.c	/^static int num_sessions_destroyed;$/;"	v	file:
+num_sessions_destroyed	gen/wsess.c	/^static int num_sessions_destroyed;$/;"	v	file:
+num_sessions_destroyed	gen/wsesspage.c	/^static int num_sessions_destroyed;$/;"	v	file:
+num_sessions_generated	gen/videosesslog.c	/^static int num_sessions_generated;$/;"	v	file:
+num_sessions_generated	gen/wsess.c	/^static int num_sessions_generated;$/;"	v	file:
+num_sessions_generated	gen/wsesspage.c	/^static int num_sessions_generated;$/;"	v	file:
+num_sock_addrinuse	stat/basic.c	/^	u_int num_sock_addrinuse;    \/* # of EADDRINUSE *\/$/;"	m	struct:__anon13	file:
+num_sock_addrunavail	stat/basic.c	/^	u_int num_sock_addrunavail;\/* # of EADDRNOTAVAIL *\/$/;"	m	struct:__anon13	file:
+num_sock_fdunavail	stat/basic.c	/^	u_int num_sock_fdunavail;	\/* # of times out of filedescriptors *\/$/;"	m	struct:__anon13	file:
+num_sock_ftabfull	stat/basic.c	/^	u_int num_sock_ftabfull;	\/* # of times file table was full *\/$/;"	m	struct:__anon13	file:
+num_sock_refused	stat/basic.c	/^	u_int num_sock_refused;	\/* # of ECONNREFUSED *\/$/;"	m	struct:__anon13	file:
+num_sock_reset	stat/basic.c	/^	u_int num_sock_reset;	\/* # of ECONNRESET *\/$/;"	m	struct:__anon13	file:
+num_sock_timeouts	stat/basic.c	/^	u_int num_sock_timeouts;	\/* # of ETIMEDOUT *\/$/;"	m	struct:__anon13	file:
+num_templates	gen/videosesslog.c	/^	int num_templates;$/;"	m	struct:Session_Log_Desc	file:
+num_total_all_conns	stat/basic.c	/^	int num_total_all_conns;$/;"	m	struct:__anon13	file:
+num_total_connected_conns	stat/basic.c	/^	int num_total_connected_conns;$/;"	m	struct:__anon13	file:
+obj	call.h	/^	Object obj;$/;"	m	struct:Call
+obj	conn.h	/^	Object obj;$/;"	m	struct:Conn
+obj	event.h	/^    Object *obj;$/;"	m	struct:Event
+obj	sess.h	/^	Object obj;$/;"	m	struct:Sess
+object_dec_ref	object.c	/^object_dec_ref (Object *obj)$/;"	f
+object_destroy	object.c	/^object_destroy (Object *obj)$/;"	f	file:
+object_expand	object.c	/^object_expand (Object_Type type, size_t size)$/;"	f
+object_h	object.h	25;"	d
+object_inc_ref	object.h	63;"	d
+object_is_call	object.h	29;"	d
+object_is_call	object.h	33;"	d
+object_is_conn	object.h	28;"	d
+object_is_conn	object.h	32;"	d
+object_is_sess	object.h	30;"	d
+object_is_sess	object.h	34;"	d
+object_new	object.c	/^object_new (Object_Type type)$/;"	f
+object_type_size	httperf.c	/^size_t object_type_size[OBJ_NUM_TYPES];$/;"	v
+op	event.c	/^	Event_Handler op;$/;"	m	struct:Event_Action::closure	file:
+optarg	lib/getopt.c	/^char *optarg = NULL;$/;"	v
+opterr	lib/getopt.c	/^int opterr = 1;$/;"	v
+optind	lib/getopt.c	/^int optind = 0;$/;"	v
+option	lib/getopt.h	/^struct option$/;"	s
+optional_argument	lib/getopt.h	99;"	d
+optopt	lib/getopt.c	/^int optopt = '?';$/;"	v
+ordering	lib/getopt.c	/^} ordering;$/;"	v	typeref:enum:__anon12	file:
+output_log	httperf.h	/^	char* output_log;$/;"	m	struct:Cmdline_Params
+pace_requests	gen/videosesslog.c	/^	int pace_requests;$/;"	m	struct:burst	file:
+panic	httperf.c	/^panic (const char *msg, ...)$/;"	f
+param	httperf.c	/^Cmdline_Params param;$/;"	v
+parse_config	gen/videosesslog.c	/^parse_config (void)$/;"	f	file:
+parse_data	http.c	/^parse_data (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+parse_footers	http.c	/^parse_footers (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+parse_headers	http.c	/^parse_headers (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+parse_status_line	http.c	/^parse_status_line (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+perf_sample	httperf.c	/^perf_sample (Timer *t, Any_Type regarg)$/;"	f	file:
+perf_sample	stat/basic.c	/^perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+perf_sample	stat/sess_stat.c	/^perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+perf_sample_start	httperf.c	/^static Time perf_sample_start;$/;"	v	file:
+port	conn.h	/^	int port;			\/* server's port (or -1 for default) *\/$/;"	m	struct:Conn
+port	core.c	/^	int port;$/;"	m	struct:hash_entry	file:
+port	gen/videosesslog.c	/^	int port;		\/* specifies port used for this session, 0 => use default *\/$/;"	m	struct:Sess_Private_Data	file:
+port	httperf.h	/^		int port[MAX_SVR_PORTS];$/;"	m	struct:Cmdline_Params::__anon10
+port	httperf.h	/^	int port;		\/* (default) server port *\/$/;"	m	struct:Cmdline_Params
+port	sess.h	/^	int port; \/* port to use for connections, 0 => use default *\/$/;"	m	struct:Sess
+port_free_map	core.c	/^static u_long port_free_map[((MAX_IP_PORT - MIN_IP_PORT + BITSPERLONG)$/;"	v	file:
+port_get	core.c	/^port_get (void)$/;"	f	file:
+port_put	core.c	/^port_put (int port)$/;"	f	file:
+posixly_correct	lib/getopt.c	/^static char *posixly_correct;$/;"	v	file:
+prefix	Makefile	/^prefix = \/usr\/local$/;"	m
+prefix	gen/Makefile	/^prefix = \/usr\/local$/;"	m
+prefix	gen/wsesspage.c	/^static char *prefix;$/;"	v	file:
+prefix	lib/Makefile	/^prefix = \/usr\/local$/;"	m
+prefix	stat/Makefile	/^prefix = \/usr\/local$/;"	m
+prefix_len	gen/wsesspage.c	/^static size_t prefix_len;$/;"	v	file:
+prepare_for_next_burst	gen/videosesslog.c	/^prepare_for_next_burst (Sess *sess, Sess_Private_Data *priv, Time conn_time)$/;"	f	file:
+prev	timer.h	/^    struct Timer *prev;$/;"	m	struct:Timer_Queue	typeref:struct:Timer_Queue::Timer
+prev_f	stat/call_stats.c	/^struct f_uri_size *prev_f = NULL;$/;"	v	typeref:struct:f_uri_size
+print_buf	stat/print_reply.c	/^print_buf (Call *call, const char *prefix, const char *buf, int len)$/;"	f	file:
+print_call	stat/call_stats.c	/^print_call (call_data cd)$/;"	f
+print_call_stats	stat/call_stats.c	/^print_call_stats()$/;"	f
+print_connected_info	stat/basic.c	/^print_connected_info(char *func, int sd, int state)$/;"	f
+print_connected_info	stat/basic.c	85;"	d	file:
+print_count	stat/call_stats.c	/^int print_count = 0;$/;"	v
+print_errno_info	stat/basic.c	/^print_errno_info()$/;"	f
+print_header_line	stat/call_stats.c	/^print_header_line()$/;"	f
+print_info	stat/call_stats.c	/^struct print_stats print_info[]={$/;"	v	typeref:struct:print_stats
+print_remaining_uri	gen/videosesslog.c	/^print_remaining_uri (Conn *conn)$/;"	f
+print_reply	httperf.h	/^	int print_reply;	 \/* bit 0: print repl headers, bit 1: print repl body *\/$/;"	m	struct:Cmdline_Params
+print_reply_hdr	stat/print_reply.c	/^print_reply_hdr (Call *call, const char *buf, int len)$/;"	f	file:
+print_request	httperf.h	/^	int print_request;	 \/* bit 0: print req headers, bit 1: print req body *\/$/;"	m	struct:Cmdline_Params
+print_request	stat/print_reply.c	/^print_request (Call *call)$/;"	f	file:
+print_spec_timeouts	stat/spec_stats.c	/^void print_spec_timeouts() {$/;"	f
+print_stats	stat/call_stats.c	/^struct print_stats {$/;"	s	file:
+priv_from_conn	gen/videosesslog.c	/^priv_from_conn (Conn *conn)$/;"	f
+process_call_timeout	stat/call_stats.c	/^void process_call_timeout(Conn * c )$/;"	f
+process_spec_timeout	stat/spec_stats.c	/^void process_spec_timeout(Conn * c ) {$/;"	f
+prog_name	httperf.c	/^const char *prog_name;$/;"	v
+prog_name	idleconn.c	/^const char *prog_name;$/;"	v
+prog_name	ttest.c	/^const char *prog_name = "ttest";$/;"	v
+prv_missed_req	gen/videosesslog.c	/^	REQ *prv_missed_req;$/;"	m	struct:Sess_Private_Data	file:
+q	timer.h	/^    Timer_Queue q;		\/* must be first member! *\/$/;"	m	struct:Timer
+ramp_down_conns	httperf.h	/^	int ramp_down_conns; \/* num of conns to ignore at end of experiment *\/$/;"	m	struct:Cmdline_Params
+ramp_up_conns	httperf.h	/^	int ramp_up_conns;  \/* num of conns to ignore at beginning of experiment *\/$/;"	m	struct:Cmdline_Params
+rate	gen/rate.h	/^    Rate_Info *rate;$/;"	m	struct:Rate_Generator
+rate	httperf.h	/^	Rate_Info rate;$/;"	m	struct:Cmdline_Params
+rate_generator_start	gen/rate.c	/^rate_generator_start (Rate_Generator *rg, Event_Type completion_event)$/;"	f
+rate_generator_stop	gen/rate.c	/^rate_generator_stop (Rate_Generator *rg)$/;"	f
+rate_h	gen/rate.h	26;"	d
+rate_interval	httperf.h	/^	double rate_interval; \/* interval at which rate info is sampled *\/$/;"	m	struct:Cmdline_Params
+rate_max	stat/sess_stat.c	/^	Time rate_max;$/;"	m	struct:__anon15	file:
+rate_min	stat/sess_stat.c	/^	Time rate_min;$/;"	m	struct:__anon15	file:
+rate_param	httperf.h	/^	double rate_param;		\/* 0 if mean_iat==0, else 1\/mean_iat *\/$/;"	m	struct:Rate_Info
+rate_sum	stat/sess_stat.c	/^	Time rate_sum;$/;"	m	struct:__anon15	file:
+rate_sum2	stat/sess_stat.c	/^	Time rate_sum2;$/;"	m	struct:__anon15	file:
+rd	gen/session.c	/^		u_int rd;		\/* first pending call *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+rdfds	core.c	/^static big_fd_set rdfds, wrfds;$/;"	v	file:
+record_conn_time	call.h	/^	int record_conn_time;$/;"	m	struct:Call
+recv_buffer_size	httperf.h	/^	int recv_buffer_size;$/;"	m	struct:Cmdline_Params
+recv_data	stat/print_reply.c	/^recv_data (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+recv_done	core.c	/^recv_done (Call *call)$/;"	f	file:
+recv_raw_data	stat/print_reply.c	/^recv_raw_data (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+recv_start	stat/basic.c	/^recv_start (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+recv_stop	stat/basic.c	/^recv_stop (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+recv_stop	stat/print_reply.c	/^recv_stop (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+recvq	conn.h	/^	struct Call *recvq;		\/* calls waiting for a reply *\/$/;"	m	struct:Conn	typeref:struct:Conn::Call
+recvq_next	call.h	/^	struct Call *recvq_next;$/;"	m	struct:Call	typeref:struct:Call::Call
+recvq_tail	conn.h	/^	struct Call *recvq_tail;$/;"	m	struct:Conn	typeref:struct:Conn::Call
+ref_count	object.h	/^    u_int ref_count;			\/* # of references to this object *\/$/;"	m	struct:Object
+replies	stat/spec_stats.c	/^  int replies;        \/* Number of replies that were received *\/$/;"	m	struct:__anon17	file:
+reply	call.h	/^	reply;$/;"	m	struct:Call	typeref:struct:Call::__anon3
+reply_bytes_received	stat/basic.c	/^	u_wide reply_bytes_received;	\/* sum of all data bytes *\/$/;"	m	struct:__anon13	file:
+reply_rate_max	stat/basic.c	/^	Time reply_rate_max;$/;"	m	struct:__anon13	file:
+reply_rate_min	stat/basic.c	/^	Time reply_rate_min;$/;"	m	struct:__anon13	file:
+reply_rate_sum	stat/basic.c	/^	Time reply_rate_sum;$/;"	m	struct:__anon13	file:
+reply_rate_sum2	stat/basic.c	/^	Time reply_rate_sum2;$/;"	m	struct:__anon13	file:
+req	call.h	/^	req;$/;"	m	struct:Call	typeref:struct:Call::__anon2
+req	gen/videosesslog.c	/^struct req$/;"	s	file:
+req_bytes_sent	stat/basic.c	/^	size_t req_bytes_sent;$/;"	m	struct:__anon13	file:
+req_list	gen/videosesslog.c	/^	REQ *req_list;$/;"	m	struct:burst	file:
+request_mix_cdf	gen/videosesslog.c	/^double* request_mix_cdf = NULL;$/;"	v
+requests	stat/spec_stats.c	/^  int requests;       \/* Number of requests sent over sessions of this length *\/$/;"	m	struct:__anon17	file:
+requests	stat/spec_stats.c	/^  int requests;      \/* Number of times this file was requested *\/$/;"	m	struct:__anon16	file:
+required_argument	lib/getopt.h	98;"	d
+retry_on_failure	httperf.h	/^	int retry_on_failure; \/* when a call fails, should we retry? *\/$/;"	m	struct:Cmdline_Params
+rg	gen/conn_rate.c	/^static Rate_Generator rg;$/;"	v	file:
+rg_sess	gen/videosesslog.c	/^static Rate_Generator rg_sess;$/;"	v	file:
+rg_sess	gen/wsess.c	/^static Rate_Generator rg_sess;$/;"	v	file:
+rg_sess	gen/wsesspage.c	/^static Rate_Generator rg_sess;$/;"	v	file:
+running	core.c	/^static int running = 1;$/;"	v	file:
+sched_getaffinity	sys_sched_affinity.c	/^sched_getaffinity(pid_t pid, unsigned int len, unsigned long *cpu_mask)$/;"	f
+sched_setaffinity	sys_sched_affinity.c	/^sched_setaffinity(pid_t pid, unsigned int len, unsigned long *cpu_mask)$/;"	f
+schedule_timeouts	core.c	/^schedule_timeouts (Conn *s)$/;"	f	file:
+sd	conn.h	/^	int	sd;			\/* socket descriptor *\/$/;"	m	struct:Conn
+sd_to_conn	core.c	/^Conn **sd_to_conn;$/;"	v
+select_time	core.c	/^	static float timer_tick_time, select_time, work_time;$/;"	v	file:
+select_timeout	core.c	/^static struct timeval select_timeout;$/;"	v	typeref:struct:timeval	file:
+send_buffer_size	httperf.h	/^	int send_buffer_size;$/;"	m	struct:Cmdline_Params
+send_calls	gen/session.c	/^send_calls (Sess *sess, struct Conn_Info *ci)$/;"	f	file:
+send_raw_data	stat/print_reply.c	/^send_raw_data (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+send_start	stat/basic.c	/^send_start (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+send_stop	stat/basic.c	/^send_stop (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)$/;"	f	file:
+sendq	conn.h	/^	struct Call *sendq;		\/* calls whose request needs to be sent *\/$/;"	m	struct:Conn	typeref:struct:Conn::Call
+sendq_next	call.h	/^	struct Call *sendq_next;$/;"	m	struct:Call	typeref:struct:Call::Call
+sendq_tail	conn.h	/^	struct Call *sendq_tail;$/;"	m	struct:Conn	typeref:struct:Conn::Call
+separate_post_stats	httperf.h	/^	int separate_post_stats; \/* Should we separate stats for dyanmic POST requests?  *\/$/;"	m	struct:Cmdline_Params
+server	gen/videosesslog.c	/^	const char *server; \/* specifies server used for this session, NULL => use default *\/ $/;"	m	struct:Sess_Private_Data	file:
+server	httperf.h	/^	const char *server;	\/* (default) hostname *\/$/;"	m	struct:Cmdline_Params
+server	sess.h	/^	const char *server; \/*server to use for connections, NULL => use default *\/$/;"	m	struct:Sess
+server_name	httperf.h	/^	const char *server_name; \/* fully qualified server name *\/$/;"	m	struct:Cmdline_Params
+sess	gen/session.c	/^	Sess *sess;$/;"	m	struct:Call_Private_Data	file:
+sess	gen/session.c	/^	Sess *sess;$/;"	m	struct:Conn_Private_Data	file:
+sess_cookie	gen/sess_cookie.c	/^Load_Generator sess_cookie =$/;"	v
+sess_create	gen/videosesslog.c	/^sess_create (Any_Type arg)$/;"	f	file:
+sess_create	gen/wsess.c	/^sess_create (Any_Type arg)$/;"	f	file:
+sess_create	gen/wsesspage.c	/^sess_create (Any_Type arg)$/;"	f	file:
+sess_created	stat/sess_stat.c	/^sess_created (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_dec_ref	sess.h	67;"	d
+sess_deinit	sess.c	/^sess_deinit (Sess *sess)$/;"	f
+sess_destroyed	gen/session.c	/^sess_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_destroyed	gen/videosesslog.c	/^sess_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_destroyed	gen/wsess.c	/^sess_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_destroyed	gen/wsesspage.c	/^sess_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_destroyed	stat/sess_stat.c	/^sess_destroyed (Event_Type et, Object *obj, Any_Type regarg, Any_Type callarg)$/;"	f	file:
+sess_failure	sess.c	/^sess_failure (Sess *sess)$/;"	f
+sess_h	sess.h	26;"	d
+sess_inc_ref	sess.h	66;"	d
+sess_init	sess.c	/^sess_init (Sess *sess)$/;"	f
+sess_new	sess.h	65;"	d
+sess_perc	httperf.h	/^		double sess_perc[MAX_LOG_FILES];	\/* Array of percentile for request-mix probability *\/$/;"	m	struct:Cmdline_Params::__anon11
+sess_private_data_offset	gen/sess_cookie.c	/^static size_t sess_private_data_offset = -1;$/;"	v	file:
+sess_private_data_offset	gen/session.c	/^static size_t sess_private_data_offset = -1;$/;"	v	file:
+sess_private_data_offset	gen/videosesslog.c	/^static size_t sess_private_data_offset;$/;"	v	file:
+sess_private_data_offset	gen/wsess.c	/^static size_t sess_private_data_offset;$/;"	v	file:
+sess_private_data_offset	gen/wsesspage.c	/^static size_t sess_private_data_offset;$/;"	v	file:
+sess_private_data_offset	stat/sess_stat.c	/^static size_t sess_private_data_offset = -1;$/;"	v	file:
+sess_stats	stat/spec_stats.c	/^session_data sess_stats[MAX_SESSION];$/;"	v
+session_cookies	httperf.h	/^	int session_cookies; \/* handle set-cookies? (at the session level) *\/$/;"	m	struct:Cmdline_Params
+session_current_qlen	gen/session.c	/^session_current_qlen (Sess *sess)$/;"	f
+session_data	stat/spec_stats.c	/^} session_data;$/;"	t	typeref:struct:__anon17	file:
+session_get_last_call	gen/session.c	/^session_get_last_call (Conn *conn)$/;"	f
+session_get_sess_from_call	gen/session.c	/^session_get_sess_from_call (Call *call)$/;"	f
+session_get_sess_from_conn	gen/session.c	/^session_get_sess_from_conn (Conn *conn)$/;"	f
+session_h	gen/session.h	26;"	d
+session_init	gen/session.c	/^session_init (void)$/;"	f
+session_issue_call	gen/session.c	/^session_issue_call (Sess *sess, Call *call)$/;"	f
+session_logs	gen/videosesslog.c	/^static Session_Log_Desc* session_logs;$/;"	v	file:
+session_max_qlen	gen/session.c	/^session_max_qlen (Sess *sess)$/;"	f
+session_offsets	httperf.h	/^	int session_offsets; \/* should each client start in a different position$/;"	m	struct:Cmdline_Params
+session_stat	stat/sess_stat.c	/^Stat_Collector session_stat =$/;"	v
+session_templates	gen/videosesslog.c	/^	Sess_Private_Data session_templates[MAX_SESSION_TEMPLATES]; $/;"	m	struct:Session_Log_Desc	file:
+set_active	core.c	/^set_active (Conn *s, big_fd_set *fdset)$/;"	f	file:
+set_missed_calls	gen/videosesslog.c	/^set_missed_calls(Conn *conn)$/;"	f
+set_uri	gen/uri_fixed.c	/^set_uri (Event_Type et, Call *call)$/;"	f	file:
+set_uri	gen/uri_wlog.c	/^set_uri (Event_Type et, Call * c)$/;"	f	file:
+set_uri	gen/uri_wset.c	/^set_uri (Event_Type et, Call *c)$/;"	f	file:
+sigint_handler	idleconn.c	/^sigint_handler (int signal)$/;"	f
+sin	core.c	/^	struct sockaddr_in sin;$/;"	m	struct:hash_entry	typeref:struct:hash_entry::sockaddr_in	file:
+size	call.h	/^		size_t size;		\/* # of bytes sent *\/$/;"	m	struct:Call::__anon2
+size	stat/print_reply.c	/^    size_t size;	\/* number of bytes allocated for "line" buffer *\/$/;"	m	struct:Call_Private_Data	file:
+size	stat/spec_stats.c	/^  int size;          \/* Size of this file (unused for now) *\/  $/;"	m	struct:__anon16	file:
+spec_file_data	stat/spec_stats.c	/^} spec_file_data;$/;"	t	typeref:struct:__anon16	file:
+spec_hash	stat/spec_stats.c	/^int spec_hash( char * uri ) {$/;"	f
+spec_stats	httperf.h	/^	int spec_stats;      \/* Should we gather SPECweb99 specific statistics?  *\/$/;"	m	struct:Cmdline_Params
+spec_stats_init	stat/spec_stats.c	/^void spec_stats_init() {$/;"	f
+srcdir	Makefile	/^srcdir = .$/;"	m
+srcdir	gen/Makefile	/^srcdir = .$/;"	m
+srcdir	stat/Makefile	/^srcdir = .$/;"	m
+ssl	conn.h	/^	SSL *ssl;			\/* SSL connection info *\/$/;"	m	struct:Conn
+ssl	sess.h	/^	SSL *ssl;		\/* SSL session (or NULL) *\/$/;"	m	struct:Sess
+ssl_cipher_list	httperf.h	/^	const char *ssl_cipher_list; \/* client's list of SSL cipher suites *\/$/;"	m	struct:Cmdline_Params
+ssl_ctx	httperf.c	/^SSL_CTX *ssl_ctx;$/;"	v
+ssl_reuse	httperf.h	/^	int ssl_reuse;	\/* reuse SSL Session ID *\/$/;"	m	struct:Cmdline_Params
+st	stat/sess_stat.c	/^st;$/;"	v	typeref:struct:__anon15	file:
+stable_conns_end	stat/basic.c	/^static long stable_conns_end;	\/* ignore connections starting from this id	*\/$/;"	v	file:
+stable_conns_start	stat/basic.c	/^static long stable_conns_start;	\/* number of connections to ignore at beginning *\/$/;"	v	file:
+stable_stats_init	stat/basic.c	/^stable_stats_init(void)$/;"	f	file:
+stagger_start	httperf.h	/^		int stagger_start;$/;"	m	struct:Cmdline_Params::__anon9
+start	gen/conn_rate.c	/^start (void)$/;"	f	file:
+start	gen/rate.h	/^    Time start;$/;"	m	struct:Rate_Generator
+start	gen/videosesslog.c	/^start (void)$/;"	f	file:
+start	gen/wsess.c	/^start (void)$/;"	f	file:
+start	gen/wsesspage.c	/^start (void)$/;"	f	file:
+start	httperf.h	/^	void (*start) (void);$/;"	m	struct:Load_Generator
+start	httperf.h	/^	void (*start) (void);$/;"	m	struct:Stat_Collector
+start_time	idleconn.c	/^struct timeval start_time;$/;"	v	typeref:struct:timeval
+state	conn.h	/^	Conn_State state;$/;"	m	struct:Conn
+state	gen/wsesspage.c	/^    state;$/;"	m	struct:Call_Private_Data	typeref:enum:Call_Private_Data::__anon6	file:
+stats_basic	stat/basic.c	/^Stat_Collector stats_basic =$/;"	v
+stats_h	stat/stats.h	26;"	d
+stats_interval	httperf.h	/^	int stats_interval;  \/* print summary statistics every N seconds *\/$/;"	m	struct:Cmdline_Params
+stats_print_reply	stat/print_reply.c	/^Stat_Collector stats_print_reply =$/;"	v
+status	call.h	/^		int status;$/;"	m	struct:Call::__anon3
+stop	httperf.h	/^	void (*stop) (void);$/;"	m	struct:Load_Generator
+stop	httperf.h	/^	void (*stop) (void);$/;"	m	struct:Stat_Collector
+stop_wlog	gen/uri_wlog.c	/^stop_wlog (void)$/;"	f	file:
+sum_resp_times	stat/spec_stats.c	/^  double sum_resp_times; \/* Sum of response times for requests of this file *\/$/;"	m	struct:__anon16	file:
+syscall_count	core.c	/^static u_int syscall_count[SC_NUM_SYSCALLS];$/;"	v	file:
+syscall_name	core.c	/^static const char * const syscall_name[SC_NUM_SYSCALLS] =$/;"	v	file:
+syscall_time	core.c	/^static Time syscall_time[SC_NUM_SYSCALLS];$/;"	v	file:
+t1	ttest.c	/^Timer *t1, *t2;$/;"	v
+t2	ttest.c	/^Timer *t1, *t2;$/;"	v
+t_curr	timer.c	/^static Timer *t_curr = 0;$/;"	v	file:
+test_rusage_start	httperf.c	/^struct rusage test_rusage_start;$/;"	v	typeref:struct:rusage
+test_rusage_stop	httperf.c	/^struct rusage test_rusage_stop;$/;"	v	typeref:struct:rusage
+test_time_start	httperf.c	/^Time test_time_start;$/;"	v
+test_time_stop	httperf.c	/^Time test_time_stop;$/;"	v
+think_time	httperf.h	/^		Time think_time;			\/* user think time between calls *\/$/;"	m	struct:Cmdline_Params::__anon11
+think_timeout	httperf.h	/^	Time think_timeout;	\/* timeout for server think time *\/$/;"	m	struct:Cmdline_Params
+throughput_max	stat/basic.c	/^	double throughput_max;$/;"	m	struct:__anon13	file:
+throughput_min	stat/basic.c	/^	double throughput_min;$/;"	m	struct:__anon13	file:
+throughput_sum	stat/basic.c	/^	double throughput_sum;$/;"	m	struct:__anon13	file:
+throughput_sum2	stat/basic.c	/^	double throughput_sum2;$/;"	m	struct:__anon13	file:
+tick	gen/rate.c	/^tick (Timer *t, Any_Type arg)$/;"	f	file:
+tick	gen/rate.h	/^    int (*tick) (Any_Type arg);$/;"	m	struct:Rate_Generator
+time_connect_start	conn.h	/^		Time time_connect_start;	\/* time connect() got called *\/$/;"	m	struct:Conn::__anon4
+time_of_timeout	conn.h	/^		Time time_of_timeout; \/* time connection timeout occurs (if it occurs) *\/$/;"	m	struct:Conn::__anon4
+time_recv_start	call.h	/^		Time time_recv_start;$/;"	m	struct:Call::__anon1
+time_send_start	call.h	/^		Time time_send_start;$/;"	m	struct:Call::__anon1
+time_to_connect	conn.h	/^		Time time_to_connect;	\/* time to connect *\/$/;"	m	struct:Conn::__anon4
+timed_out	conn.h	/^	int  timed_out;		\/* did this connection time out?*\/$/;"	m	struct:Conn
+timelimit	call.h	/^	Time timelimit;$/;"	m	struct:Call
+timelimit	gen/videosesslog.c	/^	int timelimit;$/;"	m	struct:req	file:
+timeout	call.h	/^	Time timeout;		\/* used for watchdog management *\/$/;"	m	struct:Call
+timeout	httperf.h	/^	Time timeout;	\/* watchdog timeout *\/$/;"	m	struct:Cmdline_Params
+timeout_replies	stat/basic.c	/^	int timeout_replies;         \/* num replies recvd from conns that eventually timed out *\/$/;"	m	struct:__anon13	file:
+timeout_with_reset	httperf.h	/^	int timeout_with_reset; \/* one timeout close connections with TCP RESET? *\/$/;"	m	struct:Cmdline_Params
+timeouts	stat/spec_stats.c	/^  int timeouts;       \/* Number of timeouts for sessions of this length *\/$/;"	m	struct:__anon17	file:
+timeouts	stat/spec_stats.c	/^  int timeouts;      \/* Number of requests that timed out *\/$/;"	m	struct:__anon16	file:
+timer	gen/rate.h	/^    Timer *timer;$/;"	m	struct:Rate_Generator
+timer	gen/videosesslog.c	/^	Timer *timer;		\/* timer for session think time *\/$/;"	m	struct:Sess_Private_Data	file:
+timer	gen/wsess.c	/^    Timer *timer;		\/* timer for session think time *\/$/;"	m	struct:Sess_Private_Data	file:
+timer	gen/wsesspage.c	/^    Timer *timer;		\/* timer for session think time *\/$/;"	m	struct:Sess_Private_Data	file:
+timer_cancel	timer.c	/^timer_cancel (Timer *t)$/;"	f
+timer_free_list	timer.c	/^static Timer *timer_free_list = 0;$/;"	v	file:
+timer_h	timer.h	26;"	d
+timer_init	timer.c	/^timer_init (void)$/;"	f
+timer_now	timer.c	/^timer_now (void)$/;"	f
+timer_now_forced	timer.c	/^timer_now_forced (void)$/;"	f
+timer_schedule	timer.c	/^timer_schedule (Timer_Callback timeout, Any_Type arg, Time delay)$/;"	f
+timer_tick	timer.c	/^timer_tick (void)$/;"	f
+timer_tick_time	core.c	/^	static float timer_tick_time, select_time, work_time;$/;"	v	file:
+to_free	gen/wsesspage.c	/^    void *to_free;	\/* call queue element to free when done *\/$/;"	m	struct:Call_Private_Data	file:
+top_builddir	Makefile	/^top_builddir = .$/;"	m
+top_builddir	gen/Makefile	/^top_builddir = ..$/;"	m
+top_builddir	lib/Makefile	/^top_builddir = ..$/;"	m
+top_builddir	stat/Makefile	/^top_builddir = ..$/;"	m
+top_srcdir	Makefile	/^top_srcdir = .$/;"	m
+top_srcdir	gen/Makefile	/^top_srcdir = ..$/;"	m
+top_srcdir	lib/Makefile	/^top_srcdir = ..$/;"	m
+top_srcdir	stat/Makefile	/^top_srcdir = ..$/;"	m
+total_num_reqs	gen/videosesslog.c	/^	int total_num_reqs;		\/* total number of requests in this session *\/$/;"	m	struct:Sess_Private_Data	file:
+track_call_reply	stat/call_stats.c	/^void track_call_reply(Call * c, double transfer_time)$/;"	f
+track_call_request	stat/call_stats.c	/^void track_call_request(Call *c )$/;"	f
+track_call_response	stat/call_stats.c	/^void track_call_response(Call * c, double response_start_time)$/;"	f
+track_spec_connection	stat/spec_stats.c	/^void track_spec_connection(Conn * c ) {$/;"	f
+track_spec_reply	stat/spec_stats.c	/^void track_spec_reply(Call * c, double transfer_time ) {$/;"	f
+track_spec_request	stat/spec_stats.c	/^void track_spec_request(Call *c ) {$/;"	f
+track_spec_response	stat/spec_stats.c	/^void track_spec_response(Call * c, double response_start_time ) {$/;"	f
+type	event.h	/^    Event_Type type;$/;"	m	struct:Event
+type	object.h	/^    Object_Type type;$/;"	m	struct:Object
+type_size	object.c	/^static size_t type_size[OBJ_NUM_TYPES] =$/;"	v	file:
+u_wide	config.h	120;"	d
+uc	httperf.h	/^	u_char uc;$/;"	m	union:__anon8
+ui	httperf.h	/^	u_int ui;$/;"	m	union:__anon8
+ul	httperf.h	/^	u_long ul;$/;"	m	union:__anon8
+unescape	gen/misc.c	/^unescape (const char *str, size_t *len)$/;"	f	file:
+units	stat/call_stats.c	/^	char *units;	\/* units for data *\/$/;"	m	struct:print_stats	file:
+update_epoll_event	core.c	/^update_epoll_event (Conn *s)$/;"	f	file:
+uri	gen/videosesslog.c	/^	char *uri;$/;"	m	struct:req	file:
+uri	gen/wsesspage.c	/^	char uri[1];		\/* really URI_LEN+1 bytes... *\/$/;"	m	struct:Sess_Private_Data::uri_list	file:
+uri	httperf.h	/^	const char *uri;	\/* (default) uri *\/$/;"	m	struct:Cmdline_Params
+uri_fixed	gen/uri_fixed.c	/^Load_Generator uri_fixed =$/;"	v
+uri_len	gen/uri_fixed.c	/^static size_t uri_len;$/;"	v	file:
+uri_len	gen/videosesslog.c	/^	int uri_len;$/;"	m	struct:req	file:
+uri_len	gen/wsesspage.c	/^	size_t uri_len;$/;"	m	struct:Sess_Private_Data::uri_list	file:
+uri_list	gen/wsesspage.c	/^    *uri_list;$/;"	m	struct:Sess_Private_Data	typeref:struct:Sess_Private_Data::uri_list	file:
+uri_list	gen/wsesspage.c	/^    struct uri_list$/;"	s	struct:Sess_Private_Data	file:
+uri_prefix_len	gen/uri_wset.c	/^static size_t uri_prefix_len;$/;"	v	file:
+uri_wlog	gen/uri_wlog.c	/^Load_Generator uri_wlog =$/;"	v
+uri_wset	gen/uri_wset.c	/^Load_Generator uri_wset =$/;"	v
+usage	httperf.c	/^usage (void)$/;"	f	file:
+use_epoll	httperf.h	/^	int use_epoll;	\/* use epoll instead of select *\/$/;"	m	struct:Cmdline_Params
+use_ssl	gen/videosesslog.c	/^	int use_ssl; \/* 1 = use ssl, 2 = don't use ssl, other = default*\/$/;"	m	struct:Sess_Private_Data	file:
+use_ssl	httperf.h	/^	int use_ssl;	\/* connect via SSL *\/$/;"	m	struct:Cmdline_Params
+use_ssl	sess.h	/^	int use_ssl; \/* use ssl=1,don't use ssl=2,default=other *\/$/;"	m	struct:Sess
+user_think_time	gen/videosesslog.c	/^	Time user_think_time;$/;"	m	struct:burst	file:
+user_think_time_expired	gen/videosesslog.c	/^user_think_time_expired (Timer *t, Any_Type arg)$/;"	f	file:
+user_think_time_expired	gen/wsess.c	/^user_think_time_expired (Timer *t, Any_Type arg)$/;"	f	file:
+user_think_time_expired	gen/wsesspage.c	/^user_think_time_expired (Timer *t, Any_Type arg)$/;"	f	file:
+val	lib/getopt.h	/^  int val;$/;"	m	struct:option
+verbose	httperf.c	/^int verbose;$/;"	v
+verify_dir	httperf.h	/^	const char * verify_dir; \/* Directory containing reference file set (for verification) *\/$/;"	m	struct:Cmdline_Params
+verify_reply	httperf.h	/^	int verify_reply;    \/* Should we verify (i.e. check the bytes of) SPECweb99 replies*\/$/;"	m	struct:Cmdline_Params
+verify_reply_data	http.c	/^verify_reply_data (Call * c ) {$/;"	f
+version	call.h	/^		int version;		\/* 0x10000*major + minor *\/$/;"	m	struct:Call::__anon2
+version	call.h	/^		int version;		\/* 0x10000*major + minor *\/$/;"	m	struct:Call::__anon3
+video_quality_index	conn.h	/^	int video_quality_index;	\/* The index of the video quality that it is fetching *\/$/;"	m	struct:Conn
+videosesslog	gen/videosesslog.c	/^Load_Generator videosesslog =$/;"	v
+videosesslog	httperf.h	/^	videosesslog;$/;"	m	struct:Cmdline_Params	typeref:struct:Cmdline_Params::__anon11
+vp	httperf.h	/^	void *vp;$/;"	m	union:__anon8
+vprintf	configure	/^vprintf();$/;"	f
+watchdog	conn.h	/^	Timer *watchdog;$/;"	m	struct:Conn
+wheel	timer.c	/^static Timer_Queue wheel[WHEEL_SIZE], *curr = 0;$/;"	v	file:
+work_time	core.c	/^	static float timer_tick_time, select_time, work_time;$/;"	v	file:
+wr	gen/session.c	/^		u_int wr;		\/* where to insert next call *\/$/;"	m	struct:Sess_Private_Data::Conn_Info	file:
+wrfds	core.c	/^static big_fd_set rdfds, wrfds;$/;"	v	file:
+wsess	gen/wsess.c	/^Load_Generator wsess =$/;"	v
+wsesspage	gen/wsesspage.c	/^Load_Generator wsesspage =$/;"	v
+xfer_chunked	http.c	/^xfer_chunked  (Call *c, char **bufp, size_t *buf_lenp)$/;"	f	file:
+xsubi	gen/rate.h	/^    u_short xsubi[3];		\/* used for random number generation *\/$/;"	m	struct:Rate_Generator

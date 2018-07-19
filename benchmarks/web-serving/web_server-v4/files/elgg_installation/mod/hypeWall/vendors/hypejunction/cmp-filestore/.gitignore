@@ -1,0 +1,7 @@
+#Ignore files that will need to be changed locally
+.DS_Store
+.htaccess
+robots.txt
+/nbproject/
+composer.lock
+/vendors/

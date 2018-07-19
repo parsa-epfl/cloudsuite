@@ -19,6 +19,11 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) ||
 then
     # if modified, then rebuild their docker image
     travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+    # if a tag is specified as latest then tag the built image
+    if [[ $IMG_LATEST_TAG != "" ]]
+    then
+        docker tag $DH_REPO:$IMG_TAG $DH_REPO:$IMG_LATEST_TAG
+    fi
     #make sure build was successful
     result=$?
     if [ $result != "0" ]

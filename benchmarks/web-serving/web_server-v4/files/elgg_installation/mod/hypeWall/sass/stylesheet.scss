@@ -1,0 +1,302 @@
+@import "compass/css3"; // compass css3 helpers
+
+@import "font-awesome/variables";
+@import "font-awesome/mixins";
+
+@import "variables";
+@import "mixins";
+
+
+body {
+	@include loader(wall-state-loading);
+}
+
+.elgg-menu-wall-filter {
+	text-align: right;
+	margin: 10px;
+	& > li {
+		display: inline-block;
+		a {
+			font-size: 20px;
+			@include border-radius(1000px);
+			margin: 4px;
+			color: $border-color;
+		}
+		&.elgg-state-selected a, a:hover {
+			color: $primary-color;
+		}
+
+	}
+}
+
+.wall-icon {
+	@include icon;
+	&.wall-icon-photo:before {
+		content: $fa-var-camera;
+	}
+	&.wall-icon-status:before {
+		content: $fa-var-pencil;
+	}
+	&.wall-icon-url:before {
+		content: $fa-var-link;
+	}
+	&.wall-icon-file:before {
+		content: $fa-var-cloud-upload;
+	}
+	&.wall-icon-content:before {
+		content: $fa-var-clipboard;
+	}
+	&.wall-icon-find-me:before {
+		content: $fa-var-crosshairs;
+	}
+}
+
+
+.wall-container {
+	font-family: 'Open Sans', 'sans-serif';
+	* {
+		@include box-sizing(border-box);
+	}
+	position: relative;
+	margin: 10px;
+
+	form {
+		padding: 0;
+		background: transparent;
+		@include single-transition;
+		fieldset {
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		fieldset > div {
+			margin-bottom: 10px;
+		}
+		label {
+			font-weight: normal;
+			font-family: "Open Sans", "sans-serif";
+			display: inline-block;
+			margin-bottom: 7px;
+			float: left;
+		}
+		textarea {
+			height: 75px;
+			@include border-radius(0);
+			padding: 8px;
+			margin-bottom: 10px;
+		}
+		input[type="text"] {
+			@include border-radius(0);
+		}
+		.wall-find-me {
+			float: right;
+		}
+		.wall-bar-controls {
+			text-align: right;
+			margin: 10px;
+			& > li {
+				display: inline-block;
+				vertical-align: top;
+				margin: 0 5px;
+				select {
+					margin: auto;
+					line-height: 20px;
+				}
+				label {
+					line-height: 20px;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+}
+
+.wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
+	font-size: 90%;
+	color: #666;
+}
+
+.wall-post-list {
+	* {
+		@include box-sizing(border-box);
+	}
+	border: none;
+	& > li {
+		border: none;
+		position: relative;
+	}
+}
+
+.wall-post {
+	@include clearfix;
+	padding-top: 10px;
+	& > .elgg-image {
+		@include elgg-col(2);
+		margin: 0;
+		padding: 0 3px;
+		position: relative;
+		.elgg-avatar {
+			max-width: 100%;
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+		}
+		.wall-owner-icon-block {
+			margin: -20px 0 0 30px;
+			position: absolute;
+			display: block;
+		}
+	}
+	& > .elgg-body {
+		@include elgg-col(10);
+		padding: 0 3px;
+		.elgg-content {
+			@include clearfix;
+		}
+		.elgg-menu-entity {
+			margin-top: 15px;
+			margin-left: 0;
+			float: none;
+		}
+		.wall-bubble {
+			@include speech-bubble(lighten($border-color, 10%));
+			padding: 15px;
+		}
+	}
+}
+
+.wall-post-alt {
+	@include clearfix;
+	padding-top: 10px;
+	& > .elgg-image-alt {
+		@include elgg-col(2);
+		float: right;
+		margin: 0;
+		padding: 0 3px;
+		position: relative;
+		.elgg-avatar {
+			max-width: 100%;
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+		}
+		.wall-owner-icon-block {
+			margin: -20px 0 0 30px;
+			position: absolute;
+			display: block;
+		}
+	}
+	& > .elgg-body {
+		@include elgg-col(10);
+		float: left;
+		padding: 0 3px;
+		.elgg-content {
+			@include clearfix;
+		}
+		.elgg-menu-entity {
+			margin-top: 15px;
+			margin-left: 0;
+			float: none;
+		}
+		.wall-bubble {
+			@include speech-bubble-alt(lighten($border-color, 10%));
+			padding: 15px;
+		}
+	}
+}
+
+.wall-poster-avatar, .wall-owner-avatar {
+	@include border-radius(1000px);
+	border: 1px solid $border-color;
+}
+
+.wall-status-counter {
+	text-align: right;
+	left: 0;
+	bottom: 0;
+	padding: 0 8px;
+	font-size: 11px;
+	line-height: 20px;
+	vertical-align: middle;
+	color: #666;
+	.wall-chars-counter {
+		margin: 0 5px 0 0;
+		font-size: 12px;
+	}
+	&.wall-status-counter-overflow {
+		.wall-chars-counter {
+			color: darkred;
+			font-weight: bold;
+		}
+	}
+}
+
+.wall-attachments, .wall-url-preview {
+	margin: 10px 0;
+	img, iframe, object, embed {
+		max-width: 100%;
+	}
+	.elgg-gallery {
+		& > li {
+			display: inline-block;
+			float: none;
+			padding: 10px;
+			@include box-sizing(border-box);
+			width: 33%;
+		}
+	}
+}
+
+.wall-widget-list {
+	& > li {
+		padding: 10px;
+		@include box-sizing(border-box);
+	}
+}
+
+.elgg-module.elgg-module-embed {
+	font-family: "Open Sans", 'sans-serif';
+	background: lighten($border-color, 15%);
+	border: 1px solid $border-color;
+	margin: 10px 0;
+	& > .elgg-head {
+		padding: 10px;
+		border-bottom: 1px solid $border-color;
+		h3 {
+			margin: 0;
+		}
+	}
+	& > .elgg-body {
+		background: white;
+		padding: 0;
+		.elgg-image-block {
+			padding: 10px;
+		}
+	}
+	& > .elgg-foot {
+		border-top: 1px solid $border-color;
+		padding: 10px;
+		a {
+			word-break: break-all;
+		}
+	}
+}
+
+.extractor-link {
+	line-height: 110%;
+	background: #f4f4f4;
+	vertical-align: middle;
+	.favicon {
+		background-size: 16px;
+		width: 16px;
+		height: 16px;
+		background-repeat: no-repeat;
+		display: inline-block;
+		margin: 0 5px;
+	}
+	.link {
+		margin: 0 5px;
+	}
+}

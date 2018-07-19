@@ -1,0 +1,51 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:548: checking for gcc
+configure:661: checking whether the C compiler (gcc  ) works
+configure:677: gcc -o conftest   -DNDEBUG -D_GNU_SOURCE -D_XOPEN_SOURCE  conftest.c  1>&5
+configure:703: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:708: checking whether we are using GNU C
+configure:736: checking whether gcc accepts -g
+configure:798: checking for a BSD compatible install
+configure:851: checking whether make sets ${MAKE}
+configure:880: checking for ranlib
+configure:908: checking how to run the C preprocessor
+configure:989: checking whether gcc needs -traditional
+configure:1062: checking host system type
+configure:1083: checking target system type
+configure:1101: checking build system type
+configure:1140: checking for main in -lm
+configure:1183: checking for main in -lcrypto
+configure:1226: checking for SSL_version in -lssl
+configure:1275: checking for ANSI C header files
+configure:1382: checking for fcntl.h
+configure:1382: checking for sys/ioctl.h
+configure:1382: checking for sys/time.h
+configure:1382: checking for unistd.h
+configure:1382: checking for openssl/ssl.h
+configure:1429: checking for working const
+configure:1504: checking for size_t
+configure:1537: checking for long long type
+configure:1575: checking whether time.h and sys/time.h may both be included
+configure:1610: checking size of long
+configure:1649: checking for u_char
+configure:1682: checking for u_short
+configure:1715: checking for u_int
+configure:1748: checking for u_long
+configure:1784: checking for working alloca.h
+configure:1817: checking for alloca
+configure:2019: checking for unistd.h
+configure:2058: checking for getpagesize
+configure:2111: checking for working mmap
+configure:2282: checking return type of signal handlers
+configure:2323: checking for vprintf
+configure:2431: checking for gettimeofday
+configure:2431: checking for select
+configure:2431: checking for socket
+configure:2431: checking for strdup
+configure:2431: checking for strerror
+configure:2431: checking for strtod
+configure:2431: checking for strtol
+configure:2431: checking for strtoul
+configure:2431: checking for getopt_long
