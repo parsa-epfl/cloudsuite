@@ -1,9 +1,9 @@
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
-MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
+LABEL maintainer="Alexandros Daglis <alexandros.daglis@epfl.ch>"
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      nginx \
+      nginx=1.14.0-0ubuntu1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Increase the open file limit
