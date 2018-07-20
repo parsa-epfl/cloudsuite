@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
-#Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
-MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
+#Original maintainer: Tapti Palit <tpalit@cs.stonybrook.edu>
+LABEL maintainer="Alexandros Daglis <alexandros.daglis@epfl.ch>"
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
       bc \
