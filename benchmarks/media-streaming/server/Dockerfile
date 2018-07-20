@@ -11,6 +11,6 @@ COPY files/limits.conf.append /tmp/
 RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf
 
 # Update nginx to serve /videos
-RUN sed -i 's|/usr/share/nginx/html|/videos|g' /etc/nginx/sites-available/default
+RUN sed -i 's|/var/www/html|/videos|g' /etc/nginx/sites-available/default
 
 CMD ["nginx", "-g", "daemon off;"]
