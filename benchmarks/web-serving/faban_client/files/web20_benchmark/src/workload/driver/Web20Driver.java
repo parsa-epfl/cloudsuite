@@ -437,7 +437,6 @@ public class Web20Driver {
 
 		StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
 				postRequest, headers);
-		sb = thisClient.getHttp().fetchURL(hostUrl + "/activity");
 
 		updateElggTokenAndTs(thisClient, sb, true);
 		printErrorMessageIfAny(sb, postRequest);
