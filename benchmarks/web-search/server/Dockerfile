@@ -4,10 +4,12 @@ LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 ENV SOLR_USER solr
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet lsof wget unzip \
+	&& apt-get install -y --no-install-recommends telnet lsof wget unzip curl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $SOLR_USER  \
-	&& useradd -r -g $SOLR_USER $SOLR_USER
+	&& useradd -r -g $SOLR_USER $SOLR_USER \
+	&& mkdir -p /home/solr \
+	&& chown -R $SOLR_USER:$SOLR_USER /home/solr
 
 ENV BASE_PATH /usr/src
 ENV SOLR_VERSION 7.4.0
