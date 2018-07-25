@@ -14,7 +14,7 @@ WEB_SERVER_IP=$1
 LOAD_SCALE=${2:-7}
 
 while [ "$(curl -sSI ${WEB_SERVER_IP}:8080 | grep 'HTTP/1.1' | awk '{print $2}')" != "200" ]; do
-    echo "Cannot connect to web_server container at: ${WEB_SERVER_IP}:8080"
+    echo "Could not perform HTTP 200 GET from: ${WEB_SERVER_IP}:8080"
     sleep 2
 done
 
