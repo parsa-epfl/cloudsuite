@@ -4,7 +4,7 @@ LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
-ENV ANT_VERSION 1.9.6
+ENV ANT_VERSION 1.10.5
 ENV ANT_HOME $BASE_PATH/ant
 
 ENV CLIENT_HEAP_SIZE 2g
