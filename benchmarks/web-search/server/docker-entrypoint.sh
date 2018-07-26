@@ -28,7 +28,16 @@ if [[ "$#" -ne 2 && $3 == 'generate' ]]; then
     bzip2 -dc $DUMPNAME.xml.bz2 > wiki_dump.xml
     echo "</mediawiki>" >> wiki_dump.xml
     curl "http://localhost:8983/solr/cloudsuite_web_search/dataimport?command=full-import"
-    bash
+    
+    status=`curl -s "http://localhost:8983/solr/cloudsuite_web_search/dataimport?command=status" | sed -n 's/^ *\"status\":\"//p'  | sed 's/".*//'`
+    while [[ $status == 'busy' ]];
+    do
+	echo $status
+	curl -s "http://localhost:8983/solr/cloudsuite_web_search/dataimport?command=status"
+	sleep 5
+	status=`curl -s "http://localhost:8983/solr/cloudsuite_web_search/dataimport?command=status" | sed -n 's/^ *\"status\":\"//p'  | sed 's/".*//'`
+    done
+    echo $status
 
 
 fi
