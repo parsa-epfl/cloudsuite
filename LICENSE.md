@@ -6,7 +6,6 @@ CloudSuite consists of several software components that are governed by various 
 * [MySQL DBMS](http://www.gnu.org/licenses/gpl.html)
 * [PHP](http://www.php.net/license/3_01.txt)
 * [APC (Alternative PHP Cache)](http://www.php.net/license/3_01.txt)
-* [Olio Application](https://github.com/shanti/olio/blob/master/LICENSE)
 * [Hadoop](http://www.apache.org/licenses/LICENSE-2.0)
 * [Mahout](http://www.apache.org/licenses/LICENSE-2.0)
 * [Cassandra](http://www.apache.org/licenses/LICENSE-2.0)
