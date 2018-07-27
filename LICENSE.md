@@ -7,7 +7,6 @@ CloudSuite consists of several software components that are governed by various 
 * [PHP](http://www.php.net/license/3_01.txt)
 * [APC (Alternative PHP Cache)](http://www.php.net/license/3_01.txt)
 * [Olio Application](https://github.com/shanti/olio/blob/master/LICENSE)
-* [Nutch](http://www.apache.org/licenses/LICENSE-2.0)
 * [Hadoop](http://www.apache.org/licenses/LICENSE-2.0)
 * [Mahout](http://www.apache.org/licenses/LICENSE-2.0)
 * [Cassandra](http://www.apache.org/licenses/LICENSE-2.0)
@@ -21,7 +20,8 @@ CloudSuite consists of several software components that are governed by various 
 * [Sorl](http://www.apache.org/licenses/LICENSE-2.0)
 * [Zookeeper](http://www.apache.org/licenses/LICENSE-2.0)
 * [Lucene](http://www.apache.org/licenses/LICENSE-2.0)
-
+* [Ant](http://www.apache.org/licenses/LICENSE-2.0)
+* [Elgg](https://www.gnu.org/licenses/gpl-2.0.html)
 
 ### Software developed internally (by the CloudSuite group)
 **CloudSuite 3.0 License**
@@ -29,7 +29,7 @@ CloudSuite consists of several software components that are governed by various 
 
 CloudSuite 3.0 Benchmark Suite
 
-Copyright &copy; 2011-2016, Parallel Systems Architecture Lab, EPFL
+Copyright &copy; 2011-2018, Parallel Systems Architecture Lab, EPFL
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
