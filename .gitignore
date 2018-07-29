@@ -42,4 +42,5 @@ node_modules
 /Gemfile.lock
 
 # Benchmark files
-/benchmarks/*
+benchmarks/*
+commons/*
