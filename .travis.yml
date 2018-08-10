@@ -44,6 +44,7 @@ env:
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
   - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
+  - DH_REPO="cloudsuite/web-search-index" IMG_TAG="latest" DF_PATH="./datasets/web-search-index"
 
   
   # Benchmark Images
