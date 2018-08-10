@@ -4,7 +4,7 @@ LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 ENV SOLR_USER solr
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet lsof wget unzip curl \
+	&& apt-get install -y --no-install-recommends pbzip2 telnet lsof wget unzip curl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $SOLR_USER  \
 	&& useradd -r -g $SOLR_USER $SOLR_USER \
