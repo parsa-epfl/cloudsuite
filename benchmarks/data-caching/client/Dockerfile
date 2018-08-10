@@ -11,7 +11,7 @@ COPY memcached.tar.gz /memcached.tar.gz
 RUN apt-get update && apt-get install -y libevent-2.1-6 vim --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN buildDeps='curl gcc libc6-dev libevent-dev make' \
+RUN buildDeps='curl gcc libc6-dev libevent-dev make sysstat' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
