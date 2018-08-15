@@ -25,7 +25,7 @@ docker rm dc-server4 || true
 
 docker rm dc-client || true
 
-docker run --cpuset-cpus="0-3" --name dc-server1 --net caching_network -d cloudsuite/data-caching:server
+docker run --cpuset-cpus="0-3" --name dc-server1 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 2048 -n 550
 #docker run --cpuset-cpus="4-7" --name dc-server2 --net caching_network -d cloudsuite/data-caching:server
 
 docker run --cpuset-cpus="4-7" -d --name dc-client --net caching_network cloudsuite/data-caching:client bash -c 'cd /usr/src/memcached/memcached_client/; \
