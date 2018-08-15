@@ -13,7 +13,7 @@ docker rm dc-server || true
 docker rm dc-client || true
 
 # Run the test
-docker run --cpuset-cpus="32-35" --name dc-server --net caching_network -d cloudsuite/data-caching:server_ARM
+docker run --cpuset-cpus="32-35" --name dc-server --net caching_network -d cloudsuite/data-caching:server_ARM -t 4 -m 2048 -n 550
 docker run --cpuset-cpus="48-55" -d --name dc-client --net caching_network cloudsuite/data-caching:client bash -c 'cd /usr/src/memcached/memcached_client/; \
 	echo dc-server, 11211 > docker_servers.txt; \
 	./loader -a ../twitter_dataset/twitter_dataset_unscaled -o ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -w 4 -S 30 -D 4096 -j -T 1; \
