@@ -26,15 +26,23 @@ To facilitate the communication between the client(s) and the server(s), we buil
 
 We will attach the launched containers to this newly created docker network.
 
+### Populating the Index ###
+
+We download the index once and attach it as a volume. To do this, first 'pull' the web-search-index image
+   	$ docker pull cloudsuite/web-search-index
+We run the container:
+        $ docker run -it --name index cloudsuite/web-search-index
+
+
 ### Starting the server (Index Node) ###
 
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image, use the following command:
 
 	$ docker pull cloudsuite/web-search:server
 
-The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pregenerated Solr index occupies 12GB of memory, and therefore we use `12g` to avoid disk accesses. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
+The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pregenerated Solr index occupies 13GB of memory, and therefore we use `13g` to avoid disk accesses. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always. We also attach the volume we created as the index earlier.
 
-	$ docker run -it --name server --net search_network -p 8983:8983 cloudsuite/web-search:server 12g 1
+	$ docker run -it --name server --volumes-from index --net search_network -p 8983:8983 cloudsuite/web-search:server 13g 1
 
 At the end of the server booting process, the container prints the `server_address` of the index node. This address is used in the client container. The `server_address` message in the container should look like this (note that the IP address might change):
 
