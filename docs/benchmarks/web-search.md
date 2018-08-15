@@ -29,9 +29,12 @@ We will attach the launched containers to this newly created docker network.
 ### Populating the Index ###
 
 We download the index once and attach it as a volume. To do this, first 'pull' the web-search-index image
-   	$ docker pull cloudsuite/web-search-index
+
+	$ docker pull cloudsuite/web-search-index
+	
 We run the container:
-        $ docker run -it --name index cloudsuite/web-search-index
+
+	 $ docker run -it --name index cloudsuite/web-search-index
 
 
 ### Starting the server (Index Node) ###
@@ -47,6 +50,17 @@ The following command will start the server and forward port 8983 to the host, s
 At the end of the server booting process, the container prints the `server_address` of the index node. This address is used in the client container. The `server_address` message in the container should look like this (note that the IP address might change):
 
 	$ Index Node IP Address: 172.19.0.2
+	
+### Generating own Index ###
+It is also possible to generate an index from the wikipedia dumps. To do that, first download the files enwiki-latest-pages-articles-multistream-index.txt.bz2 and enwiki-latest-pages-articles-multistream.xml.bz2 from [`https://dumps.wikimedia.org/enwiki/latest/`] and store them in a folder. We'll call this folder $WIKI_DUMPS
+
+	$ cd $WIKI_DUMPS
+	$ wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream-index.txt.bz2
+	$ wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream.xml.bz2 
+	$ bpzip2 -kd enwiki-latest-pages-articles-multistream-index.txt.bz2
+Now to generate the index
+
+	$ docker run -it --name server -v $WIKI_DUMPS:/home/solr/wiki_dump --net search_network -p 8983:8983 cloudsuite/web-search:server 13g 1 generate <num_of_wikiepdia_pages>
 
 ### Starting the client and running the benchmark ###
 
