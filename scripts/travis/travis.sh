@@ -17,8 +17,10 @@ if ( grep -q "$benchmark_name/$tag_name" <<<$modified_files ) ||
    ( grep -q "travis.sh" <<<$modified_files ) ||
    ( grep -q ".travis.yml" <<<$modified_files )
 then
+    # set the docker file name to default if not set
+    DF_NAME="${DF_NAME:-Dockerfile}"
     # if modified, then rebuild their docker image
-    travis_wait 40 docker build -t $DH_REPO:$IMG_TAG $DF_PATH
+    travis_wait 40 docker build --tag $DH_REPO:$IMG_TAG $DF_PATH --file $DF_PATH/$DF_NAME
     #make sure build was successful
     result=$?
     if [ $result != "0" ]
