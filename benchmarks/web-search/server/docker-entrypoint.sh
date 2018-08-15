@@ -47,6 +47,7 @@ if [[ "$#" -ne 2 && $3 == 'generate' ]]; then
 
     head -c $BYTE_OFFSET $DUMP_FILE > $DUMPNAME.xml.bz2
     pbzip2 -dc $DUMPNAME.xml.bz2 > wiki_dump.xml
+    rm $DUMPNAME.xml.bz2
     echo "</mediawiki>" >> wiki_dump.xml
     curl "http://localhost:8983/solr/index_creator/dataimport?command=full-import"
     
@@ -61,6 +62,7 @@ if [[ "$#" -ne 2 && $3 == 'generate' ]]; then
     
 
     mkdir $INDEX_PATH
+    rm /home/solr/wiki_dump.xml
     mv $SOLR_CORE_DIR/index_creator_shard1_replica_n1/data $INDEX_PATH/data
     $SOLR_HOME/bin/solr delete -c index_creator
     $SOLR_HOME/bin/solr stop -all
