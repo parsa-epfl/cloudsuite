@@ -57,7 +57,7 @@ It is also possible to generate an index from the wikipedia dumps. To do that, f
 	$ cd $WIKI_DUMPS
 	$ wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream-index.txt.bz2
 	$ wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream.xml.bz2 
-	$ bpzip2 -kd enwiki-latest-pages-articles-multistream-index.txt.bz2
+	$ bzip2 -kd enwiki-latest-pages-articles-multistream-index.txt.bz2
 Now to generate the index. The parameter <num_of_wikipedia_pages> specifies how many wikipedia articles are to be used to create the index. As the reference, the 13GB index was created by indexing 5000000 pages. 
 
 	$ docker run -it --name server -v $WIKI_DUMPS:/home/solr/wiki_dump --net search_network -p 8983:8983 cloudsuite/web-search:server 13g 1 generate <num_of_wikiepdia_pages>
