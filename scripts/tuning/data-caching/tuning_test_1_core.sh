@@ -1,5 +1,10 @@
 set -e
 
+# TODO unify all these test scripts
+# TODO add meta data cpu_start and cpu_count to the logs
+# TODO make scripts capable of running benchmark over multiple nodes
+# TODO run scripts to create output images as well
+
 # Build the images
 docker build -t cloudsuite/memcached:1.5.9_ARM -f commons/memcached/1.5.9/Dockerfile_ARM commons/memcached/1.5.9/
 docker build -t cloudsuite/data-caching:server_ARM -f benchmarks/data-caching/server/Dockerfile_ARM benchmarks/data-caching/server/
