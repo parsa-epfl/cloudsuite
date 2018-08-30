@@ -1,0 +1,4 @@
+dc-server1, 11211
+dc-server2, 11211
+dc-server3, 11211
+dc-server4, 11211
