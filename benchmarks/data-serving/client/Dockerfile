@@ -8,8 +8,8 @@ RUN apt-get update \
  && apt-get autoremove && apt-get clean && apt-get upgrade -y \
  && groupadd -r cassandra && useradd -r -g cassandra cassandra
 
-RUN wget -q https://github.com/brianfrankcooper/YCSB/releases/download/0.3.0/ycsb-0.3.0.tar.gz -O /ycsb-0.3.0.tar.gz \
- && tar -xzf /ycsb-0.3.0.tar.gz && rm /ycsb-0.3.0.tar.gz && mv /ycsb-0.3.0 /ycsb \
+RUN wget -q https://github.com/brianfrankcooper/YCSB/releases/download/0.13.0/ycsb-0.13.0.tar.gz -O /ycsb-0.13.0.tar.gz \
+ && tar -xzf /ycsb-0.13.0.tar.gz && rm /ycsb-0.13.0.tar.gz && mv /ycsb-0.13.0 /ycsb \
  && chown cassandra:cassandra -R /ycsb/workloads
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
