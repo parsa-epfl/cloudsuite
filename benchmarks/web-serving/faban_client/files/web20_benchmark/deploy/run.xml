@@ -15,13 +15,13 @@
 			<fh:tools>NONE</fh:tools>
 			<fh:userCommands />
 		</fa:hostConfig>
-		<fa:scale>190</fa:scale>
+		<fa:scale>200</fa:scale>
 		<fa:runControl unit="time">
 			<fa:rampUp>30</fa:rampUp>
-			<fa:steadyState>50</fa:steadyState>
+			<fa:steadyState>300</fa:steadyState>
 			<fa:rampDown>30</fa:rampDown>
 		</fa:runControl>
-		<outputDir>/home/tpalit/Documents/elgg_output</outputDir>
+		<outputDir>/faban/output</outputDir>
 		<audit>false</audit>
 		<threadStart>
 		
