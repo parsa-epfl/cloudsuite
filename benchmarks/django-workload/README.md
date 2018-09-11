@@ -11,7 +11,7 @@ For instructions on how to install docker, please refer to:
 ## Warning
 
 The Cassandra heap size is set to 64GB in
-[docker-scripts/cassandra/jvm.options.128_GB](/docker-scripts/cassandra/jvm.options.128_GB).
+[cloudsuite/commons/cassandra/files/jvm.options.128_GB](cloudsuite/commons/cassandra/files/jvm.options.128_GB).
 If your machine does not have that much RAM, starting the Cassandra container
 will cause swapping, therefore your machine will become unresponsive.
 
@@ -22,8 +22,13 @@ change Xmn proportionally to the previous heap size (if changing heap size to
 
 
 ## Build the docker images
+To build cassandra image, go to the cloudsuite/commons/cassandra folder location, and run
+	docker build --no-cache -t cassandra-webtier .
 
-To build all the necessary images for the workload, run
+To build memcached image, go to the cloudsuite/commons/memcached folder location, and run
+	docker build --no-cache -t memcached-webtier .
+
+To build uwsgi, graphite and siege images for the workload, run
 
     [UWSGI_ONLY=1] ./build_containers.sh [/absolute/path/to/installed/python]
 
