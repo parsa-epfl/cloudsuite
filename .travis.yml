@@ -37,8 +37,8 @@ env:
 
   
   # Memcached
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.9"
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.9" DF_PATH="./commons/memcached/1.5.9"
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.10"
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.10" DF_PATH="./commons/memcached/1.5.10"
 
   # Datasets
   # Movielens
