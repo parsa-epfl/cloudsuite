@@ -2,7 +2,7 @@
 set -e
 
 echo Server IP
-ifconfig eth0 2>/dev/null | awk '/inet addr:/ {print $2}' | sed 's/addr://'
+hostname --ip-address
 
 if [ -z "$CASSANDRA_SEEDS" ]; then
     NEED_INIT=1

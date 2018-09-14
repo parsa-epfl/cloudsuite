@@ -1,4 +1,4 @@
-FROM cloudsuite/spark
+FROM cloudsuite/spark:2.3.1
 
 # Copy files
 COPY benchmark /root/benchmark
@@ -7,8 +7,10 @@ COPY files /root/
 WORKDIR /root
 
 # Build the benchmark using sbt
-RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823 \
+RUN apt-get update \
+    && apt-get install gnupg -y --no-install-recommends \
+    && echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 \
     && apt-get update -y \
     && apt-get install -y sbt \
     && rm -rf /var/lib/apt/lists/* \
