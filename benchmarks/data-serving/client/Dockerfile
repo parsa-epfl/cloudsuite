@@ -1,6 +1,6 @@
 FROM cloudsuite/java:openjdk8
 
-ENV CASSANDRA_VERSION 3.11.2
+ENV CASSANDRA_VERSION 3.11.3
 
 ENV YCSB_VERSION 0.14.0
 
@@ -8,7 +8,7 @@ RUN apt-get update \
  && apt-get install gnupg software-properties-common wget -y \
  && buildDeps="python  cassandra-tools=$CASSANDRA_VERSION" \
  && set -x \
- && apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57A16DD0047EC749D6EEC0353B12C A278B781FE4B2BDA\
+ && apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys A278B781FE4B2BDA\
  && echo 'deb http://www.apache.org/dist/cassandra/debian 311x main' >> /etc/apt/sources.list.d/cassandra.list \
  && apt-get update \
  && apt-get install -y $buildDeps --no-install-recommends \
