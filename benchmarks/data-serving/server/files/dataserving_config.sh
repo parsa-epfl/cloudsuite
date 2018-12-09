@@ -2,7 +2,8 @@
 set -e
 
 echo Server IP
-ifconfig eth0 2>/dev/null | awk '/inet addr:/ {print $2}' | sed 's/addr://'
+#ifconfig eth0 2>/dev/null | awk '/inet addr:/ {print $2}' | sed 's/addr://'
+hostname -i
 
 if [ -z "$CASSANDRA_SEEDS" ]; then
     NEED_INIT=1
@@ -66,18 +67,29 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 fi
 
 #exec "$@"
-cassandra
-sleep 5
+service cassandra start
+apt-get install -y netcat > /dev/null 2>&1
+
+wait_port() {
+  while ! netcat -w 5 "$1" "$2" > /dev/null 2>&1; do
+    echo "Waiting for $3 ..."
+    sleep 3
+  done
+}
+
+wait_port 127.0.0.1 9042 cassandra
+
 
 exit=0
+
 
 if [ $NEED_INIT -eq 1 ]; then
     echo ======================================================
     echo Create a usertable for the seed server
     echo ======================================================
     while [ $exit -eq 0 ]; do
-        out=`cassandra-cli --host localhost -f /setup_tables.txt`
-        if [[ "$out" =~ "Connected to" ]]; then
+	out=`cqlsh -f /scripts/setup_tables.txt`
+	if [[ $? == 0 ]]; then
             exit=1
         else
             echo Cannot connect to the seed server. Trying again...
@@ -90,6 +102,5 @@ else
     echo "Cassandra seed server exists"
 fi
 
-while true; do
-    sleep 100;
-done
+echo "Cassandra server started"
+tail -f /dev/null
