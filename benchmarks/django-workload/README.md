@@ -8,7 +8,7 @@ large-scale production workload that serves mobile clients.
 The workload can be deployed using Docker containers to gauge the impact of the Django
 workload on both Python and the hardware it runs on.
 
-Documentation to set up each component is provided each subdirectory. 
+Documentation to set up each component (possibly a multinode setup)is provided each subdirectory. 
 You'll need to follow the **README.md** file in each of the
 following locations:
 
@@ -20,6 +20,25 @@ following locations:
 * Django and uWSGI server - [uwsgi/README.md](/benchmarks/django-workload/uwsgi/README.md)
 * Siege client (a load generator) - [siege/README.md](/benchmarks/django-workload/siege/README.md)
 
+# Note
+You could run build_containers.sh followed by run_containers.sh inorder to setup a the workload on a single machine.
+Usage of build_containers.sh:
+	```
+	$ [UWSGI_ONLY=1] ./build_containers.sh [/absolute/path/to/installed/python]
+	```
+Here, UWSGI_ONLY=1 & /absolute/path/to/installed/python are optional parameters. They could be used in following scenarios:
+1. Default: Builds all the components.
+	```
+	$ ./build_containers.sh
+	```
+2. Build only UWSGI server(which might be needed often when you want to tune server and rebuild the image)
+	```
+	$ UWSGI_ONLY=1 ./build_containers.sh
+	```
+3. In order to deploy a custom Python build on the UWSGI container, please provide the script above with the absolute path to the install folder of your build. By default running the script without this parameter will deploy the system Python 3.5.2. Since this workload uses modeling a realistic use case of Python in large web deployments and the workload reflects a typical web server application running on multiple server nodes with a client simulating the payloads of different request mixes, one would be interested in running the experiments with different versions of Python.
+	```
+	$ ./build_containers.sh /absolute/path/to/installed/python
+	```
 
 The root directory contains sub directories for each of these components which contains 
 docker files and all necessary dependencies to build and deploy all the docker images necessary 
