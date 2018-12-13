@@ -16,6 +16,15 @@ Navigate to *cloudsuite/benchmarks/django-workload/cassandra* and run:
 Once you build the cassandra image, run the container using:
         ```
         $ ./run_cassandra.sh
+
+	```
+You could pass the System Memory available as a parameter to the run script as shown below. (By default the System Memory value is considered as 8GB).
+	Example: If you System Memory is other than 8GB, say 128GB, run the container as
+
+	```
+	$ ./run_cassandra.sh 128
+
+
 	```
 ## Troubleshoot
 To change the default listen address for Cassandra (localhost), edit
@@ -46,17 +55,17 @@ the Django Workload, it should be commented out:
 ```
 #concurrent_materialized_view_writes: 32
 ```
-The JVM settings can also be adjusted for better performance, by using the
+The JVM settings can also be manually adjusted for better performance, by using the
 following options in `/etc/cassandra/jvm.options`:
 ```
 -XX:+UseThreadPriorities
 -XX:ThreadPriorityPolicy=42
 
 # Heap size (Xms, Xmx) and young generation size (Xmn) should be set depending
-# on the amount of available memory. These settings work for a memory size of 128GB
--Xms65536M
--Xmx65536M
--Xmn16384M
+# on the amount of available memory. These settings work for a memory size of 8GB
+-Xms4M
+-Xmx4M
+-Xmn1M
 
 -XX:+HeapDumpOnOutOfMemoryError
 -Xss256k

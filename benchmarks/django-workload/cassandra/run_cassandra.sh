@@ -12,7 +12,13 @@ wait_port() {
 
 # Start cassandra container
 echo "Starting cassandra container"
-docker run -tid --privileged --name cassandra_container -e SYSTEM_MEMORY=8 --network host cassandra-webtier
+
+if [ -n "$1" ]
+then
+	docker run -tid --privileged --name cassandra_container -e SYSTEM_MEMORY=$1 --network host cassandra-webtier
+else
+        docker run -tid --privileged --name cassandra_container -e SYSTEM_MEMORY=8 --network host cassandra-webtier
+fi
 
 wait_port localhost 9042 cassandra
 echo "Cassandra is up and running!"

@@ -29,24 +29,6 @@ in a separate container.
 For instructions on how to install docker, please refer to:
 <https://docs.docker.com/engine/installation/linux/ubuntu/>
 
-## Warning
-
-The Cassandra heap size is set to 64GB in
-[cloudsuite/benchmarks/django-workload/cassandra/files/jvm.options.128_GB](/benchmarks/django-workload/cassandra/files/jvm.options.128_GB).
-If your machine does not have that much RAM, starting the Cassandra container
-will cause swapping, therefore your machine will become unresponsive.
-
-Please change the value of the heap size in the file mentioned above to a more
-suitable value (change Xms and Xmx to half the system memory or less). Also
-change Xmn proportionally to the previous heap size (if changing heap size to
-1/4 its original value, also reduce Xmn to 1/4 its original value).
-*Example*: use on a system with 8GB memory
-```
--Xms4G
--Xmx4G
--Xmn2G
-```
-
 # Note
 Please note that the latest Python version that was used to test the
 installation scripts was 3.6.3. Subsequent versions have not been tested. All

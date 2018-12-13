@@ -2,7 +2,7 @@
 -XX:ThreadPriorityPolicy=42
 
 # Heap size (Xms, Xmx) and young generation size (Xmn) should be set depending
-# on the amount of available memory. These settings work for a memory size of 128GB
+# on the amount of available memory. These settings work for a memory size of 8GB
 -Xms4G
 -Xmx4G
 -Xmn1G
