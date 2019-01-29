@@ -12,6 +12,9 @@ else
     echo Running regular Cassandra server.
 fi
 
+#zt Update the stack size to get around "stack size needs to be at least 328K"
+sed -ri 's/-Xss256k/-Xss512k/' "$CASSANDRA_CONFIG/jvm.options"
+
 # first arg is `-f` or `--some-option`
 if [ "${1:0:1}" = '-' ]; then
 	set -- cassandra -f -R "$@"
