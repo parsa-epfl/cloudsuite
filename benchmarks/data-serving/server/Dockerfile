@@ -4,13 +4,15 @@ ENV CASSANDRA_VERSION 3.11.2
 
 ENV CASSANDRA_CONFIG /etc/cassandra
 
-RUN apt-get update \
-	&& apt-get install gnupg tzdata -y --no-install-recommends \
-	&& apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57A16DD0047EC749D6EEC0353B12C A278B781FE4B2BDA\
-	&& echo 'deb http://www.apache.org/dist/cassandra/debian 311x main' >> /etc/apt/sources.list.d/cassandra.list \
-	&& apt-get update \
-    	&& apt-get install -y cassandra=$CASSANDRA_VERSION \
-    	&& rm -rf /var/lib/apt/lists/*
+RUN export DEBIAN_FRONTEND=noninteractive\
+    && apt-get update \
+    && apt-get -y install wget \
+    &&  wget http://archive.apache.org/dist/cassandra/$CASSANDRA_VERSION/apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz \
+    && tar -xvzf apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz
+
+ENV CASSANDRA_HOME apache-cassandra-$CASSANDRA_VERSION
+ENV CASSANDRA_CONFIG $CASSANDRA_HOME/conf
+ENV PATH $PATH:$CASSANDRA_HOME/bin
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
