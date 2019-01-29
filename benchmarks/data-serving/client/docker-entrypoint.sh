@@ -10,6 +10,13 @@ if [ ! -z "$OPERATIONCOUNT" ]; then
     OPERATIONCOUNT="-p operationcount=$OPERATIONCOUNT"
 fi
 
+if [ ! -z "$THREADS" ]; then
+    THREADS="-threads $THREADS"
+fi
+
+if [ ! -z "$TARGET" ]; then
+    TARGET="-target $TARGET"
+fi
 
 
 echo '======================================================'
@@ -37,4 +44,4 @@ echo 'Keyspace usertable was created'
 echo '======================================================'
 
 /ycsb/bin/ycsb load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada $RECORDCOUNT
-/ycsb/bin/ycsb run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT
+/ycsb/bin/ycsb run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada $OPERATIONCOUNT $THREADS $TARGET 
