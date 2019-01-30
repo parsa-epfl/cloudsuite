@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 MAINTAINER Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>
 
 # This is based on the official memcached Dockerfile

@@ -1,12 +1,8 @@
-FROM ubuntu:14.04
+FROM cloudsuite/java
 
 RUN apt-get update \
- && apt-get install software-properties-common -y \
- && add-apt-repository ppa:webupd8team/java \
- && apt-get update \
- && echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections \
- && echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections \
- && buildDeps='oracle-java7-installer python' \
+ && apt-get install software-properties-common wget -y \
+ && buildDeps='python' \
  && set -x \
  && apt-get install -y $buildDeps --no-install-recommends \
  && apt-get autoremove && apt-get clean && apt-get upgrade -y \

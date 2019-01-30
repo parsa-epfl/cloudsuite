@@ -1,5 +1,5 @@
-FROM cloudsuite/spark-base:base
-MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
+FROM cloudsuite/java
+LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV SOLR_USER solr
 

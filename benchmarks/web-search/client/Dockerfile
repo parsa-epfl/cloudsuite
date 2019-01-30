@@ -1,22 +1,22 @@
-FROM cloudsuite/spark-base:base
-MAINTAINER Javier Picorel <javier.picorel@epfl.ch>
+FROM cloudsuite/java:openjdk7
+LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV FABAN_USER faban
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet wget tar openjdk-7-jdk \
+	&& apt-get install -y --no-install-recommends telnet wget tar curl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& groupadd -r $FABAN_USER  \
 	&& useradd -r -g $FABAN_USER $FABAN_USER
 
 ENV BASE_PATH /usr/src
 ENV FABAN_HOME $BASE_PATH/faban
+ENV FABAN_VERSION 1.3
 ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
 ENV ANT_VERSION 1.9.6
 ENV ANT_HOME $BASE_PATH/ant
-ENV JAVA_HOME /usr/bin
 ENV FABAN_OUTPUT_DIR $BASE_PATH/outputFaban
 ENV CLIENT_HEAP_SIZE 2g
 ENV DRIVER_DIR $FABAN_HOME/search
@@ -34,8 +34,8 @@ ENV AGENT_ID 1
 ENV NUM_AGENTS 1
 
 RUN cd $BASE_PATH \
-	&& wget "faban.org/downloads/faban-kit-latest.tar.gz" \
-	&& tar -xzf faban-kit-latest.tar.gz
+	&& wget "faban.org/downloads/faban-kit-$FABAN_VERSION.tar.gz" \
+	&& tar -xzf faban-kit-$FABAN_VERSION.tar.gz
 
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
