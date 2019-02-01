@@ -5,6 +5,8 @@
 
 Web Serving is a main service in the cloud. Traditional web services with dynamic and static content are moved into the cloud to provide fault-tolerance and dynamic scalability by bringing up the needed number of servers behind a load balancer. Although many variants of the traditional web stack are used in the cloud (e.g., substituting Apache with other web server software or using other language interpreters in place of PHP), the underlying service architecture remains unchanged. Independent client requests are accepted by a stateless web server process which either directly serves static files from disk or passes the request to a stateless middleware script, written in a high-level interpreted or byte-code compiled language, which is then responsible for producing dynamic content. All the state information is stored by the middleware in backend databases such as cloud NoSQL data stores or traditional relational SQL servers supported by key-value cache servers to achieve high throughput and low latency. This benchmark includes a social networking engine (Elgg) and a client implemented using the Faban workload generator.
 
+Furthermore, we have recently incorporated Facebook''s HipHop Virtual Machine compiler and runtime for producing JIT-compiled PHP scripts. For more information, you can read about HHVM [here](https://hhvm.com/).
+
 ## Using the benchmark ##
 The benchmark has four tiers: the web server, the database server, the memcached server, and the clients. The web server runs Elgg and it connects to the memcached server and the database server. The clients send requests to login to the social network. Each tier has its own image which is identified by its tag.
 
@@ -44,9 +46,13 @@ To start the web server, you first have to `pull` the server image. To `pull` th
 
     $ docker pull cloudsuite/web-serving:web_server
 
-The following command will start the web server:
+To run the web server *without HHVM*, use the following command:
 
     $ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
+
+To run the web server *with HHVM enabled*, use the following command:
+
+    $ docker run -e "HHVM=true" -dt --net=host --name=web_server_local cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
 
 The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are mysql_server, and memcache_server, respectively, which are the default names of the containers. 
 The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
