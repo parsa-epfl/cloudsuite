@@ -7,7 +7,8 @@ then
   echo "Modified doc files found"
   # If .md files have been modified, we run a spellcheck
   # Install aspell (tool used for Spellcheck)
-  sudo apt-get install -y aspell-en
+  sudo apt update
+  sudo apt install -y aspell-en
   # Test if installation was successful
   result=$?
   if [ $result -eq "0" ]
@@ -83,6 +84,7 @@ then
     fi
   else
     echo "Installation of Aspell Failed : No updates performed."
+    return 1
   fi
 else
   echo "No modifications to Doc files"
