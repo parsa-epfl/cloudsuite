@@ -1,8 +1,11 @@
-FROM cloudsuite/cassandra
+FROM cloudsuite/cassandra:3.11.3
 
+COPY files /scripts
 
-COPY files/* /scripts/
+RUN chmod +x /scripts/docker-entrypoint.sh
 
+ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
 
-ENTRYPOINT ["/scripts/bootstrap.sh"]
+CMD ["cassandra", "-R", "-f"]
 
+EXPOSE 7000 7001 7199 9042 9160
