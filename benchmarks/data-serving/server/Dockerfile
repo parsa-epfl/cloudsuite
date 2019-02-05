@@ -1,21 +1,8 @@
-FROM cloudsuite/java:openjdk8
+FROM cloudsuite/cassandra
 
-ENV CASSANDRA_VERSION 3.11.3
 
-ENV CASSANDRA_CONFIG /etc/cassandra
+COPY files/* /scripts/
 
-RUN apt-get update \
-	&& apt-get install gnupg tzdata -y --no-install-recommends \
-	&& apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys A278B781FE4B2BDA\
-	&& echo 'deb http://www.apache.org/dist/cassandra/debian 311x main' >> /etc/apt/sources.list.d/cassandra.list \
-	&& apt-get update \
-    	&& apt-get install -y cassandra=$CASSANDRA_VERSION \
-    	&& rm -rf /var/lib/apt/lists/*
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/scripts/bootstrap.sh"]
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["cassandra", "-R", "-f"]
-
-EXPOSE 7000 7001 7199 9042 9160
