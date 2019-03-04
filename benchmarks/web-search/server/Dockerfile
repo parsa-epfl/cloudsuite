@@ -12,7 +12,7 @@ RUN apt-get update -y \
 ENV BASE_PATH /usr/src
 ENV SOLR_VERSION 5.2.1
 ENV SOLR_HOME $BASE_PATH/solr-$SOLR_VERSION
-ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
+ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV INDEX_URL $PACKAGES_URL/index
 ENV SCHEMA_URL $PACKAGES_URL/schema.xml
 ENV SOLR_CONFIG_URL $PACKAGES_URL/solrconfig.xml
