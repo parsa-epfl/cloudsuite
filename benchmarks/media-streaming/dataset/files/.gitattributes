@@ -1,4 +1,0 @@
-VideoSet/240p filter=lfs diff=lfs merge=lfs -text
-VideoSet/360p filter=lfs diff=lfs merge=lfs -text
-VideoSet/480p filter=lfs diff=lfs merge=lfs -text
-VideoSet/720p filter=lfs diff=lfs merge=lfs -text
