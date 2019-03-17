@@ -12,7 +12,7 @@ RUN apt-get update -y \
 ENV BASE_PATH /usr/src
 ENV FABAN_HOME $BASE_PATH/faban
 ENV FABAN_VERSION 1.3
-ENV PACKAGES_URL http://lsi-www.epfl.ch/parsa
+ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
 ENV ANT_VERSION 1.9.6
