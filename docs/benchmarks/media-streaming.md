@@ -28,7 +28,7 @@ To set up the dataset you have to first `pull` the dataset image and then run it
 
 The following command will create a dataset container that exposes the video dataset volume, which will be used by the streaming server:
 
-    $ docker create --name streaming_dataset cloudsuite/media-streaming:dataset
+    $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset
 
 
 ### Creating a network between the server and the client(s)
