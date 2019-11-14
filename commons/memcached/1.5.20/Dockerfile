@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		libevent-2.1-6 \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV MEMCACHED_VERSION 1.5.9
+ENV MEMCACHED_VERSION 1.5.20
 
 # this checksum was not provided with the author of memcached, it is checksum of the working downloaded version
-ENV MEMCACHED_SHA1 7d3807ed240597444c97e11b0f61d16964feff1c
+ENV MEMCACHED_SHA1 5d3b5af3ce0a1483d655017db7228bcaeff10d47
 
 RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& set -x \
