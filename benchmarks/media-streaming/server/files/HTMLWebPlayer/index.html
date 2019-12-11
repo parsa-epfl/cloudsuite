@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>CloudSuite Media Streaming Benchmark</title>
+    <link href="./css/video-js.min.css" rel="stylesheet">
+    <script src="./js/videojs-ie8.min.js"></script>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <style>
+    body {
+    padding-top: 54px;
+    }
+    @media (min-width: 992px) {
+    body {
+    padding-top: 56px;
+    }
+    }
+    #videocomponent{
+      margin-left: 20%;
+      margin-top:10%;
+    }
+    #info{
+      margin-left: 25%;
+    }
+    #resolution{
+      position: relative;
+      margin-left: 15%;
+    }
+    #videolist{
+      position: relative;
+      margin-left: 20%;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">CloudSuite Media Streaming Benchmark</a>
+      </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row" id="videocomponent">
+        <video id="my-video" class="video-js" controls preload="auto" width="600" height="400"
+          poster="video-poster.jpg" data-setup="{}">
+          <source src="/full-720p-00004.mp4" id="videosource" type='video/mp4'>
+          <!--source src="MY_VIDEO.webm" type='video/webm'-->
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+        <script src="./js/video.min.js"></script>
+      </div>
+
+      <span class="label label-default" id="info">Available videos in each resolution</span>
+      <div class="btn-group">
+        
+        <select class="selectpicker" id="resolution">
+          <option>240p</option>
+          <option>360p</option>
+          <option>480p</option>
+          <option>720p</option>
+        </select>
+
+        <select class="selectpicker" id="videolist">
+
+        </select>
+      </div>      
+    </div>
+    <!-- Bootstrap core JavaScript -->
+    <script src="./js/jquery.min.js"></script>
+    <!--script src="./../test_videos.js"></script-->
+    <script src="./js/helper.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

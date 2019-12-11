@@ -1318,20 +1318,20 @@ static void output_chunk_requests( FILE *f, fileset_info_struct *fsi, int rank, 
 	(*num_session_requests)++;
 #ifdef FIXED_OFFSET
 	if (*num_session_requests > num_buffering_requests)
-	    fprintf( f, "/%s-%0*d.txt pace_time=%d timeout=%d headers='Range: bytes=%d-%d'\n",
+	    fprintf( f, "/%s-%0*d.mp4 pace_time=%d timeout=%d headers='Range: bytes=%d-%d'\n",
 				basename, fsi->li->fname_num_digits, file_number, pace_time, timeout,
 				offset + request_offset, chunk_end + request_offset );
         else
-	    fprintf( f, "/%s-%0*d.txt timeout=%d headers='Range: bytes=%d-%d'\n",
+	    fprintf( f, "/%s-%0*d.mp4 timeout=%d headers='Range: bytes=%d-%d'\n",
 				basename, fsi->li->fname_num_digits, file_number, timeout,
 				offset + request_offset, chunk_end + request_offset );
 #else
 	if (*num_session_requests > num_buffering_requests)
-	    fprintf( f, "/%s-%0*d.txt pace_time=%d timeout=%d headers='Range: bytes=%d-%d'\n",
+	    fprintf( f, "/%s-%0*d.mp4 pace_time=%d timeout=%d headers='Range: bytes=%d-%d'\n",
 				basename, fsi->li->fname_num_digits, file_number, pace_time, timeout,
 				offset, chunk_end );
         else
-	    fprintf( f, "/%s-%0*d.txt timeout=%d headers='Range: bytes=%d-%d'\n",
+	    fprintf( f, "/%s-%0*d.mp4 timeout=%d headers='Range: bytes=%d-%d'\n",
 				basename, fsi->li->fname_num_digits, file_number, timeout,
 				offset, chunk_end );
 #endif
