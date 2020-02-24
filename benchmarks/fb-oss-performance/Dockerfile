@@ -41,3 +41,5 @@ RUN useradd -ms /bin/bash fbwork \
 
 USER fbwork
 WORKDIR /oss-performance
+
+ENTRYPOINT bash -x cmd.sh
