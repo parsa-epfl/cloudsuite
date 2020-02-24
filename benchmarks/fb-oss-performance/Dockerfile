@@ -35,11 +35,13 @@ RUN git clone https://github.com/facebookarchive/oss-performance.git \
 RUN cd oss-performance \
     && hhvm composer.phar install
 
+ADD entrypoint.sh /oss-performance/entrypoint.sh
+
 RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
-    && chown -R fbwork:fbwork /var/log/nginx
+    && chown -R fbwork:fbwork /var/log/nginx /oss-performance
 
 USER fbwork
-WORKDIR /oss-performance
 
-ENTRYPOINT bash -x cmd.sh
+WORKDIR /oss-performance
+ENTRYPOINT ["./entrypoint.sh"]
