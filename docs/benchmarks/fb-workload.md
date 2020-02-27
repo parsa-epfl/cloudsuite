@@ -19,9 +19,11 @@ To start the facebook workload benchmark you have to first `pull` the server ima
 
     $ docker pull cloudsuite/fb-workload:server
     
-Create a file `cmd.sh` on the host which contains the command to run the facebook workload. An example is shown below
+Create a file `cmd.sh` on the host which contains the information to connect to mysql as the first line (<MysqlIP> <Username> <Password>) and command to run the facebook workload on the second line. An example is shown below
     
+    $ 192.168.1.64 root root
     $ hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=192.168.1.62 --db-username=root --db-password=root --php5=/usr/bin/php-cgi
+    
     $ chmod a+x cmd.sh
     
 More info on parameters which can be provided to the facebook worload can be found in [README.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
