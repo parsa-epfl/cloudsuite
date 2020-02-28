@@ -52,7 +52,7 @@ To run the web server *with HHVM enabled*, use the following command:
 
     $ docker run -e "HHVM=true" -dt --net=host --name=web_server_local cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${DB_SERVER_UNAME} ${DB_SERVER_PASS} ${MEMCACHED_SERVER_IP}
 
-The three ${DATABASE_SERVER_IP} (default: mysql_server), ${DB_SERVER_UNAME} (default: root), ${DB_SERVER_PASS} (default: root), ${MEMCACHED_SERVER_IP} (default: memcache_server) are mandatory. ${MAX_PM_CHILDREN} (default: 80) is optional. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Otherwise, use the corresponding IP of the machine.
+The parameters ${DATABASE_SERVER_IP} (default: mysql_server), ${DB_SERVER_UNAME} (default: root), ${DB_SERVER_PASS} (default: root), ${MEMCACHED_SERVER_IP} (default: memcache_server) are mandatory. ${MAX_PM_CHILDREN} (default: 80) is optional. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Otherwise, use the corresponding IP of the machine.
 
 The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
 
