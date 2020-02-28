@@ -16,15 +16,9 @@ RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysq
 
 # Copy the scripts
 ADD files/execute.sh /execute.sh
-ADD files/elgg_db.dump /elgg_db.dump
 
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh
 RUN chmod 700 /etc/bootstrap.sh
 
 ENTRYPOINT ["/etc/bootstrap.sh"]
-
-
-
-
-

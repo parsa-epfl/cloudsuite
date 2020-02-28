@@ -15,7 +15,8 @@ RUN apt-get update && \
 	php5 php5-gd \
 	php5-mysql php5-curl \
 	php5-fpm php5-memcache \
-	hhvm
+	hhvm \
+	mysql-server
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
@@ -39,6 +40,8 @@ COPY files/nginx_sites_avail.append /tmp/
 COPY files/nginx_sites_avail_hhvm.append /tmp/
 COPY files/configure_hhvm.sh /tmp/
 
+ADD files/elgg_db.dump /elgg_db.dump
+
 RUN service nginx restart
 
 RUN service php5-fpm restart
@@ -50,4 +53,3 @@ RUN chmod 700 /etc/bootstrap.sh
 EXPOSE 8080
 
 CMD ["/etc/bootstrap.sh", "-d"]
-
