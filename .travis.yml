@@ -61,6 +61,9 @@ env:
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
   - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
+  # Mysql
+  - DH_REPO="cloudsuite/mysql" IMG_TAG="latest" DF_PATH="./commons/mysql" DBX_PLATFORM=linux/amd64
+
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="4.0" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
@@ -102,7 +105,6 @@ env:
   - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Web Serving
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server" DBX_PLATFORM=linux/amd64
