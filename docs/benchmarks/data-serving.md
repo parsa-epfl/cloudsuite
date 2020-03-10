@@ -66,7 +66,7 @@ Running the benchmark
 ---------------------
 The benchmark is run automatically with the client container. One can modify the record count in the database and/or the number of operations performed by the benchmark specifying the corresponding variables when running the client container:
 ```bash
-$ docker run -e RECORDCOUNT=<#> -e OPERATIONCOUNT=<#> --name cassandra-client --net serving_network cloudsuite/data-serving:client "cassandra-server-seed,cassandra-server1"
+$ docker run -e RECORDCOUNT=<#> -e OPERATIONCOUNT=<#> --name cassandra-client --net host cloudsuite/data-serving:client "cassandra-server-seed,cassandra-server1"
 ```
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
