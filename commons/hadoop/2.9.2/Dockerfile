@@ -2,9 +2,9 @@ FROM cloudsuite/java:openjdk8
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      curl \
-      rsync \
-      ssh \
+    curl \
+    rsync \
+    ssh \
     && rm -rf /var/lib/apt/lists/*
 
 ENV HADOOP_VERSION 2.9.2
@@ -14,12 +14,12 @@ ENV HADOOP_LOG_DIR ${HADOOP_PREFIX}/logs
 
 # Install Hadoop
 RUN set -x \
-    && MIRROR=$(curl -s http://www.apache.org/dyn/closer.lua?as_json=1 | grep preferred | awk '{print $2}' | sed -e 's/"//g') \
-    && URL=${MIRROR}hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz \
+    && URL=https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz \
     && curl ${URL} | tar -xzC /opt
 
 # Configure Hadoop
-RUN sed -i "s:JAVA_HOME=.*:JAVA_HOME=${JAVA_HOME}:" ${HADOOP_PREFIX}/etc/hadoop/hadoop-env.sh
+RUN JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac)))) \
+    && sed -i "s:JAVA_HOME=.*:JAVA_HOME=${JAVA_HOME}:" ${HADOOP_PREFIX}/etc/hadoop/hadoop-env.sh
 
 # Configure ssh
 RUN ssh-keygen -t rsa -P '' -f /root/.ssh/id_rsa \

@@ -3,6 +3,8 @@
 RED='\033[0;31m'
 RESET='\033[0m'
 
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+
 ${HADOOP_PREFIX}/bin/hdfs dfs -test -e /user/root/wiki
 if [ $? -ne 0 ]; then
   ${HADOOP_PREFIX}/bin/hdfs dfs -mkdir -p /user/root
@@ -31,4 +33,3 @@ ${MAHOUT_HOME}/bin/mahout testnb -i /user/root/testing -m /user/root/model -l /u
 END=$(($(date +"%s%N")/1000000))
 TIME=$(($END - $START))
 echo -e "\nBenchmark time: ${TIME}ms"
-
