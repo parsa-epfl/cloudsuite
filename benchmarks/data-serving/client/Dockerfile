@@ -1,16 +1,12 @@
-FROM cloudsuite/java:openjdk8
+FROM cloudsuite/cassandra:3.11
 
+ENV CASSANDRA_VERSION 3.11.6
 ENV YCSB_VERSION 0.14.0
 
 RUN apt-get update \
-    && apt-get install gnupg software-properties-common wget curl -y \
-    && buildDeps="python cassandra-tools" \
-    && set -x \
-    && echo "deb https://downloads.apache.org/cassandra/debian 311x main" | tee -a /etc/apt/sources.list.d/cassandra.sources.list \
-    && curl https://downloads.apache.org/cassandra/KEYS | apt-key add - \
-    && apt-get update \
-    && apt-get install -y $buildDeps --no-install-recommends \
-    && apt-get autoremove && apt-get clean && apt-get upgrade -y
+    && wget  -O /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb https://archive.apache.org/dist/cassandra/${CASSANDRA_VERSION}/debian/cassandra-tools_${CASSANDRA_VERSION}_all.deb \
+    && dpkg -i /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb \
+    && rm -rf /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb
 
 RUN wget -q https://github.com/brianfrankcooper/YCSB/releases/download/$YCSB_VERSION/ycsb-$YCSB_VERSION.tar.gz -O /ycsb-$YCSB_VERSION.tar.gz \
     && tar -xzf /ycsb-$YCSB_VERSION.tar.gz && rm /ycsb-$YCSB_VERSION.tar.gz && mv /ycsb-$YCSB_VERSION /ycsb \
