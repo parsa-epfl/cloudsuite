@@ -2,10 +2,8 @@ FROM ubuntu:14.04
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      bc \
-      build-essential \
-      libssl-dev \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bc build-essential libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY files /root/
@@ -17,7 +15,10 @@ RUN set -x \
     && make \
     && make install
 
-RUN mkdir /output
+RUN rm -rf /output && mkdir -p /output
 VOLUME ["/output"]
+
+RUN rm -rf /videos/logs && mkdir -p /videos/logs
+VOLUME [ "/videos/logs" ]
 
 ENTRYPOINT ["/root/docker-entrypoint.sh"]

@@ -1,9 +1,9 @@
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
 RUN apt-get update -y && \
 	apt-get install -y --force-yes software-properties-common && \
-	apt-add-repository "ppa:mc3man/trusty-media" && \
+	apt-add-repository "ppa:mc3man/bionic-media" && \
 	add-apt-repository ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y --no-install-recommends \
