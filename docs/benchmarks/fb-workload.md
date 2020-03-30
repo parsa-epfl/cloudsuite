@@ -9,9 +9,7 @@ To start the database server, you have to first `pull` the server image. To `pul
 
 The following command will start the database server:
 
-    $ docker run -dt --net=host --name=mysql_server cloudsuite/web-serving:db_server ${WEB_SERVER_IP}
-
-The ${WEB_SERVER_IP}  parameter is mandatory. It sets the IP of the web server. If you are using the host network, the web server IP is the IP of the machine that you are running the web_server container on. If you create your own network you can use the name that you are going to give to the web server (we called it web_server in the following commands).
+    $ docker run -dt --net=host --name=mysql_server cloudsuite/web-serving:db_server
 
 
 ### Starting the facebook workload benchmark ####
@@ -22,7 +20,7 @@ To start the facebook workload benchmark you have to first `pull` the server ima
 Create a file `cmd.sh` on the host which contains the information to connect to mysql as the first line `MysqlIP Username Password` and command to run the facebook workload on the second line. An example is shown below
 ```
 192.168.1.64 root root
-hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=192.168.1.62 --db-username=root --db-password=root --php5=/usr/bin/php-cgi
+hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=192.168.1.62 --db-username=root --db-password=root --hhvm=$HHVM
     
 $ chmod a+x cmd.sh
 ```
@@ -31,4 +29,4 @@ More info on parameters which can be provided to the facebook worload can be fou
 
 The following command will start the facebook server:
 
-    $ docker run --sysctl 'net.ipv4.tcp_tw_reuse=1' --net=host -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server
+    $ docker run --cap-add sys_admin --net=host -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server

@@ -1,9 +1,15 @@
-FROM hhvm/hhvm:3.24.0
+FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND noninteractive
-RUN hhvm --version
 
 RUN apt-get update \
-    && apt-get -y install nginx unzip mysql-server util-linux coreutils	\
+    && apt-get install -y software-properties-common apt-transport-https \
+    && apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xB4112585D386EB94 \
+    && add-apt-repository "deb https://dl.hhvm.com/ubuntu xenial-lts-3.30 main" \
+    && apt-get update \
+    && apt-get install -y hhvm=3.30.12-1~xenial
+
+RUN apt-get update \
+    && apt-get -y install git nginx unzip mysql-client util-linux coreutils	\
     && apt-get -y install autotools-dev \
     && apt-get -y install autoconf \
     && apt-get -y install software-properties-common build-essential 
@@ -27,6 +33,7 @@ RUN git clone https://github.com/JoeDog/siege.git \
 RUN git clone https://github.com/facebookarchive/oss-performance.git \ 
     && cd oss-performance \
     && git checkout tags/v2019.02.13.00 \
+    && sed -i 's/3.24/3.30/g' composer.json \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"\
@@ -39,9 +46,15 @@ ADD entrypoint.sh /oss-performance/entrypoint.sh
 
 RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
-    && chown -R fbwork:fbwork /var/log/nginx /oss-performance
+    && chown -R fbwork:fbwork /var/log/nginx /oss-performance \
+    && chmod a+x /oss-performance/entrypoint.sh
 
 USER fbwork
+
+ENV HHVM /usr/bin/hhvm
+ENV PHP-CGI /usr/bin/php-cgi
+ENV PHP-CGI7 /usr/bin/php-cgi7.0
+ENV PHP-FPM7 /usr/sbin/php-fpm7.0
 
 WORKDIR /oss-performance
 ENTRYPOINT ["./entrypoint.sh"]
