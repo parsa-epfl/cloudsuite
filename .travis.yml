@@ -58,8 +58,8 @@ env:
   - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20" DBX_PLATFORM=linux/amd64
 
   # Cassandra
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11"
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11" DF_PATH="./commons/cassandra/3.11"
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11" DF_PATH="./commons/cassandra/3.11.6"
 
   # Datasets
   # Movielens

@@ -1,4 +1,4 @@
-FROM cloudsuite/cassandra:3.11
+FROM cloudsuite/cassandra:3.11.6
 
 ENV CASSANDRA_VERSION 3.11.6
 ENV YCSB_VERSION 0.14.0
