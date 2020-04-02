@@ -40,22 +40,27 @@ To start the facebook workload benchmark you have to first `pull` the server ima
 
     $ docker pull cloudsuite/fb-workload:server
     
-Create a file `cmd.sh` on the host which contains the information to connect to mysql as the first line `MysqlIP Username Password` and command to run the facebook workload on the second line. An example is shown below
+Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in `files/cmd.sh`
 ```
-192.168.1.64 root root
-hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=192.168.1.62 --db-username=root --db-password=root --hhvm=$HHVM
-    
-$ chmod a+x cmd.sh
+$ chmod +x cmd.sh
 ```
-You can also use any one of the below parameters in `cmd.sh`.
+
+You can also use any one of the below parameters in `cmd.sh`
 ```
---hhvm=$HHVM
---php5=$PHP-CGI
---php=$PHP-FPM7
+--hhvm=$HHVM_BIN
+--php5=$PHP_CGI_BIN
+--php=$PHP_FPM7_BIN
 ```
 
 More info on parameters which can be provided to the facebook worload can be found in [README.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
 The following command will start the facebook workload:
 
-    $ docker run --cap-add sys_admin --net=host -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server
+```
+$ docker run --cap-add sys_admin --net=host --name fb -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server
+```
+
+**Note:** Mysql max_connections should be set to >1000 for the mediawiki workload (add the below line in `cmd.sh`)
+```
+mysql -h10.52.2.161 -uroot -proot -e "SET GLOBAL max_connections = 1001;"
+```

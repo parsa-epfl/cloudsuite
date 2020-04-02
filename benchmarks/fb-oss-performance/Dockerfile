@@ -42,19 +42,24 @@ RUN git clone https://github.com/facebookarchive/oss-performance.git \
 RUN cd oss-performance \
     && hhvm composer.phar install
 
+# Install perf
+RUN apt-get update \
+	&& apt-get install -y linux-tools-common linux-tools-$(uname -r)  linux-cloud-tools-$(uname -r)
+
 ADD entrypoint.sh /oss-performance/entrypoint.sh
+ADD files/perf.sh /oss-performance/scripts/perf.sh
 
 RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
     && chown -R fbwork:fbwork /var/log/nginx /oss-performance \
-    && chmod a+x /oss-performance/entrypoint.sh
+    && chmod a+x /oss-performance/entrypoint.sh /oss-performance/scripts/perf.sh
 
 USER fbwork
 
-ENV HHVM /usr/bin/hhvm
-ENV PHP-CGI /usr/bin/php-cgi
-ENV PHP-CGI7 /usr/bin/php-cgi7.0
-ENV PHP-FPM7 /usr/sbin/php-fpm7.0
+ENV HHVM_BIN /usr/bin/hhvm
+ENV PHP_CGI_BIN /usr/bin/php-cgi
+ENV PHP_CGI7_BIN /usr/bin/php-cgi7.0
+ENV PHP_FPM7_BIN /usr/sbin/php-fpm7.0
 
 WORKDIR /oss-performance
 ENTRYPOINT ["./entrypoint.sh"]
