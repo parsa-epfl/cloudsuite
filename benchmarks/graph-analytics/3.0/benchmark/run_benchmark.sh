@@ -11,5 +11,5 @@ EOS
 
 ${SPARK_HOME}/bin/spark-submit "$@" \
     --class "GraphAnalytics" \
-    ${BENCHMARK_DIR}/graph-analytics_2.10-1.0.jar \
+    ${BENCHMARK_DIR}/graph-analytics_2.11-1.0.jar \
     -app="${WORKLOAD_NAME}"
