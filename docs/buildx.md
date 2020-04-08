@@ -33,6 +33,7 @@ For more information check [docker-github](https://github.com/docker/buildx/blob
 ### Using buildx
 Docker login to enable push of images onto [dockerhub](https://hub.docker.com/u/cloudsuite/). 
 
+#### Creating the base-os image
 ```
-docker buildx build --platform linux/amd64,linux/arm64,linux/riscv64 -t cloudsuite/data-serving:server --push .
+docker buildx build --platform=linux/arm64,linux/amd64,linux/riscv64 --tag=cloudsuite/debian:base-os --progress=plain --network=host --push .
 ```
