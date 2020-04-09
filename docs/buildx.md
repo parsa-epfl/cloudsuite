@@ -43,8 +43,9 @@ For more information check [docker-github](https://github.com/docker/buildx/blob
 
 ### Using buildx
 Docker login to enable push of images onto [dockerhub](https://hub.docker.com/u/cloudsuite/). 
+```
+docker login
+```
 
 #### Creating the base-os image
-```
-docker buildx build --platform=linux/arm64,linux/amd64,linux/riscv64 --tag=cloudsuite/debian:base-os --progress=plain --network=host --push .
-```
+Run `build.sh` script in `cloudsuite/commons/base-os` to generate base images for different architectures in one manifest
