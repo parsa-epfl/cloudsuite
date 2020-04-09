@@ -14,9 +14,6 @@ services:
 # Build Matrix :
 env:
   # Commons
-  # Base-os
-  - DH_REPO="cloudsuite/debian" IMG_TAG="base-os" DF_PATH="./commons/base-os"
-
   # Java
   - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk8"
   - DH_REPO="cloudsuite/java" IMG_TAG="openjdk7" DF_PATH="./commons/java/openjdk7"
