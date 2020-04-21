@@ -20,14 +20,6 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
-### Preparing a network between the server(s) and the client
-
-To facilitate the communication between the client and the server(s), we build a docker network:
-
-    $ docker network create caching_network
-
-We will attach the launched containers to this newly created docker network.
-
 ### Starting the Server ####
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
 
@@ -36,15 +28,17 @@ To start the server you have to first `pull` the server image and then run it. T
 It takes some time to download the image, but this is only required the first time.
 The following command will start the server with four threads and 4096MB of dedicated memory, with a minimal object size of 550 bytes listening on port 11211 as default:
 
-    $ docker run --name dc-server --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
 
-We assigned a name to this server to facilitate linking it with the client. We also used `--net` option to attach the container to our prepared network.
-As mentioned before, you can have multiple instances of the Memcached server, just remember to give each of them a unique name. For example, the following commands create four Memcached server instances:
+ The following commands create Memcached server instances:
 
-    $ docker run --name dc-server1 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server2 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server3 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server4 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ # on VM1
+    $ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+
+    $ # on VM2
+    $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    ...
+    
 
 ### Starting the Client ####
 
@@ -56,9 +50,9 @@ It takes some time to download the image, but this is only required the first ti
 
 To start the client container use the following command:
 
-    $ docker run -it --name dc-client --net caching_network cloudsuite/data-caching:client bash
+    $ docker run -it --name dc-client --net host cloudsuite/data-caching:client bash
 
-This boots up the client container and you'll be logged in as the `memcache` user. Note that by using the `--net` option, you can easily make these containers visible to each other.
+This boots up the client container and you'll be logged in as the `memcache` user. 
 
 Before running the actual benchmark, you need to prepare the client.
 
@@ -75,10 +69,9 @@ Prepare the server configuration file, `docker_servers.txt`, which includes the 
 
 The client can simultaneously use multiple servers, one server with several ip addresses (in case the server machine has multiple ethernet cards active), and one server through multiple ports, measuring the overall throughput and quality of service. In that case, each line in the configuration file should contain the server address and the port number. To illustrate, in the case of our example it should be:
 
-    dc-server1, 11211
-    dc-server2, 11211
-    dc-server3, 11211
-    dc-server4, 11211
+    IP_ADDRESS_VM1, 11211
+    IP_ADDRESS_VM2, 11211
+    ...
 
 You can use the `vim` command for modifying this file inside the container.
 
@@ -110,7 +103,8 @@ where `rps` is 90% of the maximum number of requests per second achieved using t
 When you are done with benchmarking, just type `exit` to quit the client container.
 As the server containers are running as daemons, you have to stop them using `docker`:
 
-    $ docker stop dc-server1 dc-server2 dc-server3 dc-server4
+    $ docker stop dc-server1
+
 
 ## Important remarks ##
 - It takes several minutes for the server to reach a stable state.
