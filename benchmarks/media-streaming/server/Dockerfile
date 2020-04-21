@@ -1,10 +1,10 @@
-FROM ubuntu:14.04
+FROM cloudsuite/debian:base-os
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      nginx \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends nginx \
+  && rm -rf /var/lib/apt/lists/*
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/

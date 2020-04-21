@@ -32,7 +32,7 @@ The following command will run the dataset container that exposes the video data
 
 Copy logs folder from container to Host1:
 
-    $ sudo docker cp ${DATASET_CONTAINER_ID}:/videos/logs /home/ubuntu/
+    $ docker cp ${DATASET_CONTAINER_ID}:/videos/logs /home/ubuntu/
     
 
 ### Starting the Server ####

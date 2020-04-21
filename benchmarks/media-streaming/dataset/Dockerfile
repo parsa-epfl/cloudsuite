@@ -1,17 +1,23 @@
-FROM ubuntu:18.04
+FROM cloudsuite/debian:base-os
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
-RUN apt-get update -y && \
-	apt-get install -y --force-yes software-properties-common && \
-	apt-add-repository "ppa:mc3man/bionic-media" && \
-	add-apt-repository ppa:deadsnakes/ppa && \
-	apt-get update -y && \
-	apt-get install -y --no-install-recommends \
+RUN apt-get update -y \
+	&& apt-get install -y --no-install-recommends \
+	software-properties-common \
 	build-essential \
-	python3.5 \
-	ffmpeg \
-  curl \
+	curl \
+	wget \
+	yasm \
 	&& rm -rf /var/lib/apt/lists/*
+
+RUN wget --progress=bar:force -O /tmp/ffmpeg-4.1.5.tar.bz2 http://ffmpeg.org/releases/ffmpeg-4.1.5.tar.bz2 \
+	&& cd /tmp \
+	&& tar xvjf ffmpeg-4.1.5.tar.bz2 \ 
+	&& cd ffmpeg-4.1.5 \
+	&& ./configure \
+	&& make -j$(nproc) \
+	&& make install \
+	&& rm -rf /tmp/ffmpeg-4.1.5.tar.bz2
 
 COPY files /root/
 RUN chmod 755 /root/download_video_files.sh
