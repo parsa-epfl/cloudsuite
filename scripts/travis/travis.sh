@@ -17,11 +17,14 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     (grep -q ".travis.yml" <<<$modified_files); then
     # if modified, then rebuild their docker image
     travis_wait 40 docker buildx build --platform linux/amd64,linux/arm64,linux/riscv64 -t $DH_REPO:$IMG_TAG $DF_PATH
+    echo "Buildx completed"
     # make sure build was successful
     result=$?
+    echo $result
     if [ $result != "0" ]; then
         return 1
     fi
+    echo "Check PR"
     # Push if this file was triggerred by a push command (not a pull request)
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
@@ -39,7 +42,7 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     else
         echo "No push command executed"
     fi
-
+    echo "Exit"
 # if no file related to this image was modified
 else
     echo "No Modifications to this image"
