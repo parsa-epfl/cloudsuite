@@ -52,7 +52,8 @@ env:
   
   # Benchmark Images
   # Data Analytics
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/4.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/data-analytics/4.0"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
 
   # Data Caching
