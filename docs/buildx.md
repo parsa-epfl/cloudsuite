@@ -3,8 +3,8 @@ Docker Buildx is a CLI plugin that extends the docker command with the full supp
 
 ### Enable docker experimental client flag
 ```
-mkdir -p ~/.docker \
-    && echo "{\"experimental\": \"enabled\"}" >~/.docker/config.json \
+mkdir -p $HOME/.docker \
+    && echo "{\"experimental\": \"enabled\"}" > $HOME/.docker/config.json \
     && sudo service docker restart
 ```
 

@@ -24,7 +24,80 @@ before_install:
 
 # Build Matrix :
 env:
-  - DH_REPO="alok123t/java_travis_check" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
+  # Commons
+  # Java
+  - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk7" DF_PATH="./commons/java/openjdk7"
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk8" DF_PATH="./commons/java/openjdk8"
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk11" DF_PATH="./commons/java/openjdk11"
+  
+  # Hadoop
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.1"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.1" DF_PATH="./commons/hadoop/2.9.1"
+
+  # Spark
+  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
+  # - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
+  # - DH_REPO="cloudsuite/spark" IMG_TAG="2.1.0" DF_PATH="./commons/spark/2.1.0"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="2.3.1" DF_PATH="./commons/spark/2.3.1"
+
+  # Faban
+  - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
+  - DH_REPO="cloudsuite/faban" IMG_TAG="1.3" DF_PATH="./commons/faban/1.3"
+  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4"
+
+  
+  # Memcached
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20"
+
+  # Cassandra
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.3" DF_PATH="./commons/cassandra/3.11.3"
+
+  # Datasets
+  # Movielens
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
+  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
+
+  
+  # Benchmark Images
+  # Data Analytics
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
+
+  # Data Caching
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+
+  # Data Serving
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+
+  # Graph Analytics
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
+
+  # In-memory Analytics
+  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+
+  # Media Streaming
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
+
+  # Web Search
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
+
+  # Web Serving
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+
   #Spell Check
   - Spell_Check="1"
 
