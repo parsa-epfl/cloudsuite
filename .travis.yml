@@ -15,9 +15,7 @@ before_install:
   - mkdir -p $HOME/.docker 
   - |-
     echo "{\"experimental\": \"enabled\"}" > $HOME/.docker/config.json
-  - cat $HOME/.docker/config.json
   - sudo service docker restart
-  - docker version
   - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
   - docker buildx create --use --name host-builder --buildkitd-flags '--allow-insecure-entitlement network.host'
   - docker buildx use host-builder
