@@ -21,8 +21,6 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     result=$?
     if [ $result != "0" ]; then
         return 1
-    else
-        echo "Docker login succeeded"
     fi
     # if modified, then rebuild annd push their docker image
     travis_wait 40 docker buildx build --platform linux/amd64,linux/arm64,linux/riscv64 -t $DH_REPO:$IMG_TAG --push $DF_PATH
