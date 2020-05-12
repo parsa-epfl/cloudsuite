@@ -24,7 +24,7 @@ before_install:
 
 # Build Matrix :
 env:
-  - DH_REPO="alok123t/java_travis" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
+  - DH_REPO="alok123t/java_travis_check" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
   #Spell Check
   - Spell_Check="1"
 
