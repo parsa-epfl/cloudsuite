@@ -19,13 +19,13 @@ before_install:
   - sudo service docker restart
   - docker version
   - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+  - docker buildx create --use --name host-builder --buildkitd-flags '--allow-insecure-entitlement network.host'
+  - docker buildx use host-builder
+  - docker buildx inspect --bootstrap
 
 # Build Matrix :
 env:
-  # Commons
-  # Java
   - DH_REPO="alok123t/java_travis" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
-  
   #Spell Check
   - Spell_Check="1"
 
