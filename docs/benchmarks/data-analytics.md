@@ -13,7 +13,7 @@ To obtain the images:
 
 ```bash
 $ docker pull cloudsuite/hadoop:2.9.2
-$ docker pull cloudsuite/data-analytics:3.0.0
+$ docker pull cloudsuite/data-analytics:4.0
 
 ```
 
