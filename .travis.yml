@@ -32,9 +32,9 @@ env:
   - DH_REPO="cloudsuite/java" IMG_TAG="openjdk11" DF_PATH="./commons/java/openjdk11" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
   
   # Hadoop
-  # - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.1"
+  # - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.2"
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.1" DF_PATH="./commons/hadoop/2.9.1" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64
 
   # Spark
   # - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
@@ -64,8 +64,9 @@ env:
   
   # Benchmark Images
   # Data Analytics
-  # - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/3.0.0"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/4.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/data-analytics/4.0" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
 
   # Data Caching
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" DBX_PLATFORM=linux/amd64
