@@ -21,5 +21,4 @@ echo "Running perf on HHVM pid: $HHVM_PID"
 
 # Go to repo root.
 cd "$OSS_DIR/.."
-nohup sh -xec "timeout --signal INT 30s \
-    perf stat -a -D 5000 $ARGS -p $HHVM_PID" >nohup.out &
+nohup sh -xec "timeout --signal INT 30s perf stat -ddd -a -v $ARGS -p $HHVM_PID" >nohup.out 2>&1 &

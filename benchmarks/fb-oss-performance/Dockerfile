@@ -36,23 +36,23 @@ RUN git clone https://github.com/facebookarchive/oss-performance.git \
     && sed -i 's/3.24/3.30/g' composer.json \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');"\
-    && php composer.phar install
-
-RUN cd oss-performance \
+    && php -r "unlink('composer-setup.php');" \
+    && php composer.phar install \
     && hhvm composer.phar install
 
 # Install perf
 RUN apt-get update \
-	&& apt-get install -y linux-tools-common linux-tools-$(uname -r)  linux-cloud-tools-$(uname -r)
+    && apt-get install -y linux-tools-common linux-tools-$(uname -r) linux-cloud-tools-$(uname -r)
 
 ADD entrypoint.sh /oss-performance/entrypoint.sh
+RUN chmod a+x /oss-performance/entrypoint.sh /oss-performance/scripts/perf.sh
+
+# Replace with updated perf script in the fb-repo
 ADD files/perf.sh /oss-performance/scripts/perf.sh
 
 RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
-    && chown -R fbwork:fbwork /var/log/nginx /oss-performance \
-    && chmod a+x /oss-performance/entrypoint.sh /oss-performance/scripts/perf.sh
+    && chown -R fbwork:fbwork /var/log/nginx /oss-performance
 
 USER fbwork
 

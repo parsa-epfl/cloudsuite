@@ -8,3 +8,4 @@ if [ ! -f /oss-performance/cmd.sh ]; then
 fi
 
 bash /oss-performance/cmd.sh
+cat /oss-performance/nohup.out
