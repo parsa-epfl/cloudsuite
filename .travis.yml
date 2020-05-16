@@ -2,7 +2,7 @@
 sudo: required
 
 dist: bionic
-os: linnx
+os: linux
 
 branches:
   only:
