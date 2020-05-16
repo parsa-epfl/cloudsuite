@@ -1,12 +1,15 @@
 # @authors: Somya Arora, Arash Pourhabibi
 sudo: required
 
+dist: bionic
+os: linnx
+
 branches:
   only:
     - master
     - dev
 
-language: bash
+language: shell
 
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -54,19 +57,19 @@ env:
 
   # Cassandra
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.3" DF_PATH="./commons/cassandra/3.11.3" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.3" DF_PATH="./commons/cassandra/3.11.3" DBX_PLATFORM=linux/amd64
 
   # Datasets
   # Movielens
-  # - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
-  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph" DBX_PLATFORM=linux/amd64
 
   
   # Benchmark Images
   # Data Analytics
   # - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/4.0"
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/data-analytics/4.0" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0" DBX_PLATFORM=linux/amd64
 
   # Data Caching
   - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" DBX_PLATFORM=linux/amd64
@@ -74,7 +77,7 @@ env:
 
   # Data Serving
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client" DBX_PLATFORM=linux/amd64
 
   # Graph Analytics
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0" DBX_PLATFORM=linux/amd64
