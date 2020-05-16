@@ -4,8 +4,9 @@ ENV CASSANDRA_VERSION 3.11.6
 ENV CASSANDRA_CONFIG /etc/cassandra
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends gnupg tzdata wget python \
-	&& wget -O /tmp/cassandra_${CASSANDRA_VERSION}_all.deb https://archive.apache.org/dist/cassandra/${CASSANDRA_VERSION}/debian/cassandra_${CASSANDRA_VERSION}_all.deb \
+	&& apt-get install -y --no-install-recommends gnupg tzdata wget python procps \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& wget -q --show-progress --progress=bar:force -O /tmp/cassandra_${CASSANDRA_VERSION}_all.deb https://archive.apache.org/dist/cassandra/${CASSANDRA_VERSION}/debian/cassandra_${CASSANDRA_VERSION}_all.deb \
 	&& dpkg -i /tmp/cassandra_${CASSANDRA_VERSION}_all.deb \
 	&& rm -rf /tmp/cassandra_${CASSANDRA_VERSION}_all.deb
 
