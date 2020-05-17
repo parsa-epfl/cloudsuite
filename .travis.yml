@@ -1,92 +1,106 @@
 # @authors: Somya Arora, Arash Pourhabibi
 sudo: required
 
+dist: bionic
+os: linux
+
 branches:
   only:
     - master
     - dev
 
-language: bash
+language: shell
 
-services:
-  - docker
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - mkdir -p $HOME/.docker 
+  - |-
+    echo "{\"experimental\": \"enabled\"}" > $HOME/.docker/config.json
+  - sudo service docker restart
+  - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+  - docker buildx create --use --name host-builder --buildkitd-flags '--allow-insecure-entitlement network.host'
+  - docker buildx use host-builder
+  - docker buildx inspect --bootstrap
 
 # Build Matrix :
 env:
   # Commons
   # Java
-  - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
-  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk7" DF_PATH="./commons/java/openjdk7"
-  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk8" DF_PATH="./commons/java/openjdk8"
-  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk11" DF_PATH="./commons/java/openjdk11"
+  # - DH_REPO="cloudsuite/java" IMG_TAG="latest" DF_PATH="./commons/java/openjdk11"
+  # - DH_REPO="cloudsuite/java" IMG_TAG="openjdk7" DF_PATH="./commons/java/openjdk7"
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk8" DF_PATH="./commons/java/openjdk8" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/java" IMG_TAG="openjdk11" DF_PATH="./commons/java/openjdk11" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
   
   # Hadoop
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.2"
+  # - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.2"
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2"
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64
 
   # Spark
-  - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
+  # - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
   # - DH_REPO="cloudsuite/spark" IMG_TAG="1.5.1" DF_PATH="./commons/spark/1.5.1"
   # - DH_REPO="cloudsuite/spark" IMG_TAG="2.1.0" DF_PATH="./commons/spark/2.1.0"
-  - DH_REPO="cloudsuite/spark" IMG_TAG="2.3.1" DF_PATH="./commons/spark/2.3.1"
+  - DH_REPO="cloudsuite/spark" IMG_TAG="2.3.1" DF_PATH="./commons/spark/2.3.1" DBX_PLATFORM=linux/amd64
 
   # Faban
-  - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
-  - DH_REPO="cloudsuite/faban" IMG_TAG="1.3" DF_PATH="./commons/faban/1.3"
-  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4"
+  # - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
+  # - DH_REPO="cloudsuite/faban" IMG_TAG="1.3" DF_PATH="./commons/faban/1.3"
+  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4" DBX_PLATFORM=linux/amd64
 
   
   # Memcached
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20"
+  # - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20" DBX_PLATFORM=linux/amd64
 
   # Cassandra
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.3" DF_PATH="./commons/cassandra/3.11.3"
+  # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
+  # - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.3" DF_PATH="./commons/cassandra/3.11.3" DBX_PLATFORM=linux/amd64
 
   # Datasets
   # Movielens
-  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset"
-  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph"
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph" DBX_PLATFORM=linux/amd64
 
   
   # Benchmark Images
   # Data Analytics
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/4.0"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/data-analytics/4.0"
-  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0"
+  # - DH_REPO="cloudsuite/data-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/data-analytics/4.0"
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/data-analytics/4.0" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0" DBX_PLATFORM=linux/amd64
 
   # Data Caching
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server"
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client"
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client" DBX_PLATFORM=linux/amd64
 
   # Data Serving
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server"
-  - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client"
+  - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client" DBX_PLATFORM=linux/amd64
 
   # Graph Analytics
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0"
-  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0" DBX_PLATFORM=linux/amd64
+  # - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
 
   # In-memory Analytics
-  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
-  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0" DBX_PLATFORM=linux/amd64
 
   # Media Streaming
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server"
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset"
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" DBX_PLATFORM=linux/amd64
 
   # Web Search
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server"
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client"
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64
 
   # Web Serving
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server"
-  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server"
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server" DBX_PLATFORM=linux/amd64
 
   #Spell Check
   - Spell_Check="1"
