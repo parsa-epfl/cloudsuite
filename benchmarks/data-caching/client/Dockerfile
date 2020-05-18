@@ -8,17 +8,12 @@ ENV DEBIAN_FRONTEND noninteractive
 
 COPY memcached.tar.gz /memcached.tar.gz
 
-RUN buildDeps='curl gcc libc6-dev libevent-dev make wget ca-certificates vim' \
-	&& set -x \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends
+RUN apt-get update && apt-get install -y libevent-2.1-6 vim --no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
 
-RUN wget https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz \
-	&& tar -xvzf libevent-2.1.11-stable.tar.gz \
-	&& cd libevent-2.1.11-stable \
-	&& ./configure --prefix=/usr --disable-dependency-tracking --disable-static \ 
-	&& make \
-	&& make install \
-	&& cd / \
+RUN buildDeps='curl gcc libc6-dev libevent-dev make' \	
+	&& set -x \
+	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p /usr/src/memcached \
 	&& tar -xzf memcached.tar.gz -C /usr/src/memcached --strip-components=1 \
