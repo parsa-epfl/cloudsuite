@@ -88,9 +88,9 @@ env:
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0" DBX_PLATFORM=linux/amd64
 
   # Media Streaming
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="client" DF_PATH="./benchmarks/media-streaming/client" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="server" DF_PATH="./benchmarks/media-streaming/server" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # Web Search
   - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64
