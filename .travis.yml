@@ -53,7 +53,7 @@ env:
   
   # Memcached
   # - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.6.6" DF_PATH="./commons/memcached/1.5.20" DBX_PLATFORM=linux/amd64
 
   # Cassandra
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
