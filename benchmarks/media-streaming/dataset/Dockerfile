@@ -8,16 +8,8 @@ RUN apt-get update -y \
 	curl \
 	wget \
 	yasm \
+	ffmpeg \
 	&& rm -rf /var/lib/apt/lists/*
-
-RUN wget --progress=bar:force -O /tmp/ffmpeg-4.1.5.tar.bz2 http://ffmpeg.org/releases/ffmpeg-4.1.5.tar.bz2 \
-	&& cd /tmp \
-	&& tar xvjf ffmpeg-4.1.5.tar.bz2 \ 
-	&& cd ffmpeg-4.1.5 \
-	&& ./configure \
-	&& make -j$(nproc) \
-	&& make install \
-	&& rm -rf /tmp/ffmpeg-4.1.5.tar.bz2
 
 COPY files /root/
 RUN chmod 755 /root/download_video_files.sh
