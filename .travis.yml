@@ -50,7 +50,7 @@ env:
   # Faban
   # - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
   # - DH_REPO="cloudsuite/faban" IMG_TAG="1.3" DF_PATH="./commons/faban/1.3"
-  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   
   # Memcached
@@ -97,8 +97,9 @@ env:
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Web Search
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="dataset" DF_PATH="./benchmarks/web-search/dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server" DBX_PLATFORM=linux/amd64

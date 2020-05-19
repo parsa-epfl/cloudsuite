@@ -1,4 +1,4 @@
-FROM cloudsuite/java
+FROM cloudsuite/java:openjdk11
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 RUN apt-get update -y \
