@@ -6,14 +6,14 @@
 
 
 long
-sched_setaffinity(pid_t pid, unsigned int len, unsigned long *cpu_mask)
+sched_setaffinity_videoperf(pid_t pid, unsigned int len, unsigned long *cpu_mask)
 {
   return syscall(SYS_sched_setaffinity, pid, len, cpu_mask);
 }
 
 
 long
-sched_getaffinity(pid_t pid, unsigned int len, unsigned long *cpu_mask)
+sched_getaffinity_videoperf(pid_t pid, unsigned int len, unsigned long *cpu_mask)
 {
   return syscall(SYS_sched_getaffinity, pid, len, cpu_mask);
 }

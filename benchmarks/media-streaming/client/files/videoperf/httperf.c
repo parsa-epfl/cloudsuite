@@ -1210,12 +1210,12 @@ bad_wset_param:
 		SSLeay_add_ssl_algorithms ();
 
 		/* for some strange reason, SSLv23_client_method () doesn't work here */
-		ssl_ctx = SSL_CTX_new (SSLv3_client_method ());
-		if (!ssl_ctx)
-		{
-			ERR_print_errors_fp (stderr);
-			exit (-1);
-		}
+		// ssl_ctx = SSL_CTX_new (SSLv3_client_method ());
+		// if (!ssl_ctx)
+		// {
+		// 	ERR_print_errors_fp (stderr);
+		// 	exit (-1);
+		// }
 
 		memset (buf, 0, sizeof (buf));
 		RAND_seed (buf, sizeof (buf));
@@ -1413,7 +1413,7 @@ bad_wset_param:
 
 		if (param.cpu_mask != 0xffffffff)
 		{
-			rc = sched_setaffinity (0, sizeof(param.cpu_mask),
+			rc = sched_setaffinity_videoperf (0, sizeof(param.cpu_mask),
 					&param.cpu_mask);
 			if (rc < 0)
 			{
@@ -1422,7 +1422,7 @@ bad_wset_param:
 						prog_name, rc, errno, strerror(errno));
 				exit (1);
 			}
-		        rc = sched_getaffinity (0, sizeof(cpu_mask), &cpu_mask);
+		        rc = sched_getaffinity_videoperf (0, sizeof(cpu_mask), &cpu_mask);
 		        if (rc < 0)
 		        {
 			        fprintf (stderr, "%s: sched_getaffinity failed, rc=%d errno=%d (%s)\n",
