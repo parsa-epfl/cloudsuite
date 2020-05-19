@@ -40,9 +40,11 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 	sed -ri 's/(- seeds:) "127.0.0.1"/\1 "'"$CASSANDRA_SEEDS"'"/' "$CASSANDRA_CONFIG/cassandra.yaml"
 
 	for yaml in \
+		broadcast_address \
 		broadcast_rpc_address \
 		cluster_name \
 		endpoint_snitch \
+		listen_address \
 		num_tokens \
 		rpc_address \
 		start_rpc \
