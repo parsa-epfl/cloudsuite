@@ -32,7 +32,7 @@ The following command will run the dataset container that exposes the video data
 
 Copy logs folder from container to Host1:
 
-    $ docker cp ${DATASET_CONTAINER_ID}:/videos/logs /home/ubuntu/
+    $ docker cp ${DATASET_CONTAINER_ID}:/videos/logs $HOME
     
 
 ### Starting the Server ####
@@ -49,7 +49,7 @@ The following command will start the server, mount the dataset volume, and attac
 
 Copy the **`logs`** folder from Host1 to Host2
 
-    $ rsync -zarvh username@HOST1:/home/ubuntu/logs /home/ubuntu/
+    $ rsync -zarvh username@HOST1:$HOME/logs $HOME
 
 Note: Pass public key file, in case of authentication error using -e "ssh -i /path/to/.pemfile" to the rsync command
 
@@ -61,7 +61,7 @@ To start the client you have to first `pull` the client image and then run it. T
 
 To start the client container and connect it to the *host* network use the following command:
 
-    $ docker run -t --name=streaming_client -v /home/ubuntu/logs:/videos/logs -v /home/ubuntu/output:/output --net host cloudsuite/media-streaming:client ${SERVER_IP}
+    $ docker run -t --name=streaming_client -v $HOME/logs:/videos/logs -v $HOME/output:/output --net host cloudsuite/media-streaming:client ${SERVER_IP}
 
 The logs folder is mounted into the client container using `-v /path/to/logs:/videos/logs`.
 
