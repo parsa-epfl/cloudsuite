@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM cloudsuite/debian:base-os
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 ENV MYSQL_MAJOR 5.7
