@@ -1,4 +1,4 @@
-FROM cloudsuite/java:openjdk8
+FROM cloudsuite/java:adoptopenjdk8
 
 ENV CASSANDRA_VERSION 3.11.6
 ENV CASSANDRA_CONFIG /etc/cassandra
