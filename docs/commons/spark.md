@@ -28,8 +28,8 @@ interactive shell by supplying "submit" as the command to run the image.
 Arguments after "submit" are passed to spark-submit. For example, to run the
 same example as above type:
 
-    $ docker run --rm cloudsuite/spark:2.3.1 submit --class org.apache.spark.examples.SparkPi \
-        /opt/spark-2.3.1/examples/jars/spark-examples_2.11-2.3.1.jar 100
+    $ docker run --rm cloudsuite/spark:2.4.5 submit --class org.apache.spark.examples.SparkPi \
+        /opt/spark-2.4.5/examples/jars/spark-examples_2.11-2.4.5.jar 100
 
 Notice that the path to the jar is a path inside the container. You can pass
 jars in the host filesystem as arguments if you map the directory where they
@@ -61,7 +61,7 @@ Start a number of Spark workers:
     $ docker run -dP --net host --name spark-worker-02 cloudsuite/spark:2.4.5 worker spark://SPARK-MASTER-IPADDRESS:7077
     $ ...
 
-We can monitor our jobs using Spark's web UI. Point your browser to SPARK-MASTER-IPADDRESS:8080, where SPARK-MASTER-IPADDRESS is the IP of the VM/host on which spark master is running. Use spark://localhost:7077 if running on the same instance.
+We can monitor our jobs using Spark's web UI. Point your browser to SPARK-MASTER-IPADDRESS:8080, where SPARK-MASTER-IPADDRESS is the IP of the VM/host on which spark master is running. The spark master prints out (check docker logs) or check web UI for `spark://HOST:PORT URL`, use this while connecting workers. For more details refer to [spark-documentation](https://spark.apache.org/docs/2.4.5/spark-standalone.html).
 
 Finally, to submit a job, we can use any of the methods described in the Single
 Container section, with the addition of the network argument to Docker and
@@ -69,16 +69,16 @@ spark-master argument to Spark.
 
 Start Spark container with bash and run spark-submit inside it to estimate Pi:
 
-    $ docker run -it --rm --net host:: cloudsuite/spark:2.3.1 bash
-    $ /opt/spark-2.3.1/bin/spark-submit --class org.apache.spark.examples.SparkPi \
+    $ docker run -it --rm --net host cloudsuite/spark:2.4.5 bash
+    $ /opt/spark-2.4.5/bin/spark-submit --class org.apache.spark.examples.SparkPi \
         --master spark://SPARK-MASTER-IPADDRESS:7077 \
-        /opt/spark-2.3.1/examples/jars/spark-examples_2.11-2.3.1.jar 100
+        /opt/spark-2.4.5/examples/jars/spark-examples_2.11-2.4.5.jar 100
 
 Start Spark container with "submit" command to estimate Pi:
 
-    $ docker run --rm --net host cloudsuite/spark:2.3.1 submit --class org.apache.spark.examples.SparkPi \
+    $ docker run --rm --net host cloudsuite/spark:2.4.5 submit --class org.apache.spark.examples.SparkPi \
         --master spark://SPARK-MASTER-IPADDRESS:7077 \
-        /opt/spark-2.3.1/examples/jars/spark-examples_2.11-2.3.1.jar 100
+        /opt/spark-2.4.5/examples/jars/spark-examples_2.11-2.4.5.jar 100
 
 Start Spark container with "shell" command and run a parallelized count:
 

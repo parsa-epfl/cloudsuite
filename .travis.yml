@@ -80,11 +80,13 @@ env:
   # - DH_REPO="cloudsuite/data-serving" IMG_TAG="client" DF_PATH="./benchmarks/data-serving/client" DBX_PLATFORM=linux/amd64
 
   # Graph Analytics
+  - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/graph-analytics/4.0" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
   - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/graph-analytics/3.0" DBX_PLATFORM=linux/amd64
   # - DH_REPO="cloudsuite/graph-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/graph-analytics/3.0"
 
   # In-memory Analytics
   # - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="latest" DF_PATH="./benchmarks/in-memory-analytics/3.0"
+  - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="4.0" DF_PATH="./benchmarks/in-memory-analytics/4.0" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
   - DH_REPO="cloudsuite/in-memory-analytics" IMG_TAG="3.0" DF_PATH="./benchmarks/in-memory-analytics/3.0" DBX_PLATFORM=linux/amd64
 
   # Media Streaming
