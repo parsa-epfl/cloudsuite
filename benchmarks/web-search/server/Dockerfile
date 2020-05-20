@@ -2,7 +2,7 @@ FROM cloudsuite/java:openjdk11
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet lsof wget unzip \
+	&& apt-get install -y --no-install-recommends procps telnet lsof wget unzip \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV BASE_PATH /usr/src
