@@ -2,7 +2,6 @@ FROM cloudsuite/debian:base-os
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_VERSION 5.7.29-1debian10
 ENV root_password root
 
 RUN apt-get update \
@@ -19,7 +18,7 @@ RUN { \
 	&& echo "deb http://repo.mysql.com/apt/debian/ buster mysql-${MYSQL_MAJOR}" > /etc/apt/sources.list.d/mysql.list \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8C718D3B5072E1F5 \
 	&& apt-get update && DEBIAN_FRONTEND=noninteractive \
-	&& apt-get install -y mysql-server="${MYSQL_VERSION}" \
+	&& apt-get install -y mysql-server \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Allow it to listen from outer world
