@@ -55,7 +55,7 @@ env:
   
   # Memcached
   # - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.5.20" DF_PATH="./commons/memcached/1.5.20" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.6.6" DF_PATH="./commons/memcached/1.6.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Cassandra
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.3"
@@ -74,8 +74,8 @@ env:
   - DH_REPO="cloudsuite/data-analytics" IMG_TAG="3.0.0" DF_PATH="./benchmarks/data-analytics/3.0.0" DBX_PLATFORM=linux/amd64
 
   # Data Caching
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="server" DF_PATH="./benchmarks/data-caching/server" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/data-caching" IMG_TAG="client" DF_PATH="./benchmarks/data-caching/client" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Data Serving
   - DH_REPO="cloudsuite/data-serving" IMG_TAG="server" DF_PATH="./benchmarks/data-serving/server" DBX_PLATFORM=linux/amd64

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM cloudsuite/debian:base-os
 LABEL maintainer="Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>"
 
 # This is based on the official memcached Dockerfile
@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		libevent-2.1-6 \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV MEMCACHED_VERSION 1.5.20
+ENV MEMCACHED_VERSION 1.6.6
 
 # this checksum was not provided with the author of memcached, it is checksum of the working downloaded version
-ENV MEMCACHED_SHA1 5d3b5af3ce0a1483d655017db7228bcaeff10d47
+ENV MEMCACHED_SHA1 d8895b12dc9fc82b389f1713e2c09cc6ca3d03e4
 
 RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& set -x \
@@ -28,7 +28,7 @@ RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& rm memcached.tar.gz \
 	&& cd /usr/src/memcached \
 	&& ./configure \
-	&& make \
+	&& make -j $(nproc) \
 	&& make install \
 	&& cd / && rm -rf /usr/src/memcached \
 	&& apt-get purge -y --auto-remove $buildDeps
