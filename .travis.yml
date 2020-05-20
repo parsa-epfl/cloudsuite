@@ -59,7 +59,7 @@ env:
 
   # Cassandra
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Datasets
   # Movielens

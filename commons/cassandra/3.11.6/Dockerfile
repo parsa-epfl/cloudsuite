@@ -76,8 +76,5 @@ RUN set -eux; \
 	chown -R cassandra:cassandra "$CASSANDRA_CONFIG" /var/lib/cassandra /var/log/cassandra; \
 	chmod 777 "$CASSANDRA_CONFIG" /var/lib/cassandra /var/log/cassandra; \
 	ln -sT /var/lib/cassandra "$CASSANDRA_HOME/data"; \
-	ln -sT /var/log/cassandra "$CASSANDRA_HOME/logs"; \
-	\
-
-VOLUME /var/lib/cassandra
+	ln -sT /var/log/cassandra "$CASSANDRA_HOME/logs"; 
 
