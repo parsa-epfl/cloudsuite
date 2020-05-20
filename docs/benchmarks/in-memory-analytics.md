@@ -20,9 +20,9 @@ squares (ALS) algorithm which is provided by Spark MLlib.
 
 ### Getting the Image
 
-Current version of the benchmark is 3.0. To obtain the image:
+Current version of the benchmark is 4.0. To obtain the image:
 
-    $ docker pull cloudsuite/in-memory-analytics
+    $ docker pull cloudsuite/in-memory-analytics:4.0
 
 ### Datasets
 
@@ -48,7 +48,7 @@ To run a benchmark with the small dataset and the provided personal ratings
 file:
 
     $ docker create --name movielens-data cloudsuite/movielens-dataset
-    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics \
+    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics:4.0 \
         /data/ml-latest-small /data/myratings.csv
 
 ### Tweaking the Benchmark
@@ -58,7 +58,7 @@ be used to tweak execution. For example, to ensure that Spark has enough memory
 allocated to be able to execute the benchmark in-memory, supply it with
 --driver-memory and --executor-memory arguments:
 
-    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics \
+    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics:4.0 \
         /data/ml-latest /data/myratings.csv \
         --driver-memory 2g --executor-memory 2g
 
@@ -89,7 +89,7 @@ datasets with --volumes-from movielens-data.
 Finally, run the benchmark as the client to the Spark master:
 
     $ docker run --rm --net host --volumes-from movielens-data \
-                 cloudsuite/in-memory-analytics \
+                 cloudsuite/in-memory-analytics:4.0 \
                  /data/ml-latest-small /data/myratings.csv \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077

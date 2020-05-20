@@ -9,9 +9,9 @@ The Graph Analytics benchmark relies the Spark framework to perform graph analyt
 
 ### Getting the Image
 
-Current version of the benchmark is 3.0. To obtain the image:
+Current version of the benchmark is 4.0. To obtain the image:
 
-    $ docker pull cloudsuite/graph-analytics
+    $ docker pull cloudsuite/graph-analytics:4.0
 
 ### Datasets
 
@@ -29,7 +29,7 @@ The benchmark runs the PageRank algorithm on GraphX through the spark-submit scr
 
 For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, supply it with --driver-memory and  --executor-memory arguments:
 
-    $ docker run --rm --volumes-from twitter-data cloudsuite/graph-analytics \
+    $ docker run --rm --volumes-from twitter-data cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g
 
 ### Multi-node deployment
@@ -57,7 +57,7 @@ Start Spark master and Spark workers. They should all run within the same Docker
 Finally, run the benchmark as the client to the Spark master:
 
     $ docker run --rm --net host --volumes-from twitter-data \
-                 cloudsuite/graph-analytics \
+                 cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077
 
