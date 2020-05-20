@@ -19,7 +19,7 @@ RUN buildDeps='curl gcc libc6-dev libevent-dev make' \
 	&& tar -xzf memcached.tar.gz -C /usr/src/memcached --strip-components=1 \
 	&& rm memcached.tar.gz \
 	&& cd /usr/src/memcached/memcached_client \
-	&& make \
+	&& make -j $(nproc) \
 	&& chown -R memcache:memcache /usr/src/memcached \
 	&& apt-get purge -y --auto-remove $buildDeps
 
