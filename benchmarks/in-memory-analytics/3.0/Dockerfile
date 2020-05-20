@@ -23,4 +23,3 @@ RUN set -x \
 COPY files /root/
 
 ENTRYPOINT ["/root/entrypoint.sh"]
-

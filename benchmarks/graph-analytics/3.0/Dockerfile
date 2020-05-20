@@ -3,7 +3,7 @@ FROM cloudsuite/spark:2.3.1
 # Copy files
 COPY benchmark /root/benchmark
 COPY files /root/
-     
+
 WORKDIR /root
 
 # Build the benchmark using sbt
