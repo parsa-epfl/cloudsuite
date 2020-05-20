@@ -82,7 +82,7 @@ Start Spark container with "submit" command to estimate Pi:
 
 Start Spark container with "shell" command and run a parallelized count:
 
-    $ docker run -it --rm --net host cloudsuite/spark:2.4.5 shell --master spark://spark-master:7077
+    $ docker run -it --rm --net host cloudsuite/spark:2.4.5 shell --master spark://SPARK-MASTER-IPADDRESS:7077
     $ sc.parallelize(1 to 1000).count()
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/spark/ "DockerHub Page"
