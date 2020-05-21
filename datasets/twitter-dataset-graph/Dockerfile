@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM cloudsuite/debian:base-os
 #socialcomputing.asu.edu/uploads/1296759055/Twitter-dataset.zip
 # Install packages
 RUN BUILD_DEPS="wget unzip" \
@@ -8,7 +8,6 @@ RUN BUILD_DEPS="wget unzip" \
     && wget --no-check-certificate -O /data/Twitter-dataset.zip socialcomputing.asu.edu/uploads/1296759055/Twitter-dataset.zip \
     && unzip -d /data /data/Twitter-dataset.zip \
     && rm /data/Twitter-dataset.zip \
-    && sed -i "s/,/ /g" /data/Twitter-dataset/data/edges.csv \
     && mv /data/Twitter-dataset/data/edges.csv /data/edges.csv \
     && rm -rf /data/Twitter-dataset \
     && apt-get purge -y --auto-remove ${BUILD_DEPS}
