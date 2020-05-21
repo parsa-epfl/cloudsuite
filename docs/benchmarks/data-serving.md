@@ -14,14 +14,14 @@ The YCSB client has a data generator. After starting Cassandra, YCSB can start l
 Start the server container that will run cassandra server and installs a default keyspace usertable:
 
 ```bash
-$ docker run --name cassandra-server --net host cloudsuite/data-serving:server
+$ docker run --name cassandra-server --privileged --net host cloudsuite/data-serving:server
 ```
 ### Multiple Server Containers
 
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
 ```bash
-$ docker run --name cassandra-server-seed --net host cloudsuite/data-serving:server
+$ docker run --name cassandra-server-seed --privileged --net host cloudsuite/data-serving:server
 ```
 
 Then we prepare the server as previously.
@@ -29,7 +29,7 @@ Then we prepare the server as previously.
 The other server containers are instantiated as follows on different VMs:
 
 ```bash
-$ docker run --name cassandra-server(id) --net host -e CASSANDRA_SEEDS=cassandra-server-seed-IPADDRESS cloudsuite/data-serving:server
+$ docker run --name cassandra-server(id) --privileged --net host -e CASSANDRA_SEEDS=cassandra-server-seed-IPADDRESS cloudsuite/data-serving:server
 ```
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
