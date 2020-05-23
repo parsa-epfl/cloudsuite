@@ -63,8 +63,8 @@ env:
 
   # Datasets
   # Movielens
-  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="latest" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64
-  # - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="latest" DF_PATH="./datasets/twitter-dataset-graph" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="4.0" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/twitter-dataset-graph" IMG_TAG="4.0" DF_PATH="./datasets/twitter-dataset-graph" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   
   # Benchmark Images
