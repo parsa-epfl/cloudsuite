@@ -8,5 +8,3 @@ if [ ! -f /oss-performance/cmd.sh ]; then
 fi
 
 bash /oss-performance/cmd.sh
-# Uncomment the below line and build, while running perf
-# cat /oss-performance/nohup.out

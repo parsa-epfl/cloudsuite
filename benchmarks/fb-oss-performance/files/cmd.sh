@@ -18,6 +18,9 @@ mysql --host=$MYSQL_IP --user=root --password=root -e "SET GLOBAL max_connection
 # run php_fpm7 with perf
 # hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=$MYSQL_IP --db-username=root --db-password=root --exec-after-warmup="$PERF_RUN" --php=$PHP_FPM7_BIN
 
+# Uncomment the below line and build, while running perf, to check output of perf
+# cat /oss-performance/nohup.out
+
 # run hhvm
 hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=192.168.1.64 --db-username=root --db-password=root --hhvm=$HHVM
 
