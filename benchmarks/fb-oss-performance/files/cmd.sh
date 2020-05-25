@@ -22,7 +22,7 @@ mysql --host=$MYSQL_IP --user=root --password=root -e "SET GLOBAL max_connection
 # cat /oss-performance/nohup.out
 
 # run hhvm
-hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=$MYSQL_IP --db-username=root --db-password=root --hhvm=$HHVM
+hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=$MYSQL_IP --db-username=root --db-password=root --hhvm=$HHVM_BIN
 
 # run php_cgi7
 # hhvm perf.php --i-am-not-benchmarking --mediawiki --db-host=$MYSQL_IP --db-username=root --db-password=root --php5=$PHP_CGI7_BIN

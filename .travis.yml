@@ -106,6 +106,9 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server" DBX_PLATFORM=linux/amd64
 
+  # Facebook worload
+  - DH_REPO="cloudsuite/fb-oss-performance" IMG_TAG="fb_workload" DF_PATH="benchmarks/fb-oss-performance" DBX_PLATFORM=linux/amd64
+
   #Spell Check
   - Spell_Check="1"
 
