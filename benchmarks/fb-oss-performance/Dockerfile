@@ -40,10 +40,6 @@ RUN git clone https://github.com/facebookarchive/oss-performance.git \
     && php composer.phar install \
     && hhvm composer.phar install
 
-# Install perf
-RUN apt-get update \
-    && apt-get install -y linux-tools-common linux-tools-$(uname -r) linux-cloud-tools-$(uname -r)
-
 ADD entrypoint.sh /oss-performance/entrypoint.sh
 RUN chmod a+x /oss-performance/entrypoint.sh /oss-performance/scripts/perf.sh
 
