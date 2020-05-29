@@ -1,4 +1,4 @@
-FROM cloudsuite/java:openjdk11
+FROM cloudsuite/java:adoptopenjdk8
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 RUN apt-get update -y \
@@ -6,7 +6,7 @@ RUN apt-get update -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV BASE_PATH /usr/src
-ENV SOLR_VERSION 5.2.1
+ENV SOLR_VERSION 6.6.6
 ENV SOLR_HOME $BASE_PATH/solr-$SOLR_VERSION
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV INDEX_URL $PACKAGES_URL/index
