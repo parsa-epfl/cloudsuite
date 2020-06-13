@@ -1,7 +1,6 @@
-FROM cloudsuite/debian:base-os
+FROM ubuntu:14.04
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
-ENV MYSQL_MAJOR 5.7
 ENV root_password root
 
 RUN apt-get update \
@@ -9,20 +8,14 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install MySQL
-RUN { \
-	echo mysql-community-server mysql-community-server/data-dir select ''; \
-	echo mysql-community-server mysql-community-server/root-pass password ''; \
-	echo mysql-community-server mysql-community-server/re-root-pass password ''; \
-	echo mysql-community-server mysql-community-server/remove-test-db select false; \
-	} | debconf-set-selections \
-	&& echo "deb http://repo.mysql.com/apt/debian/ buster mysql-${MYSQL_MAJOR}" > /etc/apt/sources.list.d/mysql.list \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8C718D3B5072E1F5 \
-	&& apt-get update && DEBIAN_FRONTEND=noninteractive \
-	&& apt-get install -y mysql-server \
-	&& rm -rf /var/lib/apt/lists/*
+RUN echo mysql-server mysql-server/root_password password ${root_password} | sudo debconf-set-selections	
+RUN echo mysql-server mysql-server/root_password_again password ${root_password} | sudo debconf-set-selections
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \	
+	mysql-server
 
 # Allow it to listen from outer world
-RUN echo "bind-address = 0.0.0.0" >>/etc/mysql/mysql.conf.d/mysqld.cnf 
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf	
 
 # Copy the scripts
 ADD files/execute.sh /execute.sh
