@@ -1,5 +1,11 @@
 # Facebook Workload
 
+The bechmark tests maily collects RPS with MediaWiki, the main page is the Barack Obama page from Wikipedia; this is based on the Wikimedia Foundation using it as a benchmark, and finding it fairly representative of Wikipedia. The benchmarking tool performs a sanity check once the engine and webserver have started accepting traffic to ensure that the framework is sending reasonable responses on the URLs being benchmarked.
+
+This bechmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
+
+The script will run 300 warmup requests, then as many requests as possible in 1 minute. Statistics are only collected and displayed for the second set of data.
+
 The facebook benchmark readme file can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
 ### Preparing the VM
@@ -43,7 +49,7 @@ To start the facebook workload benchmark you have to first `pull` the server ima
 ```
 docker pull cloudsuite/fb-workload:server
 ``` 
-Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](benchmarks/fb-oss-performance/files/cmd.sh)
+Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](../../benchmarks/fb-oss-performance/files/cmd.sh)
 ```
 chmod +x cmd.sh
 ```
@@ -56,6 +62,7 @@ You can also use any one of the below parameters in `cmd.sh`
 ```
 
 More info on parameters which can be provided to the facebook worload can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
+For information about the hhvm performance [hhvm-blog](https://hhvm.com/blog/9293/lockdown-results-and-hhvm-performance) can be referred.
 
 The following command will start the facebook workload:
 

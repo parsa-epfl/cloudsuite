@@ -61,6 +61,10 @@ env:
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
   - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
+  # HHVM
+  # Uncomment the below line to build hhvm:3.30. The build will take around 5 hours
+  - DH_REPO="cloudsuite/hhvm" IMG_TAG="3.30" DF_PATH="./commons/hhvm/3.30" DBX_PLATFORM=linux/amd64
+
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="4.0" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
