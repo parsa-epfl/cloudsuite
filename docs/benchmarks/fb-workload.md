@@ -4,7 +4,7 @@ The bechmark tests maily collects RPS with MediaWiki, the main page is the Barac
 
 This bechmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
 
-The script will run 300 warmup requests, then as many requests as possible in 1 minute. Statistics are only collected and displayed for the second set of data.
+The script will run 300 warmup requests, then as many requests as possible in 1 minute.
 
 The facebook benchmark readme file can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
@@ -44,6 +44,26 @@ The following command will start the database server:
 docker run -dt --net=host cloudsuite/mysql:latest
 ```
 
+### Starting the siege client ####
+To start the siege client, you have to first `pull` the siege image. To `pull` the siege image use the following command:
+```
+docker pull cloudsuite/siege:4.0.3rc3
+```
+The following command will start the siege client:
+```
+docker run --name=siege -dt cloudsuite/siege:4.0.3rc3
+```
+Add the host ip entry in the siege docker container:
+```
+docker exec siege bash -c "echo '<host-ip>  <hostname>' >> /etc/hosts"
+```
+---
+**NOTE**
+
+Do not run the siege client using --network=host
+
+---
+
 ### Starting the facebook workload benchmark ####
 To start the facebook workload benchmark you have to first `pull` the server image. To `pull` the server image use the following command:
 ```
@@ -53,6 +73,13 @@ Create a file `cmd.sh` on the host which contains the command to run mediawiki w
 ```
 chmod +x cmd.sh
 ```
+
+To run the benchmark using HHVM edit the below lines in `cmd.sh`
+```
+MYSQL_IP
+SIEGE_IP
+```
+SIEGE_IP can be obtained by running `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' siege`
 
 You can also use any one of the below parameters in `cmd.sh`
 ```

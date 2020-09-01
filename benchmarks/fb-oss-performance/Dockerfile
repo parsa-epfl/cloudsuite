@@ -43,6 +43,8 @@ RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
     && chown -R fbwork:fbwork /var/log/nginx /oss-performance
 
+RUN sed -i -e '$a\    StrictHostKeyChecking no' -e '$a\    UserKnownHostsFile=/dev/null' /etc/ssh/ssh_config
+
 USER fbwork
 
 ENV PHP_CGI_BIN /usr/bin/php-cgi
