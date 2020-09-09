@@ -16,7 +16,11 @@ if [ -n "$SYSTEM_MEMORY" ]; then
         sed -i 's/^-Xmn.*/'"$XMN"'/g' $JVM_OPTIONS_FILE
 fi
 
+if [ -n "$ENDPOINT" ]
+then
+    /scripts/init_config.sh $ENDPOINT
+else
+    /scripts/init_config.sh localhost
+fi
 
-/scripts/init_config.sh localhost
-service cassandra start && tail -f /dev/null
-
+cassandra -R && tail -f /dev/null

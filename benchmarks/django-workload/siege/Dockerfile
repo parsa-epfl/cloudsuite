@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM cloudsuite/siege:4.0.3rc3
 
 ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port
@@ -8,7 +8,7 @@ COPY files/ /home/tester/django-workload
 
 RUN useradd -m tester
 RUN apt-get update
-RUN apt-get -y install git siege python3 python3-numpy netcat-openbsd
+RUN apt-get -y install git python3 python3-numpy netcat-openbsd
 RUN cd /home/tester/django-workload/                                     \
     && echo "failures = 1000000" > /home/tester/.siegerc                 \
     && echo "protocol = HTTP/1.1" >> /home/tester/.siegerc               \

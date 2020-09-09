@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM cloudsuite/debian:base-os
 
 ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port

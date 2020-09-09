@@ -1,4 +1,4 @@
-FROM hopsoft/graphite-statsd
+FROM cloudsuite/graphite-statsd
 
 ENV DEBIAN_FRONTEND noninteractive
 

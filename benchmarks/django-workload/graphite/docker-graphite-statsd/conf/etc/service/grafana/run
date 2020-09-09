@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec grafana-server -config /etc/grafana/grafana.ini -homepath /usr/share/grafana

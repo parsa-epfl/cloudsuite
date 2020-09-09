@@ -21,6 +21,11 @@ else
     PROC_NO=$(grep -c processor /proc/cpuinfo)
     sed -i "s/processes = 88/processes = $PROC_NO/g" uwsgi.ini
 
+    #Add uwsgi ip in allowed hosts
+    if ! grep "ALLOWED_HOSTS" cluster_settings.py | grep -q $UWSGI_ENDPOINT; then
+        sed -i -e "/^ALLOWED_HOSTS = / s/.$/, \'$UWSGI_ENDPOINT\'\]/" cluster_settings.py
+    fi
+
     cp cluster_settings.py cluster_settings.py.bak
 fi
 
