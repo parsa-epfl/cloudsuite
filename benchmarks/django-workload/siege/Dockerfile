@@ -1,4 +1,4 @@
-FROM ajaygk95/siege:4.0.3rc3
+FROM cloudsuite/siege:4.0.3rc3
   
 ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port
