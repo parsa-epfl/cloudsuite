@@ -1,5 +1,5 @@
-FROM cloudsuite/siege:4.0.3rc3
-
+FROM ajaygk95/siege:4.0.3rc3
+  
 ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port
 #ENV https_proxy https://proxy-address:proxy-port
@@ -17,6 +17,7 @@ RUN cd /home/tester/django-workload/                                     \
 COPY files/siege_init.sh files/set_sysctl.conf /home/tester/scripts/
 
 RUN chown -R tester:tester /home/tester \
+    && chmod a+x /home/tester/scripts/siege_init.sh \
     && echo "Add nf_conntrack to modules ...\n"\
     && echo "nf_conntrack" >> /etc/modules \
     && echo "Add limits settings ...\n"\
