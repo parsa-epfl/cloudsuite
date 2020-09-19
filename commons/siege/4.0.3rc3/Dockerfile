@@ -22,10 +22,12 @@ RUN git clone https://github.com/JoeDog/siege.git \
     && rm -rf siege
 
 # Modify `sshd_config`
-RUN sed -i -e 's/.*PermitEmptyPasswords.*/PermitEmptyPasswords yes/' -e 's/.*PermitRootLogin.*/PermitRootLogin yes/' -e 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-RUN /etc/init.d/ssh start
+RUN sed -i -e 's/.*PermitEmptyPasswords.*/PermitEmptyPasswords yes/' -e 's/.*PermitRootLogin.*/PermitRootLogin yes/' -e 's/.*Port.*/Port 9801/' -e 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config \
+    && /etc/init.d/ssh start \
+    && passwd -d root
 
-# Delete root password (set as empty)
-RUN passwd -d root
+ADD entrypoint.sh /entrypoint.sh
+RUN chown root:root /entrypoint.sh \
+    && chmod 700 /entrypoint.sh
 
-CMD ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/entrypoint.sh"]

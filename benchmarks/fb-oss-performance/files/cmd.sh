@@ -2,7 +2,7 @@
 
 # mysql server ip
 MYSQL_IP=10.52.3.70
-SIEGE_IP=172.17.0.2
+SIEGE_IP=10.52.3.70
 
 # Max connections >1000 required for mediawiki workload. If mysql already has max_connections > 1000 comment the below line.
 mysql --host=$MYSQL_IP --user=root --password=root -e "SET GLOBAL max_connections = 1001;"

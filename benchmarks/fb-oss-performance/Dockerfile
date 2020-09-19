@@ -43,7 +43,7 @@ RUN useradd -ms /bin/bash fbwork \
     && mkdir -p /var/log/nginx \
     && chown -R fbwork:fbwork /var/log/nginx /oss-performance
 
-RUN sed -i -e '$a\    StrictHostKeyChecking no' -e '$a\    UserKnownHostsFile=/dev/null' /etc/ssh/ssh_config
+RUN sed -i -e '$a\    StrictHostKeyChecking no' -e '$a\    UserKnownHostsFile=/dev/null' -e 's/.*Port.*/Port 9801/' /etc/ssh/ssh_config
 
 USER fbwork
 

@@ -51,16 +51,15 @@ docker pull cloudsuite/siege:4.0.3rc3
 ```
 The following command will start the siege client:
 ```
-docker run --name=siege -dt cloudsuite/siege:4.0.3rc3
-```
-Add the host ip entry in the siege docker container:
-```
-docker exec siege bash -c "echo '<host-ip>  <hostname>' >> /etc/hosts"
+docker run --name=siege -dt cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_SERVER> <HOSTNAME_OF_FB_SERVER>
 ```
 ---
 **NOTE**
 
-Do not run the siege client using --network=host
+HOST_IP_OF_FB_SERVER = IP addr of the Host Machine where the fb-workload:server docker will be started
+HOSTNAME_OF_FB_SERVER = Hostname of the Host Machine where the fb-workload:server docker will be started
+
+If siege is started on the same host as of fb-workload:server, then HOST_IP_OF_FB_SERVER, HOSTNAME_OF_FB_SERVER can be skipped
 
 ---
 
@@ -79,7 +78,6 @@ To run the benchmark using HHVM edit the below lines in `cmd.sh`
 MYSQL_IP
 SIEGE_IP
 ```
-SIEGE_IP can be obtained by running `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' siege`
 
 You can also use any one of the below parameters in `cmd.sh`
 ```
