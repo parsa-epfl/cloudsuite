@@ -28,4 +28,4 @@ RUN cp /home/tester/scripts/set_sysctl.conf /etc/sysctl.conf
 
 ENV DEBIAN_FRONTEND teletype
 
-CMD /home/tester/scripts/siege_init.sh
+ENTRYPOINT ["/home/tester/scripts/siege_init.sh"]
