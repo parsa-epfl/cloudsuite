@@ -61,6 +61,9 @@ env:
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
   - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
+  # MySQL
+  - DH_REPO="cloudsuite/mysql" IMG_TAG="mariadb-10.3" DF_PATH="./commons/mysql" DBX_PLATFORM=linux/amd64,linux/arm64
+
   # Datasets
   # Movielens
   - DH_REPO="cloudsuite/movielens-dataset" IMG_TAG="4.0" DF_PATH="./datasets/movielens-dataset" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
