@@ -14,7 +14,7 @@ RUN git clone git://github.com/facebook/hhvm.git \
     && git checkout HHVM-3.30 \
     && git submodule update --init --recursive \
     && cmake -DMYSQL_UNIX_SOCK_ADDR=/var/run/mysqld/mysqld.sock . \
-    && make -j 4 \
+    && make -j $(nproc) \
     && make install \
     && cd .. && rm -rf /hhvm
 
