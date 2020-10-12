@@ -24,4 +24,5 @@ mysql -uroot -p$root_password -e "create database ELGG_DB;"
 bash -c "mysql -uroot -p$root_password ELGG_DB < /elgg_db.dump"
 mysql -uroot -p$root_password -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$root_password' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 service mysql stop
+
 /usr/sbin/mysqld

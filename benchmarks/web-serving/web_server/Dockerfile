@@ -50,4 +50,3 @@ RUN chmod 700 /etc/bootstrap.sh
 EXPOSE 8080
 
 CMD ["/etc/bootstrap.sh", "-d"]
-

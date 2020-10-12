@@ -2,20 +2,14 @@ FROM cloudsuite/debian:base-os
 
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
+ENV DEBIAN_FRONTEND noninteractive
 ENV root_password root
-
-RUN apt-get update 
-	#  && apt-get install debconf-utils
-	
-# RUN apt-get install -y wget
-RUN apt update 
-RUN apt upgrade -y
 
 RUN echo mysql-server mysql-server/root_password password ${root_password} |  /usr/bin/debconf-set-selections	
 RUN echo mysql-server mysql-server/root_password_again password ${root_password} |  /usr/bin/debconf-set-selections
-RUN apt update
 	
-RUN apt install -y default-mysql-server
+RUN apt-get update \
+    && apt-get install -y default-mysql-server
 
 # Allow it to listen from outer world	
 RUN echo "[mysqld]" >> /etc/mysql/my.cnf
