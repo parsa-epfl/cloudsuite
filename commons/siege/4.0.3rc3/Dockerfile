@@ -1,11 +1,26 @@
 FROM cloudsuite/debian:base-os
 
-# Install sshd
-RUN apt-get update \
-    && apt-get install -y gcc-7 g++-7 openssh-server git autotools-dev autoconf make
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
+# Install sshd
+RUN set -eux; \
+    ARCH="$(dpkg --print-architecture)"; \
+    case "${ARCH}" in \
+       aarch64|arm64|amd64|x86_64) \
+         GCC_VER='7'; \
+        ;; \
+       riscv64) \
+         GCC_VER='8'; \
+        ;; \
+       *) \
+         echo "Unsupported arch: ${ARCH}"; \
+         exit 1; \
+         ;; \
+    esac; \
+    apt-get update && apt-get install -y gcc-${GCC_VER} g++-${GCC_VER} openssh-server git autotools-dev autoconf make \
+    && rm -rf /var/lib/apt/lists/* \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VER} ${GCC_VER} \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${GCC_VER} ${GCC_VER} \
     && update-alternatives --config gcc \
     && update-alternatives --config g++
 
