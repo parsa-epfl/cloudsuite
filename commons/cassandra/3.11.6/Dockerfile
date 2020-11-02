@@ -1,4 +1,4 @@
-FROM cloudsuite/java:adoptopenjdk8
+FROM cloudsuite/java:openjdk11
 
 ENV CASSANDRA_VERSION 3.11.6
 
@@ -8,7 +8,7 @@ RUN set -eux \
 
 RUN set -eux \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends procps python iproute2 numactl \
+	&& apt-get install -y --no-install-recommends procps python2 iproute2 numactl \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV CASSANDRA_HOME /opt/cassandra
@@ -78,3 +78,6 @@ RUN set -eux; \
 	ln -sT /var/lib/cassandra "$CASSANDRA_HOME/data"; \
 	ln -sT /var/log/cassandra "$CASSANDRA_HOME/logs"; 
 
+COPY jvm.options /opt/cassandra/conf/jvm.options
+
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
