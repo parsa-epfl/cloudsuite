@@ -961,6 +961,7 @@ bad_wsesspage_param:
 					tmp = strchr(optarg, ']');
 					end_index = (int)(tmp - optarg);
 					strncpy(file_list, optarg, end_index);
+					file_list[end_index] = '\0';
 
 					// Tokenize the files
 					token = strtok(file_list, delim);
