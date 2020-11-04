@@ -51,7 +51,7 @@ docker pull cloudsuite/siege:4.0.3rc3
 ```
 The following command will start the siege client:
 ```
-docker run --name=siege -dt cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_SERVER> <HOSTNAME_OF_FB_SERVER>
+docker run --name=siege -dt --net=host cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_SERVER> <HOSTNAME_OF_FB_SERVER>
 ```
 ---
 **NOTE**
@@ -73,7 +73,7 @@ Create a file `cmd.sh` on the host which contains the command to run mediawiki w
 chmod +x cmd.sh
 ```
 
-To run the benchmark using HHVM edit the below lines in `cmd.sh`
+To run the benchmark using HHVM edit the below lines in `cmd.sh`, with their private IP's
 ```
 MYSQL_IP
 SIEGE_IP
