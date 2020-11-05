@@ -8,3 +8,5 @@ wait_port() {
     sleep 3
   done
 }
+
+wait_port $1 $2 $3

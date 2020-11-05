@@ -120,6 +120,14 @@ env:
   # Facebook worload
   - DH_REPO="cloudsuite/fb-oss-performance" IMG_TAG="fb_workload" DF_PATH="benchmarks/fb-oss-performance" DBX_PLATFORM=linux/amd64
 
+  # Django
+  - DH_REPO="cloudsuite/django" IMG_TAG="memcached-webtier" DF_PATH="./benchmarks/django-workload/memcached" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/django" IMG_TAG="cassandra-webtier" DF_PATH="./benchmarks/django-workload/cassandra" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/django" IMG_TAG="graphite-statsd" DF_PATH="./benchmarks/django-workload/graphite/docker-graphite-statsd" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/django" IMG_TAG="graphite-webtier" DF_PATH="./benchmarks/django-workload/graphite" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/django" IMG_TAG="uwsgi-webtier" DF_PATH="./benchmarks/django-workload/uwsgi" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+  - DH_REPO="cloudsuite/django" IMG_TAG="siege-webtier" DF_PATH="./benchmarks/django-workload/siege" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+
   #Spell Check
   - Spell_Check="1"
 

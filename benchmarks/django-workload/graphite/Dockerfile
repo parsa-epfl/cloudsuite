@@ -1,4 +1,4 @@
-FROM cloudsuite/graphite-statsd
+FROM cloudsuite/django:graphite-statsd
 
 ENV DEBIAN_FRONTEND noninteractive
 
