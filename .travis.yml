@@ -39,7 +39,7 @@ env:
   # Hadoop
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.2"
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # Spark
   # - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
