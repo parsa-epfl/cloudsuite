@@ -24,5 +24,5 @@ We encourage CloudSuite users to use GitHub issues for requests for enhancements
 
 [csp]: http://cloudsuite.ch "CloudSuite Page"
 [csl]: http://cloudsuite.ch/pages/license/ "CloudSuite License"
-[csb]: http://cloudsuite.ch/pages/download/ "CloudSuite Benchmarks"
+[csb]: http://cloudsuite.ch/#download "CloudSuite Benchmarks"
 [pkb]: https://github.com/GoogleCloudPlatform/PerfKitBenchmarker "Google's PerfKit Benchmarker"
