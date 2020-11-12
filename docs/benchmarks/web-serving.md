@@ -31,6 +31,7 @@ The following command will start the database server:
     $ docker run -dt --net=host --name=mysql_server cloudsuite/web-serving:db_server ${WEB_SERVER_IP}
 
 The ${WEB_SERVER_IP}  parameter is mandatory. It sets the IP of the web server. If you are using the host network, the web server IP is the IP of the machine that you are running the web_server container on. If you create your own network you can use the name that you are going to give to the web server (we called it web_server in the following commands).
+The database server is using MariaDB version 10.3.23 .
 
 ### Starting the memcached server ####
 To start the memcached server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -73,7 +74,7 @@ The last command will output the summary of the benchmark results in XML at the 
 
   [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
   [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
-  [mysqlserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
+  [databaseserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "DatabaseServer(MariaDB) Dockerfile"
   [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
 
   [repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-serving "GitHub Repo"
