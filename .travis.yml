@@ -39,7 +39,7 @@ env:
   # Hadoop
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="latest" DF_PATH="./commons/hadoop/2.9.2"
   # - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.7.6" DF_PATH="./commons/hadoop/2.7.6"
-  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/hadoop" IMG_TAG="2.9.2" DF_PATH="./commons/hadoop/2.9.2" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # Spark
   # - DH_REPO="cloudsuite/spark" IMG_TAG="latest" DF_PATH="./commons/spark/2.3.1"
@@ -50,7 +50,7 @@ env:
   # Faban
   # - DH_REPO="cloudsuite/faban" IMG_TAG="latest" DF_PATH="./commons/faban/1.4"
   # - DH_REPO="cloudsuite/faban" IMG_TAG="1.3" DF_PATH="./commons/faban/1.3"
-  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/faban" IMG_TAG="1.4" DF_PATH="./commons/faban/1.4" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   
   # Memcached
@@ -67,6 +67,9 @@ env:
 
   # SIEGE
   - DH_REPO="cloudsuite/siege" IMG_TAG="4.0.3rc3" DF_PATH="./commons/siege/4.0.3rc3" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+
+  # MySQL
+  - DH_REPO="cloudsuite/mysql" IMG_TAG="mariadb-10.3" DF_PATH="./commons/mysql" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Datasets
   # Movielens
@@ -104,8 +107,9 @@ env:
   - DH_REPO="cloudsuite/media-streaming" IMG_TAG="dataset" DF_PATH="./benchmarks/media-streaming/dataset" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Web Search
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64
-  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="server" DF_PATH="./benchmarks/web-search/server" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="dataset" DF_PATH="./benchmarks/web-search/dataset" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/web-search" IMG_TAG="client" DF_PATH="./benchmarks/web-search/client" DBX_PLATFORM=linux/amd64,linux/arm64
 
   # Web Serving
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="db_server" DF_PATH="./benchmarks/web-serving/db_server" DBX_PLATFORM=linux/amd64
