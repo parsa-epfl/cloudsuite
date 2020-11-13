@@ -61,6 +61,13 @@ env:
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
   - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
 
+  # HHVM
+  # Uncomment the below line to build hhvm:3.30. The build will take around 5 hours
+  # - DH_REPO="cloudsuite/hhvm" IMG_TAG="3.30" DF_PATH="./commons/hhvm/3.30" DBX_PLATFORM=linux/amd64
+
+  # SIEGE
+  - DH_REPO="cloudsuite/siege" IMG_TAG="4.0.3rc3" DF_PATH="./commons/siege/4.0.3rc3" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
+
   # MySQL
   - DH_REPO="cloudsuite/mysql" IMG_TAG="mariadb-10.3" DF_PATH="./commons/mysql" DBX_PLATFORM=linux/amd64,linux/arm64
 
@@ -109,6 +116,9 @@ env:
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="faban_client" DF_PATH="./benchmarks/web-serving/faban_client" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="web_server" DF_PATH="./benchmarks/web-serving/web_server" DBX_PLATFORM=linux/amd64
   - DH_REPO="cloudsuite/web-serving" IMG_TAG="memcached_server" DF_PATH="./benchmarks/web-serving/memcached_server" DBX_PLATFORM=linux/amd64
+
+  # Facebook worload
+  - DH_REPO="cloudsuite/fb-oss-performance" IMG_TAG="fb_workload" DF_PATH="benchmarks/fb-oss-performance" DBX_PLATFORM=linux/amd64
 
   #Spell Check
   - Spell_Check="1"
