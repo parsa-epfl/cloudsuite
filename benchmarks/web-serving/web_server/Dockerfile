@@ -6,7 +6,7 @@ USER root
 RUN apt-get update && \
 	apt-get install -y --force-yes software-properties-common && \
 	apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 && \
-	add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main" && \
+	add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc)-lts-3.30 main" && \
 	apt-get update && \
 	apt-get install --force-yes -y \
 	build-essential \
