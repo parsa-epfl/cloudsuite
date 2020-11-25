@@ -55,11 +55,11 @@ env:
   
   # Memcached
   # - DH_REPO="cloudsuite/memcached" IMG_TAG="latest" DF_PATH="./commons/memcached/1.5.20"
-  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.6.6" DF_PATH="./commons/memcached/1.6.6" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/memcached" IMG_TAG="1.6.6" DF_PATH="./commons/memcached/1.6.6" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # Cassandra
   # - DH_REPO="cloudsuite/cassandra" IMG_TAG="latest" DF_PATH="./commons/cassandra/3.11.6"
-  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64
+  - DH_REPO="cloudsuite/cassandra" IMG_TAG="3.11.6" DF_PATH="./commons/cassandra/3.11.6" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   # HHVM
   # Uncomment the below line to build hhvm:3.30. The build will take around 5 hours
