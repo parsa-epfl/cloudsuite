@@ -22,12 +22,12 @@ The below services are needed for the workload
 
 ## Run Memcached on Host 1
 	$ cd cloudsuite/benchmarks/django-workload/memcached/
-	$ docker build -t cloudsuite/django:memcached-webtier .
+	$ docker pull cloudsuite/django:memcached-webtier
 	$ docker run -tid --name memcached_container --network host cloudsuite/django:memcached-webtier
 
 ## Run Cassandra on Host 2
 	$ cd cloudsuite/benchmarks/django-workload/cassandra/
-	$ docker build -t cloudsuite/django:cassandra-webtier .
+	$ docker pull cloudsuite/django:cassandra-webtier
 	$ docker run -tid --name cassandra_container -e SYSTEM_MEMORY=8 -e ENDPOINT=<cassandra-host-private-ip> --network host cloudsuite/django:cassandra-webtier
 
 	# SYSTEM_MEMORY : for cassandra in GB (example: 8)
@@ -35,12 +35,12 @@ The below services are needed for the workload
 
 ## Run Graphite on Host 3
 	$ cd cloudsuite/benchmarks/django-workload/graphite/
-	$ docker build -t cloudsuite/django:graphite-webtier .
+	$ docker pull cloudsuite/django:graphite-webtier
 	$ docker run -tid --name graphite_container --network host cloudsuite/django:graphite-webtier
 
 ## Run uwsgi on Host 4
 	$ cd cloudsuite/benchmarks/django-workload/uwsgi/
-        $ docker build -t cloudsuite/django:uwsgi-webtier .
+        $ docker pull cloudsuite/django:uwsgi-webtier
         
         # Edit uwsgi.cfg with endpoints (host-private-ip) of uWSGI, Graphite, Cassandra, Memcached and Seige
 
@@ -49,7 +49,7 @@ The below services are needed for the workload
 
 ## Run siege on Host 5
         $ cd cloudsuite/benchmarks/django-workload/siege/
-        $ docker build -t cloudsuite/django:siege-webtier .
+        $ docker pull cloudsuite/django:siege-webtier
 
         # Edit siege.cfg withthe endpoint of uWSGI and the number of siege workers needed 
 
@@ -70,16 +70,11 @@ cloudsuite/benchmarks/django-workload/check_containers.sh <cassandra-host-privat
 ```
 
 ### Troubleshoot
-To change the default listen address for Cassandra (localhost), edit
-`/etc/cassandra/cassandra.yaml` to replace the `listen_address` configuration
-with `listen_address <desired_ip_address>`. If planning to deploy Cassandra
-on the same machine as uWSGI, this parameter does not need changing.
-
 There seems to be an issue with cassandra expecting the output of `hostname` to
 resolve to either an ipv4 address or to localhost; if you see an error about
 `Local host name unknown: java.net.UnknownHostException` in
 `/var/log/cassandra/system.log`, add `hostname` to `/etc/hosts` for the
-`127.0.0.1` entry.
+`cassandra-host-private-ip` entry.
 
 ### Performance configuration
 In order to increase the performance of your Cassandra deployment, the
@@ -221,14 +216,15 @@ cloudsuite/benchmarks/django-workload/check_containers.sh <uWSGI-host-private-ip
 #### uWSGI Logging
 Logging for uWSGI is turned off by default for benchmarking purposes. In order
 to turn it back on, comment out the `disable-logging` parameter in uwsgi.ini,
-like this:
+For example:
 ```
 #disable-logging = True
 ```
 
 #### Django debugging
 If you get HTTP response codes different than 200, change the DEBUG parameter
-in cluster_settings.py:
+in cluster_settings.py (You can change the setting under uwsgi/files/django-workload/cluster_settings_template.py)
+and rebuild the docker image:
 
     DEBUG = True
 
