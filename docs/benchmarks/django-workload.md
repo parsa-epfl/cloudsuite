@@ -21,12 +21,10 @@ The below services are needed for the workload
 # Running benchmark on single/multiple VMs
 
 ## Run Memcached on Host 1
-	$ cd cloudsuite/benchmarks/django-workload/memcached/
 	$ docker pull cloudsuite/django:memcached-webtier
 	$ docker run -tid --name memcached_container --network host cloudsuite/django:memcached-webtier
 
 ## Run Cassandra on Host 2
-	$ cd cloudsuite/benchmarks/django-workload/cassandra/
 	$ docker pull cloudsuite/django:cassandra-webtier
 	$ docker run -tid --name cassandra_container -e SYSTEM_MEMORY=8 -e ENDPOINT=<cassandra-host-private-ip> --network host cloudsuite/django:cassandra-webtier
 
@@ -34,25 +32,24 @@ The below services are needed for the workload
 	# ENDPOINT : cassandra-host-private-ip (example: 192.168.XXX.XXX)
 
 ## Run Graphite on Host 3
-	$ cd cloudsuite/benchmarks/django-workload/graphite/
 	$ docker pull cloudsuite/django:graphite-webtier
 	$ docker run -tid --name graphite_container --network host cloudsuite/django:graphite-webtier
 
 ## Run uwsgi on Host 4
-	$ cd cloudsuite/benchmarks/django-workload/uwsgi/
         $ docker pull cloudsuite/django:uwsgi-webtier
         
         # Edit uwsgi.cfg with endpoints (host-private-ip) of uWSGI, Graphite, Cassandra, Memcached and Seige
 
+	$ cd cloudsuite/benchmarks/django-workload/uwsgi/
         $ . ./uwsgi.cfg
         $ docker run -tid --name uwsgi_container --network host -e GRAPHITE_ENDPOINT=$GRAPHITE_ENDPOINT -e CASSANDRA_ENDPOINT=$CASSANDRA_ENDPOINT -e MEMCACHED_ENDPOINT="$MEMCACHED_ENDPOINT" -e SIEGE_ENDPOINT=$SIEGE_ENDPOINT -e UWSGI_ENDPOINT=$UWSGI_ENDPOINT cloudsuite/django:uwsgi-webtier
 
 ## Run siege on Host 5
-        $ cd cloudsuite/benchmarks/django-workload/siege/
         $ docker pull cloudsuite/django:siege-webtier
 
         # Edit siege.cfg withthe endpoint of uWSGI and the number of siege workers needed 
 
+        $ cd cloudsuite/benchmarks/django-workload/siege/
         $ . ./siege.cfg
         $ docker run -ti --name siege_container --volume=/tmp:/tmp --network host -e TARGET_ENDPOINT=$UWSGI_ENDPOINT -e SIEGE_WORKERS=$SIEGE_WORKERS cloudsuite/django:siege-webtier
 
