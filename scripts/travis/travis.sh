@@ -17,7 +17,7 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     (grep -q ".travis.yml" <<<$modified_files); then
     # if modified, then rebuild their docker image
     docker buildx prune -a -f
-    travis_wait 90 docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
+    travis_wait 40 docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
     # make sure build was successful
     result=$?
     if [ $result != "0" ]; then
