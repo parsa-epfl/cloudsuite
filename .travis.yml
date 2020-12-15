@@ -125,7 +125,8 @@ env:
   - DH_REPO="cloudsuite/django" IMG_TAG="cassandra-webtier" DF_PATH="./benchmarks/django-workload/cassandra" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
   - DH_REPO="cloudsuite/django" IMG_TAG="graphite-statsd" DF_PATH="./benchmarks/django-workload/graphite/docker-graphite-statsd" DBX_PLATFORM=linux/amd64,linux/arm64
   - DH_REPO="cloudsuite/django" IMG_TAG="graphite-webtier" DF_PATH="./benchmarks/django-workload/graphite" DBX_PLATFORM=linux/amd64,linux/arm64
-  - DH_REPO="cloudsuite/django" IMG_TAG="uwsgi-webtier" DF_PATH="./benchmarks/django-workload/uwsgi" DBX_PLATFORM=linux/amd64,linux/arm64
+    # Uncomment the below line to build uwsgi-webtier. The build will take around 1 hour.
+  #- DH_REPO="cloudsuite/django" IMG_TAG="uwsgi-webtier" DF_PATH="./benchmarks/django-workload/uwsgi" DBX_PLATFORM=linux/amd64,linux/arm64
   - DH_REPO="cloudsuite/django" IMG_TAG="siege-webtier" DF_PATH="./benchmarks/django-workload/siege" DBX_PLATFORM=linux/amd64,linux/arm64,linux/riscv64
 
   #Spell Check
