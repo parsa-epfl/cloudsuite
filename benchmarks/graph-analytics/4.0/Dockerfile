@@ -1,7 +1,5 @@
 FROM --platform=linux/amd64 cloudsuite/spark:2.4.5 as build
      
-WORKDIR /root
-
 # Build the benchmark using sbt
 RUN apt-get update \
     && apt-get install gnupg -y --no-install-recommends \
@@ -30,4 +28,5 @@ FROM cloudsuite/spark:2.4.5
 RUN mkdir -p /benchmarks /root
 COPY --from=build /benchmarks /benchmarks
 COPY --from=build /root/entrypoint.sh /root/entrypoint.sh
+WORKDIR /root
 ENTRYPOINT ["/root/entrypoint.sh"]
