@@ -67,7 +67,7 @@ To start the client container which runs the benchmark, use the following comman
 
     $ docker run --net=host --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
 
-The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7).
+The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7). The `LOAD_SCALE` parameter controls the number of users that are simultaneously logging in to the web servers and requesting social networking pages. You can scale it up and down as much as you would like, keeping in mind that scaling the number of threads may stress the system. To tune the benchmark, we recommend testing your machines for the maximum possible request throughput, while maintaining your target QoS metric (we use 99th percentile latency). CPU utilization is less important than the latency and responsiveness for these benchmarks.
 
 The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 
