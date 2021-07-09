@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuitetest/debian:base-os
 
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 

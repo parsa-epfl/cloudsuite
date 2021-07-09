@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuitetest/debian:base-os
 ENV DEBIAN_FRONTEND noninteractive
 ENV HHVM_DISABLE_NUMA true
 

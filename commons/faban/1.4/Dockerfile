@@ -1,4 +1,4 @@
-FROM cloudsuite/java:openjdk11
+FROM cloudsuitetest/java:openjdk11
 ENV FABAN_USER faban
 ENV FABAN_VERSION 1.4
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk*
