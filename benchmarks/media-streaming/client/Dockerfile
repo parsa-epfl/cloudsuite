@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuitetest/debian:base-os
 #Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
 MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 

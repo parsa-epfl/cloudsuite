@@ -1,4 +1,4 @@
-FROM cloudsuite/memcached:1.5.20
+FROM cloudsuitetest/memcached:1.5.20
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 # the entry point is already memcached

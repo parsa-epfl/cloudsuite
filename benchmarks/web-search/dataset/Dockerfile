@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuitetest/debian:base-os
 
 RUN BUILD_DEPS="wget curl ca-certificates" \
     && set -x \
