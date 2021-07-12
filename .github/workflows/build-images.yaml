@@ -224,7 +224,7 @@ jobs:
     needs: java
     strategy:
       matrix:
-        tags: ["2.9.2"]
+        tags: ["2.10.1"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
