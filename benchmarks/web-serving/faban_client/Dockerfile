@@ -18,6 +18,7 @@ WORKDIR /web20_benchmark
 
 # Build the Faban benchmark and the user-generation tool
 RUN sed -i "s@faban\.home.*@faban.home=$FABAN_HOME@" /web20_benchmark/build.properties
+ENV JAVA_HOME /usr/
 RUN ant deploy.jar
 RUN ant usergen-jar
 
