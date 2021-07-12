@@ -1,5 +1,13 @@
 name: build-and-push-docker-image
-on: [push, workflow_dispatch]
+on: 
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
 
 jobs:
   base-os:
