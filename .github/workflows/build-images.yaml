@@ -242,6 +242,26 @@ jobs:
           push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
 
+  graphite-statsd:
+    runs-on: ubuntu-latest
+    needs: base-os
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/graphite-statsd
+          push: true
+          tags: "cloudsuitetest/${{ github.job }}:latest"
+
   data-analytics:
     runs-on: ubuntu-latest
     needs: hadoop
@@ -287,26 +307,6 @@ jobs:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
           push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-
-  graphite-statsd:
-    runs-on: ubuntu-latest
-    needs: base-os
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
-      - name: build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./benchmarks/django-workload/graphite/docker-graphite-statsd
-          push: true
-          tags: "cloudsuitetest/${{ github.job }}:latest"
 
   django-workload:
     runs-on: ubuntu-latest
