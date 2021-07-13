@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     ssh \
     && rm -rf /var/lib/apt/lists/*
 
-ENV HADOOP_VERSION 2.9.2
+ENV HADOOP_VERSION 2.10.1
 ENV HADOOP_PREFIX /opt/hadoop-${HADOOP_VERSION}
 ENV HADOOP_CONF_DIR ${HADOOP_PREFIX}/etc/hadoop
 ENV HADOOP_LOG_DIR ${HADOOP_PREFIX}/logs
