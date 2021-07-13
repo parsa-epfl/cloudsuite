@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuitetest/debian:base-os
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update \

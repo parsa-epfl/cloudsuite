@@ -1,4 +1,4 @@
-FROM cloudsuite/java:adoptopenjdk8
+FROM cloudsuitetest/java:adoptopenjdk8
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 RUN apt-get update -y \
