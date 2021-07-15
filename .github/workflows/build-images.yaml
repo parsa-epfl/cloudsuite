@@ -308,7 +308,7 @@ jobs:
           push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
 
-   data-serving:
+  data-serving:
     runs-on: ubuntu-latest
     needs: cassandra
     strategy:
