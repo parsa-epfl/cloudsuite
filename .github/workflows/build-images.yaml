@@ -287,6 +287,29 @@ jobs:
 
   data-caching:
     runs-on: ubuntu-latest
+    needs: memcached
+    strategy:
+      matrix:
+        tags: ["client", "server"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          push: true
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+
+   data-serving:
+    runs-on: ubuntu-latest
     needs: cassandra
     strategy:
       matrix:
