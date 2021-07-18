@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - dev
+      - gha_multiarch
   pull_request:
     branches:
       - master
@@ -14,118 +15,354 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target-os: [amd64, arm64]
+        platforms: [amd64, arm64, riscv64]
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
-      - name: build and push
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}
-          platforms: linux/${{ matrix.target-os }}
-          file: ./commons/${{ github.job }}/Dockerfile.${{ matrix.target-os }}
-          push: true
-          tags: "cloudsuitetest/debian:${{ matrix.target-os }}"
-      - run: docker manifest create --amend cloudsuitetest/debian:base-os cloudsuitetest/debian:amd64 cloudsuitetest/debian:arm64
-      - run: docker manifest push cloudsuitetest/debian:base-os
-  
-  java:
-    runs-on: ubuntu-latest
-    needs: base-os
-    strategy:
-      matrix:
-        tags: [openjdk11, adoptopenjdk8]
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
+          file: ./commons/${{ github.job }}/Dockerfile.${{matrix.platforms}}
+          tags: "cloudsuitetest/debian:${{matrix.platforms}}"
+          platforms: linux/${{matrix.platforms}}
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
-          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          context: ./commons/${{ github.job }}
+          file: ./commons/${{ github.job }}/Dockerfile.${{matrix.platforms}}
+          tags: "cloudsuitetest/debian:${{matrix.platforms}}"
+          platforms: linux/${{matrix.platforms}}
           push: true
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-    
-  mysql:
+      
+  sync-base-os:
     runs-on: ubuntu-latest
     needs: base-os
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV  
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        run: |
+          cd ./commons/base-os \
+          && ./push.sh
+  
+  adoptopenjdk8:
+    runs-on: ubuntu-latest
+    needs: sync-base-os
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/java/${{ github.job }}
+          tags: "cloudsuitetest/java:${{ github.job }}"
+          platforms: linux/arm64, linux/amd64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/java/${{ github.job }}
+          tags: "cloudsuitetest/java:${{ github.job }}"
+          platforms: linux/arm64, linux/amd64
+          push: true
+
+  openjdk11:
+    runs-on: ubuntu-latest
+    needs: sync-base-os
+    strategy:
+      matrix:
+        platforms: [amd64, arm64, riscv64]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/java/${{ github.job }}
+          file: ./commons/java/${{ github.job }}/Dockerfile.${{matrix.platforms}}
+          tags: "cloudsuitetest/java:${{ github.job }}_${{ matrix.platforms }}"
+          platforms: linux/${{matrix.platforms}}
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/java/${{ github.job }}
+          file: ./commons/java/${{ github.job }}/Dockerfile.${{matrix.platforms}}
+          tags: "cloudsuitetest/java:${{ github.job }}_${{ matrix.platforms }}"
+          platforms: linux/${{matrix.platforms}}
+          push: true
+
+  java: 
+    runs-on: ubuntu-latest
+    needs: [adoptopenjdk8, openjdk11]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV  
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        run: |
+          cd ./commons/java/openjdk11 \
+          && ./push.sh
+
+  mysql:
+    runs-on: ubuntu-latest
+    needs: sync-base-os
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:mariadb-10.3"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/
+          tags: "cloudsuitetest/${{ github.job }}:mariadb-10.3"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+          push: true
     
   memcached:
     runs-on: ubuntu-latest
-    needs: base-os
+    needs: sync-base-os
     strategy:
       matrix:
         tags: ["1.6.6"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
     
   hhvm:
     runs-on: ubuntu-latest
-    needs: base-os
+    needs: sync-base-os
     strategy:
       matrix:
         tags: ["3.30"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/arm64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/arm64, linux/riscv64
+          push: true
   
   faban:
     runs-on: ubuntu-latest
@@ -136,19 +373,45 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
     
   spark:
     runs-on: ubuntu-latest
@@ -159,19 +422,45 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
 
   siege:
     runs-on: ubuntu-latest
@@ -182,19 +471,45 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+          push: true
 
   cassandra:
     runs-on: ubuntu-latest
@@ -205,108 +520,45 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
-      - name: build and push
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-
-  hadoop:
-    runs-on: ubuntu-latest
-    needs: java
-    strategy:
-      matrix:
-        tags: ["2.10.1"]
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-
-  graphite-statsd:
-    runs-on: ubuntu-latest
-    needs: base-os
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
-      - name: build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./commons/graphite-statsd
+          platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
-          tags: "cloudsuitetest/${{ github.job }}:latest"
-
-  data-analytics:
-    runs-on: ubuntu-latest
-    needs: hadoop
-    strategy:
-      matrix:
-        tags: ["4.0"]
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
-      - name: build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-
-  data-caching:
-    runs-on: ubuntu-latest
-    needs: memcached
-    strategy:
-      matrix:
-        tags: ["client", "server"]
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
-      - name: build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
 
   data-serving:
     runs-on: ubuntu-latest
@@ -317,19 +569,241 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
+          
+  hadoop:
+    runs-on: ubuntu-latest
+    needs: java
+    strategy:
+      matrix:
+        tags: ["2.10.1"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
+
+  graphite-statsd:
+    runs-on: ubuntu-latest
+    needs: sync-base-os
+    strategy:
+      matrix:
+        tags: ["0.9.15"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/graphite-statsd
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./commons/graphite-statsd
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+          push: true
+
+  data-analytics:
+    runs-on: ubuntu-latest
+    needs: hadoop
+    strategy:
+      matrix:
+        tags: ["4.0"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|hadoop\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
+
+  data-caching:
+    runs-on: ubuntu-latest
+    needs: memcached
+    strategy:
+      matrix:
+        tags: ["client", "server"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|cassandra\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+          push: true
 
   django-workload:
     runs-on: ubuntu-latest
@@ -340,39 +814,94 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|cassandra\|graphite\|siege\|memcached\|uwsgi\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64 #, linux/riscv64
+          push: true
 
   fb-oss-performance:
     runs-on: ubuntu-latest
     needs: [mysql, siege, hhvm]
+    strategy:
+      matrix:
+        tags: ["2019.02.13"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|hhvm\|siege\|mysql\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/arm64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/arm64, linux/riscv64
           push: true
-          tags: "cloudsuitetest/${{ github.job }}:latest"
   
   graph-analytics:
     runs-on: ubuntu-latest
@@ -383,20 +912,50 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|spark\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
-      - name: build and push
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
-
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
 
   in-memory-analytics:
     runs-on: ubuntu-latest
@@ -407,42 +966,94 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|spark\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
 
   media-streaming:
     runs-on: ubuntu-latest
-    needs: base-os
+    needs: sync-base-os
     strategy:
       matrix:
         tags: ["client", "server", "dataset"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
+          push: true
   
   web-search:
     runs-on: ubuntu-latest
@@ -453,19 +1064,46 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|java\|faban\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - run: echo ${{env.MISMATCH}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64
+          push: true
   
   web-serving:
     runs-on: ubuntu-latest
@@ -476,56 +1114,141 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|mysql\|java\|faban\|memcached\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
-      - name: build and push
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          push: true
           tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/arm64, linux/riscv64
+      - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/amd64 #, linux/amd64, linux/riscv64
+          push: true
   
   movielens-dataset:
     runs-on: ubuntu-latest
-    needs: base-os
+    needs: sync-base-os
+    strategy:
+      matrix:
+        tags: ["2019.12.03"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./datasets/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags}}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags}}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
-          tags: "cloudsuitetest/${{ github.job }}:latest"
   
   twitter-dataset-graph:
     runs-on: ubuntu-latest
-    needs: base-os
+    needs: sync-base-os
+    strategy:
+      matrix:
+        tags: ["v1"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+        run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - if: ${{ github.base_ref != ''}}
+        run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
+      - name: Diffset
+        id: diffset
+        uses: softprops/diffset@v1
+        with:
+          base: ${{env.DIFF_POINT}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set var
+        id: set_var
+        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./datasets/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
-      - name: build and push
+      - name: build
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
+          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
-          tags: "cloudsuitetest/${{ github.job }}:latest"
+

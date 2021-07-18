@@ -47,4 +47,6 @@ RUN chmod +x /entrypoint.sh
 EXPOSE $FABAN_PORT
 #USER $FABAN_USER
 
+
+
 ENTRYPOINT ["/entrypoint.sh"]
