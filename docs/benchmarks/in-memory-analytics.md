@@ -29,7 +29,7 @@ Current version of the benchmark is 4.0. To obtain the image:
 The benchmark uses user-movie ratings datasets provided by Movielens. To get
 the dataset image:
 
-    $ docker pull cloudsuite/movielens-dataset:4.0
+    $ docker pull cloudsuite/movielens-dataset:2019.12.03
 
 More information about the dataset is available at
 [cloudsuite/movielens-dataset][ml-dhrepo].
@@ -47,7 +47,7 @@ large), and a sample personal ratings file.
 To run a benchmark with the small dataset and the provided personal ratings
 file:
 
-    $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
+    $ docker create --name movielens-data cloudsuite/movielens-dataset:2019.12.03
     $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics:4.0 \
         /data/ml-latest-small /data/myratings.csv
 
@@ -72,7 +72,7 @@ in a cluster. For more information on running Spark with Docker look at
 First, create a dataset image on every physical node where Spark workers will
 be running.
 
-    $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
+    $ docker create --name movielens-data cloudsuite/movielens-dataset:2019.12.03
 
 Start Spark master and Spark workers. They should all run within the same
 Docker network, which we call spark-net here. The workers get access to the

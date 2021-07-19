@@ -17,8 +17,8 @@ Current version of the benchmark is 4.0. To obtain the image:
 
 The benchmark uses a graph dataset generated from Twitter. To get the dataset image:
 
-    $ docker pull cloudsuite/twitter-dataset-graph:4.0
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:4.0
+    $ docker pull cloudsuite/twitter-dataset-graph:v1
+    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:v1
 
 More information about the dataset is available at
 [cloudsuite/twitter-dataset-graph][ml-dhrepo].
@@ -42,7 +42,7 @@ with Docker look at [cloudsuite/spark:2.4.5][spark-dhrepo].
 First, create a dataset image on every physical node where Spark
 workers will be running.
 
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:4.0
+    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:v1
 
 Start Spark master and Spark workers. They should all run within the same Docker network, which we call spark-net here. The workers get access to the datasets with --volumes-from twitter-data.
 

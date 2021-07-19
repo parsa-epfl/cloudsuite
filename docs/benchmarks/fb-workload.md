@@ -37,11 +37,11 @@ More info on CPU frequency can be found in [fb-cpufreq.md](https://github.com/fa
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 ```
-docker pull cloudsuite/mysql:latest
+docker pull cloudsuite/mysql:mariadb-10.3
 ```
 The following command will start the database server:
 ```
-docker run -dt --net=host cloudsuite/mysql:latest
+docker run -dt --net=host cloudsuite/mysql:mariadb-10.3
 ```
 
 ### Starting the siege client ####
@@ -66,7 +66,7 @@ If siege is started on the same host as of fb-workload:server, then HOST_IP_OF_F
 ### Starting the facebook workload benchmark ####
 To start the facebook workload benchmark you have to first `pull` the server image. To `pull` the server image use the following command:
 ```
-docker pull cloudsuite/fb-workload:server
+docker pull cloudsuite/fb-oss-performance:2019.02.13
 ``` 
 Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](../../benchmarks/fb-oss-performance/files/cmd.sh)
 ```
@@ -92,5 +92,5 @@ For information about the hhvm performance [hhvm-blog](https://hhvm.com/blog/929
 The following command will start the facebook workload:
 
 ```
-docker run --net=host --name=fb -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server
+docker run --net=host --name=fb -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-oss-performance:2019.02.13
 ```
