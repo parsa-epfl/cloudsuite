@@ -1077,7 +1077,6 @@ jobs:
       - name: set var
         id: set_var
         run: echo "MISMATCH=$(grep -o -- "base-os\|java\|faban\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
-      - run: echo ${{env.MISMATCH}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: setup docker buildx
