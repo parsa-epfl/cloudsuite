@@ -1,4 +1,4 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/debian:base-os
 
 ENV DEBIAN_FRONTEND noninteractive
 

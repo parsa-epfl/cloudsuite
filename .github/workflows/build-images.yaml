@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - dev
-      - gha_multiarch
   pull_request:
     branches:
       - master
@@ -19,7 +18,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -38,26 +37,26 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}
           file: ./commons/${{ github.job }}/Dockerfile.${{matrix.platforms}}
-          tags: "cloudsuitetest/debian:${{matrix.platforms}}"
+          tags: "cloudsuite/debian:${{matrix.platforms}}"
           platforms: linux/${{matrix.platforms}}
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}
           file: ./commons/${{ github.job }}/Dockerfile.${{matrix.platforms}}
-          tags: "cloudsuitetest/debian:${{matrix.platforms}}"
+          tags: "cloudsuite/debian:${{matrix.platforms}}"
           platforms: linux/${{matrix.platforms}}
           push: true
       
@@ -67,7 +66,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -82,12 +81,12 @@ jobs:
         id: set_var
         run: echo "MISMATCH=$(grep -o -- "base-os" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV  
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         run: |
           cd ./commons/base-os \
           && ./push.sh
@@ -98,7 +97,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -117,24 +116,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/java/${{ github.job }}
-          tags: "cloudsuitetest/java:${{ github.job }}"
+          tags: "cloudsuite/java:${{ github.job }}"
           platforms: linux/arm64, linux/amd64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/java/${{ github.job }}
-          tags: "cloudsuitetest/java:${{ github.job }}"
+          tags: "cloudsuite/java:${{ github.job }}"
           platforms: linux/arm64, linux/amd64
           push: true
 
@@ -147,7 +146,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -166,26 +165,26 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/java/${{ github.job }}
           file: ./commons/java/${{ github.job }}/Dockerfile.${{matrix.platforms}}
-          tags: "cloudsuitetest/java:${{ github.job }}_${{ matrix.platforms }}"
+          tags: "cloudsuite/java:${{ github.job }}_${{ matrix.platforms }}"
           platforms: linux/${{matrix.platforms}}
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/java/${{ github.job }}
           file: ./commons/java/${{ github.job }}/Dockerfile.${{matrix.platforms}}
-          tags: "cloudsuitetest/java:${{ github.job }}_${{ matrix.platforms }}"
+          tags: "cloudsuite/java:${{ github.job }}_${{ matrix.platforms }}"
           platforms: linux/${{matrix.platforms}}
           push: true
 
@@ -195,7 +194,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -210,12 +209,12 @@ jobs:
         id: set_var
         run: echo "MISMATCH=$(grep -o -- "base-os\|java" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV  
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+      - if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         run: |
           cd ./commons/java/openjdk11 \
           && ./push.sh
@@ -226,7 +225,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -245,24 +244,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/
-          tags: "cloudsuitetest/${{ github.job }}:mariadb-10.3"
+          tags: "cloudsuite/${{ github.job }}:mariadb-10.3"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/
-          tags: "cloudsuitetest/${{ github.job }}:mariadb-10.3"
+          tags: "cloudsuite/${{ github.job }}:mariadb-10.3"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
           push: true
     
@@ -275,7 +274,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -294,24 +293,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
     
@@ -324,7 +323,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -343,24 +342,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/arm64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/arm64, linux/riscv64
           push: true
   
@@ -373,7 +372,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -392,24 +391,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
     
@@ -422,7 +421,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -441,24 +440,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -471,7 +470,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -490,24 +489,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
           push: true
 
@@ -520,7 +519,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -539,24 +538,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -569,7 +568,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -588,24 +587,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
           
@@ -618,7 +617,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -637,24 +636,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -667,7 +666,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -686,24 +685,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/graphite-statsd
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./commons/graphite-statsd
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
           push: true
 
@@ -716,7 +715,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -735,24 +734,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -765,7 +764,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -784,24 +783,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
           push: true
 
@@ -814,7 +813,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -833,24 +832,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64 #, linux/riscv64
           push: true
 
@@ -863,7 +862,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -882,24 +881,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/arm64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/arm64, linux/riscv64
           push: true
   
@@ -912,7 +911,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -936,24 +935,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -966,7 +965,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -985,24 +984,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 
@@ -1015,7 +1014,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -1034,24 +1033,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
   
@@ -1064,7 +1063,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -1084,24 +1083,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64
           push: true
   
@@ -1114,7 +1113,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -1133,24 +1132,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/arm64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./benchmarks/${{ github.job }}/${{ matrix.tags }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/amd64 #, linux/amd64, linux/riscv64
           push: true
   
@@ -1163,7 +1162,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -1182,24 +1181,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags}}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags}}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build and push
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags}}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags}}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
   
@@ -1212,7 +1211,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - if: ${{ github.ref == 'refs/heads/gha_multiarch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
         run: echo "DIFF_POINT=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - if: ${{ github.base_ref != ''}}
         run: echo "DIFF_POINT=${GITHUB_BASE_REF}" >> $GITHUB_ENV
@@ -1231,24 +1230,24 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
-        if: ${{ env.MISMATCH && github.ref != 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref != 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
       - name: Login to Docker Hub
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build
-        if: ${{ env.MISMATCH && github.ref == 'refs/heads/gha_multiarch'}}
+        if: ${{ env.MISMATCH && github.ref == 'refs/heads/master'}}
         uses: docker/build-push-action@v2
         with:
           context: ./datasets/${{ github.job }}
-          tags: "cloudsuitetest/${{ github.job }}:${{ matrix.tags }}"
+          tags: "cloudsuite/${{ github.job }}:${{ matrix.tags }}"
           platforms: linux/arm64, linux/amd64, linux/riscv64
           push: true
 

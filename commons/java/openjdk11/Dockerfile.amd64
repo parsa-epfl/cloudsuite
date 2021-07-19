@@ -1,4 +1,4 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/debian:base-os
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends openjdk-11-jdk-headless \
         && rm -rf /var/lib/apt/lists/*

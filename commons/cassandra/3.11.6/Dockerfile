@@ -1,4 +1,4 @@
-FROM cloudsuitetest/java:openjdk11
+FROM cloudsuite/java:openjdk11
 
 ENV CASSANDRA_VERSION 3.11.6
 
