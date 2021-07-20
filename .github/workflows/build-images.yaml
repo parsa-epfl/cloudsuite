@@ -1166,7 +1166,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: set var
-        run: echo "MISMATCH=$(grep -o -- "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
+        run: echo "MISMATCH=$(grep "base-os\|${{github.job}}" <<< "${{steps.diffset.outputs.files}}")" >> $GITHUB_ENV
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build
