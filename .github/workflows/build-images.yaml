@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - dev
-      - refactor-*
   pull_request:
     branches:
       - master
@@ -30,7 +29,7 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v1
       - name: build and push
-        run: "./.github/scripts/build-images-base-os.sh"
+        run: "./.github/scripts/build-images.sh"
   
   java:
     runs-on: ubuntu-latest

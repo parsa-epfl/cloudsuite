@@ -22,7 +22,8 @@ fi
 if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     (grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ]) ||
     (grep -q "build-images.sh" <<<$modified_files) ||
-    (grep -q "build-images.yaml" <<<$modified_files); then
+    (grep -q "build-images.yaml" <<<$modified_files) || 
+    ( [ $benchmark_name = "debian" ] && (grep -q "commons/base-os" <<<$modified_files) ); then
     # if modified, then rebuild their docker image
     docker buildx prune -a -f
     # reference: https://github.com/docker/buildx/issues/495
@@ -30,7 +31,19 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     docker buildx create --name multiarch --driver docker-container --use
     docker buildx inspect --bootstrap
 
-    docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
+    if [ $benchmark_name = "debian" ]; then
+        cd commons/base-os
+        for arch in amd64 arm64; do
+            docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} .
+            if [ $? != "0" ]; then
+                exit 1
+            fi
+        done
+        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64
+    else
+        docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
+    fi
+
     # make sure build was successful
     if [ $? != "0" ]; then
         exit 1
@@ -42,8 +55,13 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
         if [ $? != "0" ]; then
             exit 1
         fi
-        # Push the docker image
-        docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG --push $DF_PATH
+
+        if [ $benchmark_name = "debian" ]; then
+            docker manifest push $DH_REPO:base-os
+        else
+            # Push the docker image
+            docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG --push $DF_PATH
+        fi
         
         if [ $? != "0" ]; then
             exit 1
