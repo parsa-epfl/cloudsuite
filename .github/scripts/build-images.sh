@@ -3,6 +3,18 @@
 # @authors: Somya Arora, Arash Pourhabibi
 # @modified: Shanqing Lin
 
+# 0. Setup QEMU and Docker buildx.
+
+# 0.1 Setup QEMU
+# reference: https://github.com/docker/setup-qemu-action/blob/master/src/main.ts
+
+docker pull 'tonistiigi/binfmt:latest'
+docker run --rm --privileged 'tonistiigi/binfmt:latest' --install arm64,riscv64
+docker run --rm --privileged 'tonistiigi/binfmt:latest'
+
+# 0.2 docker buildx
+docker buildx install
+
 
 # 1. Figure out the modified files
 if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then

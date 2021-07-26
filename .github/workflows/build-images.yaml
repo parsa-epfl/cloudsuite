@@ -27,10 +27,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
   
@@ -51,10 +47,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -76,10 +68,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -101,10 +89,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -126,10 +110,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -151,10 +131,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -176,10 +152,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -201,10 +173,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -226,10 +194,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -251,10 +215,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -276,10 +236,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -301,10 +257,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -329,10 +281,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -354,10 +302,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -382,10 +326,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -407,10 +347,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -432,10 +368,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -458,10 +390,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -483,10 +411,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -508,10 +432,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -533,10 +453,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -558,10 +474,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
@@ -583,10 +495,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: setup qemu
-        uses: docker/setup-qemu-action@v1
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v1
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
