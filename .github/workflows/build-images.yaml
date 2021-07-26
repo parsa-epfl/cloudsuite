@@ -445,7 +445,6 @@ jobs:
           needs.memcached.outputs.is_parent_modified == 'true' ||
           needs.siege.outputs.is_parent_modified == 'true' }}
         run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
-      - run: echo ${IS_PARENT_MODIFIED}
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
