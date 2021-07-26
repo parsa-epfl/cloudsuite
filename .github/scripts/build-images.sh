@@ -31,13 +31,13 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
 
     if [ $image_name = "debian" ]; then
         cd commons/base-os
-        for arch in amd64 arm64; do # TODO: Add risc-v here.
+        for arch in amd64 arm64 riscv64; do 
             docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} .
             if [ $? != "0" ]; then
                 exit 1
             fi
         done
-        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64
+        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
     else
         docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
     fi
