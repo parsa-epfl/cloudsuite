@@ -3,19 +3,6 @@
 # @authors: Somya Arora, Arash Pourhabibi
 # @modified: Shanqing Lin
 
-# 0. Setup QEMU and Docker buildx.
-
-# 0.1 Setup QEMU
-# reference: https://github.com/docker/setup-qemu-action/blob/master/src/main.ts
-
-docker pull 'tonistiigi/binfmt:latest'
-docker run --rm --privileged 'tonistiigi/binfmt:latest' --install arm64,riscv64
-docker run --rm --privileged 'tonistiigi/binfmt:latest'
-
-# 0.2 docker buildx
-# docker buildx install
-
-
 # 1. Figure out the modified files
 if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
   modified_files=$(git --no-pager diff --name-only ${PR_COMMIT_RANGE})
@@ -34,7 +21,20 @@ fi
 if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any file in the build folder is changed 
     (grep -q "build-images.sh" <<<$modified_files) ||
     (grep -q "build-images.yaml" <<<$modified_files); then
+
     # if modified, then rebuild their docker image
+
+    # install QEMU for extra arch
+    arch_list=${DBX_PLATFORM//linux\//} # linux/amd64,linux/arm64,linux/riscv64 -> amd64,arm64,riscv64
+    echo "Platforms: ${arch_list}"
+    extra_arch_list=${${$arch_list#amd64}#,} # amd64,arm64,riscv64 -> arm64,riscv64
+    # reference: https://github.com/tonistiigi/binfmt/
+    if [ $extra_arch_list ]; then
+        docker run --rm --privileged 'tonistiigi/binfmt:latest' --install $extra_arch_list
+    else
+        echo "No extra arch is found, skipping install QEMU."
+    fi
+    # remove build cache
     docker buildx prune -a -f
     # reference: https://github.com/docker/buildx/issues/495
     docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
