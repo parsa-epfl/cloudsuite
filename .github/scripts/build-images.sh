@@ -3,7 +3,6 @@
 # @authors: Somya Arora, Arash Pourhabibi
 # @modified: Shanqing Lin
 
-
 # 1. Figure out the modified files
 if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
   modified_files=$(git --no-pager diff --name-only ${PR_COMMIT_RANGE})
@@ -23,21 +22,35 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     (grep -q "build-images.sh" <<<$modified_files) ||
     (grep -q "build-images.yaml" <<<$modified_files); then
     # if modified, then rebuild their docker image
-    docker buildx prune -a -f
-    # reference: https://github.com/docker/buildx/issues/495
-    docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    docker buildx create --name multiarch --driver docker-container --use
-    docker buildx inspect --bootstrap
 
+    # remove build cache
+    docker buildx prune -a -f
+
+    # install QEMU for extra arch
+    arch_list=${DBX_PLATFORM//linux\//} # linux/amd64,linux/arm64,linux/riscv64 -> amd64,arm64,riscv64
+    echo "Platforms: ${arch_list}"
+    extra_arch_list=${arch_list#amd64} # amd64,arm64,riscv64 -> ,arm64,riscv64
+    extra_arch_list=${extra_arch_list#,}
+    # reference: https://github.com/tonistiigi/binfmt/
+    if [ $extra_arch_list ]; then
+        docker run --rm --privileged 'tonistiigi/binfmt:latest' --install $extra_arch_list
+        # reference: https://github.com/docker/buildx/issues/495
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+        docker buildx create --name multiarch --driver docker-container --use
+        docker buildx inspect --bootstrap
+    else
+        echo "No extra arch is found, skipping install QEMU."
+    fi
+    
     if [ $image_name = "debian" ]; then
         cd commons/base-os
-        for arch in amd64 arm64; do # TODO: Add risc-v here.
+        for arch in amd64 arm64 riscv64; do 
             docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} .
             if [ $? != "0" ]; then
                 exit 1
             fi
         done
-        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64
+        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
     else
         docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
     fi
