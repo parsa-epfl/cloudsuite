@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # @authors: Somya Arora, Arash Pourhabibi
-# @modified: Shanqing Lin
+# @modified: Shanqing Lin, Ali Ansari
+
 
 # 1. Figure out the modified files
 if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
@@ -17,10 +18,12 @@ if [ -z "$modified_files" ]; then
 else
     echo "Checking against modified files"
 fi
+
 # 3.Find out whether the files related with the current build were modified or not
 if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any file in the build folder is changed 
     (grep -q "build-images.sh" <<<$modified_files) ||
-    (grep -q "build-images.yaml" <<<$modified_files); then
+    (grep -q "build-images.yaml" <<<$modified_files) ||
+    [ "${IS_PARENT_MODIFIED}" = "true" ]; then
     # if modified, then rebuild their docker image
 
     # remove build cache
@@ -42,6 +45,8 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
         echo "No extra arch is found, skipping install QEMU."
     fi
     
+    echo "MODIFIED=true" >> $GITHUB_ENV
+
     if [ $image_name = "debian" ]; then
         cd commons/base-os
         for arch in amd64 arm64 riscv64; do 
