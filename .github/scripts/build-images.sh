@@ -13,7 +13,7 @@ docker run --rm --privileged 'tonistiigi/binfmt:latest' --install arm64,riscv64
 docker run --rm --privileged 'tonistiigi/binfmt:latest'
 
 # 0.2 docker buildx
-docker buildx install
+# docker buildx install
 
 
 # 1. Figure out the modified files
