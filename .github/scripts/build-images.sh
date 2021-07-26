@@ -11,7 +11,7 @@ else
   modified_files=$(git --no-pager diff --name-only ${PUSH_COMMIT_RANGE})
 fi
 # 2.Get benchmark name and tag name for this build
-benchmark_name=${DH_REPO#*/}
+image_name=${DH_REPO#*/}
 tag_name=$IMG_TAG
 if [ -z "$modified_files" ]; then
     echo "No Modifications required."
@@ -19,11 +19,9 @@ else
     echo "Checking against modified files"
 fi
 # 3.Find out whether the files related with the current build were modified or not
-if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
-    (grep -q "$benchmark_name" <<<$modified_files && [ $tag_name = "latest" ]) ||
+if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any file in the build folder is changed 
     (grep -q "build-images.sh" <<<$modified_files) ||
-    (grep -q "build-images.yaml" <<<$modified_files) || 
-    ( [ $benchmark_name = "debian" ] && (grep -q "commons/base-os" <<<$modified_files) ); then
+    (grep -q "build-images.yaml" <<<$modified_files); then
     # if modified, then rebuild their docker image
     docker buildx prune -a -f
     # reference: https://github.com/docker/buildx/issues/495
@@ -31,9 +29,9 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
     docker buildx create --name multiarch --driver docker-container --use
     docker buildx inspect --bootstrap
 
-    if [ $benchmark_name = "debian" ]; then
+    if [ $image_name = "debian" ]; then
         cd commons/base-os
-        for arch in amd64 arm64; do
+        for arch in amd64 arm64; do # TODO: Add risc-v here.
             docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} .
             if [ $? != "0" ]; then
                 exit 1
@@ -56,7 +54,7 @@ if (grep -q "$benchmark_name/$tag_name" <<<$modified_files) ||
             exit 1
         fi
 
-        if [ $benchmark_name = "debian" ]; then
+        if [ $image_name = "debian" ]; then
             docker manifest push $DH_REPO:base-os
         else
             # Push the docker image

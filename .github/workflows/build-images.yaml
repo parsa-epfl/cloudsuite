@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DH_REPO: "cloudsuitetest/debian"
+      DF_PATH: "./commons/base-os"
     steps:
       - name: checkout
         uses: actions/checkout@v2
