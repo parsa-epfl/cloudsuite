@@ -14,7 +14,7 @@ env:
   PR_COMMIT_RANGE: ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
   DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-  FORCE_PUSH: "false"
+  FORCE_PUSH: "true"
 
 jobs:
   base-os:
@@ -32,6 +32,8 @@ jobs:
           fetch-depth: 0
       - name: build and push
         run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: ${{ github.job }}
       - id: set_is_parent_modified
         run: echo "::set-output name=is_parent_modified::${MODIFIED}"
       
