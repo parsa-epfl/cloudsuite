@@ -27,7 +27,8 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     # install QEMU for extra arch
     arch_list=${DBX_PLATFORM//linux\//} # linux/amd64,linux/arm64,linux/riscv64 -> amd64,arm64,riscv64
     echo "Platforms: ${arch_list}"
-    extra_arch_list=${${$arch_list#amd64}#,} # amd64,arm64,riscv64 -> arm64,riscv64
+    extra_arch_list=${arch_list#amd64} # amd64,arm64,riscv64 -> ,arm64,riscv64
+    extra_arch_list=${extra_arch_list#,}
     # reference: https://github.com/tonistiigi/binfmt/
     if [ $extra_arch_list ]; then
         docker run --rm --privileged 'tonistiigi/binfmt:latest' --install $extra_arch_list
