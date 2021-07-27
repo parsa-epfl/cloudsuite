@@ -10,12 +10,14 @@ ENV DEBIAN_FRONTEND noninteractive
 # RUN apt-get update && apt-get install -y libevent-2.1-6 vim --no-install-recommends \
 	# && rm -rf /var/lib/apt/lists/*
 
-RUN buildDeps='curl gcc libc6-dev libevent-dev make git vim' \	
+RUN buildDeps='curl gcc libc6-dev libevent-dev make' \	
 	&& set -x \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+	&& apt-get update && apt-get install -y $buildDeps vim --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& git config --global http.sslverify false \
-	&& git clone http://github.com/parsa-epfl/memcached-loadtester /usr/src/memcached \
+	&& curl -k -L --remote-name http://github.com/parsa-epfl/memcached-loadtester/archive/refs/tags/v4.0.tar.gz \
+	&& mkdir -p /usr/src/memcached \
+	&& tar xvf v4.0.tar.gz -C /usr/src/memcached --strip-components=1 \
+	&& rm v4.0.tar.gz \
 	&& cd /usr/src/memcached/memcached_client \
 	&& make -j $(nproc) \
 	&& chown -R memcache:memcache /usr/src/memcached \
