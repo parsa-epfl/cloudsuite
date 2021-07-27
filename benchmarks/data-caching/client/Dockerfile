@@ -6,18 +6,16 @@ RUN groupadd -r memcache && useradd -r -g memcache memcache
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY memcached.tar.gz /memcached.tar.gz
+# libevent-dev will include libevent, so it's not necessary to install it standalone
+# RUN apt-get update && apt-get install -y libevent-2.1-6 vim --no-install-recommends \
+	# && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y libevent-2.1-6 vim --no-install-recommends \
-	&& rm -rf /var/lib/apt/lists/*
-
-RUN buildDeps='curl gcc libc6-dev libevent-dev make' \	
+RUN buildDeps='curl gcc libc6-dev libevent-dev make git vim' \	
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir -p /usr/src/memcached \
-	&& tar -xzf memcached.tar.gz -C /usr/src/memcached --strip-components=1 \
-	&& rm memcached.tar.gz \
+	&& git config --global http.sslverify false \
+	&& git clone http://github.com/parsa-epfl/memcached-loadtester /usr/src/memcached \
 	&& cd /usr/src/memcached/memcached_client \
 	&& make -j $(nproc) \
 	&& chown -R memcache:memcache /usr/src/memcached \
