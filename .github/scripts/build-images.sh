@@ -44,8 +44,6 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     else
         echo "No extra arch is found, skipping install QEMU."
     fi
-    
-    echo "MODIFIED=true" >> $GITHUB_ENV
 
     if [ $image_name = "debian" ]; then
         cd commons/base-os
@@ -64,6 +62,9 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     if [ $? != "0" ]; then
         exit 1
     fi
+    
+    echo "MODIFIED=true" >> $GITHUB_ENV
+    
     # Push if this file was triggerred by a push command (not a pull request)
     if ( [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/master" ] ) || [ "${FORCE_PUSH}" = "true" ]; then
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
