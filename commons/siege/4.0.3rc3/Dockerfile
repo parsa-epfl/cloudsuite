@@ -4,25 +4,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install sshd
 RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
-    case "${ARCH}" in \
-       aarch64|arm64|amd64|x86_64) \
-         GCC_VER='7'; \
-        ;; \
-       riscv64) \
-         GCC_VER='8'; \
-        ;; \
-       *) \
-         echo "Unsupported arch: ${ARCH}"; \
-         exit 1; \
-         ;; \
-    esac; \
-    apt-get update && apt-get install -y gcc-${GCC_VER} g++-${GCC_VER} openssh-server git autotools-dev autoconf make \
-    && rm -rf /var/lib/apt/lists/* \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VER} ${GCC_VER} \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${GCC_VER} ${GCC_VER} \
-    && update-alternatives --config gcc \
-    && update-alternatives --config g++
+    apt-get update && apt-get install -y gcc g++ openssh-server git autotools-dev autoconf make \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/JoeDog/siege.git \
     && cd siege \
