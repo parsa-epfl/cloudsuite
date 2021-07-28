@@ -418,7 +418,7 @@ jobs:
       DH_REPO: "cloudsuitetest/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["latest"]
+        tag: ["4.0"]
         platform: ["linux/amd64"]
     steps:
       - name: checkout
@@ -561,7 +561,7 @@ jobs:
       DH_REPO: "cloudsuitetest/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["latest"]
+        tag: ["4.0"]
         platform: ["linux/amd64"]
     steps:
       - name: checkout
@@ -584,7 +584,7 @@ jobs:
       DH_REPO: "cloudsuitetest/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["latest"]
+        tag: ["4.0"]
         platform: ["linux/amd64"]
     steps:
       - name: checkout
