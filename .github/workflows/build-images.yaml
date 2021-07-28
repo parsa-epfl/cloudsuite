@@ -14,7 +14,7 @@ env:
   PR_COMMIT_RANGE: ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
   DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-  FORCE_PUSH: "true"
+  FORCE_PUSH: "false"
 
 jobs:
   base-os:
