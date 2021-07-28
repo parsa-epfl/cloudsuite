@@ -55,10 +55,15 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
         DO_PUSH="--push"
     fi
     
-    if ([ $image_name = "debian" ]); then
+    if ([ $image_name = "debian" ] || [ $IMG_TAG = "openjdk11" ]); then
         cd $DF_PATH
         for arch in amd64 arm64 riscv64; do 
-            docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} $DO_PUSH .             
+            if [ $IMG_TAG = "openjdk11" ]; then
+                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile --build-arg EXTERNAL_ARG="/usr/lib/jvm/java-11-openjdk-${arch}/" $DO_PUSH .
+            else
+                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} $DO_PUSH . 
+            fi
+
             if [ $? != "0" ]; then
                 exit 1
             fi
