@@ -44,18 +44,31 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     else
         echo "No extra arch is found, skipping install QEMU."
     fi
+    
+    if ( [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/master" ] ) || [ "${FORCE_PUSH}" = "true" ]; then
+        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+        # Pushing needs login, test if login was successful
+        if [ $? != "0" ]; then
+            exit 1
+        fi
 
-    if [ $image_name = "debian" ]; then
-        cd commons/base-os
+        DO_PUSH="--push"
+    fi
+    
+    if ([ $image_name = "debian" ]); then
+        cd $DF_PATH
         for arch in amd64 arm64 riscv64; do 
-            docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} .
+            docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} $DO_PUSH .             
             if [ $? != "0" ]; then
                 exit 1
             fi
+            if [ -n "$DO_PUSH" ]; then
+                docker manifest create --amend $DH_REPO:$IMG_TAG $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
+                docker manifest push $DH_REPO:$IMG_TAG
+            fi
         done
-        docker manifest create --amend $DH_REPO:base-os $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
     else
-        docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DF_PATH
+        docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DO_PUSH $DF_PATH
     fi
 
     # make sure build was successful
@@ -65,27 +78,6 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
     
     echo "MODIFIED=true" >> $GITHUB_ENV
     
-    # Push if this file was triggerred by a push command (not a pull request)
-    if ( [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/master" ] ) || [ "${FORCE_PUSH}" = "true" ]; then
-        docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-        # Pushing needs login, test if login was successful
-        if [ $? != "0" ]; then
-            exit 1
-        fi
-
-        if [ $image_name = "debian" ]; then
-            docker manifest push $DH_REPO:base-os
-        else
-            # Push the docker image
-            docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG --push $DF_PATH
-        fi
-        
-        if [ $? != "0" ]; then
-            exit 1
-        fi
-    else
-        echo "No push command executed"
-    fi
 # if no file related to this image was modified
 else
     echo "No Modifications to this image"
