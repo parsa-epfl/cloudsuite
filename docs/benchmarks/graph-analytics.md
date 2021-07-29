@@ -11,13 +11,13 @@ The Graph Analytics benchmark relies the Spark framework to perform graph analyt
 
 Current version of the benchmark is 3.0. To obtain the image:
 
-    $ docker pull cloudsuite/graph-analytics
+    $ docker pull cloudsuite3/graph-analytics
 
 ### Datasets
 
 The benchmark uses a graph dataset generated from Twitter. To get the dataset image:
 
-    $ docker pull cloudsuite/twitter-dataset-graph
+    $ docker pull cloudsuite3/twitter-dataset-graph
 
 More information about the dataset is available at
 [cloudsuite/twitter-dataset-graph][ml-dhrepo].
@@ -30,8 +30,8 @@ spark-submit.
 
 To run a benchmark with the Twitter dataset:
 
-    $ docker create --name data cloudsuite/twitter-dataset-graph
-    $ docker run --rm --volumes-from data cloudsuite/graph-analytics
+    $ docker create --name data cloudsuite3/twitter-dataset-graph
+    $ docker run --rm --volumes-from data cloudsuite3/graph-analytics
 
 ### Tweaking the Benchmark
 
@@ -41,7 +41,7 @@ has enough memory allocated to be able to execute the benchmark
 in-memory, supply it with --driver-memory and --executor-memory
 arguments:
 
-    $ docker run --rm --volumes-from data cloudsuite/graph-analytics \
+    $ docker run --rm --volumes-from data cloudsuite3/graph-analytics \
                  --driver-memory 1g --executor-memory 4g
 
 ### Multi-node deployment
@@ -54,30 +54,30 @@ with Docker look at [cloudsuite/spark][spark-dhrepo].
 First, create a dataset image on every physical node where Spark
 workers will be running.
 
-    $ docker create --name data cloudsuite/twitter-dataset-graph
+    $ docker create --name data cloudsuite3/twitter-dataset-graph
 
 Start Spark master and Spark workers. They should all run within the
 same Docker network, which we call spark-net here. The workers get
 access to the datasets with --volumes-from data.
 
     $ docker run -dP --net spark-net --hostname spark-master --name spark-master \
-                 cloudsuite/spark master
+                 cloudsuite3/spark master
     $ docker run -dP --net spark-net --volumes-from data --name spark-worker-01 \
-                 cloudsuite/spark worker spark://spark-master:7077
+                 cloudsuite3/spark worker spark://spark-master:7077
     $ docker run -dP --net spark-net --volumes-from data --name spark-worker-02 \
-                 cloudsuite/spark worker spark://spark-master:7077
+                 cloudsuite3/spark worker spark://spark-master:7077
     $ ...
 
 Finally, run the benchmark as the client to the Spark master:
 
     $ docker run --rm --net spark-net --volumes-from data \
-                 cloudsuite/graph-analytics \
+                 cloudsuite3/graph-analytics \
                  --driver-memory 1g --executor-memory 4g \
                  --master spark://spark-master:7077
 
-[dhrepo]: https://hub.docker.com/r/cloudsuite/graph-analytics/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
-[ml-dhrepo]: https://hub.docker.com/r/cloudsuite/twitter-dataset-graph/
-[spark-dhrepo]: https://hub.docker.com/r/cloudsuite/spark/
+[dhrepo]: https://hub.docker.com/r/cloudsuite3/graph-analytics/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/graph-analytics.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite3/graph-analytics.svg "Go to DockerHub Page"
+[ml-dhrepo]: https://hub.docker.com/r/cloudsuite3/twitter-dataset-graph/
+[spark-dhrepo]: https://hub.docker.com/r/cloudsuite3/spark/
 

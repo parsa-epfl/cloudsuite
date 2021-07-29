@@ -12,8 +12,8 @@ The benchmark consists of running a Naive Bayes classifier on a Wikimedia datase
 To obtain the images:
 
 ```bash
-$ docker pull cloudsuite/hadoop
-$ docker pull cloudsuite/data-analytics
+$ docker pull cloudsuite3/hadoop
+$ docker pull cloudsuite3/data-analytics
 ```
 
 ## Running the benchmark ##
@@ -30,16 +30,16 @@ Start the master with:
 
 ```bash
 $ docker run -d --net hadoop-net --name master --hostname master \
-             cloudsuite/data-analytics master
+             cloudsuite3/data-analytics master
 ```
 
 Start a number of slaves with:
 
 ```bash
 $ docker run -d --net hadoop-net --name slave01 --hostname slave01 \
-             cloudsuite/hadoop slave
+             cloudsuite3/hadoop slave
 $ docker run -d --net hadoop-net --name slave02 --hostname slave02 \
-             cloudsuite/hadoop slave
+             cloudsuite3/hadoop slave
 ...
 ```
 
@@ -51,6 +51,6 @@ Run the benchmark with:
 $ docker exec master benchmark
 ```
 
-[dhrepo]: https://hub.docker.com/r/cloudsuite/data-analytics/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-analytics.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-analytics.svg "Go to DockerHub Page"
+[dhrepo]: https://hub.docker.com/r/cloudsuite3/data-analytics/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/data-analytics.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite3/data-analytics.svg "Go to DockerHub Page"

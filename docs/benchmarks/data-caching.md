@@ -31,32 +31,32 @@ We will attach the launched containers to this newly created docker network.
 ### Starting the Server ####
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
 
-    $ docker pull cloudsuite/data-caching:server
+    $ docker pull cloudsuite3/data-caching:server
 
 It takes some time to download the image, but this is only required the first time.
 The following command will start the server with four threads and 4096MB of dedicated memory, with a minimal object size of 550 bytes listening on port 11211 as default:
 
-    $ docker run --name dc-server --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server --net caching_network -d cloudsuite3/data-caching:server -t 4 -m 4096 -n 550
 
 We assigned a name to this server to facilitate linking it with the client. We also used `--net` option to attach the container to our prepared network.
 As mentioned before, you can have multiple instances of the Memcached server, just remember to give each of them a unique name. For example, the following commands create four Memcached server instances:
 
-    $ docker run --name dc-server1 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server2 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server3 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
-    $ docker run --name dc-server4 --net caching_network -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server1 --net caching_network -d cloudsuite3/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server2 --net caching_network -d cloudsuite3/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server3 --net caching_network -d cloudsuite3/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server4 --net caching_network -d cloudsuite3/data-caching:server -t 4 -m 4096 -n 550
 
 ### Starting the Client ####
 
 To start the client you have to first `pull` the client image and then run it. To `pull` the server image use the following command:
 
-    $ docker pull cloudsuite/data-caching:client
+    $ docker pull cloudsuite3/data-caching:client
 
 It takes some time to download the image, but this is only required the first time.
 
 To start the client container use the following command:
 
-    $ docker run -it --name dc-client --net caching_network cloudsuite/data-caching:client bash
+    $ docker run -it --name dc-client --net caching_network cloudsuite3/data-caching:client bash
 
 This boots up the client container and you'll be logged in as the `memcache` user. Note that by using the `--net` option, you can easily make these containers visible to each other.
 
@@ -138,6 +138,6 @@ and the client on different sockets of the same machine
   [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
 
   [repo]: https://github.com/parsa-epfl/cloudsuite "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/data-caching/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-caching.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-caching.svg "Go to DockerHub Page"
+  [dhrepo]: https://hub.docker.com/r/cloudsuite3/data-caching/ "DockerHub Page"
+  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/data-caching.svg "Go to DockerHub Page"
+  [dhstars]: https://img.shields.io/docker/stars/cloudsuite3/data-caching.svg "Go to DockerHub Page"

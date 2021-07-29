@@ -30,11 +30,11 @@ We will attach the launched containers to this newly created docker network.
 
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image, use the following command:
 
-	$ docker pull cloudsuite/web-search:server
+	$ docker pull cloudsuite3/web-search:server
 
 The following command will start the server and forward port 8983 to the host, so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pregenerated Solr index occupies 12GB of memory, and therefore we use `12g` to avoid disk accesses. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
 
-	$ docker run -it --name server --net search_network -p 8983:8983 cloudsuite/web-search:server 12g 1
+	$ docker run -it --name server --net search_network -p 8983:8983 cloudsuite3/web-search:server 12g 1
 
 At the end of the server booting process, the container prints the `server_address` of the index node. This address is used in the client container. The `server_address` message in the container should look like this (note that the IP address might change):
 
@@ -44,11 +44,11 @@ At the end of the server booting process, the container prints the `server_addre
 
 To start a client you have to first `pull` the client image and then run it. To `pull` the client image, use the following command:
 
-	$ docker pull cloudsuite/web-search:client
+	$ docker pull cloudsuite3/web-search:client
 
 The following command will start the client node and run the benchmark. The `server_address` refers to the IP address, in brackets (e.g., "172.19.0.2"), of the index node that receives the client requests. The four numbers after the server address refer to: the scale, which indicates the number of concurrent clients (50); the ramp-up time in seconds (90), which refers to the time required to warm up the server; the ramp-down time in seconds (60), which refers to the time to wait before ending the benchmark; and the steady-state time in seconds (60), which indicates the time the benchmark is in the steady state. Tune these parameters accordingly to stress your target system.
 
-	$ docker run -it --name client --net search_network cloudsuite/web-search:client server_address 50 90 60 60  
+	$ docker run -it --name client --net search_network cloudsuite3/web-search:client server_address 50 90 60 60  
 
 The output results will show on the screen after the benchmark finishes.
 
@@ -97,6 +97,6 @@ More information about Solr can be found [here][solrmanual].
 [apachesolr]: https://github.com/apache/solr "Apache Solr"
 [apachenutch]: https://github.com/apache/nutch "Apache Nutch"
 [repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-search "Web Search GitHub Repo"
-[dhrepo]: https://hub.docker.com/r/cloudsuite/web-search/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-search.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-search.svg "Go to DockerHub Page"
+[dhrepo]: https://hub.docker.com/r/cloudsuite3/web-search/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/web-search.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite3/web-search.svg "Go to DockerHub Page"

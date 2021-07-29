@@ -10,7 +10,7 @@ Size is around 1MB.  The large dataset (ml-latest) has 21,000,000 ratings
 applied to 30,000 movies by 230,000 users. Size is 144MB.
 
 This image is intended to be used with the
-[cloudsuite/in-memory-analytics][ima-dhrepo] image as the dataset to run the
+[cloudsuite3/in-memory-analytics][ima-dhrepo] image as the dataset to run the
 benchmark on.
 
 The datasets and the personal ratings file myratings.csv are located in /data,
@@ -20,10 +20,10 @@ ratings.
 
 To obtain the image:
 
-    $ docker pull cloudsuite/movielens-dataset
+    $ docker pull cloudsuite3/movielens-dataset
 
-[dhrepo]: https://hub.docker.com/r/cloudsuite/movielens-dataset/ "DockerHub Page"
-[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/movielens-dataset.svg "Go to DockerHub Page"
-[dhstars]: https://img.shields.io/docker/stars/cloudsuite/movielens-dataset.svg "Go to DockerHub Page"
-[ima-dhrepo]: https://hub.docker.com/r/cloudsuite/in-memory-analytics/
+[dhrepo]: https://hub.docker.com/r/cloudsuite3/movielens-dataset/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/movielens-dataset.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite3/movielens-dataset.svg "Go to DockerHub Page"
+[ima-dhrepo]: https://hub.docker.com/r/cloudsuite3/in-memory-analytics/
 

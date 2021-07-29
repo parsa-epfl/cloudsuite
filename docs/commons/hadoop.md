@@ -1,10 +1,10 @@
 ## Hadoop
 
-Currently supported version is 2.7.3.
+Currently supported version is 2.9.2 for Cloudsuite 3.0.
 
 To obtain the image:
 ```
-$ docker pull cloudsuite/hadoop
+$ docker pull cloudsuite3/hadoop
 ```
 
 ### Running Hadoop
@@ -16,13 +16,13 @@ $ docker network create hadoop-net
 
 Start Hadoop master with:
 ```
-$ docker run -d --net hadoop-net --name master --hostname master cloudsuite/hadoop master
+$ docker run -d --net hadoop-net --name master --hostname master cloudsuite3/hadoop master
 ```
 
 Start any number of Hadoop slaves with:
 ```
-$ docker run -d --net hadoop-net --name slave01 --hostname slave01 cloudsuite/hadoop slave
-$ docker run -d --net hadoop-net --name slave02 --hostname slave02 cloudsuite/hadoop slave
+$ docker run -d --net hadoop-net --name slave01 --hostname slave01 cloudsuite3/hadoop slave
+$ docker run -d --net hadoop-net --name slave02 --hostname slave02 cloudsuite3/hadoop slave
 ...
 ```
 
