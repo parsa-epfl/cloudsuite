@@ -1,20 +1,20 @@
 ## Hadoop
-Currently supported version is 2.9.2.
+Currently supported version is 2.10.1.
 
 To obtain / build the image :
 ```
-$ docker pull cloudsuite/hadoop:2.9.2
+$ docker pull cloudsuite/hadoop:2.10.1
 
 or
 
-$ cd /path/to/cloudsuite/commons/hadoop/2.9.2
-$ docker build --network host -t cloudsuite/hadoop:2.9.2 .
+$ cd /path/to/cloudsuite/commons/hadoop/2.10.1
+$ docker build --network host -t cloudsuite/hadoop:2.10.1 .
 ```
 
 ### Running Hadoop
 Start Hadoop master with:
 ```
-$ docker run -d --net host --name master cloudsuite/hadoop:2.9.2 master
+$ docker run -d --net host --name master cloudsuite/hadoop:2.10.1 master
 ```
 
 Start any number of Hadoop slaves with:
@@ -27,7 +27,7 @@ $ docker run -d --net host --name slave02 cloudsuite/hadoop:2.9.2 slave $IP_ADRE
 
 ...
 ```
-Note : Start each slave on a different VM.
+Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADRESS_MASTER` to `127.0.1.1`.
 
 Run the supplied example job (grep) with:
 ```
