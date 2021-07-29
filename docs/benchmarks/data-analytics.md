@@ -12,7 +12,7 @@ The benchmark consists of running a Naive Bayes classifier on a Wikimedia datase
 To obtain the images:
 
 ```bash
-$ docker pull cloudsuite/hadoop:2.9.2
+$ docker pull cloudsuite/hadoop:2.10.1
 $ docker pull cloudsuite/data-analytics:4.0
 
 ```
@@ -37,7 +37,7 @@ $ docker run -d --net host --name slave02 cloudsuite/hadoop:2.9.2 slave $IP_ADRE
 
 ...
 ```
-Note : Start each slave on a different VM.
+Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADRESS_MASTER` to `127.0.1.1`.
 
 Run the benchmark with:
 

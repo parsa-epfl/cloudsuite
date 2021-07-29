@@ -19,7 +19,7 @@ case $1 in
     sed -i "s/master/$HOSTNAME/g" $HADOOP_PREFIX/etc/hadoop/core-site.xml
     sed -i "s/master/$HOSTNAME/g" $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
     # update /etc/hosts with IP (only needed when using host networking)
-    if [ -n $2 ]; then
+    if [[ $2 ]]; then
       cp /etc/hosts /tmp/hosts
       sed -i "s/127.0.1.1/$2/g" /tmp/hosts
       cp /tmp/hosts /etc/hosts
@@ -38,7 +38,7 @@ case $1 in
     sed -i "s/master/$HOSTNAME/g" $HADOOP_PREFIX/etc/hadoop/core-site.xml
     sed -i "s/master/$HOSTNAME/g" $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
     # update /etc/hosts with IP (only needed when using host networking)
-    if [ -n $3 ]; then
+    if [[ $3 ]]; then
       cp /etc/hosts /tmp/hosts
       sed -i "s/127.0.1.1/$3/g" /tmp/hosts
       cp /tmp/hosts /etc/hosts
