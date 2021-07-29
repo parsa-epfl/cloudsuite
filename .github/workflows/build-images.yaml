@@ -89,7 +89,7 @@ jobs:
         run: "./.github/scripts/build-images.sh"
         env:
           IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./commons/${{ github.job }}" # TODO: Unify the name
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
         run: echo "::set-output name=is_parent_modified::${MODIFIED}"
@@ -170,7 +170,7 @@ jobs:
         run: "./.github/scripts/build-images.sh"
         env:
           IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./commons/${{ github.job }}" # TODO: unify the path
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
         run: echo "::set-output name=is_parent_modified::${MODIFIED}"
@@ -433,7 +433,7 @@ jobs:
         run: "./.github/scripts/build-images.sh"
         env:
           IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./benchmarks/${{ github.job }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
   
   graph-analytics:
@@ -574,7 +574,7 @@ jobs:
         run: "./.github/scripts/build-images.sh"
         env:
           IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./datasets/${{ github.job }}"
+          DF_PATH: "./datasets/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
   
   twitter-dataset-graph:
@@ -597,5 +597,5 @@ jobs:
         run: "./.github/scripts/build-images.sh"
         env:
           IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./datasets/${{ github.job }}"
+          DF_PATH: "./datasets/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
