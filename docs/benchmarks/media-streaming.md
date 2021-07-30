@@ -61,13 +61,13 @@ To start the client container and connect it to the *streaming_network* network 
 
 The client will issue a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of client's execution, the resulting log files can be found under /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`.
 
-  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
+  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/media-streaming "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite3/media-streaming/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/media-streaming.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite3/media-streaming.svg "Go to DockerHub Page"

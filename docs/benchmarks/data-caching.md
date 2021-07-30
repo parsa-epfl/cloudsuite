@@ -133,9 +133,9 @@ and the client on different sockets of the same machine
 
   [memcachedWeb]: http://memcached.org/ "Memcached Website"
 
-  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
+  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
 
   [repo]: https://github.com/parsa-epfl/cloudsuite "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite3/data-caching/ "DockerHub Page"

@@ -71,12 +71,12 @@ The last command has a mandatory parameter to set the IP of the web_server, and 
 
 The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 
-  [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
-  [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
-  [mysqlserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
+  [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
+  [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
+  [mysqlserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/CSv3/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-serving "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite/tree/CSv3/benchmarks/web-serving "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite3/web-serving/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite3/web-serving.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite3/web-serving.svg "Go to DockerHub Page"
