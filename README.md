@@ -1,5 +1,7 @@
 # CloudSuite 3.0 #
 
+**This branch is an archive where all CloudSuite 3.0 benchmarks are stored. All prebuilt images are available at [cloudsuite3][old] at dockerhub. If you're searching for CloudSuite 4.0, please checkout [master][master] branch.**
+
 [CloudSuite][csp] is a benchmark suite for cloud services. The third release consists of eight applications that have 
 been selected based on their popularity in today's datacenters. The benchmarks are based on real-world software 
 stacks and represent real-world setups.
@@ -26,3 +28,5 @@ We encourage CloudSuite users to use GitHub issues for requests for enhancements
 [csl]: http://cloudsuite.ch/pages/license/ "CloudSuite License"
 [csb]: http://cloudsuite.ch/#download "CloudSuite Benchmarks"
 [pkb]: https://github.com/GoogleCloudPlatform/PerfKitBenchmarker "Google's PerfKit Benchmarker"
+[old]: https://hub.docker.com/orgs/cloudsuite3/repositories "CloudSuite3 on Dockerhub"
+[master]: https://github.com/parsa-epfl/cloudsuite "CloudSuite Master"
