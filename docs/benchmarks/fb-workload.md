@@ -1,8 +1,8 @@
-# Facebook Workload
+# Facebook Workload (fb-oss-performance)
 
-The bechmark tests maily collects RPS with MediaWiki, the main page is the Barack Obama page from Wikipedia; this is based on the Wikimedia Foundation using it as a benchmark, and finding it fairly representative of Wikipedia. The benchmarking tool performs a sanity check once the engine and webserver have started accepting traffic to ensure that the framework is sending reasonable responses on the URLs being benchmarked.
+The benchmark tests mainly collects RPS with MediaWiki, the main page is the Barack Obama page from Wikipedia; this is based on the Wikimedia Foundation using it as a benchmark, and finding it fairly representative of Wikipedia. The benchmarking tool performs a sanity check once the engine and webserver have started accepting traffic to ensure that the framework is sending reasonable responses on the URLs being benchmarked.
 
-This bechmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
+This benchmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
 
 The script will run 300 warmup requests, then as many requests as possible in 1 minute.
 
@@ -37,11 +37,11 @@ More info on CPU frequency can be found in [fb-cpufreq.md](https://github.com/fa
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 ```
-docker pull cloudsuite/mysql:latest
+docker pull cloudsuite/mysql:mariadb-10.3
 ```
 The following command will start the database server:
 ```
-docker run -dt --net=host cloudsuite/mysql:latest
+docker run -dt --net=host cloudsuite/mysql:mariadb-10.3
 ```
 
 ### Starting the siege client ####
@@ -56,17 +56,17 @@ docker run --name=siege -dt --net=host cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_
 ---
 **NOTE**
 
-HOST_IP_OF_FB_SERVER = IP addr of the Host Machine where the fb-workload:server docker will be started
-HOSTNAME_OF_FB_SERVER = Hostname of the Host Machine where the fb-workload:server docker will be started
+HOST_IP_OF_FB_SERVER = IP addr of the Host Machine where the `fb-oss-performance:4.0` docker will be started
+HOSTNAME_OF_FB_SERVER = Hostname of the Host Machine where the `fb-oss-performance:4.0` docker will be started
 
-If siege is started on the same host as of fb-workload:server, then HOST_IP_OF_FB_SERVER, HOSTNAME_OF_FB_SERVER can be skipped
+If siege is started on the same host as of `fb-oss-performance:4.0`, then HOST_IP_OF_FB_SERVER, HOSTNAME_OF_FB_SERVER can be skipped
 
 ---
 
 ### Starting the facebook workload benchmark ####
 To start the facebook workload benchmark you have to first `pull` the server image. To `pull` the server image use the following command:
 ```
-docker pull cloudsuite/fb-workload:server
+docker pull cloudsuite/fb-oss-performance:4.0
 ``` 
 Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](../../benchmarks/fb-oss-performance/files/cmd.sh)
 ```
@@ -92,5 +92,5 @@ For information about the hhvm performance [hhvm-blog](https://hhvm.com/blog/929
 The following command will start the facebook workload:
 
 ```
-docker run --net=host --name=fb -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-workload:server
+docker run --net=host --name=fb -v /<path>/cmd.sh:/oss-performance/cmd.sh cloudsuite/fb-oss-performance:4.0
 ```

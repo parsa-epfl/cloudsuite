@@ -24,16 +24,16 @@ The benchmark is designed to run on a Hadoop cluster, where the single master ru
 Start the master with:
 
 ```bash
-$ docker run -d --net host --name master cloudsuite/data-analytics master
+$ docker run -d --net host --name master cloudsuite/data-analytics:4.0 master
 ```
 
 Start any number of Hadoop slaves with:
 ```
 $ # on VM1
-$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.9.2 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
 
 $ # on VM2
-$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.9.2 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
 
 ...
 ```

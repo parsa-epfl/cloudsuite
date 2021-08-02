@@ -20,10 +20,10 @@ $ docker run -d --net host --name master cloudsuite/hadoop:2.10.1 master
 Start any number of Hadoop slaves with:
 ```
 $ # on VM1
-$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.9.2 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
 
 $ # on VM2
-$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.9.2 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
 
 ...
 ```
