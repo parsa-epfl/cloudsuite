@@ -1,4 +1,6 @@
-# CloudSuite 3.0 #
+# CloudSuite 4.0 #
+
+**This branch is WIP and contains the upcoming release of CloudSuite v4.0. If you are looking for CloudSuite 3, please checkout the [CSv3][CSv3] branch.**
 
 [CloudSuite][csp] is a benchmark suite for cloud services. The third release consists of eight applications that have 
 been selected based on their popularity in today's datacenters. The benchmarks are based on real-world software 
@@ -26,3 +28,4 @@ We encourage CloudSuite users to use GitHub issues for requests for enhancements
 [csl]: http://cloudsuite.ch/pages/license/ "CloudSuite License"
 [csb]: http://cloudsuite.ch/#download "CloudSuite Benchmarks"
 [pkb]: https://github.com/GoogleCloudPlatform/PerfKitBenchmarker "Google's PerfKit Benchmarker"
+[CSv3]: https://github.com/parsa-epfl/cloudsuite/tree/CSv3 "CloudSuite v3"

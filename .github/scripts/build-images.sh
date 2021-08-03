@@ -45,7 +45,7 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
         echo "No extra arch is found, skipping install QEMU."
     fi
     
-    if ( [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/master" ] ) || [ "${FORCE_PUSH}" = "true" ]; then
+    if ( [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/main" ] ) || [ "${FORCE_PUSH}" = "true" ]; then
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
         # Pushing needs login, test if login was successful
         if [ $? != "0" ]; then
