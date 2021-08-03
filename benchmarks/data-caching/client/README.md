@@ -5,4 +5,4 @@ This `Dockerfile` creates an ubuntu (latest) image representing the Memcached cl
 Example:
 
     $ docker pull cloudsuite/data-caching:client
-    $ docker run -it --name dc-client --net caching_network cloudsuite/data-caching:client bash
+    $ docker run -it --name dc-client --net host cloudsuite/data-caching:client bash

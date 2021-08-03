@@ -16,7 +16,7 @@ Supported tags and their respective `Dockerfile` links:
 
  - [`web_server`][webserverdocker]: This represents the web server.
  - [`memcached_server`][memcacheserverdocker]: This represents the memcached server.
- - [`db_server`][mysqlserverdocker]: This represents the database server, which runs MySQL.
+ - [`db_server`][databaseserverdocker]: This represents the database server, which runs MariaDb.
  - [`faban_client`][clientdocker]: This represents the faban client.
 
 These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
@@ -28,9 +28,10 @@ To start the database server, you have to first `pull` the server image. To `pul
 
 The following command will start the database server:
 
-    $ docker run -dt --net=host --name=mysql_server cloudsuite/web-serving:db_server ${WEB_SERVER_IP}
+    $ docker run -dt --net=host --name=database_server cloudsuite/web-serving:db_server ${WEB_SERVER_IP}
 
 The ${WEB_SERVER_IP}  parameter is mandatory. It sets the IP of the web server. If you are using the host network, the web server IP is the IP of the machine that you are running the web_server container on. If you create your own network you can use the name that you are going to give to the web server (we called it web_server in the following commands).
+The database server is using MariaDB version 10.3.
 
 ### Starting the memcached server ####
 To start the memcached server, you have to first `pull` the server image. To `pull` the server image use the following command:
@@ -54,7 +55,7 @@ To run the web server *with HHVM enabled*, use the following command:
 
     $ docker run -e "HHVM=true" -dt --net=host --name=web_server_local cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
 
-The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are mysql_server, and memcache_server, respectively, which are the default names of the containers. 
+The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are database_server, and memcache_server, respectively, which are the default names of the containers. 
 The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
 
 ###  Running the benchmark ###
@@ -73,7 +74,7 @@ The last command will output the summary of the benchmark results in XML at the 
 
   [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
   [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/memcached_server/Dockerfile "MemcacheServer Dockerfile"
-  [mysqlserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "MysqlServer Dockerfile"
+  [databaseserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/db_server/Dockerfile "DatabaseServer(MariaDB) Dockerfile"
   [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
 
   [repo]: https://github.com/parsa-epfl/cloudsuite/tree/master/benchmarks/web-serving "GitHub Repo"

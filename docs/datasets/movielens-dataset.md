@@ -20,7 +20,7 @@ ratings.
 
 To obtain the image:
 
-    $ docker pull cloudsuite/movielens-dataset
+    $ docker pull cloudsuite/movielens-dataset:4.0
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/movielens-dataset/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/movielens-dataset.svg "Go to DockerHub Page"

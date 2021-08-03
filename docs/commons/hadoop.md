@@ -1,34 +1,33 @@
 ## Hadoop
+Currently supported version is 2.10.1.
 
-Currently supported version is 2.7.3.
-
-To obtain the image:
+To obtain / build the image :
 ```
-$ docker pull cloudsuite/hadoop
+$ docker pull cloudsuite/hadoop:2.10.1
+
+or
+
+$ cd /path/to/cloudsuite/commons/hadoop/2.10.1
+$ docker build --network host -t cloudsuite/hadoop:2.10.1 .
 ```
 
 ### Running Hadoop
-
-First, create a network to isolate your Hadoop cluster:
-```
-$ docker network create hadoop-net
-```
-
 Start Hadoop master with:
 ```
-$ docker run -d --net hadoop-net --name master --hostname master cloudsuite/hadoop master
+$ docker run -d --net host --name master cloudsuite/hadoop:2.10.1 master
 ```
 
 Start any number of Hadoop slaves with:
 ```
-$ docker run -d --net hadoop-net --name slave01 --hostname slave01 cloudsuite/hadoop slave
-$ docker run -d --net hadoop-net --name slave02 --hostname slave02 cloudsuite/hadoop slave
+$ # on VM1
+$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
+
+$ # on VM2
+$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
+
 ...
 ```
-
-Note that it is important to set hostnames. Hostname should be the same as
-name. If master's name/hostname isn't "master", then it should be supplied to
-slaves when running the containers as an argument after "slave".
+Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADRESS_MASTER` to `127.0.1.1`.
 
 Run the supplied example job (grep) with:
 ```

@@ -1014,9 +1014,9 @@ core_ssl_connect (Conn *s)
 		if (!ssl_cipher)
 			fprintf (stderr, "core_ssl_connect: server refused all client cipher "
 					"suites!\n");
-		else
-			fprintf (stderr, "core_ssl_connect: cipher=%s, valid=%d, id=%lu\n",
-					ssl_cipher->name, ssl_cipher->valid, ssl_cipher->id);
+		// else
+		// 	fprintf (stderr, "core_ssl_connect: cipher=%s, valid=%d, id=%lu\n",
+		// 			ssl_cipher->name, ssl_cipher->valid, ssl_cipher->id);
 	}
 
 	arg.l = 0;

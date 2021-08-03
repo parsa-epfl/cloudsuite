@@ -1,16 +1,12 @@
-FROM cloudsuite/java
+FROM cloudsuitetest/java:adoptopenjdk8
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
-ENV SOLR_USER solr
-
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends telnet lsof wget unzip \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& groupadd -r $SOLR_USER  \
-	&& useradd -r -g $SOLR_USER $SOLR_USER
+	&& apt-get install -y --no-install-recommends procps telnet lsof wget unzip \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENV BASE_PATH /usr/src
-ENV SOLR_VERSION 5.2.1
+ENV SOLR_VERSION 6.6.6
 ENV SOLR_HOME $BASE_PATH/solr-$SOLR_VERSION
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV INDEX_URL $PACKAGES_URL/index
@@ -27,24 +23,21 @@ ENV ZOOKEEPER_PORT $SOLR_PORT
 #INSTALL SOLR
 RUN 	mkdir -p $BASE_PATH/cloudsuite-web-search \
 	&& cd $BASE_PATH \ 
-	&& wget -O solr.tar.gz "archive.apache.org/dist/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
+	&& wget --progress=bar:force -O solr.tar.gz "archive.apache.org/dist/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
 	&& tar -zxf solr.tar.gz 
 
 RUN 	cd $SOLR_HOME/server/solr/configsets/basic_configs/conf \
-	&& wget $SCHEMA_URL -O schema.xml \
-	&& wget $SOLR_CONFIG_URL -O solrconfig.xml
+	&& wget --progress=bar:force $SCHEMA_URL -O schema.xml \
+	&& wget --progress=bar:force $SOLR_CONFIG_URL -O solrconfig.xml
 
 #RELOAD CONFIGURATION
 RUN     cd $SOLR_HOME \
 	&& mkdir -p $SOLR_CORE_DIR \
 	&& cp -R server/solr/* $SOLR_CORE_DIR 
 
-RUN 	chown -R $SOLR_USER:$SOLR_USER $BASE_PATH
-
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE $SOLR_PORT
-USER $SOLR_USER
 
 ENTRYPOINT ["/entrypoint.sh"]

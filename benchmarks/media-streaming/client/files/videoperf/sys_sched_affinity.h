@@ -4,10 +4,10 @@
 #ifdef HAVE_SCHED_AFFINITY
 #ifdef __linux__
 
-extern long sched_setaffinity(pid_t pid, unsigned int len,
+extern long sched_setaffinity_videoperf(pid_t pid, unsigned int len,
    unsigned long *cpu_mask);
 
-extern long sched_getaffinity(pid_t pid, unsigned int len,
+extern long sched_getaffinity_videoperf(pid_t pid, unsigned int len,
    unsigned long *cpu_mask);
 
 #endif /* HAVE_SCHED_AFFINITY */

@@ -4,7 +4,7 @@
 export IP=$1
 
 #Read local IP
-export HOST_IP=$(echo `ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`) \
+export HOST_IP=$(echo `hostname`) \
   && export AGENTS=$HOST_IP:$NUM_AGENTS
 
 #Read client parameters
@@ -13,6 +13,7 @@ export SCALE=$2 \
   && export RAMP_DOWN=$4 \
   && export STEADY_STATE=$5
 
+export JAVA_HOME=`ls -d $JAVA_HOME`
 #PREPARE
 $FABAN_HOME/master/bin/startup.sh
 
@@ -20,6 +21,7 @@ $FABAN_HOME/master/bin/startup.sh
 cd $FABAN_HOME/search \
 	&& cp distributions/$SEARCH_DRIVER src/sample/searchdriver/SearchDriver.java
 
+cd $FABAN_HOME/search && sed -i 's/^compiler.target.version=.*/compiler.target.version=11/' build.properties
 
 cd $FABAN_HOME/search \
 	&& $ANT_HOME/bin/ant deploy 

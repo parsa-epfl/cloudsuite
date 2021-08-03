@@ -1,0 +1,601 @@
+name: build-and-push-docker-image
+on: 
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+env:
+  PUSH_COMMIT_RANGE: ${{ github.event.before }}...${{ github.event.after }}
+  PR_COMMIT_RANGE: ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+  DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+  FORCE_PUSH: "false"
+
+jobs:
+  base-os:
+    runs-on: ubuntu-latest
+    env:
+      DH_REPO: "cloudsuitetest/debian"
+      DF_PATH: "./commons/base-os"
+      DBX_PLATFORM: "linux/amd64,linux/arm64,linux/riscv64"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: ${{ github.job }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+      
+  java:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        include:
+          - tag: "adoptopenjdk8"
+            platform: "linux/amd64,linux/arm64"
+          - tag: "openjdk11"
+            platform: "linux/amd64,linux/arm64,linux/riscv64"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+    
+  mysql:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["mariadb-10.3"]
+        platform: ["linux/amd64,linux/arm64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+    
+  memcached:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["1.6.6"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+    
+  hhvm:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["3.30"]
+        platform: ["linux/amd64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+
+  graphite-statsd:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["0.9.15"]
+        platform: ["linux/amd64,linux/arm64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+  
+  faban:
+    runs-on: ubuntu-latest
+    needs: java
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["1.4"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+    
+  spark:
+    runs-on: ubuntu-latest
+    needs: java
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["2.4.5"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+
+  siege:
+    runs-on: ubuntu-latest
+    needs: java
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["4.0.3rc3"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+
+  cassandra:
+    runs-on: ubuntu-latest
+    needs: java
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["3.11.6"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+
+  hadoop:
+    runs-on: ubuntu-latest
+    needs: java
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["2.10.1"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+
+  data-analytics:
+    runs-on: ubuntu-latest
+    needs: hadoop
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.hadoop.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  data-caching:
+    runs-on: ubuntu-latest
+    needs: memcached
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        include:
+          - tag: "server"
+            platform: "linux/amd64,linux/arm64,linux/riscv64"
+          - tag: "client"
+            platform: "linux/amd64,linux/arm64,linux/riscv64"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.memcached.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  data-serving:
+    runs-on: ubuntu-latest
+    needs: cassandra
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["server", "client"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.cassandra.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  django-workload:
+    runs-on: ubuntu-latest
+    needs: [cassandra, graphite-statsd, memcached, siege]
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["cassandra", "graphite", "memcached", "siege"]
+        platform: ["linux/amd64,linux/arm64"]
+        include:
+          - tag: "uwsgi"
+            platform: "linux/amd64,linux/arm64"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.cassandra.outputs.is_parent_modified == 'true' || 
+          needs.graphite-statsd.outputs.is_parent_modified == 'true' ||
+          needs.memcached.outputs.is_parent_modified == 'true' ||
+          needs.siege.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  fb-oss-performance:
+    runs-on: ubuntu-latest
+    needs: [mysql, siege, hhvm]
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.mysql.outputs.is_parent_modified == 'true' ||
+          needs.siege.outputs.is_parent_modified == 'true' ||
+          needs.hhvm.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+  
+  graph-analytics:
+    runs-on: ubuntu-latest
+    needs: spark
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.spark.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+
+  in-memory-analytics:
+    runs-on: ubuntu-latest
+    needs: spark
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.spark.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  media-streaming:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["client", "server", "dataset"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+  
+  web-search:
+    runs-on: ubuntu-latest
+    needs: faban
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["client", "server", "dataset"]
+        platform: ["linux/amd64,linux/arm64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.faban.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+  
+  web-serving:
+    runs-on: ubuntu-latest
+    needs: [faban, mysql, memcached]
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["db_server", "faban_client", "memcached_server", "web_server"]
+        platform: ["linux/amd64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.faban.outputs.is_parent_modified == 'true' ||
+          needs.mysql.outputs.is_parent_modified == 'true' ||
+          needs.memcached.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+  
+  movielens-dataset:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./datasets/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+  
+  twitter-dataset-graph:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuitetest/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["4.0"]
+        platform: ["linux/amd64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./datasets/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}

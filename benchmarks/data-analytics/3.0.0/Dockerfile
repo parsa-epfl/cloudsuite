@@ -1,11 +1,11 @@
-FROM cloudsuite/hadoop
+FROM cloudsuite/hadoop:2.9.1
 
-ENV MAHOUT_VERSION 0.12.2
+ENV MAHOUT_VERSION 0.13.0
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-      bzip2 \
+    bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Mahout
@@ -16,7 +16,10 @@ RUN set -x \
     && mv /opt/apache-mahout-distribution-${MAHOUT_VERSION} ${MAHOUT_HOME}
 
 # Download dataset
-RUN curl https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles1.xml-p10p30302.bz2 | bunzip2 > /root/wiki
+# Use latest_link=$(curl -s https://dumps.wikimedia.org/enwiki/latest/ | grep  "enwiki-latest-pages-articles1.xml-" | grep -Eoi '<a [^>]+>' | cut -d '"' -f 2 | grep -E "*.bz2$") \
+#     && curl https://dumps.wikimedia.org/enwiki/latest/${latest_link} | bunzip2 > /root/wiki - to get the latest link and download.
+RUN curl https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles1.xml-p1p41242.bz2 | bunzip2 > /root/wiki
+
 COPY files/*-site.xml ${HADOOP_CONF_DIR}/
 COPY files/categories /root/
 COPY files/benchmark.sh /root/
