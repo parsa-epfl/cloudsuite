@@ -4,7 +4,7 @@ The benchmark tests mainly collects RPS with MediaWiki, the main page is the Bar
 
 This benchmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
 
-The script will run 300 warmup requests, then as many requests as possible in 1 minute.
+The script will run 300 warm-up requests, then as many requests as possible in 1 minute.
 
 The facebook benchmark readme file can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
@@ -56,7 +56,7 @@ docker run --name=siege -dt --net=host cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_
 ---
 **NOTE**
 
-HOST_IP_OF_FB_SERVER = IP addr of the Host Machine where the `fb-oss-performance:4.0` docker will be started
+HOST_IP_OF_FB_SERVER = IP address of the Host Machine where the `fb-oss-performance:4.0` docker will be started
 HOSTNAME_OF_FB_SERVER = Hostname of the Host Machine where the `fb-oss-performance:4.0` docker will be started
 
 If siege is started on the same host as of `fb-oss-performance:4.0`, then HOST_IP_OF_FB_SERVER, HOSTNAME_OF_FB_SERVER can be skipped
