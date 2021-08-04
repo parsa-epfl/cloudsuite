@@ -1,6 +1,6 @@
 # Memcached Client #
 
-This `Dockerfile` creates an ubuntu (latest) image representing the Memcached client which tries to access server's data.
+This `Dockerfile` creates a debian image representing the Memcached client which tries to access server's data.
 
 Example:
 

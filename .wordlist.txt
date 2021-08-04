@@ -84,6 +84,7 @@ Nutch
 OPERATIONCOUNT
 os
 PageRank
+parallelize
 parallelized
 parsa
 php
