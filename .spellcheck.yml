@@ -10,7 +10,11 @@ matrix:
       wordlists:
         - "./.wordlist.txt"
     pipeline:
-        - pyspelling.filters.markdown:
+      - pyspelling.filters.markdown:
+      - pyspelling.filters.html:
+          comments: false
+          ignores: [code, pre, href]
+      - pyspelling.filters.text:
     sources:
       - docs/*.md
       - docs/**/*.md

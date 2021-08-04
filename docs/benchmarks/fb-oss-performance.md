@@ -9,7 +9,7 @@ The script will run 300 warmup requests, then as many requests as possible in 1 
 The facebook benchmark readme file can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
 ### Preparing the VM
-Facebook-Mediawiki workload needs specific network parameters to be set. Set the below params in `/etc/sysctl.conf` file as `root`.
+Facebook-Mediawiki workload needs specific network parameters to be set. Set the below parameters in `/etc/sysctl.conf` file as `root`.
 ```
 net.ipv4.tcp_tw_reuse = 1
 net.core.somaxconn = 1024
@@ -73,7 +73,7 @@ Create a file `cmd.sh` on the host which contains the command to run mediawiki w
 chmod +x cmd.sh
 ```
 
-To run the benchmark using HHVM edit the below lines in `cmd.sh`, with their private IP's
+To run the benchmark using HHVM edit the below lines in `cmd.sh`, with their private IP
 ```
 MYSQL_IP
 SIEGE_IP
@@ -86,7 +86,7 @@ You can also use any one of the below parameters in `cmd.sh`
 --php=$PHP_FPM7_BIN
 ```
 
-More info on parameters which can be provided to the facebook worload can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
+More info on parameters which can be provided to the facebook workload can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 For information about the hhvm performance [hhvm-blog](https://hhvm.com/blog/9293/lockdown-results-and-hhvm-performance) can be referred.
 
 The following command will start the facebook workload:

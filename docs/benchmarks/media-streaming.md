@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. The client, based on [httperf's][httperf_repo] wsesslog session generator, generates a request mix for different videos, to stress the server.
+This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. The client, based on [httperf][httperf_repo]'s wsesslog session generator, generates a request mix for different videos, to stress the server.
 
 ## Using the benchmark ##
 The benchmark has two tiers: the server and the clients. The server runs Nginx, and the clients send requests to stream videos from the server. Each tier has its own image which is identified by its tag.
@@ -51,7 +51,7 @@ Copy the **`logs`** folder from Host1 to Host2
 
     $ rsync -zarvh username@HOST1:$HOME/logs $HOME
 
-Note: Pass public key file, in case of authentication error using -e "ssh -i /path/to/.pemfile" to the rsync command
+Note: Pass public key file, in case of authentication error using -e "ssh -i /path/to/.pemfile" to the `rsync` command
 
 The ${SERVER_IP} is the IP of Host1
 
