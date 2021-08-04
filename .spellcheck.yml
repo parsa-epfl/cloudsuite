@@ -1,0 +1,16 @@
+matrix:
+  - name: md source
+    aspell:
+      lang: en
+      d: en_US
+      ignore-case: true
+      mode: html
+    default_encoding: utf-8
+    dictionary:
+      wordlists:
+        - "./.wordlist.txt"
+    pipeline:
+        - pyspelling.filters.markdown:
+    sources:
+      - docs/*.md
+      - docs/**/*.md

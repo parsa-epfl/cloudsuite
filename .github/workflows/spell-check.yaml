@@ -1,0 +1,27 @@
+on: 
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: spell-check
+        uses: rojopolis/spellcheck-github-actions@0.14.0
+      - name: push to gh-page
+        uses: devmasx/merge-branch@v1.3.1
+        if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+        with:
+          from_branch: master
+          target_branch: gh-pages
+          github_token: ${{ github.token }}
+
