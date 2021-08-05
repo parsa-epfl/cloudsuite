@@ -90,7 +90,7 @@ If the scaled file is already created, but the server is not warmed up, use the 
 ### Running the benchmark ###
 
 To determine the maximum throughput while running the workload with eight client threads,
-200 TPC/IP connections, and a get/set ratio of 0.8, use the following command:
+200 TCP/IP connections, and a get/set ratio of 0.8, use the following command:
 
     $ ./loader -a ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -g 0.8 -T 1 -c 200 -w 8
 

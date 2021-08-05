@@ -30,14 +30,14 @@ $ docker run -d --net host --name master cloudsuite/data-analytics:4.0 master
 Start any number of Hadoop slaves with:
 ```
 $ # on VM1
-$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave01 cloudsuite/hadoop:2.10.1 slave $IP_ADDRESS_MASTER
 
 $ # on VM2
-$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADRESS_MASTER
+$ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADDRESS_MASTER
 
 ...
 ```
-Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADRESS_MASTER` to `127.0.1.1`.
+Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADDRESS_MASTER` to `127.0.1.1`.
 
 Run the benchmark with:
 
