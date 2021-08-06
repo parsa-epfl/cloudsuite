@@ -40,7 +40,7 @@ The below services are needed for the workload
 
         # Edit uwsgi.cfg with endpoints (host-private-ip) of uWSGI, Graphite, Cassandra, Memcached and Siege
 
-        $ cd cloudsuite/benchmarks/django-workload-workload/uwsgi/
+        $ cd cloudsuite/benchmarks/django-workload/uwsgi/
         $ . ./uwsgi.cfg
         $ docker run -tid --name uwsgi_container --network host -e GRAPHITE_ENDPOINT=$GRAPHITE_ENDPOINT -e CASSANDRA_ENDPOINT=$CASSANDRA_ENDPOINT -e MEMCACHED_ENDPOINT="$MEMCACHED_ENDPOINT" -e SIEGE_ENDPOINT=$SIEGE_ENDPOINT -e UWSGI_ENDPOINT=$UWSGI_ENDPOINT cloudsuite/django-workload:uwsgi
 
@@ -49,7 +49,7 @@ The below services are needed for the workload
 
         # Edit siege.cfg with the endpoint of uWSGI and the number of siege workers needed 
 
-        $ cd cloudsuite/benchmarks/django-workload-workload/siege/
+        $ cd cloudsuite/benchmarks/django-workload/siege/
         $ . ./siege.cfg
         $ docker run -ti --name siege_container --volume=/tmp:/tmp --network host -e TARGET_ENDPOINT=$UWSGI_ENDPOINT -e SIEGE_WORKERS=$SIEGE_WORKERS cloudsuite/django-workload:siege
 
