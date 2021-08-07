@@ -74,8 +74,7 @@ be running.
 
     $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
 
-Start Spark master and Spark workers. They should all run within the same
-Docker network, which we call spark-net here. The workers get access to the
+Start Spark master and Spark workers. The workers get access to the
 datasets with --volumes-from movielens-data.
 
     $ docker run -dP --net host --name spark-master \
@@ -93,6 +92,36 @@ Finally, run the benchmark as the client to the Spark master:
                  /data/ml-latest-small /data/myratings.csv \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077
+
+### Multi-node deployment with dedicated network
+
+It's also feasible to run all these containers within the same docker network. First, create a dedicated network:
+
+```
+$ docker network create spark-net
+```
+
+Then setup Spark master and slaves accordingly, but this time we give a specific hostname to the master. Slaves also use this hostname to connect:
+
+```
+$ docker run -dP --net spark-net --hostname spark-master \
+    --name spark-master cloudsuite/spark/spark:2.4.5 master
+$ docker run -dP --net spark-net --volumes-from data --name spark-worker-01 \
+    cloudsuite/spark/spark:2.4.5 worker spark://spark-master:7077
+$ docker run -dP --net spark-net --volumes-from data --name spark-worker-02 \
+    cloudsuite/spark:2.4.5 worker spark://spark-master:7077
+$ ...
+```
+
+And finally run the benchmark:
+
+```
+$ docker run --rm --net spark-net --volumes-from data cloudsuite/in-memory-analytics:4.0 \
+    /data/ml-latest-small /data/myratings.csv \
+    --driver-memory 4g --executor-memory 4g \
+    --master spark://spark-master:7077
+```
+
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/in-memory-analytics/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/in-memory-analytics.svg "Go to DockerHub Page"
