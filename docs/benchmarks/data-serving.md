@@ -25,6 +25,8 @@ $ docker run --name cassandra-server --privileged --net host cloudsuite/data-ser
 ```
 ### Multiple Server Containers
 
+Please note the server containers cannot be hosted on the same node when the host network configuration is used because they will all try to use the same port.
+
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
 ```bash
@@ -33,7 +35,7 @@ $ docker run --name cassandra-server-seed --privileged --net host cloudsuite/dat
 
 Then we prepare the server as previously.
 
-The other server containers are instantiated as follows on different VMs:
+The other server containers are instantiated as follows on **different VMs**:
 
 ```bash
 $ docker run --name cassandra-server(id) --privileged --net host -e CASSANDRA_SEEDS=cassandra-server-seed-IPADDRESS cloudsuite/data-serving:server
