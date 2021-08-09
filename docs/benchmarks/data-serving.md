@@ -25,7 +25,7 @@ $ docker run --name cassandra-server --privileged --net host cloudsuite/data-ser
 ```
 ### Multiple Server Containers
 
-Please do not start these server containers on the same machine when the host network configuration is used, because them will listen on the same port 7199. See [issue #329](https://github.com/parsa-epfl/cloudsuite/issues/329) for more details. 
+Please note the server containers cannot be hosted on the same node when the host network configuration is used because they will all try to use the same port.
 
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
