@@ -74,8 +74,7 @@ be running.
 
     $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
 
-Start Spark master and Spark workers. They should all run within the same
-Docker network, which we call spark-net here. The workers get access to the
+Start Spark master and Spark workers. The workers get access to the
 datasets with --volumes-from movielens-data.
 
     $ docker run -dP --net host --name spark-master \
