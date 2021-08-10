@@ -14,12 +14,13 @@ To obtain the images:
 ```bash
 $ docker pull cloudsuite/hadoop:2.10.1
 $ docker pull cloudsuite/data-analytics:4.0
-
 ```
 
 ## Running the benchmark ##
 
 The benchmark is designed to run on a Hadoop cluster, where the single master runs the driver program, and the slaves run the mappers and reducers.
+
+**Note**: The following commands will run the Hadoop cluster within host's network. To make sure that slaves and master can communicate with each other, the master container's hostname, which should be host's hostname, must be able to be resolved to the same IP address by the master container and all slave containers. 
 
 Start the master with:
 
@@ -37,7 +38,7 @@ $ docker run -d --net host --name slave02 cloudsuite/hadoop:2.10.1 slave $IP_ADD
 
 ...
 ```
-Note : Start each slave on a different VM. If they are running on the same host rather than multiple VMs, you should set `IP_ADDRESS_MASTER` to `127.0.1.1`.
+**Note**: You should set `IP_ADDRESS_MASTER` to master's IP address.
 
 Run the benchmark with:
 
