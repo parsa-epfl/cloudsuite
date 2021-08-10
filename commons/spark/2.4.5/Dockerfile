@@ -1,4 +1,4 @@
-FROM cloudsuitetest/java:openjdk11
+FROM cloudsuite/java:openjdk11
 
 ENV SPARK_VERSION 2.4.5
 ENV HADOOP_VERSION 2.7

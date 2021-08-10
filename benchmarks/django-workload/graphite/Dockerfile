@@ -1,4 +1,4 @@
-FROM cloudsuitetest/graphite-statsd:0.9.15
+FROM cloudsuite/graphite-statsd:0.9.15
 
 ENV DEBIAN_FRONTEND noninteractive
 

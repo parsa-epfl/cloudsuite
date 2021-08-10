@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -125,7 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -179,7 +179,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: java
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -206,7 +206,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: java
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -233,7 +233,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: java
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -260,7 +260,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: java
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -287,7 +287,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: java
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     outputs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
@@ -314,7 +314,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: hadoop
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]
@@ -363,7 +363,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: cassandra
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["server", "client"]
@@ -386,7 +386,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [cassandra, graphite-statsd, memcached, siege]
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["cassandra", "graphite", "memcached", "siege"]
@@ -415,7 +415,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [mysql, siege, hhvm]
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]
@@ -440,7 +440,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: spark
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]
@@ -464,7 +464,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: spark
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]
@@ -487,7 +487,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["client", "server", "dataset"]
@@ -510,7 +510,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: faban
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["client", "server", "dataset"]
@@ -533,7 +533,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [faban, mysql, memcached]
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["db_server", "faban_client", "memcached_server", "web_server"]
@@ -558,7 +558,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]
@@ -581,7 +581,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: base-os
     env:
-      DH_REPO: "cloudsuitetest/${{ github.job }}"
+      DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
         tag: ["4.0"]

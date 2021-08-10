@@ -1,4 +1,4 @@
-FROM cloudsuitetest/faban:1.4
+FROM cloudsuite/faban:1.4
 LABEL maintainer="Siddharth Gupta <siddharth.gupta@epfl.ch>"
 
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search

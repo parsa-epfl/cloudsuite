@@ -1,4 +1,4 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/debian:base-os
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl ca-certificates \
