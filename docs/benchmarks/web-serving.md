@@ -21,6 +21,9 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
+### IP Addresses ###
+Please note that all IP addresses should refer to the explicit IP address of the host server running each container.
+
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 
@@ -55,8 +58,7 @@ To run the web server *with HHVM enabled*, use the following command:
 
     $ docker run -e "HHVM=true" -dt --net=host --name=web_server_local cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
 
-The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are database_server, and memcache_server, respectively, which are the default names of the containers. 
-The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
+The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP of the database server, and the IP of the memcached server, respectively. The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
 
 ###  Running the benchmark ###
 

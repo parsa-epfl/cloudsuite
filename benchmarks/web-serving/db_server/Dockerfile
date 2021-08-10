@@ -1,4 +1,4 @@
-FROM cloudsuitetest/mysql:mariadb-10.3
+FROM cloudsuite/mysql:mariadb-10.3
 LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 ENV root_password root
