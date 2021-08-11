@@ -1,5 +1,4 @@
 FROM cloudsuite/debian:base-os
-LABEL maintainer="Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>"
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r memcache && useradd -r -g memcache memcache

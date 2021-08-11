@@ -1,6 +1,4 @@
 FROM cloudsuite/debian:base-os
-#Original maintainer: MAINTAINER Tapti Palit <tpalit@cs.stonybrook.edu>
-MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
 
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends nginx \

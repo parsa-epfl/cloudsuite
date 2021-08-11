@@ -1,6 +1,5 @@
 FROM cloudsuite/debian:base-os
 
-LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV root_password root
