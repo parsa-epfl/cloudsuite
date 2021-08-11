@@ -1,5 +1,4 @@
-FROM cloudsuite/debian:base-os
-LABEL maintainer="Arash Pourhabibi Zarandi <arash.pourhabibi@epfl.ch>"
+FROM cloudsuite/base-os:debian
 
 # This is based on the official memcached Dockerfile
 

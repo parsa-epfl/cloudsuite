@@ -1,4 +1,4 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/base-os:debian
 
 # Download datasets
 RUN BUILD_DEPS="curl unzip" \
