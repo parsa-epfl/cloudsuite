@@ -67,11 +67,14 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
             if [ $? != "0" ]; then
                 exit 1
             fi
-            if [ -n "$DO_PUSH" ]; then
-                docker manifest create --amend $DH_REPO:$IMG_TAG $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
-                docker manifest push $DH_REPO:$IMG_TAG
-            fi
         done
+        if [ -n "$DO_PUSH" ]; then
+            docker manifest create --amend $DH_REPO:$IMG_TAG $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
+            docker manifest push $DH_REPO:$IMG_TAG
+            if [ $? != "0" ]; then
+                exit 1
+            fi
+        fi
     else
         docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DO_PUSH $DF_PATH
     fi
