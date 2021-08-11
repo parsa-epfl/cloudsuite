@@ -1,4 +1,4 @@
-FROM cloudsuite/debian:base-os
+FROM cloudsuite/base-os:debian
 #socialcomputing.asu.edu/uploads/1296759055/Twitter-dataset.zip
 # Install packages
 RUN BUILD_DEPS="wget unzip" \

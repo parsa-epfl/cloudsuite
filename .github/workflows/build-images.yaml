@@ -20,7 +20,7 @@ jobs:
   base-os:
     runs-on: ubuntu-latest
     env:
-      DH_REPO: "cloudsuite/debian"
+      DH_REPO: "cloudsuite/${{ github.job }}"
       DF_PATH: "./commons/base-os"
       DBX_PLATFORM: "linux/amd64,linux/arm64,linux/riscv64"
     outputs:
@@ -33,7 +33,7 @@ jobs:
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
-          IMG_TAG: ${{ github.job }}
+          IMG_TAG: "debian"
       - id: set_is_parent_modified
         run: echo "::set-output name=is_parent_modified::${MODIFIED}"
       
