@@ -59,22 +59,19 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
         cd $DF_PATH
         for arch in amd64 arm64 riscv64; do 
             if [ $IMG_TAG = "openjdk11" ]; then
-                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile --build-arg EXTERNAL_ARG="/usr/lib/jvm/java-11-openjdk-${arch}/" --load .
+                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile --build-arg EXTERNAL_ARG="/usr/lib/jvm/java-11-openjdk-${arch}/" $DO_PUSH .
             else
-                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} --load . 
+                docker buildx build --platform=linux/${arch} -t $DH_REPO:${arch} -f Dockerfile.${arch} $DO_PUSH . 
             fi
 
             if [ $? != "0" ]; then
                 exit 1
             fi
-        done
-        if [ -n "$DO_PUSH" ]; then
-            docker manifest create --amend $DH_REPO:$IMG_TAG $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
-            docker manifest push $DH_REPO:$IMG_TAG
-            if [ $? != "0" ]; then
-                exit 1
+            if [ -n "$DO_PUSH" ]; then
+                docker manifest create --amend $DH_REPO:$IMG_TAG $DH_REPO:amd64 $DH_REPO:arm64 $DH_REPO:riscv64
+                docker manifest push $DH_REPO:$IMG_TAG
             fi
-        fi
+        done
     else
         docker buildx build --platform $DBX_PLATFORM -t $DH_REPO:$IMG_TAG $DO_PUSH $DF_PATH
     fi
