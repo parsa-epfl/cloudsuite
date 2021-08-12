@@ -14,7 +14,7 @@ env:
   PR_COMMIT_RANGE: ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
   DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-  FORCE_PUSH: "false"
+  FORCE_PUSH: "true"
 
 jobs:
   base-os:
@@ -537,7 +537,7 @@ jobs:
     strategy:
       matrix:
         tag: ["db_server", "faban_client", "memcached_server", "web_server"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
