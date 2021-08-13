@@ -2,11 +2,13 @@
 
 **This branch is WIP and contains the upcoming release of CloudSuite v4.0. If you are looking for CloudSuite 3, please checkout the [CSv3][CSv3] branch.**
 
-[CloudSuite][csp] is a benchmark suite for cloud services. The third release consists of eight applications that have 
+[CloudSuite][csp] is a benchmark suite for cloud services. The fourth release consists of ten applications that have 
 been selected based on their popularity in today's datacenters. The benchmarks are based on real-world software 
-stacks and represent real-world setups.
+stacks and represent real-world setups. In v4.0, we have added multi-architecture support to Cloudsuite, so that the
+workloads can be run on processors using x86, ARM, and RISC-V architectures.
 
-
+# Workload Status #
+To see which workloads are currently functioning on the new architectures, you can find the status matrix [here][status_pg].
 
 # Licensing #
 
@@ -29,3 +31,4 @@ We encourage CloudSuite users to use GitHub issues for requests for enhancements
 [csb]: http://cloudsuite.ch/#download "CloudSuite Benchmarks"
 [pkb]: https://github.com/GoogleCloudPlatform/PerfKitBenchmarker "Google's PerfKit Benchmarker"
 [CSv3]: https://github.com/parsa-epfl/cloudsuite/tree/CSv3 "CloudSuite v3"
+[status_pg]: https://github.com/parsa-epfl/cloudsuite/wiki/CloudSuite-4.0-Workload-Status-Matrix
