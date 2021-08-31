@@ -131,7 +131,7 @@ jobs:
     strategy:
       matrix:
         tag: ["3.30"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
