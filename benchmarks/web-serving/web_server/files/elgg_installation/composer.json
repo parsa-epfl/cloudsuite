@@ -1,10 +1,36 @@
 {
-    "name": "elgg/elgg",
-    "version": "1.9.3",
-    "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
-    "license": "GPL-2.0",
-    "type": "project",
-    "require-dev": {
-        "phpunit/phpunit": "4.1"
-    }
+	"type": "project",
+	"name": "elgg/starter-project",
+	"description": "This is a quickstart skeleton for building a site based on Elgg 3.x.",
+	"license": "MIT",
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+	"require": {
+		"elgg/elgg": "3.3.21"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~8.5"
+	},
+	"scripts": {
+		"post-install-cmd": "\\Elgg\\Composer\\PostInstall::execute",
+		"post-package-update": "\\Elgg\\Composer\\PostUpdate::execute",
+		"test": "phpunit"
+	},
+	"config": {
+		"process-timeout": 0,
+		"platform": {
+			"php": "7.2.5"
+		},
+		"fxp-asset": {
+			"enabled": false
+		},
+		"optimize-autoloader": true,
+		"apcu-autoloader": true
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	]
 }

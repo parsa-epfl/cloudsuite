@@ -1,0 +1,10 @@
+[
+    {
+        "test": "example@example.com",
+        "expected": "<callback href=\"example@example.com\" mail=\"1\">example@example.com</callback>"
+    },
+    {
+        "test": "www.example.com",
+        "expected": "<callback href=\"http://www.example.com\" mail=\"\">www.example.com</callback>"
+    }
+]

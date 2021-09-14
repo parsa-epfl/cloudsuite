@@ -1,0 +1,129 @@
+/* <style> /**/
+
+/* ***************************************
+	MODULES
+*************************************** */
+.elgg-module {
+	display: block;
+	margin-bottom: 1rem;
+}
+
+.elgg-module > .elgg-head {
+	display: flex;
+}
+
+.elgg-module > .elgg-head > .elgg-module-menu {
+	margin-left: auto;
+}
+
+/* ***************************************
+	ASIDE
+*************************************** */
+.elgg-module-aside > .elgg-head {
+	padding: 0.5rem 1rem;
+	border-bottom: 1px solid $(border-color-soft);
+}
+
+.elgg-module-aside > .elgg-body {
+	padding: 0.5rem;
+}
+
+/* ***************************************
+	INFO
+*************************************** */
+.elgg-module-info {
+	border: 1px solid $(border-color-soft);
+	
+	> .elgg-head {
+		background-color: $(background-color-mild);
+		padding: 0.5rem 1rem;
+		
+		> * {
+			color: $(text-color-strong);
+		}
+	}
+	
+	> .elgg-body {
+		padding: 1rem;
+	}
+	
+	> .elgg-foot {
+		padding: 0.5rem 1rem;
+	}
+}
+
+/* ***************************************
+	POPUP MODULE
+*************************************** */
+.elgg-module-popup {
+	background-color: #ffffff;
+	margin-bottom: 0;
+	padding: 0.5rem;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+	border-top: 1px solid $(border-color-soft);
+	
+	> .elgg-head {
+		margin-bottom: 0.5rem;
+		
+		> * {
+			color: $(text-color-strong);
+		}
+	}
+}
+
+/* ***************************************
+	DROPDOWN MODULE
+*************************************** */
+.elgg-module-dropdown {
+	background-color: #ffffff;
+	display: none;
+	width: 15rem;
+	padding: 2rem;
+	margin-right: 0;
+	position: absolute;
+	right: 0;
+	top: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0,0, 0.2);
+}
+
+/* ***************************************
+	FEATURED MODULE
+*************************************** */
+.elgg-module-featured {
+	border: 1px solid $(border-color-highlight);
+}
+
+.elgg-module-featured > .elgg-head {
+	background-color: $(background-color-highlight);
+	color: #ffffff;
+	padding: 0.5rem 1rem;
+	height: auto;
+	overflow: hidden;
+}
+
+.elgg-module-featured > .elgg-body {
+	padding: 1rem;
+}
+
+/* ***************************************
+	SIDEBAR OWNER BLOCK AND PAGE MENU
+*************************************** */
+.elgg-owner-block,
+.elgg-page-menu {
+	border: none;
+	margin: 0;
+}
+
+.elgg-owner-block-empty {
+	margin-bottom: 2rem;
+}
+
+.elgg-owner-block > .elgg-head,
+.elgg-page-menu > .elgg-body {
+	padding: 1.5rem;
+}
+
+.elgg-owner-block > .elgg-body,
+.elgg-page-menu > .elgg-body {
+	padding: 0;
+}

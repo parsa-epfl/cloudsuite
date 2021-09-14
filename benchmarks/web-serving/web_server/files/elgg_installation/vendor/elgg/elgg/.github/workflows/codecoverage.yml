@@ -1,0 +1,57 @@
+name: Code Coverage
+on: [push]
+env:
+  ELGG_DB_USER: root
+  ELGG_DB_PASS: root
+  ELGG_DB_NAME: elgg
+  ELGG_DB_PREFIX: elgg_
+  
+jobs:
+  scrutinizer:
+    name: Scrutinizer
+    runs-on: ubuntu-latest
+        
+    steps:
+      - name: Check if run on the Elgg repo
+        if: github.repository != 'Elgg/Elgg'
+        run: exit 1
+        
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: xdebug
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+        
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        
+      - name: Restore Composer Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      
+      - name: Composer install
+        run: composer install
+      
+      - name: Install Elgg
+        run: |
+          sudo systemctl start mysql
+          mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
+          mysql -u root -proot -e 'create database elgg;'
+          php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
+      
+      - name: Test and publish code coverage
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          ./vendor/bin/phpunit --coverage-clover=coverage.clover
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
