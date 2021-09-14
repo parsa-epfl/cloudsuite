@@ -1,0 +1,12 @@
+{
+    "options": {
+        "attr": {
+            "class": "foo"
+        }
+    },
+    "tests": [
+        "Lorem ipsum dolor sit amet.",
+        "<a href=\"http://www.example.com/\">www.example.com</a>",
+        "<a href=\"mailto:example@example.com\">example@example.com</a>"
+    ]
+}

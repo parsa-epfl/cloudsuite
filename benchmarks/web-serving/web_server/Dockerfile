@@ -1,20 +1,24 @@
-FROM ubuntu:14.04
+FROM ubuntu:20.04
 
 USER root
 
 RUN apt-get update && \
 	apt-get install -y --force-yes software-properties-common && \
-	apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 && \
-	add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc)-lts-3.30 main" && \
+	#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
+	#apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 && \
+	#add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc)-lts-3.30 main" && \
+	#add-apt-repository ppa:ondrej/php && \
 	apt-get update && \
 	apt-get install --force-yes -y \
 	build-essential \
-	git \
+	vim git \
 	nginx \
-	php5 php5-gd \
-	php5-mysql php5-curl \
-	php5-fpm php5-memcache \
-	hhvm
+	php7.4 php7.4-gd \
+	php7.4-mysql php7.4-curl \
+	php7.4-fpm php7.4-memcache \
+  	php7.4-json php7.4-xml \
+  	php7.4-pdo php7.4-mbstring 
+#	hhvm
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
@@ -25,7 +29,8 @@ COPY files/elgg_installation /usr/share/nginx/html/elgg
 
 WORKDIR /usr/share/nginx/html
 # Copy over the settings.php
-COPY files/settings.php elgg/engine/settings.php
+# commented by a_ansaarii, still does not work this way. Install elgg by browser
+COPY files/settings.php elgg/elgg-config/settings.php 
 
 # Make the Elgg data directory
 RUN mkdir /elgg_data
@@ -40,7 +45,7 @@ COPY files/configure_hhvm.sh /tmp/
 
 RUN service nginx restart
 
-RUN service php5-fpm restart
+RUN service php7.4-fpm start
 
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh

@@ -1,7 +1,14 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
-    <testsuites>
+<phpunit bootstrap="./vendor/autoload.php">
+	<testsuites>
 		<testsuite name="All Tests">
-    			<directory>./engine/tests/phpunit/</directory>
+			<directory>./tests/</directory>
 		</testsuite>
 	</testsuites>
+
+	<filter>
+		<blacklist>
+			<directory suffix=".php">/vendor</directory>
+			<directory suffix=".php">/vendors</directory>
+		</blacklist>
+	</filter>
 </phpunit>

@@ -1,10 +1,5 @@
 # Elgg htaccess directives
 
-<Files "htaccess_dist">
-	order allow,deny
-	deny from all
-</Files>
-
 # Don't allow listing directories
 Options -Indexes
 
@@ -41,11 +36,13 @@ DirectoryIndex index.php
 
 ############################
 # PHP SETTINGS
-<IfModule mod_php5.c>
+# Don't forget to keep these two IfModules in sync!
+#
+<IfModule mod_php7.c>
+	# If using PHP 7.x
+
 	# limit the maximum memory consumed by the php script to 64 MB
 	php_value memory_limit 64M
-	# register_globals is deprecated as of PHP 5.3.0 - disable it for security reasons.
-	php_value register_globals 0
 	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
 	php_value post_max_size 8388608
 	# upload_max_filesize is the maximum size of a single uploaded file (5 MB)
@@ -120,26 +117,19 @@ RewriteEngine on
 
 # If your users receive the message "Sorry, logging in from a different domain is not permitted"
 # you must make sure your login form is served from the same hostname as your site pages.
-# See http://docs.elgg.org/wiki/Login_token_mismatch_error for more info.
+# See http://learn.elgg.org/en/stable/appendix/faqs/general.html#login-token-mismatch for more info.
 #
 # If you must add RewriteRules to change hostname, add them directly below (above all the others)
+
+# explicity allow access for the .well-known directory
+RewriteRule "^.well-known/" - [L]
 
 # hide all dot files/dirs (.git)
 RewriteRule (^\.|/\.) - [F]
 
-# cache handler to skip engine
-RewriteRule ^cache\/(.*)$ engine/handlers/cache_handler.php?request=$1&%{QUERY_STRING} [L]
-
-# deprecated export handler
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/?$ engine/handlers/export_handler.php?view=$1&guid=$2 [L]
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4 [L]
-
-# rule for rewrite module test during install - can be removed after installation
-RewriteRule ^rewrite.php$ install.php [L]
-
 # Everything else that isn't a file gets routed through Elgg
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
+RewriteRule ^(.*)$ index.php [QSA,L]
 
 </IfModule>

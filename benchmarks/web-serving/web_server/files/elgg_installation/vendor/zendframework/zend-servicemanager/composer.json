@@ -1,0 +1,79 @@
+{
+    "name": "zendframework/zend-servicemanager",
+    "description": "Factory-Driven Dependency Injection Container",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "di",
+        "dic",
+        "dependency-injection",
+        "psr-11",
+        "zf",
+        "zendframework",
+        "servicemanager",
+        "service-manager"
+    ],
+    "support": {
+        "docs": "https://docs.zendframework.com/zend-servicemanager/",
+        "issues": "https://github.com/zendframework/zend-servicemanager/issues",
+        "source": "https://github.com/zendframework/zend-servicemanager",
+        "rss": "https://github.com/zendframework/zend-servicemanager/releases.atom",
+        "slack": "https://zendframework-slack.herokuapp.com",
+        "forum": "https://discourse.zendframework.com/c/questions/components"
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "container-interop/container-interop": "^1.2",
+        "psr/container": "^1.0",
+        "zendframework/zend-stdlib": "^3.2.1"
+    },
+    "require-dev": {
+        "mikey179/vfsStream": "^1.6.5",
+        "ocramius/proxy-manager": "^1.0 || ^2.0",
+        "phpbench/phpbench": "^0.13.0",
+        "phpunit/phpunit": "^5.7.25 || ^6.4.4",
+        "zendframework/zend-coding-standard": "~1.0.0"
+    },
+    "provide": {
+        "container-interop/container-interop-implementation": "^1.2",
+        "psr/container-implementation": "^1.0"
+    },
+    "suggest": {
+        "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services",
+        "zendframework/zend-stdlib": "zend-stdlib ^2.5 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zend\\ServiceManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendTest\\ServiceManager\\": "test/",
+            "ZendBench\\ServiceManager\\": "benchmarks/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.3-dev",
+            "dev-develop": "4.0-dev"
+        }
+    },
+    "bin": [
+        "bin/generate-deps-for-config-factory",
+        "bin/generate-factory-for-class"
+    ],
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "upload-coverage": "coveralls -v"
+    }
+}

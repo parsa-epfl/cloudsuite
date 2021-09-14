@@ -1,0 +1,252 @@
+{
+    "options": {
+    },
+    "tests": [
+        {
+            "test": "www.example.com",
+            "expected": "<a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "http://www.example.com/",
+            "expected": "<a href=\"http://www.example.com/\">http://www.example.com/</a>"
+        },
+        {
+            "test": "https://www.example.com/",
+            "expected": "<a href=\"https://www.example.com/\">https://www.example.com/</a>"
+        },
+        {
+            "test": "http://www.example.com",
+            "expected": "<a href=\"http://www.example.com\">http://www.example.com</a>"
+        },
+        {
+            "test": "www.example.com/",
+            "expected": "<a href=\"http://www.example.com/\">www.example.com/</a>"
+        },
+        {
+            "test": "www.example.com/example",
+            "expected": "<a href=\"http://www.example.com/example\">www.example.com/example</a>"
+        },
+        {
+            "test": "www.example.com/example/",
+            "expected": "<a href=\"http://www.example.com/example/\">www.example.com/example/</a>"
+        },
+        {
+            "test": "http://www.example.com/example",
+            "expected": "<a href=\"http://www.example.com/example\">http://www.example.com/example</a>"
+        },
+        {
+            "test": "http://www.example.com/example/",
+            "expected": "<a href=\"http://www.example.com/example/\">http://www.example.com/example/</a>"
+        },
+        {
+            "test": "www.example.com　",
+            "expected": "<a href=\"http://www.example.com\">www.example.com</a>　"
+        },
+        {
+            "test": "Линк: https://ru.wikipedia.org/wiki/Футбол",
+            "expected": "Линк: <a href=\"https://ru.wikipedia.org/wiki/Футбол\">https://ru.wikipedia.org/wiki/Футбол</a>"
+        },
+        {
+            "test": "(http://www.example.com/)",
+            "expected": "(<a href=\"http://www.example.com/\">http://www.example.com/</a>)"
+        },
+        {
+            "test": "http://www.example.com/)",
+            "expected": "<a href=\"http://www.example.com/\">http://www.example.com/</a>)"
+        },
+        {
+            "test": "www.example.com/)",
+            "expected": "<a href=\"http://www.example.com/\">www.example.com/</a>)"
+        },
+        {
+            "test": "website:http://www.example.com/example",
+            "expected": "website:<a href=\"http://www.example.com/example\">http://www.example.com/example</a>"
+        },
+        {
+            "test": "http://www.example.com/example-example/.",
+            "expected": "<a href=\"http://www.example.com/example-example/\">http://www.example.com/example-example/</a>."
+        },
+        {
+            "test": "http://www.example.com/example-example/-",
+            "expected": "<a href=\"http://www.example.com/example-example/\">http://www.example.com/example-example/</a>-"
+        },
+        {
+            "test": "www.example.com/example?fdasfs=24fa3fd32",
+            "expected": "<a href=\"http://www.example.com/example?fdasfs=24fa3fd32\">www.example.com/example?fdasfs=24fa3fd32</a>"
+        },
+        {
+            "test": "www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw",
+            "expected": "<a href=\"http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw\">www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw</a>"
+        },
+        {
+            "test": "http://www.example.com/example?fdasfs=24fa3fd32",
+            "expected": "<a href=\"http://www.example.com/example?fdasfs=24fa3fd32\">http://www.example.com/example?fdasfs=24fa3fd32</a>"
+        },
+        {
+            "test": "http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw",
+            "expected": "<a href=\"http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw\">http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw</a>"
+        },
+        {
+            "test": "(www-example.example.example.com).",
+            "expected": "(<a href=\"http://www-example.example.example.com\">www-example.example.example.com</a>)."
+        },
+        {
+            "test": "http://www.example.com/example.aspx",
+            "expected": "<a href=\"http://www.example.com/example.aspx\">http://www.example.com/example.aspx</a>"
+        },
+        {
+            "test": "(www.example.com/example.php)",
+            "expected": "(<a href=\"http://www.example.com/example.php\">www.example.com/example.php</a>)"
+        },
+        {
+            "test": ".http://www.example.com",
+            "expected": ".<a href=\"http://www.example.com\">http://www.example.com</a>"
+        },
+        {
+            "test": "/http://www.example.com",
+            "expected": "/<a href=\"http://www.example.com\">http://www.example.com</a>"
+        },
+        {
+            "test": "\"http://www.example.com\"",
+            "expected": "\"<a href=\"http://www.example.com\">http://www.example.com</a>\""
+        },
+        {
+            "test": "'http://www.example.com'",
+            "expected": "'<a href=\"http://www.example.com\">http://www.example.com</a>'"
+        },
+        {
+            "test": "\"example.com/\"",
+            "expected": "\"<a href=\"http://example.com/\">example.com/</a>\""
+        },
+        {
+            "test": "http://mail.example.com/example/compose?to=example@example.com",
+            "expected": "<a href=\"http://mail.example.com/example/compose?to=example@example.com\">http://mail.example.com/example/compose?to=example@example.com</a>"
+        },
+        {
+            "test": "www.example.com/example_(example)",
+            "expected": "<a href=\"http://www.example.com/example_(example)\">www.example.com/example_(example)</a>"
+        },
+        {
+            "test": "http://www.example.com/example_(example)",
+            "expected": "<a href=\"http://www.example.com/example_(example)\">http://www.example.com/example_(example)</a>"
+        },
+        {
+            "test": "http://example.com/something?co,m,m,as,",
+            "expected": "<a href=\"http://example.com/something?co,m,m,as\">http://example.com/something?co,m,m,as</a>,"
+        },
+        {
+            "test": "ftp://example.com",
+            "expected": "<a href=\"ftp://example.com\">ftp://example.com</a>"
+        },
+        {
+            "test": "example.com/",
+            "expected": "<a href=\"http://example.com/\">example.com/</a>"
+        },
+        {
+            "test": "example.com/example/example",
+            "expected": "<a href=\"http://example.com/example/example\">example.com/example/example</a>"
+        },
+        {
+            "test": "example.example.com/",
+            "expected": "<a href=\"http://example.example.com/\">example.example.com/</a>"
+        },
+        {
+            "test": "example.example.com/example/example",
+            "expected": "<a href=\"http://example.example.com/example/example\">example.example.com/example/example</a>"
+        },
+        {
+            "test": "example.com/example#example",
+            "expected": "<a href=\"http://example.com/example#example\">example.com/example#example</a>"
+        },
+        {
+            "test": "http://example.com/example#example",
+            "expected": "<a href=\"http://example.com/example#example\">http://example.com/example#example</a>"
+        },
+        {
+            "test": "www.example.com/example.pdf",
+            "expected": "<a href=\"http://www.example.com/example.pdf\">www.example.com/example.pdf</a>"
+        },
+        {
+            "test": "www-example.example.com.",
+            "expected": "<a href=\"http://www-example.example.com\">www-example.example.com</a>."
+        },
+        {
+            "test": "http://ex.am/pLE",
+            "expected": "<a href=\"http://ex.am/pLE\">http://ex.am/pLE</a>"
+        },
+        {
+            "test": "http://www.example.com/~example/example.html",
+            "expected": "<a href=\"http://www.example.com/~example/example.html\">http://www.example.com/~example/example.html</a>"
+        },
+        {
+            "test": "examplehttp://www.example.com",
+            "expected": "example<a href=\"http://www.example.com\">http://www.example.com</a>"
+        },
+        {
+            "test": "examplewww.example.com/",
+            "expected": "<a href=\"http://examplewww.example.com/\">examplewww.example.com/</a>"
+        },
+        {
+            "test": "<p>www.example.com</p>",
+            "expected": "<p><a href=\"http://www.example.com\">www.example.com</a></p>"
+        },
+        {
+            "test": "<x>www.example.com</x>",
+            "expected": "<x><a href=\"http://www.example.com\">www.example.com</a></x>"
+        },
+        {
+            "test": "<pre/> www.example.com",
+            "expected": "<pre/> <a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "<pre /> www.example.com",
+            "expected": "<pre /> <a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "<pre></pre> www.example.com",
+            "expected": "<pre></pre> <a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "<pre ></pre> www.example.com",
+            "expected": "<pre ></pre> <a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "<pre></ pre> www.example.com",
+            "expected": "<pre></ pre> <a href=\"http://www.example.com\">www.example.com</a>"
+        },
+        {
+            "test": "www.example.com",
+            "options": {
+                "attr": {
+                    "class": "foo"
+                }
+            },
+            "expected": "<a href=\"http://www.example.com\" class=\"foo\">www.example.com</a>"
+        },
+        {
+            "test": "www.example.com",
+            "options": {
+                "attr": {
+                    "class": "foo bar",
+                    "rel": "nofollow"
+                },
+                "ignore": [
+                    "baz"
+                ]
+            },
+            "expected": "<a href=\"http://www.example.com\" class=\"foo bar\" rel=\"nofollow\">www.example.com</a>"
+        },
+        {
+            "test": "https://www.example.com/a_(aaaaaaaaaaaaaaaa)",
+            "expected": "<a href=\"https://www.example.com/a_(aaaaaaaaaaaaaaaa)\">https://www.example.com/a_(aaaaaaaaaaaaaaaa)</a>"
+        },
+        {
+            "test": "https://www.example.com/a_(aaaaaaaaaaaaaaaaa)",
+            "expected": "<a href=\"https://www.example.com/a_(aaaaaaaaaaaaaaaaa)\">https://www.example.com/a_(aaaaaaaaaaaaaaaaa)</a>"
+        },
+        {
+            "test": "https://www.example.com/a_(aaaaaaaaaaaaaaaaa)a",
+            "expected": "<a href=\"https://www.example.com/a_(aaaaaaaaaaaaaaaaa)a\">https://www.example.com/a_(aaaaaaaaaaaaaaaaa)a</a>"
+        }
+    ]
+}

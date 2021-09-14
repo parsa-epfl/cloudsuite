@@ -1,0 +1,143 @@
+{
+    "name": "elgg/elgg",
+    "version": "3.3.21",
+    "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
+    "license": "GPL-2.0-only",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "type": "project",
+    "require": {
+        "php": ">=7.2",
+        "ext-pdo": "*",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-xml": "*",
+        "elgg/login_as": "~2.1.0",
+        "bower-asset/fontawesome": "~5.6",
+        "bower-asset/jquery": "^2.1.4",
+        "bower-asset/jquery-colorbox": "^1.5.14",
+        "bower-asset/jquery-form": "^3.51",
+        "bower-asset/jquery-treeview": "^1.4",
+        "bower-asset/jquery-ui": "~1.11.4",
+        "bower-asset/jquery.imgareaselect": "~0.9.10",
+        "bower-asset/normalize-css": "*",
+        "bower-asset/requirejs": "^2.1.18",
+        "bower-asset/sprintf": "~1.0.3",
+        "bower-asset/text": "^2.0.4",
+        "ckeditor/ckeditor": "~4.12.0",
+        "css-crush/css-crush": "^2.4.0",
+        "doctrine/cache": "^1.6",
+        "doctrine/dbal": "~2.10.0",
+        "fzaninotto/faker": "^1.9",
+        "hackzilla/password-generator": "~1.4.1",
+        "imagine/imagine": "^0.7.1",
+        "league/flysystem": "~1.0",
+        "league/flysystem-memory": "^1.0",
+        "mrclay/minify": "~2.0",
+        "michelf/php-markdown": "^1.5.0",
+        "misd/linkify": "~1.1.2",
+        "monolog/monolog": "^1.23",
+        "npm-asset/cropperjs": "~1.4.3",
+        "npm-asset/jquery-cropper": "~1.0.0",
+        "npm-asset/formdata-polyfill": "3.0.15",
+        "npm-asset/weakmap-polyfill": "^2.0",
+        "peppeocchi/php-cron-scheduler": "2.*",
+        "php-di/php-di": "^5.4",
+        "react/promise": "^2.5",
+        "roave/security-advisories": "dev-master",
+        "robmorgan/phinx": "0.11.1",
+        "symfony/console": "~3.3",
+        "symfony/http-foundation": "~3.4",
+        "symfony/polyfill-php71": "^1.7",
+        "symfony/polyfill-php72": "^1.7",
+        "symfony/routing": "^3.3",
+        "symfony/var-dumper": "~3.3",
+        "tedivm/stash": "~0.15.0",
+        "vanilla/htmlawed": "~2.2.0",
+        "zendframework/zend-mail": "~2.4",
+        "zendframework/zend-servicemanager": "^3.3.1"
+    },
+    "config": {
+        "process-timeout": 0,
+        "platform": {
+            "php": "7.2.5"
+        },
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "scripts": {
+        "lint": [
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/* engine/classes engine/lib actions mod views",
+            "composer validate"
+        ],
+        "lint-fixer": [
+            "phpcbf --standard=vendor/elgg/sniffs/elgg.xml *.php actions engine install mod views"
+        ],
+        "test": "phpunit",
+        "travis:install": [
+            "composer self-update --1",
+            "composer install --prefer-dist --no-suggest"
+        ],
+        "travis:install-with-mysql": [
+            "composer travis:install",
+            "mysql -e 'create database elgg;'",
+            "echo \"SET PASSWORD FOR 'root'@'localhost' = PASSWORD('password'); FLUSH PRIVILEGES;\" | mysql -u root",
+            "php ./elgg-cli install --config ./install/cli/testing_app.php --verbose"
+        ],
+        "travis:install-with-mysql8": [
+            "composer travis:install",
+            "mysql -e 'create database elgg;'",
+            "echo \"ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'password'; FLUSH PRIVILEGES;\" | mysql -u root",
+            "php ./elgg-cli install --config ./install/cli/testing_app.php --verbose"
+        ],
+        "docs:build": [
+            "sphinx-build -b html -nW docs docs/_build/html/en",
+            "sphinx-build -b latex -nW docs docs/_build/latex/en",
+            "sphinx-intl build --locale-dir=docs/locale/",
+            "sphinx-build -b html -D language=es -n docs docs/_build/html/es"
+        ]
+    },
+    "suggest": {
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "engine/classes/"
+        ],
+        "psr-4": {
+            "Elgg\\": "engine/classes/Elgg/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "engine/tests/classes/",
+            "engine/tests/phpunit/integration/",
+            "engine/tests/phpunit/unit/"
+        ],
+        "psr-4": {
+            "Elgg\\": [
+                "engine/tests/classes/Elgg/",
+                "engine/tests/phpunit/integration/Elgg/",
+                "engine/tests/phpunit/unit/Elgg/",
+                "engine/tests/simpletest/Elgg/"
+            ]
+        }
+    },
+    "require-dev": {
+        "elgg/sniffs": "3.x-dev",
+        "squizlabs/php_codesniffer": "^2.8.1",
+        "simpletest/simpletest": "~1.1",
+        "phpdocumentor/reflection-docblock": "~2.0",
+        "phpunit/phpunit": "~8.5"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "bin": [
+        "elgg-cli"
+    ]
+}

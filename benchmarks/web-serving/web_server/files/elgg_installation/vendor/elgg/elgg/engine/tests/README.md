@@ -1,0 +1,1 @@
+For more information about the tests visit http://learn.elgg.org/en/stable/contribute/tests.html
