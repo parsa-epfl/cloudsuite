@@ -20,7 +20,8 @@ done
 
 sed -i -e"s/num_users=500/num_users=${LOAD_SCALE}/" $FABAN_HOME/usersetup.properties
 $FABAN_HOME/master/bin/startup.sh
-cd /web20_benchmark/build && java -jar Usergen.jar http://${WEB_SERVER_IP}:8080
+cd /web20_benchmark/build
+java -jar Usergen.jar http://${WEB_SERVER_IP}:8080
 sed -i "s/<fa:scale.*/<fa:scale>${LOAD_SCALE}<\\/fa:scale>/" /web20_benchmark/deploy/run.xml
 sed -i "s/<fa:rampUp.*/<fa:rampUp>10<\\/fa:rampUp>/" /web20_benchmark/deploy/run.xml
 sed -i "s/<fa:rampDown.*/<fa:rampDown>10<\\/fa:rampDown>/" /web20_benchmark/deploy/run.xml

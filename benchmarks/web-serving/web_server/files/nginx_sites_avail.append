@@ -1,50 +1,24 @@
 server {
-        listen 8080;
-        server_name localhost;
-        listen [::]:8080 default_server ipv6only=on;
+  listen 8080;
 
-        root /usr/share/nginx/html/elgg;
-                # Server root, replace it with your elgg installation location
-                index index.php index.html index.htm;
+  server_name localhost;
+  root /usr/share/nginx/html/elgg;
 
-                # Server logs, replace it with your project names
-                error_log /var/log/nginx/example_error.log;
-                access_log /var/log/nginx/example_access.log;
+  index index.php;
+  
+  access_log /var/log/nginx/elgg_access.log;
+  error_log /var/log/nginx/elgg_error.log;
 
-                location ~ (^\.|/\.) {
-                        return 403;
-                }
+  location / {
+    try_files $uri $uri/ /index.php?$query_string;
+  }
 
-                location /cache {
-                        rewrite ^/cache\/(.*)$ /engine/handlers/cache_handler.php?request=$1&$query_string;
-                }
-
-                location /export {
-                        rewrite ^/export\/([A-Za-z]+)\/([0-9]+)\/?$ /engine/handlers/export_handler.php?view=$1&guid=$2;
-                        rewrite ^/export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ /engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4;
-                }
-
-                location = /rewrite.php {
-                        rewrite ^(.*)$ /install.php;
-                }
-
-                location / {
-                        try_files $uri $uri/ /index.php?__elgg_uri=$uri&$query_string;
-                }
-
-                # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-                #
-                location ~ \.php$ {
-
-                        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                       # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-
-                       # With php5-cgi alone:
-                #       fastcgi_pass 127.0.0.1:9000;
-                       # With php5-fpm:
-                       fastcgi_pass unix:/var/run/php5-fpm.sock;
-                       fastcgi_index index.php;
-                       include fastcgi_params;
-                }
-
-        }
+  location ~ \.php$ {
+    fastcgi_index index.php;
+    fastcgi_split_path_info ^(.+\.php)(.*)$;
+    fastcgi_keep_conn on;
+    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  }
+}

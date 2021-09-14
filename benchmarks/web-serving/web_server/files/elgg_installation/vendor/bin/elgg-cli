@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+if (PHP_SAPI !== 'cli') {
+	echo "You must use the command line to run this script." . PHP_EOL;
+	die(1);
+}
+
+// Load dependencies
+// Check various installation paths, which may vary depending on how Elgg was installed
+$files = [
+	__DIR__ . '/../../autoload.php', // Elgg in Composer project
+	__DIR__ . '/../vendor/autoload.php',
+	__DIR__ . '/vendor/autoload.php', // Elgg as base path
+	__DIR__ . '/../autoload.php', // from Composer bin directory
+];
+
+foreach ($files as $file) {
+	if (file_exists($file)) {
+		require_once $file;
+	}
+}
+
+if (!class_exists('\Elgg\Application')) {
+	fwrite(STDERR, "Composer dependencies are not installed "
+		. "or you are trying to run the script outside of an Elgg installation's root directory." . PHP_EOL);
+	die(2);
+}
+
+$settings_file = \Elgg\Project\Paths::settingsFile();
+
+$installed = is_file($settings_file);
+if (!$installed) {
+	$cli = new Symfony\Component\Console\Application();
+	$cli->add(new \Elgg\Cli\InstallCommand());
+	$cli->run();
+	return;
+}
+
+$app = \Elgg\Application::getInstance();
+
+$services = $app->_services;
+
+$logger = $services->logger;
+
+$cli = $services->cli;
+$cli->setLogger($logger);
+
+$argv = $services->request->server->get('argv');
+
+if ($argv[1] === 'upgrade') {
+	// To run an upgrade successfully, we must first migrate
+	// the application before booting it
+	$cli->add(\Elgg\Cli\UpgradeCommand::class);
+	$cli->run(false);
+	return;
+}
+
+// For other commands, we just boot an application
+try {
+	$app->start();
+	$cli->run();
+} catch (\Throwable $throw) {
+	fwrite(STDERR, "An error occured during the execution of the command '{$argv[0]}': {$throw->getMessage()}" . PHP_EOL);
+	die(3);
+}

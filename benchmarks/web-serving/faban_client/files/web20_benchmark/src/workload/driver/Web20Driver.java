@@ -73,6 +73,7 @@ import workload.driver.Web20Client.ClientState;
 		@Row ({90, 0, 0, 0, 0, 10, 0})
 		}
 		)
+		
 /*
 @MatrixMix (operations = {"AccessHomepage", 
 		"DoLogin",  
@@ -84,10 +85,20 @@ import workload.driver.Web20Client.ClientState;
 		}
 		)
 */
-@Background(operations = 
+
+// commented by a_ansaarii, The url for the UpdateActivity is not valid on elgg-3.3.20: RIVER_UPDATE_URL, I could not find its alternative
+/*@Background(operations = 
 	{ "UpdateActivity", "ReceiveChatMessage"}, 
 	timings = { 
 		@FixedTime(cycleTime = 10000, cycleDeviation = 2),
+		@FixedTime(cycleTime = 10000, cycleDeviation = 2) }
+		
+)*/
+
+// The above Background code is replaced by this by a_ansaarii
+@Background(operations = 
+	{ "ReceiveChatMessage"}, 
+	timings = { 
 		@FixedTime(cycleTime = 10000, cycleDeviation = 2) }
 		
 )
@@ -160,7 +171,7 @@ public class Web20Driver {
 			"/vendors/jquery/jquery-1.11.0.min.js",
 			"/vendors/jquery/jquery-migrate-1.2.1.min.js",
 			"/vendors/jquery/jquery-ui-1.10.4.min.js",
-			"/_graphics/favicon-16.png", "/_graphics/favicon-32.png",
+			"/_graphics/favicon-16.png", "/_graphics/favicon-32.png", 
 			"/_graphics/icons/user/defaultsmall.gif",
 			"/_graphics/icons/user/defaulttiny.gif",
 			"/_graphics/header_shadow.png", "/_graphics/elgg_sprites.png",
@@ -266,19 +277,33 @@ public class Web20Driver {
 	Pattern pattern2 = Pattern.compile("input type=\"hidden\" name=\"__elgg_ts\" value=\"(.*?)\"");
 	
 	private void updateElggTokenAndTs(Web20Client client, StringBuilder sb, boolean updateGUID) {
+	
+		int elggTokenStartIndex = sb.indexOf("\"__elgg_token\":\"") + "\"__elgg_token\":\"".length();
+        	int elggTokenEndIndex = sb.indexOf("\"", elggTokenStartIndex);
+        	String elggToken = sb.substring(elggTokenStartIndex, elggTokenEndIndex);
+        	//System.out.println("Elgg Token = "+elggToken);
+        
+       	int elggTsStartIndex = sb.indexOf("\"__elgg_ts\":") + "\"__elgg_ts\":".length();
+        	int elggTsEndIndex = sb.indexOf(",", elggTsStartIndex);
+        	String elggTs = sb.substring(elggTsStartIndex, elggTsEndIndex);
+        	//System.out.println("Elgg Ts = "+elggTs);
+        
+        	client.setElggToken(elggToken);
+        	client.setElggTs(elggTs);
+        
 
-		String elggToken = null;
-		String elggTs = null;
+		//String elggToken = null;
+		//String elggTs = null;
 		
-	    Matcher matcherToken = pattern1.matcher(sb.toString());
-	    while (matcherToken.find()) {
-	    	elggToken = matcherToken.group(1);
-	    }
+	    //Matcher matcherToken = pattern1.matcher(sb.toString());
+	    //while (matcherToken.find()) {
+	    //	elggToken = matcherToken.group(1);
+	    //}
 	    
-		Matcher matcherTs = pattern2.matcher(sb.toString());
-		while (matcherTs.find()) {
-			elggTs = matcherTs.group(1);
-		}
+		//Matcher matcherTs = pattern2.matcher(sb.toString());
+		//while (matcherTs.find()) {
+	//		elggTs = matcherTs.group(1);
+//		}
 		
 		if (updateGUID) {
 			// Get the Json
@@ -298,13 +323,13 @@ public class Web20Driver {
 		
 		logger.finer("Elgg Token = "+elggToken+" Elgg Ts = "+elggTs);
 		
-		if (null != elggToken) {
+		/*if (null != elggToken) {
 			client.setElggToken(elggToken);
 		}
 		
 		if (null != elggTs) {
 			client.setElggTs(elggTs);
-		}
+		}*/
 	}
 
 	private void updateNumActivities(Web20Client client, StringBuilder sb) {
@@ -345,6 +370,8 @@ public class Web20Driver {
 			thisClient.setPassword("password1234");
 			*/
 			
+			System.out.println("CHP1\n");
+			
 			HttpTransport http = HttpTransport.newInstance();
 			http.addTextType("application/xhtml+xml");
 			http.addTextType("application/xml");
@@ -352,15 +379,28 @@ public class Web20Driver {
 			http.addTextType("q=0.8");
 			http.setFollowRedirects(true);
 	
+			System.out.println("CHP2\n");
+			
 			thisClient.setHttp(http);
 			StringBuilder sb = http.fetchURL(hostUrl + ROOT_URL);
+			
+			
+			System.out.println("CHP3\n");
 	
+			System.out.println("response:\n"+sb.toString());
 			updateElggTokenAndTs(thisClient, sb, false);
+			System.out.println("A, token: "+thisClient.getElggToken()+"\t"+thisClient.getElggTs());
 			updateNumActivities(thisClient, sb);
 			printErrorMessageIfAny(sb, null);
-			for (String url : ROOT_URLS) {
+			
+			// commented by a_ansaarii
+			/*for (String url : ROOT_URLS) {
+				System.out.println("url is: " + hostUrl + url);
 				http.readURL(hostUrl + url);
-			}
+			}*/
+			
+			System.out.println("CHP4\n");
+			
 
 		}
 		context.recordTime();
@@ -395,9 +435,11 @@ public class Web20Driver {
 		updateNumActivities(thisClient, sb);
 
 		printErrorMessageIfAny(sb, null);
-		for (String url : ROOT_URLS) {
+		
+		// commented by a_ansaarii
+		/*for (String url : ROOT_URLS) {
 			thisClient.getHttp().readURL(hostUrl + url);
-		}
+		}*/
 
 		context.recordTime();
 			elggMetrics.attemptHomePageCnt++;		
@@ -423,10 +465,14 @@ public class Web20Driver {
 				+ "&__elgg_ts=" + thisClient.getElggTs() + "&username="
 				+ thisClient.getUsername() + "&password="
 				+ thisClient.getPassword();
+		
+		System.out.println("doLogin request: " + postRequest);
 
-		for (String url : LOGIN_URLS) {
+		
+		// commented by a_ansaarii
+		/*for (String url : LOGIN_URLS) {
 			thisClient.getHttp().readURL(hostUrl + url);
-		}
+		}*/
 
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept",
@@ -468,39 +514,43 @@ public class Web20Driver {
 						percentileLimits= {500,750,1000},
                         timing = Timing.MANUAL)
 	public void updateActivity() throws Exception {
-		boolean success = false;
+		// this function is disabled by a_ansaarii
+		// I don't know what this function actually does. The fetched url does not exist on the elgg 3.3.20
+		
+		
+		//boolean success = false;
 
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId() +" : Doing operation: updateActivity");
+		//context.recordTime();
+		//if (thisClient.getClientState() == ClientState.LOGGED_IN) {
+		//	logger.fine(context.getThreadId() +" : Doing operation: updateActivity");
 			
-			Map<String, String> headers = new HashMap<String, String>();
-			headers.put("Accept",
-					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			headers.put("Accept-Language", "en-US,en;q=0.5");
-			headers.put("Accept-Encoding", "gzip, deflate");
-			headers.put("Referer", hostUrl + "/activity");
-			headers.put("User-Agent",
-					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-			headers.put("Content-Type", "application/x-www-form-urlencoded");
+		//	Map<String, String> headers = new HashMap<String, String>();
+		//	headers.put("Accept",
+		//			"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		//	headers.put("Accept-Language", "en-US,en;q=0.5");
+		//	headers.put("Accept-Encoding", "gzip, deflate");
+		//	headers.put("Referer", hostUrl + "/activity");
+		//	headers.put("User-Agent",
+		//			"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
+		//	headers.put("Content-Type", "application/x-www-form-urlencoded");
 
 
-			String postString = "options%5Bcount%5D=false&options%5Bpagination%5D=false&options%5Boffset%5D=0&options%5Blimit%5D=5&count="+thisClient.getNumActivities(); 
+		//	String postString = "options%5Bcount%5D=false&options%5Bpagination%5D=false&options%5Boffset%5D=0&options%5Blimit%5D=5&count="+thisClient.getNumActivities(); 
 			// Note: the %5B %5D are [ and ] respectively.
 			// #TODO: Fix the count value.
-			StringBuilder sb = thisClient.getHttp().fetchURL(
-					hostUrl + RIVER_UPDATE_URL, postString, headers);
-			if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-				logger.fine("startNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-			}
-			printErrorMessageIfAny(sb, postString);
+		//	StringBuilder sb = thisClient.getHttp().fetchURL(
+		//			hostUrl + RIVER_UPDATE_URL, postString, headers);
+		//	if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
+		//		logger.fine("startNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
+		//	}
+		//	printErrorMessageIfAny(sb, postString);
 
-			success = true;
-		}
-		context.recordTime();
-		if (success) {
-			elggMetrics.attemptUpdateActivityCnt++;
-		}
+		//	success = true;
+		//}
+		//context.recordTime();
+		//if (success) {
+		//	elggMetrics.attemptUpdateActivityCnt++;
+		//}
 	}
 
 	/**
@@ -852,10 +902,11 @@ public class Web20Driver {
 			StringBuilder sb = tempClient.getHttp().fetchURL(hostUrl + ROOT_URL);
 	
 			updateElggTokenAndTs(tempClient, sb, false);
-			for (String url : ROOT_URLS) {
+			// commented by a_ansaarii
+			/*for (String url : ROOT_URLS) {
 				tempClient.getHttp().readURL(hostUrl + url);
 				// System.out.println(sb.indexOf("__elgg_token"));
-			}
+			}*/
 	
 	
 			// Click on Register link and generate user name and password
@@ -896,6 +947,9 @@ public class Web20Driver {
 					headers);
 			printErrorMessageIfAny(sb, postString);
 			// System.out.println(sb);
+			
+			// added by a_ansaarii: we should set the flag somewhere, right?
+			success = true;
 		}
 		context.recordTime();
 		if (success) 

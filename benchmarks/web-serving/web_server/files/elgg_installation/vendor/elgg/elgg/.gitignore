@@ -1,0 +1,77 @@
+# ignore Elgg configuration
+/engine/settings.php
+/elgg-config/*
+/.htaccess
+/mod/*
+/composer.phar
+/cache
+
+# don't ignore example settings
+!/elgg-config/settings.example.php
+
+# Don't check in third party code
+/node_modules
+/vendor
+
+# don't ignore bundled plugins
+!/mod/activity
+!/mod/blog/
+!/mod/bookmarks/
+!/mod/categories/
+!/mod/ckeditor/
+!/mod/custom_index/
+!/mod/dashboard/
+!/mod/developers/
+!/mod/diagnostics/
+!/mod/discussions/
+!/mod/embed/
+!/mod/externalpages/
+!/mod/file/
+!/mod/friends/
+!/mod/friends_collections/
+!/mod/garbagecollector/
+!/mod/groups/
+!/mod/invitefriends/
+!/mod/likes/
+!/mod/members/
+!/mod/messageboard/
+!/mod/messages/
+!/mod/notifications/
+!/mod/pages/
+!/mod/profile/
+!/mod/reportedcontent/
+!/mod/search/
+!/mod/site_notifications/
+!/mod/system_log/
+!/mod/tagcloud/
+!/mod/thewire/
+!/mod/uservalidationbyemail/
+!/mod/web_services/
+!/mod/zaudio/
+
+# ignore IDE/hidden/testing/OS cache files
+.*
+*~
+/nbproject
+/nb-configuration.xml
+Session.vim
+*.tmproj
+*.tmproject
+tmtags
+Thumbs.db
+Desktop.ini
+npm-debug.log
+phpcbf-fixed.diff
+
+# Codio.com
+startup.sh
+
+# don't ignore special configs
+!/.mailmap
+!/.travis.yml
+!/.readthedocs.yml
+!/.scrutinizer.yml
+!.github
+!.gitignore
+!.scripts
+!.tx
