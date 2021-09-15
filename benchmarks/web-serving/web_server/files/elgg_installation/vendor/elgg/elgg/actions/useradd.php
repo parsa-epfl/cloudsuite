@@ -71,7 +71,7 @@ try {
 		'password' => $password,
 	]);
 
-  // added by a_ansaarii, required by Userjen.jar in faban clients
+  // added by a_ansaarii, required by Usergen.jar in faban clients
   system_message("GUID#".$new_user->guid."#");
 
 	return elgg_ok_response('', elgg_echo('adduser:ok', [elgg_get_site_entity()->getDisplayName()]));
