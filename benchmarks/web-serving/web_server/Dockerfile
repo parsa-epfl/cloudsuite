@@ -4,10 +4,6 @@ USER root
 
 RUN apt-get update && \
 	apt-get install -y --force-yes software-properties-common && \
-	#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
-	#apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 && \
-	#add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc)-lts-3.30 main" && \
-	#add-apt-repository ppa:ondrej/php && \
 	apt-get update && \
 	apt-get install --force-yes -y \
 	build-essential \
@@ -29,7 +25,6 @@ COPY files/elgg_installation /usr/share/nginx/html/elgg
 
 WORKDIR /usr/share/nginx/html
 # Copy over the settings.php
-# commented by a_ansaarii, still does not work this way. Install elgg by browser
 COPY files/settings.php elgg/elgg-config/settings.php 
 
 # Make the Elgg data directory

@@ -106,47 +106,32 @@ public class UserGenerator {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		headers.put("Accept-Language", "en-US,en;q=0.5");
+		// commented by a_ansaarii, some server responses become unreadable, I tested different encodings and decided to comment the following line
 		//headers.put("Accept-Encoding", "*");
 		headers.put("Referer", hostURL+"/admin/users/add");
 		headers.put("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 
-    		System.out.println("loginPostRequest is:\n");
-    		System.out.println(loginPostRequest);
-
 		sb = http.fetchURL(hostURL+"/action/login", loginPostRequest, headers);
-		System.out.println("Response A:" + sb.toString());
 		sb = http.fetchURL(hostURL+"/activity");
-		System.out.println("Response B:" + sb.toString());
 		// Update token
 		updateElggTokenAndTs(tokenTsPair, sb);
-
-		System.out.println("A, token: "+tokenTsPair.getValue1()+"\t"+tokenTsPair.getValue2());	
 		
 		// Weird response from the server when fetching this page!	
 		headers.put("Referer", hostURL+"/activity");
-		System.out.println("Headers: "+headers);
 		sb = http.fetchURL(hostURL+"/admin", headers);
-		System.out.println("Response C:" + sb.toString());
 		updateElggTokenAndTs(tokenTsPair, sb);
-		System.out.println("B, token: "+tokenTsPair.getValue1()+"\t"+tokenTsPair.getValue2());		
 		
 		i = 0;
 		for (UserEntity user: userList) {
 			headers.put("Referer", hostURL+"/admin");
 			sb = http.fetchURL(hostURL+"/admin/users/add", headers);
-			System.out.println("Response D:" + sb.toString());
-			updateElggTokenAndTs(tokenTsPair, sb);
-			System.out.print("C, token: "+tokenTsPair.getValue1()+"\t"+tokenTsPair.getValue2());		
+			updateElggTokenAndTs(tokenTsPair, sb);		
 			
 			String postRequest = "__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="
 					+tokenTsPair.getValue2()+"&name="+user.getDisplayName()+"&username="+user.getUserName()+"&email="+user.getEmail()+"&password="+user.getPassword()
 					+"&password2="+user.getPassword()+"&admin=0";
 			headers.put("Referer", hostURL+"/admin/users/add");
-			System.out.println("In Loop\n");
-      			System.out.println("postRequest:\n"+postRequest+"\nHeaders:\n");
-			System.out.println(headers);
 			sb = http.fetchURL(hostURL+"/action/useradd", postRequest, headers);
-			System.out.println("Response E:" + sb.toString());
 			int startIndex = sb.indexOf("GUID#")+"GUID#".length();
 			int endIndex = sb.indexOf("#", startIndex);
 			String guid = sb.substring(startIndex, endIndex);

@@ -4,8 +4,6 @@ MEMCACHE_SERVER_IP=${2:-"memcache_server"}
 sed -i -e"s/mysql_server/${DB_SERVER_IP}/" elgg/elgg-config/settings.php
 sed -i -e"s/'memcache_server'/'${MEMCACHE_SERVER_IP}'/" elgg/elgg-config/settings.php
 
-#chmod 777 elgg/elgg-config
-
 if [[ ! -z "${HHVM}" && "${HHVM}" = "true" ]]; then
 	chmod 700 /tmp/configure_hhvm.sh
 	/tmp/configure_hhvm.sh

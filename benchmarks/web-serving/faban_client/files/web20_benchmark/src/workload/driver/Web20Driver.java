@@ -166,6 +166,8 @@ public class Web20Driver {
 	
 	/* Constants : URL */
 	private final String ROOT_URL = "/";
+	
+	// a_ansaarii: these urls refer to the old elgg. They do not exist in the current version
 	private final String[] ROOT_URLS = new String[] {
 			"/vendors/requirejs/require-2.1.10.min.js",
 			"/vendors/jquery/jquery-1.11.0.min.js",
@@ -178,16 +180,21 @@ public class Web20Driver {
 			"/_graphics/sidebar_background.gif",
 			"/_graphics/button_graduation.png", "/_graphics/favicon-128.png" };
 	private final String LOGIN_URL = "/action/login";
+	
+	// a_ansaarii: these urls refer to the old elgg. They do not exist in the current version
 	private final String[] LOGIN_URLS = new String[] { //"/js/lib/ui.river.js",
 			"/_graphics/icons/user/defaulttopbar.gif",
 //			"/mod/riverautoupdate/_graphics/loading.gif",
 			"/_graphics/toptoolbar_background.gif",
 			"/mod/reportedcontent/graphics/icon_reportthis.gif" };
 	private final String ACTIVITY_URL = "/activity";
+	
+	// a_ansaarii: these urls refer to the old elgg. They do not exist in the current version
 	private final String[] ACTIVITY_URLS = new String[] {
 			"/mod/hypeWall/vendors/fonts/font-awesome.css",
 			"/mod/hypeWall/vendors/fonts/open-sans.css" };
 
+	// a_ansaarii: this url refers to the old elgg. They do not exist in the current version
 	private final String RIVER_UPDATE_URL = "/activity/proc/updateriver";
 	private final String WALL_URL = "/action/wall/status";
 
@@ -277,7 +284,8 @@ public class Web20Driver {
 	Pattern pattern2 = Pattern.compile("input type=\"hidden\" name=\"__elgg_ts\" value=\"(.*?)\"");
 	
 	private void updateElggTokenAndTs(Web20Client client, StringBuilder sb, boolean updateGUID) {
-	
+		// The code for obtaining the token and ts is changed by a_ansaarii, the old code does not work
+		// this code is derived from UserGenerator.java
 		int elggTokenStartIndex = sb.indexOf("\"__elgg_token\":\"") + "\"__elgg_token\":\"".length();
         	int elggTokenEndIndex = sb.indexOf("\"", elggTokenStartIndex);
         	String elggToken = sb.substring(elggTokenStartIndex, elggTokenEndIndex);
@@ -291,19 +299,27 @@ public class Web20Driver {
         	client.setElggToken(elggToken);
         	client.setElggTs(elggTs);
         
-
+		// These lines are commented by a_ansaarii, they are the implementations that are not working with elgg 3.3.20
 		//String elggToken = null;
 		//String elggTs = null;
 		
-	    //Matcher matcherToken = pattern1.matcher(sb.toString());
-	    //while (matcherToken.find()) {
-	    //	elggToken = matcherToken.group(1);
-	    //}
+	    	//Matcher matcherToken = pattern1.matcher(sb.toString());
+	    	//while (matcherToken.find()) {
+	    	//	elggToken = matcherToken.group(1);
+	    	//}
 	    
 		//Matcher matcherTs = pattern2.matcher(sb.toString());
 		//while (matcherTs.find()) {
-	//		elggTs = matcherTs.group(1);
-//		}
+		//	elggTs = matcherTs.group(1);
+		//}
+		
+		//if (null != elggToken) {
+		//	client.setElggToken(elggToken);
+		//}
+		
+		//if (null != elggTs) {
+		//	client.setElggTs(elggTs);
+		//}
 		
 		if (updateGUID) {
 			// Get the Json
@@ -322,14 +338,6 @@ public class Web20Driver {
 		}
 		
 		logger.finer("Elgg Token = "+elggToken+" Elgg Ts = "+elggTs);
-		
-		/*if (null != elggToken) {
-			client.setElggToken(elggToken);
-		}
-		
-		if (null != elggTs) {
-			client.setElggTs(elggTs);
-		}*/
 	}
 
 	private void updateNumActivities(Web20Client client, StringBuilder sb) {
@@ -370,36 +378,25 @@ public class Web20Driver {
 			thisClient.setPassword("password1234");
 			*/
 			
-			System.out.println("CHP1\n");
-			
 			HttpTransport http = HttpTransport.newInstance();
 			http.addTextType("application/xhtml+xml");
 			http.addTextType("application/xml");
 			http.addTextType("q=0.9,*/*");
 			http.addTextType("q=0.8");
 			http.setFollowRedirects(true);
-	
-			System.out.println("CHP2\n");
-			
+				
 			thisClient.setHttp(http);
 			StringBuilder sb = http.fetchURL(hostUrl + ROOT_URL);
 			
-			
-			System.out.println("CHP3\n");
-	
-			System.out.println("response:\n"+sb.toString());
 			updateElggTokenAndTs(thisClient, sb, false);
-			System.out.println("A, token: "+thisClient.getElggToken()+"\t"+thisClient.getElggTs());
 			updateNumActivities(thisClient, sb);
 			printErrorMessageIfAny(sb, null);
 			
-			// commented by a_ansaarii
+			// commented by a_ansaarii, these urls do not exist on elgg 3.3.20
 			/*for (String url : ROOT_URLS) {
 				System.out.println("url is: " + hostUrl + url);
 				http.readURL(hostUrl + url);
 			}*/
-			
-			System.out.println("CHP4\n");
 			
 
 		}
@@ -436,7 +433,7 @@ public class Web20Driver {
 
 		printErrorMessageIfAny(sb, null);
 		
-		// commented by a_ansaarii
+		// commented by a_ansaarii, these urls do not exist on elgg 3.3.20
 		/*for (String url : ROOT_URLS) {
 			thisClient.getHttp().readURL(hostUrl + url);
 		}*/
@@ -466,10 +463,7 @@ public class Web20Driver {
 				+ thisClient.getUsername() + "&password="
 				+ thisClient.getPassword();
 		
-		System.out.println("doLogin request: " + postRequest);
-
-		
-		// commented by a_ansaarii
+		// commented by a_ansaarii, these urls do not exist on elgg 3.3.20
 		/*for (String url : LOGIN_URLS) {
 			thisClient.getHttp().readURL(hostUrl + url);
 		}*/
@@ -493,11 +487,11 @@ public class Web20Driver {
 
 		if (sb.toString().contains("You have been logged in")) {
 			logger.fine("Successfully logged in: "+thisClient.getUsername());
-      System.out.print("PRINT: Successfully logged in\n");
+			System.out.print("PRINT: Successfully logged in\n");
 		} else {
 			logger.fine("!!!!!!!!!!!!!!!!!! Failed to log in :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
 			System.out.print("PRINT: Failed to login!\n");
-      throw new RuntimeException(sb.toString());
+			throw new RuntimeException(sb.toString());
 		}
 		thisClient.setLoggedIn(true);
 		thisClient.setClientState(ClientState.LOGGED_IN);
@@ -514,43 +508,40 @@ public class Web20Driver {
 						percentileLimits= {500,750,1000},
                         timing = Timing.MANUAL)
 	public void updateActivity() throws Exception {
-		// this function is disabled by a_ansaarii
-		// I don't know what this function actually does. The fetched url does not exist on the elgg 3.3.20
 		
-		
-		//boolean success = false;
+		boolean success = false;
 
-		//context.recordTime();
-		//if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-		//	logger.fine(context.getThreadId() +" : Doing operation: updateActivity");
+		context.recordTime();
+		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
+			logger.fine(context.getThreadId() +" : Doing operation: updateActivity");
 			
-		//	Map<String, String> headers = new HashMap<String, String>();
-		//	headers.put("Accept",
-		//			"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		//	headers.put("Accept-Language", "en-US,en;q=0.5");
-		//	headers.put("Accept-Encoding", "gzip, deflate");
-		//	headers.put("Referer", hostUrl + "/activity");
-		//	headers.put("User-Agent",
-		//			"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-		//	headers.put("Content-Type", "application/x-www-form-urlencoded");
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			headers.put("Accept-Language", "en-US,en;q=0.5");
+			headers.put("Accept-Encoding", "gzip, deflate");
+			headers.put("Referer", hostUrl + "/activity");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
+			headers.put("Content-Type", "application/x-www-form-urlencoded");
 
 
-		//	String postString = "options%5Bcount%5D=false&options%5Bpagination%5D=false&options%5Boffset%5D=0&options%5Blimit%5D=5&count="+thisClient.getNumActivities(); 
+			String postString = "options%5Bcount%5D=false&options%5Bpagination%5D=false&options%5Boffset%5D=0&options%5Blimit%5D=5&count="+thisClient.getNumActivities(); 
 			// Note: the %5B %5D are [ and ] respectively.
 			// #TODO: Fix the count value.
-		//	StringBuilder sb = thisClient.getHttp().fetchURL(
-		//			hostUrl + RIVER_UPDATE_URL, postString, headers);
-		//	if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-		//		logger.fine("startNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-		//	}
-		//	printErrorMessageIfAny(sb, postString);
+			StringBuilder sb = thisClient.getHttp().fetchURL(
+					hostUrl + RIVER_UPDATE_URL, postString, headers);
+			if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
+				logger.fine("startNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
+			}
+			printErrorMessageIfAny(sb, postString);
 
-		//	success = true;
-		//}
-		//context.recordTime();
-		//if (success) {
-		//	elggMetrics.attemptUpdateActivityCnt++;
-		//}
+			success = true;
+		}
+		context.recordTime();
+		if (success) {
+			elggMetrics.attemptUpdateActivityCnt++;
+		}
 	}
 
 	/**
@@ -602,7 +593,7 @@ public class Web20Driver {
 		context.recordTime();
 
 		if (success) {
-					elggMetrics.attemptAddFriendsCnt++;
+			elggMetrics.attemptAddFriendsCnt++;
 		}/* else {
 			if (thisClient.getClientState() == ClientState.AT_HOME_PAGE) {
 				doLogin();
@@ -649,7 +640,7 @@ public class Web20Driver {
 		context.recordTime();
 		
 		if (success) {
-				elggMetrics.attemptRecvChatMessageCnt ++;
+			elggMetrics.attemptRecvChatMessageCnt ++;
 		} 
 	}
 	
