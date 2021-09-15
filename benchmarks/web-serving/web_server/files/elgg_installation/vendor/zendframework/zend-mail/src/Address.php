@@ -75,7 +75,7 @@ class Address implements Address\AddressInterface
         if (! $emailAddressValidator->isValid($email)) {
             $invalidMessages = $emailAddressValidator->getMessages();
             // commented by a_ansaarii, it throws an unknown exception when users are generated stating:
-            // the ip address is not a valid hostname for the email address
+            // "the ip address is not a valid hostname for the email address"
             // throw new Exception\InvalidArgumentException(array_shift($invalidMessages));
         }
 
