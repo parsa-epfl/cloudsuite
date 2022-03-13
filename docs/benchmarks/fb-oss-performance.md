@@ -68,7 +68,7 @@ To start the facebook workload benchmark you have to first `pull` the server ima
 ```
 docker pull cloudsuite/fb-oss-performance:4.0
 ``` 
-Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](../../benchmarks/fb-oss-performance/files/cmd.sh)
+Create a file `cmd.sh` on the host which contains the command to run mediawiki workload. An example is present in [cmd.sh](../../benchmarks/fb-oss-performance/4.0/files/cmd.sh)
 ```
 chmod +x cmd.sh
 ```
