@@ -614,7 +614,7 @@ parse_config (void)
  	int log_file_counter = 0;
 
 	// Initialize the session_templates, depending on the number of log files specified
- 	session_logs = malloc(param.videosesslog.num_logs * sizeof(Session_Log_Desc));	
+ 	session_logs = calloc(param.videosesslog.num_logs * sizeof(Session_Log_Desc), 1);	
 
 	// Build the request-mix cdf
 	build_request_mix_cdf();
