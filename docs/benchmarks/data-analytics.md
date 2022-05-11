@@ -5,7 +5,7 @@
 
 The explosion of accessible human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. The MapReduce paradigm has emerged as a popular approach to handling large-scale analysis, farming out requests to a cluster of nodes that first perform filtering and transformation of the data (map) and then aggregate the results (reduce). The Data Analytics benchmark is included in CloudSuite to cover the increasing importance of machine learning tasks analyzing large amounts of data in datacenters using the MapReduce framework. It is composed of Mahout, a set of machine learning libraries, running on top of Hadoop, an open-source implementation of MapReduce.
 
-The benchmark consists of running a Naive Bayes classifier on a Wikimedia dataset. It uses Hadoop version 2.9.2 and Mahout version 0.13.0.
+The benchmark consists of running a Naive Bayes classifier on a Wikimedia dataset. It uses Hadoop version 2.10.1 and Mahout version 0.13.0.
 
 ## Images ##
 
