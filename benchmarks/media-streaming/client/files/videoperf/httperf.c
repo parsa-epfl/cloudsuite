@@ -79,7 +79,7 @@ test.
 #endif
 
 #define RATE_INTERVAL	5.0
-#define STATS_INTERVAL 60.0
+#define STATS_INTERVAL 15.0
 
 #define MAX_HOSTNAME_LEN   (100)
 
@@ -265,6 +265,7 @@ dump_stats (Timer *t, Any_Type regarg)
 {
 	Any_Type callarg;
 
+  getrusage (RUSAGE_SELF, &test_rusage_stop); // aansaarii: required to measure CPU utilization
 	event_signal (EV_DUMP_STATS, 0, callarg);
 
 	/* prepare for next sample interval: */
@@ -357,6 +358,7 @@ main (int argc, char **argv)
 	param.recv_buffer_size = 16384;
 	param.rate.dist = DETERMINISTIC;
 	param.rate_interval = RATE_INTERVAL;
+  param.stats_interval = STATS_INTERVAL; // aansaarii
 	param.spec_stats = 0;
 #ifdef UW_CALL_STATS
 	param.call_stats = -1;

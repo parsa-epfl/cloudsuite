@@ -40,9 +40,9 @@ To start the server you have to first `pull` the server image and then run it. T
 
     $ docker pull cloudsuite/media-streaming:server
 
-The following command will start the server, mount the dataset volume, and attach it to the *host* network:
+The following command will start the server, mount the dataset volume, and attach it to the *host* network. The ${NGINX_WORKERS} parameter sets the number of NGINX workers. If it is not given, the default value is 2000. Adjust this number based on the computational resources of the server and the intended load.  
 
-    $ docker run -d --name streaming_server --volumes-from ${DATASET_CONTAINER_ID} --net host cloudsuite/media-streaming:server
+    $ docker run -d --name streaming_server --volumes-from ${DATASET_CONTAINER_ID} --net host cloudsuite/media-streaming:server ${NGINX_WORKERS}
 
 
 ### Starting the Client on Host2 ###
@@ -51,29 +51,27 @@ Copy the **`logs`** folder from Host1 to Host2
 
     $ rsync -zarvh username@HOST1:$HOME/logs $HOME
 
-Note: Pass public key file, in case of authentication error using `-e "ssh -i /path/to/.pemfile` to the `rsync` command
+Note: Pass the public key file, in case of authentication error using `-e "ssh -i /path/to/.pemfile"` to the `rsync` command.
 
-The ${SERVER_IP} is the IP of Host1
 
 To start the client you have to first `pull` the client image and then run it. To `pull` the client image use the following command:
 
     $ docker pull cloudsuite/media-streaming:client
 
 To start the client container and connect it to the *host* network use the following command:
+    $ docker run -t --name=streaming_client -v $HOME/logs:/videos/logs -v $HOME/output:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${NUM_HTTPERF_CLIENTS} ${NUM_SESSIONS} ${RATE}
 
-    $ docker run -t --name=streaming_client -v $HOME/logs:/videos/logs -v $HOME/output:/output --net host cloudsuite/media-streaming:client ${SERVER_IP}
+The **`logs`** folder is mounted into the client container using `-v /path/to/logs:/videos/logs`. The ${SERVER_IP} is the IP of Host1. ${NUM_HTTPERF_CLIENTS} determines the number of distinct `httperf` processes on the client machine that will generate the load. For higher loads, it would be beneficial to increase the number of httperf clients to distribute the load among multiple processes. The default value is 4. ${NUM_SESSIONS} sets the number of individual sessions that the client would request from the server to stream. Each session is assigned to a movie with specific quality and the client sends HTTP requests for the chunks of the video until the movie is fully streamed. The **`logs`** folder describes the sessions used in the benchmark. Each session is separated from the others by blank lines. Finally, ${RATE} specifies the rate at which a new session will be generated. Its unit is sessions per second. For example, if ${NUM_SESSIONS} is 1000 and ${RATE} is 10, it takes 100 seconds until the client generates all demanded sessions. 
 
-The logs folder is mounted into the client container using `-v /path/to/logs:/videos/logs`.
+During the execution of the benchmark, the client container continuously reports some statistics. Moreover, at the end of the client's execution, the overall execution statistics will be found under the /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`.
 
-The client will issue a mix of requests for different videos of various qualities and performs a binary search of experiments to find the peak request rate the client can sustain while keeping the failure rate acceptable. At the end of client's execution, the resulting log files can be found under /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`.
+  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
+  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
 
-  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
+  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
 
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
-
-  [repo]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/media-streaming "GitHub Repo"
+  [repo]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming "GitHub Repo"
   [dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
   [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
   [dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"

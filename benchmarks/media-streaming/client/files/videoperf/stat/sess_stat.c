@@ -84,8 +84,9 @@ perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)
 	rate = weight*st.num_completed_since_last_sample;
 	st.num_completed_since_last_sample = 0;
 
+  // aansaarii
 	if (verbose)
-		printf ("session-rate = %-8.1f\n", rate);
+    printf ("session-rate = %-8.1f, session-completed: %-8u, session-failed: %-8u, session-total: %-8u\n", rate, st.num_completed, st.num_failed, st.num_completed + st.num_failed);
 
 	++st.num_rate_samples;
 	st.rate_sum += rate;

@@ -24,6 +24,7 @@
 
 /* Basic statistics collector.  */
 
+
 #include "config.h"
 
 #include <stdio.h>
@@ -202,23 +203,62 @@ perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)
 	rate = weight*num_replies;
 
 	if (!started_dump_stats) {
-		printf("Benchmark stats...\n");
+    if(verbose)	{
+      printf("Benchmark stats...\n");
+    }
 		started_dump_stats = 1;
 	}
-	for (i=0; i < MAX_LOG_FILES; i++) {
-		printf("%d ", basic.num_active_conns[i]);
-	}
-	printf("\n");
+  if(verbose){
+    printf("\n\n\n");
+	  for (i=0; i < MAX_LOG_FILES; i++) {
+		  printf("%d ", basic.num_active_conns[i]);
+	  }
+	  printf("\n");
+  }
 #ifdef UW_THROUGHPUT_STATS
 	/* convert throughput into Mbps */
-	double throughput = weight * bytes_received / 125000.0;
-	if (verbose)
-		printf("throughput = %-8.2lf reply-rate = %-8.1f connected-conns = %-8d\n", 
-				throughput, rate, basic.num_connected_conns);
+	double throughput = weight * bytes_received * 8.0 / 1048576; // aansaarii: 1048576 = 1 M (2^20)
+	if (verbose){
+		printf("Last Period: throughput (Mbps) = %-8.2lf reply-rate = %-8.1f connected-conns = %-8d\n", 
+				throughput, rate, basic.num_connected_conns);  
+    // aansaarii
+    printf ("Errors: total %-8u client-timo %-8u socket-timo %-8u "
+                        "connrefused %-8u connreset %-8u\n"
+                        "Errors: fd-unavail %-8u addrunavail %-8u ftab-full %-8u "
+                        "addrinuse %-8u other %-8u\n",
+                        (basic.num_client_timeouts + basic.num_sock_timeouts
+                         + basic.num_sock_fdunavail + basic.num_sock_ftabfull
+                         + basic.num_sock_refused + basic.num_sock_reset
+                         + basic.num_sock_addrunavail + basic.num_sock_addrinuse
+                         + basic.num_other_errors),
+                        basic.num_client_timeouts, basic.num_sock_timeouts,
+                        basic.num_sock_refused, basic.num_sock_reset,
+                        basic.num_sock_fdunavail, basic.num_sock_addrunavail,
+                        basic.num_sock_ftabfull, basic.num_sock_addrinuse,
+                        basic.num_other_errors);
+    fflush(stdout);
+  }
 #else
-	if (verbose)
+	if (verbose){
 		printf("reply-rate = %-8.1f connected-conns = %-8d\n", 
 				rate, basic.num_connected_conns);
+    // aansaarii
+    printf ("Errors: total %-8u client-timo %-8u socket-timo %-8u "
+                        "connrefused %-8u connreset %-8u\n"
+                        "Errors: fd-unavail %-8u addrunavail %-8u ftab-full %-8u "
+                        "addrinuse %-8u other %-8u\n",
+                        (basic.num_client_timeouts + basic.num_sock_timeouts
+                         + basic.num_sock_fdunavail + basic.num_sock_ftabfull
+                         + basic.num_sock_refused + basic.num_sock_reset
+                         + basic.num_sock_addrunavail + basic.num_sock_addrinuse
+                         + basic.num_other_errors),
+                        basic.num_client_timeouts, basic.num_sock_timeouts,
+                        basic.num_sock_refused, basic.num_sock_reset,
+                        basic.num_sock_fdunavail, basic.num_sock_addrunavail,
+                        basic.num_sock_ftabfull, basic.num_sock_addrinuse,
+                        basic.num_other_errors);
+    fflush(stdout);
+  }
 #endif /* UW_THROUGHPUT_STATS */
 
 #ifdef UW_STABLE_STATS
