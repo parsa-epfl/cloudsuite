@@ -312,7 +312,10 @@ port_get (void)
 		mask = 0;
 	else
 		mask = ~((1UL << (bit + 1)) - 1);
-	port_free_map[i] &= ~(1UL << bit);
+  // commented by aansaarii
+  // if the port is utilized by another program, it will be utilized by httperf
+  // and it will never have a chance to be freed, httperf will eventually run out of ports
+  //port_free_map[i] &= ~(1UL << bit);
 	port = bit + i*BITSPERLONG + MIN_IP_PORT;
 	return port;
 }
@@ -1172,8 +1175,16 @@ core_connect (Conn *s)
 			SYSCALL (BIND,
 					result = bind (sd, (struct sockaddr *) &myaddr, sizeof (myaddr)));
 			saved_err = errno;
-			if (result == 0)
+			if (result == 0){
+        // edited by aansaarii
+        // set the port as allocated if it is binded to this httperf process
+        int port = myport - MIN_IP_PORT;
+        int i   = port / BITSPERLONG;
+        int bit = port % BITSPERLONG;
+        port_free_map[i] &= ~(1UL << bit);
+        // end edit
 				break;
+      }
 
 			if (errno != EADDRINUSE && errno == EADDRNOTAVAIL)
 			{
