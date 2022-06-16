@@ -1,12 +1,12 @@
 FROM cloudsuite/base-os:debian
 
 RUN apt-get update -y \
-  && apt-get install -y --no-install-recommends nginx \
+  && apt-get install -y --no-install-recommends nginx openssl \
   && rm -rf /var/lib/apt/lists/*
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
-RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf
+RUN cat /tmp/limits.conf.append >> /etc/security/limits.confi
 
 COPY files/nginx.location.append /tmp/
 RUN cat /tmp/nginx.location.append > /etc/nginx/sites-available/default

@@ -1213,12 +1213,12 @@ bad_wset_param:
 		SSLeay_add_ssl_algorithms ();
 
 		/* for some strange reason, SSLv23_client_method () doesn't work here */
-		// ssl_ctx = SSL_CTX_new (SSLv3_client_method ());
-		// if (!ssl_ctx)
-		// {
-		// 	ERR_print_errors_fp (stderr);
-		// 	exit (-1);
-		// }
+		ssl_ctx = SSL_CTX_new (TLSv1_2_client_method ());
+		if (!ssl_ctx)
+		{
+		 	ERR_print_errors_fp (stderr);
+		 	exit (-1);
+		}
 
 		memset (buf, 0, sizeof (buf));
 		RAND_seed (buf, sizeof (buf));

@@ -6,9 +6,10 @@ remoteOutputPath="$3"
 numClientsPerHost="$4"
 totalNumSessions="$5"
 rate="$6"
+mode="$7"
 
-if [ $# -ne 6 ]; then
-  echo "Usage: launch_hunt_bin.sh <video_server_ip> <host_list_file> <remote_output_path> <num_clients_per_host> <total_num_sessions> <rate>"
+if [ $# -ne 7 ]; then
+  echo "Usage: launch_hunt_bin.sh <video_server_ip> <host_list_file> <remote_output_path> <num_clients_per_host> <total_num_sessions> <rate> <encryption_mode>"
   exit 
 fi
 
@@ -33,7 +34,7 @@ function launchRemote () {
   totalErrors=0
   
   numSessions="$1"
-  $(dirname $0)/launch_remote.sh $videoServerIp $hostFileName $remoteOutputPath $numClientsPerHost $numSessions $rate
+  $(dirname $0)/launch_remote.sh $videoServerIp $hostFileName $remoteOutputPath $numClientsPerHost $numSessions $rate $mode
   if [ $? -ne 0 ]; then
     echo 'Failed launching remote... exiting.'
     exit
