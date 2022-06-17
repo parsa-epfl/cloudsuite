@@ -6,7 +6,7 @@ RUN apt-get update -y \
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
-RUN cat /tmp/limits.conf.append >> /etc/security/limits.confi
+RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf
 
 COPY files/nginx.location.append /tmp/
 RUN cat /tmp/nginx.location.append > /etc/nginx/sites-available/default
