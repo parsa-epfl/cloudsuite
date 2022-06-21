@@ -175,7 +175,7 @@ server to ALLOWED_HOSTS.
 
 ## Siege configuration
 Siege client will be used to stress test or benchmark the Python Django Workload.
-This will install Siege version 4.0.3rc3. There are no known version requirements
+This will install Siege version 4.1.3. There are no known version requirements
 for Siege at the moment, although older versions might not allow concurrency
 levels higher than 256, which can be insufficient to properly stress a certain
 system.

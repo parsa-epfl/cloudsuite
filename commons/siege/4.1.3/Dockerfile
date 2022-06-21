@@ -9,7 +9,7 @@ RUN set -eux; \
 
 RUN git clone https://github.com/JoeDog/siege.git \
     && cd siege \
-    && git checkout tags/v4.0.3rc3 \
+    && git checkout tags/v4.1.3 \
     && ./utils/bootstrap \
     && automake --add-missing \
     && ./configure \

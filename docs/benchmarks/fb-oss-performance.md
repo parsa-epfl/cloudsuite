@@ -47,7 +47,7 @@ docker run -dt --net=host cloudsuite/mysql:mariadb-10.3
 ### Starting the siege client ####
 To start the siege client, you have to first `pull` the siege image. To `pull` the siege image use the following command:
 ```
-docker pull cloudsuite/siege:4.0.3rc3
+docker pull cloudsuite/siege:4.1.3
 ```
 The following command will start the siege client:
 ```
