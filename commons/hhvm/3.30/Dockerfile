@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get build-dep hhvm-nightly -y
 
-RUN git clone git://github.com/facebook/hhvm.git \
+RUN git clone git@github.com:facebook/hhvm.git \
     && cd hhvm \
     && git checkout HHVM-3.30 \
     && git submodule update --init --recursive \

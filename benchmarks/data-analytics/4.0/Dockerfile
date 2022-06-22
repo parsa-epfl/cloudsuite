@@ -1,6 +1,6 @@
 FROM cloudsuite/hadoop:2.10.1
 
-ENV MAHOUT_VERSION 0.13.0
+ENV MAHOUT_VERSION 14.1
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
 
 # Install dependencies
@@ -8,9 +8,11 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
+#http://archive.apache.org/dist/mahout/14.1/apache-mahout-distribution-14.1.tar.gz
+
 # Install Mahout
 RUN set -x \
-    && URL=https://downloads.apache.org/mahout/${MAHOUT_VERSION}/apache-mahout-distribution-${MAHOUT_VERSION}.tar.gz \
+    && URL=https://archive.apache.org/dist/mahout/${MAHOUT_VERSION}/apache-mahout-distribution-${MAHOUT_VERSION}.tar.gz \
     && curl ${URL} | tar -xzC /opt \
     && mv /opt/apache-mahout-distribution-${MAHOUT_VERSION} ${MAHOUT_HOME}
 
