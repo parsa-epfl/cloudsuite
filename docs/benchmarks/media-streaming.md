@@ -34,6 +34,10 @@ Copy logs folder from container to Host1:
 
     $ docker cp ${DATASET_CONTAINER_ID}:/videos/logs $HOME
     
+The dataset container generates a collection of videos with 10 videos for each of 240p, 360p, 480p, and 720p resolutions. For each of the resolutions, the dataset container creates a log file containing the sessions. Each session represents the behavior of a specific client streaming a specific media by mentioning the name of the requested media and the bytes streamed in each connection. The log file for each resolution contains 5 sessions. Therefore, some of the videos in the dataset won't be accessed during the benchmark's execution. In the log files, sessions are separated with empty lines. 
+
+You can modify the dataset container easily based on your need by modifying the files at `root/filegen/params` inside of the container. In this folder, for each resolution, there is a file that configures how the dataset would be generated. You can control the size of the dataset by changing the `library_size` parameter. The container will generate a larger dataset by copying the videos in the initial dataset multiple times. Moreover, by increasing `num_log_sessions`, the sessions in the log files will cover a larger portion of the available dataset. Note that the sessions in the log files are generated based on a distribution to represent the behvaior that some videos are more demanded compared to the others. In other words, an equal number of `library_size` and `num_log_sessions` does not mean that there will be a session for each video. Consequently, consider giving a larger number to `num_log_sessions` to cover all videos available in the dataset. 
+
 
 ### Starting the Server ####
 To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
