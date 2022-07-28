@@ -12,7 +12,7 @@ WEB_SERVER_IP=$1
 find /var/lib/mysql -type f -exec touch {} \;
 
 # Update the hostname/IP to that of the webserver
-sed -i -e"s/HOST_IP/${WEB_SERVER_IP}:8080/" /elgg_db.dump
+sed -i -e"s/HOST_IP/${WEB_SERVER_IP}:8080/" /elgg_bigDB.dump
 set root_password=root
 
 MY_SQL=$(find /etc/init.d -name "*mariadb*")
@@ -29,7 +29,7 @@ while :; do $MY_SQL -uroot -p${root_password} -e "status" && break; sleep 1; don
 $MY_SQL -uroot -p$root_password -e "create database ELGG_DB;"
 
 # Need bash -c for redirection
-bash -c "$MY_SQL -uroot -p$root_password ELGG_DB < /elgg_db.dump"
+bash -c "$MY_SQL -uroot -p$root_password ELGG_DB < /elgg_bigDB.dump"
 $MY_SQL -uroot -p$root_password -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$root_password' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 service $MY_SQL stop
 
