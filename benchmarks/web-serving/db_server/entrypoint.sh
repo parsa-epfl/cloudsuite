@@ -5,6 +5,8 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
+wget --no-check-certificate -O /elgg_bigDB.dump https://cloudsuite.ch/download/web-serving/elgg_bigDB.dump
+
 WEB_SERVER_IP=$1
 
 # workaround for overlayfs:
@@ -32,5 +34,7 @@ $MY_SQL -uroot -p$root_password -e "create database ELGG_DB;"
 bash -c "$MY_SQL -uroot -p$root_password ELGG_DB < /elgg_bigDB.dump"
 $MY_SQL -uroot -p$root_password -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$root_password' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 service $MY_SQL stop
+
+rm /elgg_bigDB.dump
 
 /usr/sbin/${MY_SQL}d
