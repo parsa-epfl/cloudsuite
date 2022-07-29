@@ -1,6 +1,8 @@
 package setup;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,7 +122,10 @@ public class UserGenerator {
 		headers.put("Referer", hostURL+"/activity");
 		sb = http.fetchURL(hostURL+"/admin", headers);
 		updateElggTokenAndTs(tokenTsPair, sb);
-		
+	
+		String outputFile = System.getenv("FABAN_HOME")+"/"+properties.getProperty("output_file").trim();
+		PrintWriter pw = new PrintWriter(new FileOutputStream(new File(outputFile), true));
+	
 		i = 0;
 		for (UserEntity user: userList) {
 			headers.put("Referer", hostURL+"/admin");
@@ -137,7 +142,11 @@ public class UserGenerator {
 			String guid = sb.substring(startIndex, endIndex);
 			user.setGuid(guid);
 			System.out.println("User"+i+++" generated.");
+			pw.append(user.getGuid()+" "+user.getUserName()+" "+user.getPassword()+"\n");
+			pw.flush();
 		}
+		//pw.flush();
+		pw.close();
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -145,7 +154,7 @@ public class UserGenerator {
 		gen.loadProperties();
 		gen.generateUsers();
 		gen.createUsers();
-		gen.writeUserFile();
+		//gen.writeUserFile();
 	}
 
 	private void writeUserFile() throws FileNotFoundException {

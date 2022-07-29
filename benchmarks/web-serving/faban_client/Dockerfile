@@ -24,9 +24,9 @@ RUN ant usergen-jar
 RUN cp /web20_benchmark/build/Web20Driver.jar $FABAN_HOME/benchmarks/
 
 COPY files/usersetup.properties $FABAN_HOME/usersetup.properties
+COPY files/users.list $FABAN_HOME/users.list
 
-ADD bootstrap.sh /etc/bootstrap.sh
-RUN chown root:root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
+RUN chown root:root bin/entrypoint.sh
+RUN chmod 700 bin/entrypoint.sh
 
-ENTRYPOINT ["/etc/bootstrap.sh"]
+ENTRYPOINT ["bin/entrypoint.sh"]
