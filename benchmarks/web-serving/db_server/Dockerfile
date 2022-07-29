@@ -2,7 +2,8 @@ FROM cloudsuite/mysql:mariadb-10.3
 
 ENV root_password root
 
-ADD files/elgg_bigDB.dump /elgg_bigDB.dump
+RUN apt-get update && apt-get install -y --no-install-recommends wget \
+  && rm -rf /var/lib/apt/lists/*
 
 ADD entrypoint.sh /etc/entrypoint.sh
 RUN chown root:root /etc/entrypoint.sh
