@@ -2,7 +2,7 @@ FROM cloudsuite/mysql:mariadb-10.3
 
 ENV root_password root
 
-ADD files/elgg_db.dump /elgg_bigDB.dump
+ADD files/elgg_bigDB.dump /elgg_bigDB.dump
 
 ADD entrypoint.sh /etc/entrypoint.sh
 RUN chown root:root /etc/entrypoint.sh

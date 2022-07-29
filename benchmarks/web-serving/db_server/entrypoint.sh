@@ -12,7 +12,7 @@ WEB_SERVER_IP=$1
 find /var/lib/mysql -type f -exec touch {} \;
 
 # Update the hostname/IP to that of the webserver
-sed -i -e"s/HOST_IP/${WEB_SERVER_IP}:8080/" /elgg_bigDB.dump
+#sed -i -e"s/HOST_IP/${WEB_SERVER_IP}:8080/" /elgg_bigDB.dump
 set root_password=root
 
 MY_SQL=$(find /etc/init.d -name "*mariadb*")
