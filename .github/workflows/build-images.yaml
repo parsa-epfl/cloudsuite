@@ -103,7 +103,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
       matrix:
-        tag: ["1.6.10"]
+        tag: ["1.6.15"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
