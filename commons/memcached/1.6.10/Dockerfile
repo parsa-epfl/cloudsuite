@@ -12,25 +12,29 @@ RUN set -eux; \
     case "${ARCH}" in \
        aarch64|arm64|amd64|x86_64) \
          LIBEVENT_VER='2.1-6'; \
+         GCC='gcc'; \
+         apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER} ${GCC}; \
         ;; \
        riscv64) \
          LIBEVENT_VER='2.1-7'; \
+         GCC='gcc-11'; \
+         apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER} ${GCC}; \
+         ln -s /usr/bin/${GCC} /usr/bin/gcc; \
         ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
          exit 1; \
          ;; \
-    esac; \
-    apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER} && rm -rf /var/lib/apt/lists/*;
+    esac; 
 
 ENV MEMCACHED_VERSION 1.6.10
 
 # this checksum was not provided with the author of memcached, it is checksum of the working downloaded version
 ENV MEMCACHED_SHA1 cb5b9fe77a2a59cc6cc7103a415bc07df9ddc6ec 
 
-RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
+RUN buildDeps='curl libc6-dev libevent-dev make perl' \
 	&& set -x \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+	&& apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -SL "http://memcached.org/files/memcached-$MEMCACHED_VERSION.tar.gz" -o memcached.tar.gz \
 	&& echo "$MEMCACHED_SHA1 memcached.tar.gz" | sha1sum -c - \
