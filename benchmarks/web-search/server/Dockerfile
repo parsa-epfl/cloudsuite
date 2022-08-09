@@ -1,11 +1,14 @@
-FROM cloudsuite/java:adoptopenjdk8
+FROM cloudsuite/java:openjdk11
 
 RUN apt-get update -y \
 	&& apt-get install -y --no-install-recommends procps telnet lsof wget unzip \
 	&& rm -rf /var/lib/apt/lists/*
 
+COPY files/limits.txt /root/.
+RUN cat /root/limits.txt >> /etc/security/limits.conf
+
 ENV BASE_PATH /usr/src
-ENV SOLR_VERSION 6.6.6
+ENV SOLR_VERSION 9.0.0
 ENV SOLR_HOME $BASE_PATH/solr-$SOLR_VERSION
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV INDEX_URL $PACKAGES_URL/index
@@ -20,14 +23,20 @@ ENV SERVER_0_IP localhost
 ENV ZOOKEEPER_PORT $SOLR_PORT
 
 #INSTALL SOLR
-RUN 	mkdir -p $BASE_PATH/cloudsuite-web-search \
-	&& cd $BASE_PATH \ 
-	&& wget --progress=bar:force -O solr.tar.gz "archive.apache.org/dist/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
-	&& tar -zxf solr.tar.gz 
+RUN cd $BASE_PATH \ 
+  && wget --progress=bar:force -O solr.tar.gz "https://downloads.apache.org/solr/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
+	&& tar -zxf solr.tar.gz \
+  && rm solr.tar.gz
 
-RUN 	cd $SOLR_HOME/server/solr/configsets/basic_configs/conf \
-	&& wget --progress=bar:force $SCHEMA_URL -O schema.xml \
-	&& wget --progress=bar:force $SOLR_CONFIG_URL -O solrconfig.xml
+
+COPY files/index/ /root/.
+
+RUN cd $SOLR_HOME/server/solr/configsets/ \
+  && cp -r _default cloudsuite_web_search \
+  && rm cloudsuite_web_search/conf/managed* 
+
+COPY files/schema.xml $SOLR_HOME/server/solr/configsets/cloudsuite_web_search/conf/.
+COPY files/solrconfig.xml $SOLR_HOME/server/solr/configsets/cloudsuite_web_search/conf/.
 
 #RELOAD CONFIGURATION
 RUN     cd $SOLR_HOME \
@@ -38,5 +47,7 @@ COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE $SOLR_PORT
+
+RUN sed -i "/SOLR_JETTY_HOST/c\SOLR_JETTY_HOST=\"0.0.0.0\"" ${SOLR_HOME}/bin/solr.in.sh 
 
 ENTRYPOINT ["/entrypoint.sh"]
