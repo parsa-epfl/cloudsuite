@@ -29,9 +29,9 @@ The benchmark runs the PageRank algorithm on GraphX through the spark-submit scr
 
 For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, supply it with --driver-memory and  --executor-memory arguments:
 
-    $ docker run --rm --volumes-from twitter-data cloudsuite/graph-analytics:4.0 \
+    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pagerank cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g
-
+The container can also run `connected components` and `triangle count` algorithms on the given dataset by setting the environment variable `WORKLOAD_NAME` to `cc` and `tc`, respectively.
 ### Multi-node deployment
 
 This section explains how to run the benchmark using multiple Spark
@@ -58,7 +58,7 @@ Start Spark master and Spark workers. They should all run within the same Docker
 
 Finally, run the benchmark as the client to the Spark master:
 
-    $ docker run --rm --net host --volumes-from twitter-data \
+    $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pagerank \
                  cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077
