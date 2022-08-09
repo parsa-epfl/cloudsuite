@@ -31,7 +31,8 @@ For example, to ensure that Spark has enough memory allocated to be able to exec
 
     $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pagerank cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g
-The container can also run `connected components` and `triangle count` algorithms on the given dataset by setting the environment variable `WORKLOAD_NAME` to `cc` and `tc`, respectively.
+The container can also run `connected components` and `triangle count` algorithms on the given dataset by setting the environment variable `WORKLOAD_NAME` to `cc` and `tc`, respectively. Allocate over 40g for the `driver-memory` if you run the triangle count algorithm on the twitter dataset.
+
 ### Multi-node deployment
 
 This section explains how to run the benchmark using multiple Spark
