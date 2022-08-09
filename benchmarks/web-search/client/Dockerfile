@@ -1,7 +1,7 @@
 FROM cloudsuite/faban:1.4
 
-ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
-ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
+#ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
+#ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz
 ENV FABAN_PORT 9980
 ENV ANT_VERSION 1.9.6
 ENV ANT_HOME $BASE_PATH/ant
@@ -26,9 +26,11 @@ RUN cd $BASE_PATH \
 	&& tar -zxf apache-ant-$ANT_VERSION-bin.tar.gz \
 	&& ln -s $BASE_PATH/apache-ant-$ANT_VERSION/ $ANT_HOME
 
-RUN cd $FABAN_HOME \
-	&& wget -O - $SEARCH_DRIVER_URL \
-	| tar -xzf -
+COPY files $FABAN_HOME/.
+
+#RUN cd $FABAN_HOME \
+#	&& wget -O - $SEARCH_DRIVER_URL \
+#	| tar -xzf -
 
 RUN cd $FABAN_HOME/search \
 	&& sed -i "/faban.home/c\\faban.home=$FABAN_HOME" build.properties \

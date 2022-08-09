@@ -1,0 +1,148 @@
+<project name="Faban Benchmark" default="deploy.jar" basedir=".">
+
+    <property file="build.properties"/>
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="buildlib.dir" value="${build.dir}/lib"/>
+    <property name="faban.libs" value="${faban.home}/lib"/>
+    <property name="faban.classes" value="${faban.home}/master/webapps/faban/WEB-INF/classes"/>
+
+    <path id="taskclasspath">
+        <fileset dir="${ant.home}/lib" includes="*.jar"/>
+        <fileset dir="${faban.libs}" includes="*.jar"/>
+    </path>
+
+    <path id="classpath" location="${faban.libs}" >
+        <pathelement location="${classes.dir}"/>
+        <fileset dir="${lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+        <fileset dir="${faban.libs}" includes="*.jar"/>
+        <pathelement location="${faban.classes}"/>
+    </path>
+    
+    <taskdef name="deploy" classname="com.sun.faban.harness.util.DeployTask">
+        <classpath refid="taskclasspath"/>
+    </taskdef>
+
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <target name="compile" depends="init" description="Compiling all source files">
+        <javac srcdir="${src.dir}"
+            deprecation="on" target="${compiler.target.version}"
+            destdir="${classes.dir}" debug="on">
+            <include name="**/*.java" />
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="clean" description="cleanup module">
+      <delete>
+        <fileset dir="${build.dir}" includes="**/*"/>
+      </delete>
+    </target>
+
+
+    <target name="bench.jar" depends="compile" description="Assembles library jar with benchmark classes">
+        <mkdir dir="${buildlib.dir}"/>
+        <jar jarfile="${buildlib.dir}/${bench.shortname}.jar">
+            <fileset dir="${classes.dir}" includes="**/*.class"/>
+        </jar>
+    </target>
+
+    <target name="deploy.jar" depends="bench.jar"
+        description="Assembles deployment jar image for Faban harness">
+        <jar jarfile="${build.dir}/${bench.shortname}.jar">
+            <metainf dir="deploy" includes="*"/>
+            <fileset dir="." includes="bin/**/*, lib/**/*, resources/**/*, public_html/**/*"/>
+            <fileset dir="${build.dir}" includes="lib/**/*"/>
+        </jar>
+    </target>
+
+    <target name="deploy" depends="deploy.jar"
+        description="Deploys benchmark on the Faban harness">
+        <deploy url="${faban.url}"
+            jar="${build.dir}/${bench.shortname}.jar"
+            user="${deploy.user}" password="${deploy.password}"
+            clearConfig="${deploy.clearconfig}"/>
+    </target>
+
+    <target name="run" depends="bench.jar" 
+        description="Test runs the benchmark outside the Faban Harness">
+        <java classname="com.sun.faban.driver.engine.MasterImpl"
+              classpathref="classpath"
+              fork="true"
+              failonerror="true"
+              dir="config">
+              <jvmarg value="-XX:+DisableExplicitGC"/>
+              <jvmarg value="-Djava.security.policy=security/driver.policy"/>
+              <jvmarg value="-Djava.util.logging.config.file=logging.properties"/>
+              <jvmarg value="-Dfaban.driver.base=.."/>
+              <jvmarg value="-Dbenchmark.config=../deploy/run.xml"/>
+        </java>
+    </target>
+    
+    <target name="registry"
+        description="Starts the Faban registry">
+        <java classname="com.sun.faban.common.RegistryImpl"
+              classpathref="classpath"
+              fork="true"
+              failonerror="true">
+              <jvmarg value="-XX:+DisableExplicitGC"/>
+              <jvmarg value="-Djava.security.policy=security/driver.policy"/>
+              <jvmarg value="-Djava.util.logging.config.file=logging.properties"/>
+        </java>            
+    </target>
+    
+    <target name="agent"
+        description="Start a Faban agent">
+        <!-- To start the agent, properties driver.name, driver.id, 
+             and master.host need to be declared -->
+        <java classname="com.sun.faban.driver.engine.AgentImpl"
+              classpathref="classpath"
+              fork="true"
+              failonerror="true">
+              <jvmarg value="-XX:+DisableExplicitGC"/>
+              <jvmarg value="-Djava.security.policy=security/driver.policy"/>
+              <jvmarg value="-Djava.util.logging.config.file=logging.properties"/>
+              <jvmarg value="-Dfaban.driver.base=."/>
+              <arg value="${driver.name}"/>
+              <arg value="${driver.id}"/>
+              <arg value="${master.host}"/>
+        </java>                        
+    </target>
+
+     <target name="genxform"
+        description="Generates config.xhtml form from run.xml">
+        <!-- To start the agent, properties driver.name, driver.id,
+             and master.host need to be declared -->
+        <java classname="com.sun.faban.harness.util.XformsGenerator"
+              classpathref="classpath"
+              fork="true"
+              failonerror="true">
+              <jvmarg value="-XX:+DisableExplicitGC"/>
+              <jvmarg value="-Djava.security.policy=security/driver.policy"/>
+              <jvmarg value="-Djava.util.logging.config.file=logging.properties"/>
+              <arg value="deploy/run.xml"/>
+              <arg value="deploy/config.xhtml"/>
+              <arg value="${faban.home}"/>
+        </java>
+    </target>
+    
+    <target name="multi"
+        description="Start a distributed benchmark run">
+        <parallel>
+            <antcall target="registry"/>
+            <sequential>
+                <sleep seconds="2"/>
+                <antcall target="agent"/>                
+            </sequential>
+            <sequential>
+                <sleep seconds="5"/>
+                <antcall target="run"/>
+            </sequential>
+        </parallel>
+    </target>
+</project>
