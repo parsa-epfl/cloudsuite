@@ -14,8 +14,7 @@ RUN apt-get update && \
 	php7.4-fpm php7.4-memcache \
   	php7.4-json php7.4-xml \
   	php7.4-pdo php7.4-mbstring 
-#	hhvm
-
+     
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
 RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf && rm -f /tmp/limits.conf.append
@@ -33,10 +32,6 @@ RUN chmod a+rw /elgg_data
 
 # Copy over the Nginx Server configuration
 COPY files/nginx_sites_avail.append /tmp/
-
-# Copy over the Nginx HHVM Server configuration
-COPY files/nginx_sites_avail_hhvm.append /tmp/
-COPY files/configure_hhvm.sh /tmp/
 
 RUN service nginx restart
 
