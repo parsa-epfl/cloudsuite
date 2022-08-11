@@ -1,4 +1,4 @@
-FROM cloudsuite/faban:1.4
+FROM cloudsuitetest/faban:1.4
 
 ENV FABAN_PORT 9980
 ENV ANT_VERSION 1.9.6

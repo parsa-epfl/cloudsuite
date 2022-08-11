@@ -1,4 +1,4 @@
-FROM cloudsuite/java:openjdk7
+FROM cloudsuitetest/java:openjdk7
 ENV FABAN_USER faban
 ENV FABAN_VERSION 1.3
 RUN apt-get update -y \

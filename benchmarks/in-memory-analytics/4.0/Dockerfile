@@ -24,7 +24,7 @@ RUN cd /root/movielens-als \
 
 COPY files /root/
 
-FROM cloudsuite/spark:2.4.5
+FROM cloudsuitetest/spark:2.4.5
 RUN mkdir -p /benchmarks/movielens-als /root
 COPY --from=build /benchmarks/movielens-als /benchmarks/movielens-als
 COPY --from=build /root/entrypoint.sh /root/entrypoint.sh
