@@ -1,5 +1,7 @@
 # Facebook Workload
 
+> **Warning:** This benchmark is deprecated in CloudSuite 4 and not maintained anymore. However, you can still download the binary image with the command in this document and run the experiment.
+
 The benchmark tests mainly collects RPS with MediaWiki, the main page is the Barack Obama page from Wikipedia; this is based on the Wikimedia Foundation using it as a benchmark, and finding it fairly representative of Wikipedia. The benchmarking tool performs a sanity check once the engine and webserver have started accepting traffic to ensure that the framework is sending reasonable responses on the URLs being benchmarked.
 
 This benchmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
