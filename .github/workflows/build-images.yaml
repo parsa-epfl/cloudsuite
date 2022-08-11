@@ -125,7 +125,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: base-os
   #   env:
-  #     DH_REPO: "cloudsuitetest/${{ github.job }}"
+  #     DH_REPO: "cloudsuite/${{ github.job }}"
   #   outputs:
   #     is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
   #   strategy:
@@ -415,7 +415,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [mysql, siege, hhvm]
   #   env:
-  #     DH_REPO: "cloudsuitetest/${{ github.job }}"
+  #     DH_REPO: "cloudsuite/${{ github.job }}"
   #   strategy:
   #     matrix:
   #       tag: ["4.0"]
