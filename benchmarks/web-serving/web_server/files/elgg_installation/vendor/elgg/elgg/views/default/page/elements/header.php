@@ -1,4 +1,0 @@
-<?php
-/**
- * Elgg page header
- */

@@ -1,30 +1,38 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 
+ENV VERSION 8.1
+
 RUN apt-get update && \
-	apt-get install -y --force-yes software-properties-common && \
-	apt-get update && \
-	apt-get install --force-yes -y \
-	build-essential \
-	vim git \
-	nginx \
-	php7.4 php7.4-gd \
-	php7.4-mysql php7.4-curl \
-	php7.4-fpm php7.4-memcache \
-  	php7.4-json php7.4-xml \
-  	php7.4-pdo php7.4-mbstring 
+    apt-get install -y --force-yes software-properties-common && \
+# if you want to install versions other than 8.1, uncomment the following lines
+#    add-apt-repository ppa:ondrej/php && \
+#    apt-get update && \
+    apt-get install -y --force-yes \
+    build-essential \
+    vim git \
+    nginx \
+    php${VERSION} php${VERSION}-gd \
+    php${VERSION}-mysql php${VERSION}-curl \
+    php${VERSION}-fpm php${VERSION}-memcached\
+    php${VERSION}-xml \
+    php${VERSION}-pdo php${VERSION}-mbstring 
+#    php${VERSION}-json   
 
 # Increase the open file limit
 COPY files/limits.conf.append /tmp/
 RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf && rm -f /tmp/limits.conf.append
 
 # Checkout the Elgg installation
-COPY files/elgg_installation /usr/share/nginx/html/elgg
+COPY files/elgg_installation_4.3.0 /usr/share/nginx/html/elgg
 
 WORKDIR /usr/share/nginx/html
+
 # Copy over the settings.php
-COPY files/settings.php elgg/elgg-config/settings.php 
+COPY files/settings_4.3.php elgg/elgg-config/settings.php
 
 # Make the Elgg data directory
 RUN mkdir /elgg_data
@@ -35,7 +43,7 @@ COPY files/nginx_sites_avail.append /tmp/
 
 RUN service nginx restart
 
-RUN service php7.4-fpm start
+RUN service php${VERSION}-fpm start
 
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh

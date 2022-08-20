@@ -1,1 +1,0 @@
-// <?php echo "PHP"; if (!empty($vars['in'])) { echo $vars['in']; } ?>

@@ -8,7 +8,7 @@ import com.sun.faban.driver.HttpTransport;
  * This class contains all details of one particular Elgg user.
  * 
  * @author Tapti Palit
- *
+ * @author Ali Ansari
  */
 public class Web20Client {
 	
@@ -25,8 +25,11 @@ public class Web20Client {
 
 	private HttpTransport http;
 	
-	private List<String> chatSessionList; // List of guids of chat sessions of this client. 
-	
+	private List<String> friendsList;
+	private List<String> messages_guids;
+	private List<String> blogs_guids;
+	private List<String> wires_guids;
+
 	public enum ClientState {
 		LOGGED_IN,
 		LOGGED_OUT
@@ -102,14 +105,6 @@ public class Web20Client {
 		this.clientState = clientState;
 	}
 
-	public List<String> getChatSessionList() {
-		return chatSessionList;
-	}
-
-	public void setChatSessionList(List<String> chatSessionList) {
-		this.chatSessionList = chatSessionList;
-	}
-
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
@@ -125,4 +120,65 @@ public class Web20Client {
 	public void setNumActivities(String numActivities) {
 		this.numActivities = numActivities;
 	}
+
+	public void addFriendsList(String guid){
+		this.friendsList.add(guid);
+	}
+
+	public void removeFriendsList(String guid){
+		this.friendsList.remove(guid);
+	}
+
+	public void setFriendsList(List<String> friendsList){
+		this.friendsList = friendsList;
+	}
+
+	public String getFriendsList(int index){
+		return this.friendsList.get(index);
+	}
+
+	public int getFriendsListSize(){
+		return this.friendsList.size();
+	}
+
+	public void setMessagesGuids(List<String> messages_guids){
+		this.messages_guids = messages_guids;
+	}
+
+	public int getMessagesGuidsSize(){
+		return this.messages_guids.size();
+	}
+
+	public String getMessagesGuids(int index){
+		return this.messages_guids.get(index);
+	}
+
+	public void removeMessagesGuids(String item){
+		this.messages_guids.remove(item);
+	}
+
+	public void setBlogsGuids(List<String> blogs_guids){
+		this.blogs_guids = blogs_guids;
+	}
+
+	public int getBlogsGuidsSize(){
+		return this.blogs_guids.size();
+	}
+
+	public String getBlogsGuids(int index){
+		return this.blogs_guids.get(index);
+	}
+
+	public void setWiresGuids(List<String> wires_guids){
+		this.wires_guids = wires_guids;
+	}
+
+	public int getWiresGuidsSize(){
+		return this.wires_guids.size();
+	}
+
+	public String getWiresGuids(int index){
+		return this.wires_guids.get(index);
+	}
+
 }

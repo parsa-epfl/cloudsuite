@@ -103,7 +103,7 @@ public class UserGenerator {
 		// Get the token values
 		updateElggTokenAndTs(tokenTsPair, sb);
 
-		String loginPostRequest="__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="+tokenTsPair.getValue2()+"&username=admin&password=admin1234";
+		String loginPostRequest="__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="+tokenTsPair.getValue2()+"&username=admin&password=adminadmin";
 		
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

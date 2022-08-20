@@ -5,7 +5,7 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-wget --no-check-certificate -O /elgg_bigDB.dump https://cloudsuite.ch/download/web-serving/elgg_bigDB.dump
+#wget --no-check-certificate -O /elgg_bigDB.dump https://cloudsuite.ch/download/web-serving/elgg_bigDB.dump
 
 WEB_SERVER_IP=$1
 

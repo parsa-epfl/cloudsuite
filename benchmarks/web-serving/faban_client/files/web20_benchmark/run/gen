@@ -150,19 +150,55 @@ class Gen(Dic):
 
             self.ops = Arr('BrowsetoElgg',
                            'DoLogin',
-                           'PostSelfWall',
-                           'SendChatMessage',
                            'AddFriend',
                            'Register',
                            'Logout',
+                           'CheckActivity',
+                           'Dashboard',
+                           'AccessHomePage',
+                           'RemoveFriend',
+                           'GetNotifications',
+                           'Inbox',
+                           'CheckProfile',
+                           'CheckFriends',
+                           'CheckWire',
+                           'PostWire',
+                           'SendMessage',
+                           'ReadMessage',
+                           'CheckBlog',
+                           'SentMessages',
+                           'PostBlog',
+                           'DeleteMessage',
+                           'Like',
+                           'ReplyWire',
+                           'Comment',
+                           'Search',
                            ofunc = Gen.to_string)
-            self.mix = Arr(Gen.Row( 0, 80,  0,  0,  0,  0, 20),
-                           Gen.Row( 0,  0, 30, 55,  9,  0,  1),
-                           Gen.Row( 0,  0, 30, 55,  9,  0,  1),
-                           Gen.Row( 0,  0, 30, 55,  9,  0,  1),
-                           Gen.Row( 0,  0, 30, 55,  9,  0,  1),
-                           Gen.Row(80, 20,  0,  0,  0,  0,  0),
-                           Gen.Row(90,  0,  0,  0,  0, 10,  0),
+            self.mix = Arr(Gen.Row( 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # BrowsetoElgg
+                           Gen.Row( 0, 0, 5,  0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # DoLogin
+                           Gen.Row( 0, 0, 5,  0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # AddFriend
+                           Gen.Row( 100, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # Register
+                           Gen.Row( 70, 0,  0,  30, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # Logout
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Check Activity
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Dashboard
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # AccessHomePage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # RemoveFriend
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 2), # GetNotifications
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Inbox
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckProfile
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5, 3, 2), # CheckFriends
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # PostWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # SendMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # ReadMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckBlog
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 2, 5, 3, 2), # SentMessages
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # PostBlog
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # DeleteMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Like
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # ReplyWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Comment
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Search
                            ifunc = Gen.to_row)
 
         def __repr__(self):
@@ -262,7 +298,7 @@ class Gen(Dic):
             self.driver,
             self.timing,
             self.matrix,
-            self.background
+            #self.background  # uncomment this line if there is any background operation
         ])
 
     def parse(self, fn):

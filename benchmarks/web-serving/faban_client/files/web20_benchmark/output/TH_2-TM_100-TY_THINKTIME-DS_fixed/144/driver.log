@@ -1,0 +1,87 @@
+Aug 20, 2022 12:27:27 PM com.sun.faban.driver.util.Timer idleTimerCheck
+INFO: ElggDriverAgent[0]: Performing idle timer check
+Aug 20, 2022 12:27:28 PM com.sun.faban.driver.util.Timer idleTimerCheck
+INFO: ElggDriverAgent[0]: Idle timer characteristics:
+Accuracy=3,
+min. invocation cost=19,
+med. invocation cost (math)=21.0,
+med. invocation cost (phys)=21,
+avg. invocation cost=21.5735,
+max. invocation cost=64,
+variance of invocation cost=4.952397750000241.
+Aug 20, 2022 12:27:31 PM workload.driver.Web20Driver browseToElgg
+INFO: Inited thread0
+Aug 20, 2022 12:27:31 PM workload.driver.Web20Driver browseToElgg
+INFO: Inited thread1
+Aug 20, 2022 12:27:31 PM com.sun.faban.driver.engine.AgentImpl run
+INFO: ElggDriverAgent[0]: Successfully started 2 driver threads.
+Aug 20, 2022 12:27:31 PM com.sun.faban.driver.engine.MasterImpl executeRun
+INFO: Started all threads; run commences in 2998 ms
+Aug 20, 2022 12:27:34 PM com.sun.faban.driver.util.Timer$BusyTimerMeter run
+INFO: ElggDriverAgent[0]: Performing busy timer check
+Aug 20, 2022 12:27:35 PM com.sun.faban.driver.util.Timer$BusyTimerMeter run
+INFO: ElggDriverAgent[0]: Busy timer characteristics:
+Accuracy=3,
+min. invocation cost=19,
+med. invocation cost (math)=22.0,
+med. invocation cost (phys)=22,
+avg. invocation cost=21.8709,
+max. invocation cost=83,
+variance of invocation cost=2.7916331900000246.
+Aug 20, 2022 12:27:44 PM com.sun.faban.driver.util.Timer$SleepCalibrator run
+INFO: ElggDriverAgent[0]: Calibration succeeded. Sleep time deviation: 0.19790121786833856 ms, compensation: 1 ms.
+Aug 20, 2022 12:27:44 PM com.sun.faban.driver.engine.MasterImpl executeRun
+INFO: Ramp up completed
+Aug 20, 2022 12:28:14 PM com.sun.faban.driver.engine.MasterImpl executeRun
+INFO: Steady state completed
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MasterImpl executeRun
+INFO: Ramp down completed
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MasterImpl getDriverMetrics
+INFO: Gathering ElggDriverStats ...
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MatrixMix flatMix
+FINER: flatMix - before
+MatrixMix
+operations: BrowsetoElgg, DoLogin, AddFriend, Register, Logout, CheckActivity, Dashboard, AccessHomePage, RemoveFriend, GetNotifications, Inbox, CheckProfile, CheckFriends, CheckWire, PostWire, SendMessage, ReadMessage, CheckBlog, SentMessages, PostBlog, DeleteMessage, Like, ReplyWire, Comment, Search
+mix:
+0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+0.7, 0.0, 0.0, 0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.02, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.03, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.03, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.02, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.03, 0.05, 0.05, 0.05, 0.02, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+0.0, 0.0, 0.05, 0.0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.05, 0.03, 0.02
+deviation :2.0
+
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MatrixMix flatMix
+FINER: Obtained stable mix at matrix power 10.
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MatrixMix flatMix
+FINER: flatMix - after
+FlatMix
+operations: BrowsetoElgg, DoLogin, AddFriend, Register, Logout, CheckActivity, Dashboard, AccessHomePage, RemoveFriend, GetNotifications, Inbox, CheckProfile, CheckFriends, CheckWire, PostWire, SendMessage, ReadMessage, CheckBlog, SentMessages, PostBlog, DeleteMessage, Like, ReplyWire, Comment, Search
+mix: 0.0448, 0.0448, 0.0448, 0.0135, 0.0448, 0.0448, 0.0448, 0.0448, 0.043500000000000004, 0.0448, 0.0448, 0.0439, 0.0448, 0.0448, 0.0448, 0.0448, 0.0448, 0.0439, 0.0448, 0.0448, 0.0448, 0.0031000000000000003, 0.0448, 0.0269, 0.0179
+deviation :2.0
+
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MasterImpl generateReports
+INFO: Printing Summary report ...
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MasterImpl generateReports
+INFO: Summary finished. Now printing detail ...
+Aug 20, 2022 12:28:24 PM com.sun.faban.driver.engine.MasterImpl generateReports
+INFO: Detail finished. Results written to /usr/src/faban/output/144.

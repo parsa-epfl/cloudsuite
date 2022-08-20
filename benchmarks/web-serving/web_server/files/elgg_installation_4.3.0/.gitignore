@@ -1,0 +1,10 @@
+.*
+!.htaccess
+!.travis.yml
+!.gitignore
+/elgg-config/settings.php
+/cache
+/settings.php
+/mod
+
+/vendor

@@ -1,0 +1,2 @@
+  timing = fixed, min = 100, max = 150, type = THINKTIME
+  background.time.0.type = THINKTIME

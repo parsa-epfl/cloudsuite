@@ -1,4 +1,0 @@
-<?php
-/**
- * Blog view sidebar
- */

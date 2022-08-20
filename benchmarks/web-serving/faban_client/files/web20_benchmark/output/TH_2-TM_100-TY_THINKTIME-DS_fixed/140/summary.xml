@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../xslt/summary_report.xsl"?>
+<benchResults>
+    <benchSummary name="Elgg benchmark" version="1.0">
+        <runId>140</runId>
+        <startTime>Sat Aug 20 12:05:32 UTC 2022</startTime>
+        <endTime>Sat Aug 20 12:06:23 UTC 2022</endTime>
+        <metric unit="ops/sec">8.500</metric>
+        <passed>false</passed>
+    </benchSummary>
+    <driverSummary name="ElggDriver">
+        <metric unit="ops/sec">8.500</metric>
+        <startTime>Sat Aug 20 12:05:32 UTC 2022</startTime>
+        <endTime>Sat Aug 20 12:06:23 UTC 2022</endTime>
+        <totalOps unit="operations">255</totalOps>
+        <users>2</users>
+        <rtXtps>1.9788</rtXtps>
+        <passed>false</passed>
+        <mix allowedDeviation="0.0200">
+            <operation name="BrowsetoElgg">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="DoLogin">
+                <successes>10</successes>
+                <failures>0</failures>
+                <mix>0.0392</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="AddFriend">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Register">
+                <successes>2</successes>
+                <failures>0</failures>
+                <mix>0.0078</mix>
+                <requiredMix>0.0135</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Logout">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckActivity">
+                <successes>16</successes>
+                <failures>0</failures>
+                <mix>0.0627</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Dashboard">
+                <successes>8</successes>
+                <failures>0</failures>
+                <mix>0.0314</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="AccessHomePage">
+                <successes>7</successes>
+                <failures>0</failures>
+                <mix>0.0275</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="RemoveFriend">
+                <successes>13</successes>
+                <failures>0</failures>
+                <mix>0.0510</mix>
+                <requiredMix>0.0435</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="GetNotifications">
+                <successes>10</successes>
+                <failures>0</failures>
+                <mix>0.0392</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Inbox">
+                <successes>6</successes>
+                <failures>0</failures>
+                <mix>0.0235</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>false</passed>
+            </operation>
+            <operation name="CheckProfile">
+                <successes>8</successes>
+                <failures>0</failures>
+                <mix>0.0314</mix>
+                <requiredMix>0.0439</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckFriends">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckWire">
+                <successes>19</successes>
+                <failures>0</failures>
+                <mix>0.0745</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>false</passed>
+            </operation>
+            <operation name="PostWire">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="SendMessage">
+                <successes>10</successes>
+                <failures>0</failures>
+                <mix>0.0392</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReadMessage">
+                <successes>9</successes>
+                <failures>0</failures>
+                <mix>0.0353</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckBlog">
+                <successes>9</successes>
+                <failures>0</failures>
+                <mix>0.0353</mix>
+                <requiredMix>0.0439</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="SentMessages">
+                <successes>21</successes>
+                <failures>0</failures>
+                <mix>0.0824</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>false</passed>
+            </operation>
+            <operation name="PostBlog">
+                <successes>15</successes>
+                <failures>0</failures>
+                <mix>0.0588</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="DeleteMessage">
+                <successes>11</successes>
+                <failures>0</failures>
+                <mix>0.0431</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Like">
+                <successes>1</successes>
+                <failures>0</failures>
+                <mix>0.0039</mix>
+                <requiredMix>0.0031</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReplyWire">
+                <successes>14</successes>
+                <failures>0</failures>
+                <mix>0.0549</mix>
+                <requiredMix>0.0448</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Comment">
+                <successes>3</successes>
+                <failures>0</failures>
+                <mix>0.0118</mix>
+                <requiredMix>0.0269</requiredMix>
+                <passed>true</passed>
+            </operation>
+            <operation name="Search">
+                <successes>8</successes>
+                <failures>0</failures>
+                <mix>0.0314</mix>
+                <requiredMix>0.0179</requiredMix>
+                <passed>true</passed>
+            </operation>
+        </mix>
+        <responseTimes unit="milliseconds">
+            <operation name="BrowsetoElgg">
+                <avg>100.278</avg>
+                <max>146.797</max>
+                <sd>19.143</sd>
+                <percentile nth="95" suffix="th" limit="500.000">130.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">130.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">130.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="DoLogin">
+                <avg>312.827</avg>
+                <max>479.788</max>
+                <sd>96.141</sd>
+                <percentile nth="95" suffix="th" limit="500.000">450.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">450.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">450.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="AddFriend">
+                <avg>180.340</avg>
+                <max>234.140</max>
+                <sd>24.346</sd>
+                <percentile nth="95" suffix="th" limit="500.000">200.000</percentile>
+                <percentile nth="99" suffix="th" limit="750.000">200.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="1000.000">200.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Register">
+                <avg>377.889</avg>
+                <max>400.526</max>
+                <sd>0.000</sd>
+                <percentile nth="95" suffix="th" limit="500.000">360.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">360.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">360.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Logout">
+                <avg>154.394</avg>
+                <max>197.332</max>
+                <sd>23.618</sd>
+                <percentile nth="95" suffix="th" limit="500.000">200.000</percentile>
+                <percentile nth="99" suffix="th" limit="750.000">200.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="1000.000">200.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckActivity">
+                <avg>116.594</avg>
+                <max>204.040</max>
+                <sd>28.310</sd>
+                <percentile nth="95" suffix="th" limit="500.000">160.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">160.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">160.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Dashboard">
+                <avg>137.555</avg>
+                <max>243.441</max>
+                <sd>47.529</sd>
+                <percentile nth="95" suffix="th" limit="500.000">180.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">180.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">180.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="AccessHomePage">
+                <avg>137.326</avg>
+                <max>159.860</max>
+                <sd>13.756</sd>
+                <percentile nth="95" suffix="th" limit="500.000">160.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">160.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">160.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="RemoveFriend">
+                <avg>59.538</avg>
+                <max>128.431</max>
+                <sd>25.849</sd>
+                <percentile nth="95" suffix="th" limit="500.000">90.000</percentile>
+                <percentile nth="99" suffix="th" limit="750.000">90.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="1000.000">90.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="GetNotifications">
+                <avg>88.641</avg>
+                <max>128.122</max>
+                <sd>20.893</sd>
+                <percentile nth="95" suffix="th" limit="500.000">130.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">130.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">130.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Inbox">
+                <avg>94.491</avg>
+                <max>141.760</max>
+                <sd>22.434</sd>
+                <percentile nth="95" suffix="th" limit="500.000">110.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">110.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">110.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckProfile">
+                <avg>86.224</avg>
+                <max>117.507</max>
+                <sd>22.948</sd>
+                <percentile nth="95" suffix="th" limit="500.000">120.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">120.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">120.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckFriends">
+                <avg>103.799</avg>
+                <max>182.333</max>
+                <sd>32.221</sd>
+                <percentile nth="95" suffix="th" limit="500.000">150.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">150.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">150.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckWire">
+                <avg>110.366</avg>
+                <max>158.661</max>
+                <sd>26.656</sd>
+                <percentile nth="95" suffix="th" limit="500.000">150.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">150.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">150.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="PostWire">
+                <avg>235.540</avg>
+                <max>324.748</max>
+                <sd>36.499</sd>
+                <percentile nth="95" suffix="th" limit="500.000">280.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">280.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">280.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="SendMessage">
+                <avg>381.132</avg>
+                <max>443.302</max>
+                <sd>40.536</sd>
+                <percentile nth="95" suffix="th" limit="500.000">440.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">440.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">440.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReadMessage">
+                <avg>17.889</avg>
+                <max>93.353</max>
+                <sd>34.007</sd>
+                <percentile nth="95" suffix="th" limit="500.000">70.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">70.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">70.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckBlog">
+                <avg>98.614</avg>
+                <max>160.053</max>
+                <sd>26.323</sd>
+                <percentile nth="95" suffix="th" limit="500.000">120.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">120.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">120.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="SentMessages">
+                <avg>92.393</avg>
+                <max>148.592</max>
+                <sd>23.073</sd>
+                <percentile nth="95" suffix="th" limit="500.000">120.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">150.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">150.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="PostBlog">
+                <avg>232.602</avg>
+                <max>417.431</max>
+                <sd>58.699</sd>
+                <percentile nth="95" suffix="th" limit="500.000">330.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">330.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">330.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="DeleteMessage">
+                <avg>21.896</avg>
+                <max>148.620</max>
+                <sd>47.975</sd>
+                <percentile nth="95" suffix="th" limit="500.000">100.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">100.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">100.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Like">
+                <avg>0.003</avg>
+                <max>0.003</max>
+                <sd>0.000</sd>
+                <percentile nth="95" suffix="th" limit="500.000">10.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">10.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">10.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReplyWire">
+                <avg>121.858</avg>
+                <max>276.696</max>
+                <sd>108.069</sd>
+                <percentile nth="95" suffix="th" limit="500.000">240.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">240.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">240.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Comment">
+                <avg>0.004</avg>
+                <max>0.005</max>
+                <sd>0.001</sd>
+                <percentile nth="95" suffix="th" limit="500.000">10.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">10.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">10.000</percentile>
+                <passed>true</passed>
+            </operation>
+            <operation name="Search">
+                <avg>100.360</avg>
+                <max>119.197</max>
+                <sd>10.029</sd>
+                <percentile nth="95" suffix="th" limit="500.000">120.000</percentile>
+                <percentile nth="99" suffix="th" limit="1000.000">120.000</percentile>
+                <percentile nth="99.9" suffix="th" limit="2000.000">120.000</percentile>
+                <passed>true</passed>
+            </operation>
+        </responseTimes>
+        <delayTimes>
+            <operation name="BrowsetoElgg" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="DoLogin" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="AddFriend" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Register" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.100</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Logout" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckActivity" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Dashboard" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="AccessHomePage" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="RemoveFriend" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="GetNotifications" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Inbox" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckProfile" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckFriends" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckWire" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="PostWire" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="SendMessage" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReadMessage" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="CheckBlog" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="SentMessages" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="PostBlog" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="DeleteMessage" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Like" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.099</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="ReplyWire" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Comment" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.100</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+            <operation name="Search" type="thinkTime">
+                <targetedAvg>0.100</targetedAvg>
+                <actualAvg>0.099</actualAvg>
+                <min>0.099</min>
+                <max>0.100</max>
+                <passed>true</passed>
+            </operation>
+        </delayTimes>
+        <customStats name="Miscellaneous Statistics">
+            <stat>
+                <description>Number of times home page was actually attempted to be accessed.</description>
+                <result>18</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times login was actually attempted.</description>
+                <result>22</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times add friends was actually attempted.</description>
+                <result>19</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times logout was actually attempted.</description>
+                <result>20</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times register was actually attempted.</description>
+                <result>3</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times check activity was actually attempted.</description>
+                <result>23</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times dashboard was actually attempted.</description>
+                <result>19</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times BrowseToElgg was actually attempted.</description>
+                <result>22</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times removeFriends was actually attempted.</description>
+                <result>30</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times GetNotifications was actually attempted.</description>
+                <result>17</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times readInbox was actually attempted.</description>
+                <result>11</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times checkProfile was actually attempted.</description>
+                <result>14</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times checkFriends was actually attempted.</description>
+                <result>22</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times checkWire was actually attempted.</description>
+                <result>28</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times postWire was actually attempted.</description>
+                <result>18</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times sendMessage was actually attempted.</description>
+                <result>18</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times readMessage was successfully attempted.</description>
+                <result>3</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times checkBlog was actually attempted.</description>
+                <result>20</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times readMessage was actually attempted.</description>
+                <result>14</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times sentMessages was not attempted.</description>
+                <result>26</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times postBlog was actually attempted.</description>
+                <result>23</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times deleteMessage was successfully attempted.</description>
+                <result>3</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times deleteMessage was not attempted.</description>
+                <result>19</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times like was successfully attempted.</description>
+                <result>0</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times like was not attempted.</description>
+                <result>2</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times replyWire was successfully attempted.</description>
+                <result>13</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times replyWire was not attempted.</description>
+                <result>10</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times comment was successfully attempted.</description>
+                <result>1</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times comment was not attempted.</description>
+                <result>4</result>
+                <passed>true</passed>
+            </stat>
+            <stat>
+                <description>Number of times search was acctually attempted.</description>
+                <result>11</result>
+                <passed>true</passed>
+            </stat>
+        </customStats>
+    </driverSummary>
+</benchResults>

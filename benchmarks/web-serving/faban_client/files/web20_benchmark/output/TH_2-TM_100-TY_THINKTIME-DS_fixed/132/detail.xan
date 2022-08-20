@@ -1,0 +1,46 @@
+Title: Elgg benchmark Detailed Results
+
+
+Section: Benchmark Information
+Name     Value
+-----    -------------
+RunId    132
+
+
+Section: ElggDriver Throughput
+Display: Line
+Time (s)  BrowsetoElgg  DoLogin  AddFriend  Register  Logout  CheckActivity  Dashboard  AccessHomePage  RemoveFriend  GetNotifications  Inbox  CheckProfile  CheckFriends  CheckWire  PostWire  SendMessage  ReadMessage  CheckBlog  SentMessages  PostBlog  DeleteMessage  Like  ReplyWire  Comment  Search
+--------  ------------  -------  ---------  --------  ------  -------------  ---------  --------------  ------------  ----------------  -----  ------------  ------------  ---------  --------  -----------  -----------  ---------  ------------  --------  -------------  ----  ---------  -------  ------
+0                 0.00     0.00       0.00      0.00    0.00           0.00       0.00            0.00          0.00              0.00   0.00          0.00          0.00       0.00      0.00         0.00         0.00       0.00          0.00      0.00           0.00  0.00       0.00     0.00    0.00
+30                0.03     0.00       0.00      0.00    0.00           0.00       0.00            0.00          0.00              0.00   0.00          0.00          0.00       0.00      0.00         0.00         0.00       0.00          0.00      0.00           0.00  0.00       0.00     0.00    0.00
+
+
+Section: ElggDriver Response Times (milliseconds)
+Display: Line
+Time (s)  BrowsetoElgg   DoLogin  AddFriend  Register    Logout  CheckActivity  Dashboard  AccessHomePage  RemoveFriend  GetNotifications     Inbox  CheckProfile  CheckFriends  CheckWire  PostWire  SendMessage  ReadMessage  CheckBlog  SentMessages  PostBlog  DeleteMessage      Like  ReplyWire   Comment    Search
+--------  ------------  --------  ---------  --------  --------  -------------  ---------  --------------  ------------  ----------------  --------  ------------  ------------  ---------  --------  -----------  -----------  ---------  ------------  --------  -------------  --------  ---------  --------  --------
+0             0.000000  0.000000   0.000000  0.000000  0.000000       0.000000   0.000000        0.000000      0.000000          0.000000  0.000000      0.000000      0.000000   0.000000  0.000000     0.000000     0.000000   0.000000      0.000000  0.000000       0.000000  0.000000   0.000000  0.000000  0.000000
+30         1279.643668  0.000000   0.000000  0.000000  0.000000       0.000000   0.000000        0.000000      0.000000          0.000000  0.000000      0.000000      0.000000   0.000000  0.000000     0.000000     0.000000   0.000000      0.000000  0.000000       0.000000  0.000000   0.000000  0.000000  0.000000
+
+
+Section: ElggDriver Frequency Distribution of Response Times (milliseconds)
+Display: Line
+Time     BrowsetoElgg  DoLogin  AddFriend  Register  Logout  CheckActivity  Dashboard  AccessHomePage  RemoveFriend  GetNotifications  Inbox  CheckProfile  CheckFriends  CheckWire  PostWire  SendMessage  ReadMessage  CheckBlog  SentMessages  PostBlog  DeleteMessage  Like  ReplyWire  Comment  Search
+-------  ------------  -------  ---------  --------  ------  -------------  ---------  --------------  ------------  ----------------  -----  ------------  ------------  ---------  --------  -----------  -----------  ---------  ------------  --------  -------------  ----  ---------  -------  ------
+0.00000             0        0          0         0       0              0          0               0             0                 0      0             0             0          0         0            0            0          0             0         0              0     0          0        0       0
+
+
+Section: ElggDriver Frequency Distribution of Cycle/Think Times (seconds)
+Display: Line
+Time   BrowsetoElgg  DoLogin  AddFriend  Register  Logout  CheckActivity  Dashboard  AccessHomePage  RemoveFriend  GetNotifications  Inbox  CheckProfile  CheckFriends  CheckWire  PostWire  SendMessage  ReadMessage  CheckBlog  SentMessages  PostBlog  DeleteMessage  Like  ReplyWire  Comment  Search
+-----  ------------  -------  ---------  --------  ------  -------------  ---------  --------------  ------------  ----------------  -----  ------------  ------------  ---------  --------  -----------  -----------  ---------  ------------  --------  -------------  ----  ---------  -------  ------
+0.000             0        0          0         0       0              0          0               0             0                 0      0             0             0          0         0            0            0          0             0         0              0     0          0        0       0
+
+
+Section: ElggDriver Frequency Distribution of Targeted Cycle/Think Times (seconds)
+Display: Line
+Time   BrowsetoElgg  DoLogin  AddFriend  Register  Logout  CheckActivity  Dashboard  AccessHomePage  RemoveFriend  GetNotifications  Inbox  CheckProfile  CheckFriends  CheckWire  PostWire  SendMessage  ReadMessage  CheckBlog  SentMessages  PostBlog  DeleteMessage  Like  ReplyWire  Comment  Search
+-----  ------------  -------  ---------  --------  ------  -------------  ---------  --------------  ------------  ----------------  -----  ------------  ------------  ---------  --------  -----------  -----------  ---------  ------------  --------  -------------  ----  ---------  -------  ------
+0.000             0        0          0         0       0              0          0               0             0                 0      0             0             0          0         0            0            0          0             0         0              0     0          0        0       0
+
+

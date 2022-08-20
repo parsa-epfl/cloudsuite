@@ -1,8 +1,0 @@
-#!/usr/bin/env php
-<?php
-/**
- *
- * Alias for package managers.
- *
- */
-require __DIR__ . '/../cli.php';

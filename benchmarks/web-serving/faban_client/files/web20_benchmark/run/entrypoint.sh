@@ -4,25 +4,27 @@
 # parse args
 ARGS=()
 OPER="usergen&run"
-TRPU=30
-TRPD=30
+TRPU=10
+TRPD=10
 TSTD=30
 TMIN=100
 TMAX=150
 TYPE=THINKTIME
 DIST=fixed
+TLS=0
 
 while (( ${#@} )); do
   case ${1} in
-    --oper=*)      OPER=${1#*=} ;;
-  --ramp-up=*)   TRPU=${1#*=} ;;
---ramp-down=*) TRPD=${1#*=} ;;
-  --steady=*)    TSTD=${1#*=} ;;
---min=*)       TMIN=${1#*=} ;;
-    --max=*)       TMAX=${1#*=} ;;
-  --type=*)      TYPE=${1#*=} ;;
---dist=*)      DIST=${1#*=} ;;
-    *)             ARGS+=(${1}) ;;
+    --oper=*)       OPER=${1#*=} ;;
+    --ramp-up=*)    TRPU=${1#*=} ;;
+    --ramp-down=*)  TRPD=${1#*=} ;;
+    --steady=*)     TSTD=${1#*=} ;;
+    --min=*)        TMIN=${1#*=} ;;
+    --max=*)        TMAX=${1#*=} ;;
+    --type=*)       TYPE=${1#*=} ;;
+    --dist=*)       DIST=${1#*=} ;;
+    --encryption=*) TLS= ${1#*=} ;;
+    *)              ARGS+=(${1}) ;;
   esac
 
   shift
@@ -40,16 +42,22 @@ WSIP=${1}
 THRD=${2:-1}
 
 boot() {
-  while [[ $(curl -sSI ${WSIP}:8080 | awk '/HTTP\/1.1/{print $2}') != 200 ]]; do
-    echo "Could not perform HTTP 200 GET from: ${WSIP}:8080"
-    sleep 2
-  done
+  if [ $TLS == 1 ]; then
+    while [[ $(curl -sSI --insecure https://${WSIP}:8443 | awk '/HTTP\/1.1/{print $2}') != 200 ]]; do
+      echo "Could not perform HTTPS 200 GET from: https://${WSIP}:8443"
+      sleep 2
+    done
+  elif [ $TLS == 0 ]; then
+    while [[ $(curl -sSI http://${WSIP}:8080 | awk '/HTTP\/1.1/{print $2}') != 200 ]]; do
+      echo "Could not perform HTTP 200 GET from: http://${WSIP}:8080"
+      sleep 2
+    done
+  fi
 
   sed -i -e "s/<host.*/<host>${WSIP}<\\/host>/" \
     deploy/run.xml
 
   ${FABAN_HOME}/master/bin/startup.sh
-
 }
 
 init() {
@@ -59,7 +67,11 @@ init() {
     ${FABAN_HOME}/usersetup.properties
 
   ant usergen-jar
-  ant usergen-run -Darg0=http://${WSIP}:8080
+  if [ $TLS == 1 ]; then
+    ant usergen-run -Darg0=https://${WSIP}:8443
+  elif [ $TLS == 0 ]; then
+    ant usergen-run -Darg0=http://${WSIP}:8080
+  fi
 }
 
 fini() {
@@ -76,16 +88,22 @@ gen() {
     -e "s/<fa:rampDown.*/<fa:rampDown>${TRPD}<\\/fa:rampDown>/"          \
     -e "s/<fa:steadyState.*/<fa:steadyState>${TSTD}<\\/fa:steadyState>/" \
     -e "s/<host.*/<host>${WSIP}<\\/host>/" \
-    -e "s/<port.*/<port>8080<\\/port>/" \
     -e "s@<outputDir.*@<outputDir>${FABAN_HOME}\/output<\\/outputDir>@" /web20_benchmark/deploy/run.xml
-    deploy/run.xml
+   
+  if [ $TLS == 1 ]; then
+    sed -i -e "s/<port.*/<port>8443<\\/port>/" \
+      -e "s/<protocol.*/<protocol>https<\\/protocol>/" /web20_benchmark/deploy/run.xml
+  elif [ $TLS == 0 ]; then
+    sed -i -e "s/<port.*/<port>8080<\\/port>/" \
+      -e "s/<protocol.*/<protocol>http<\\/protocol>/" /web20_benchmark/deploy/run.xml
+  fi
 
   cat <<EOF > ${1}/cfg
   timing = ${DIST}, min = ${TMIN}, max = ${TMAX}, type = ${TYPE}
   background.time.0.type = ${TYPE}
 EOF
 
-  bin/gen -i src/workload/driver/Web20Driver.java.in \
+  run/gen -i src/workload/driver/Web20Driver.java.in \
     -o src/workload/driver/Web20Driver.java    \
     ${1}/cfg
 
@@ -94,6 +112,7 @@ EOF
 
   ant deploy.jar
   cp  build/Web20Driver.jar ${FABAN_HOME}/benchmarks
+
 }
 
 run() {
