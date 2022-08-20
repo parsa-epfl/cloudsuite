@@ -5,7 +5,7 @@ RUN BUILD_DEPS="wget curl ca-certificates" \
     && apt-get update -y && apt-get install -y --no-install-recommends ${BUILD_DEPS} \
     && rm -rf /var/lib/apt/lists/* 
 
-ENV INDEX_URL http://cloudsuite.ch/download/web_search/index
+ENV INDEX_URL http://cloudsuite.ch/download/web_search/index_4GB
 
 VOLUME ["/download"]
 

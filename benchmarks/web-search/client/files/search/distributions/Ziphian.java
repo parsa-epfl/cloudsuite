@@ -45,7 +45,7 @@ import java.util.Random;
 
 @BenchmarkDefinition(
   name = "Sample Search Workload",
-  version = "0.3",
+  version = "0.4",
   configPrecedence = true
 )
 @BenchmarkDriver(
@@ -61,11 +61,20 @@ import java.util.Random;
   },
   deviation = 0
 )
-@NegativeExponential(
+
+@FixedTime(
+  cycleType = CycleType.CYCLETIME,
+  cycleTime = 2000,
+  cycleDeviation = 2
+)
+
+// You can also use negative exponential 
+// and uniform distributions, for example:
+/*@NegativeExponential(
   cycleType = CycleType.CYCLETIME,
   cycleMean = 2000,
   cycleDeviation = 2
-)
+)*/
 
 public class SearchDriver {
   private DriverContext ctx;
