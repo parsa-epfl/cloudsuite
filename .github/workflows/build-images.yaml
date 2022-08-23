@@ -562,7 +562,7 @@ jobs:
     strategy:
       matrix:
         tag: ["4.0"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -585,7 +585,7 @@ jobs:
     strategy:
       matrix:
         tag: ["4.0"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
