@@ -3,7 +3,8 @@ FROM cloudsuite/faban:1.4
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
-        curl \
+    curl \
+    python3 \
 	wget
 
 # Setup Faban 

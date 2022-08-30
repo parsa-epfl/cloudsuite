@@ -50,5 +50,6 @@ RUN chown root:root /etc/bootstrap.sh
 RUN chmod 700 /etc/bootstrap.sh
 
 EXPOSE 8080
+EXPOSE 8443
 
 CMD ["/etc/bootstrap.sh", "-d"]
