@@ -14,8 +14,7 @@ kill -9 $(pgrep java) $(pgrep java)
 cd $SOLR_CORE_DIR/cloudsuite_web_search*
 rm -rf data
 # Copy data from dataset to server
-cp --verbose -a /download/data .
-#rm -r /download/*
+cp --verbose -a /download/index_14GB/data .
 
 echo "================================="
 echo "Index Node IP Address: "$(hostname -I)

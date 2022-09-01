@@ -29,8 +29,6 @@ RUN cd $BASE_PATH \
   && rm solr.tar.gz
 
 
-#COPY files/index_4GB/ /root/.
-
 RUN cd $SOLR_HOME/server/solr/configsets/ \
   && cp -r _default cloudsuite_web_search \
   && rm cloudsuite_web_search/conf/managed* 
