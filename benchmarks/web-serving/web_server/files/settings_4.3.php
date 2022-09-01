@@ -41,7 +41,7 @@ $CONFIG->dataroot = "/elgg_data/";
  *
  * @global string $CONFIG->wwwroot
  */
-$CONFIG->wwwroot = "root_server";
+$CONFIG->wwwroot = "http_protocol://root_server:port_number/";
 
 /**
  * The database username

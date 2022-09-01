@@ -8,13 +8,9 @@ RUN apt-get update && apt-get install -y \
 	wget
 
 # Setup Faban 
-
-
-
 COPY files/web20_benchmark /web20_benchmark
 
 WORKDIR /web20_benchmark
-
 
 # Build the Faban benchmark and the user-generation tool
 RUN sed -i "s@faban\.home.*@faban.home=$FABAN_HOME@" /web20_benchmark/build.properties

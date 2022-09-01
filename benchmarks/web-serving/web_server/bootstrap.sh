@@ -1,15 +1,24 @@
 #!/bin/bash
-ROOT_SERVER=${1:-"root_server"} # it should be given like: "http:\/\/IP:8080\/" or "https:\/\/IP:8443:\/"
-DB_SERVER_IP=${2:-"mysql_server"}
-MEMCACHE_SERVER_IP=${3:-"memcache_server"}
+PROTOCOL=${1:-"http"} # the protocol to access the server, valid values are 'http' and 'https'
+ROOT_SERVER=${2:-"root_server"} 
+PORT_NUMBER=8080
 
+if [ $PROTOCOL == 'https' ]; then
+    PORT_NUMBER=8443
+fi
+
+DB_SERVER_IP=${3:-"mysql_server"}
+MEMCACHE_SERVER_IP=${4:-"memcache_server"}
+
+sed -i -e"s/http_protocol/${PROTOCOL}/" elgg/elgg-config/settings.php
 sed -i -e"s/root_server/${ROOT_SERVER}/" elgg/elgg-config/settings.php
+sed -i -e"s/port_number/${PORT_NUMBER}/" elgg/elgg-config/settings.php
 sed -i -e"s/mysql_server/${DB_SERVER_IP}/" elgg/elgg-config/settings.php
 sed -i -e"s/'memcache_server'/'${MEMCACHE_SERVER_IP}'/" elgg/elgg-config/settings.php
 
 cat /tmp/nginx_sites_avail.append >> /etc/nginx/sites-available/default
 
-FPM_CHILDREN=${4:-80}
+FPM_CHILDREN=${5:-80}
 sed -i -e"s/pm.max_children = 5/pm.max_children = ${FPM_CHILDREN}/" /etc/php/${VERSION}/fpm/pool.d/www.conf
 
 service php${VERSION}-fpm restart
