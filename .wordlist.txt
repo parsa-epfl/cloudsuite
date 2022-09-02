@@ -55,6 +55,7 @@ https
 IP
 IPAddress
 JIT
+js
 keyspace
 localhost
 login
