@@ -12,7 +12,7 @@ The below services are needed for the workload
 * 3 services
   * Cassandra - [cassandra/README.md](#cassandra-configuration)
   * Memcached - [memcached/README.md](#memcached-configuration)
-  * Graphite (for monitoring) - [graphite/README.md](#graphite-configuration)
+  * Graphite (for monitoring) - [graphite/README.md](#graphite-configuration), which is optional.
 
 * Django and uWSGI server - [uwsgi/README.md](#uwsgi-configuration)
 * Siege client (a load generator) - [siege/README.md](#siege-configuration)
@@ -35,10 +35,14 @@ The below services are needed for the workload
         $ docker pull cloudsuite/django-workload:graphite
         $ docker run -tid --name graphite_container --network host cloudsuite/django-workload:graphite
 
+Note: This server is optional. Since currently we cannot get Node.js running on RISC-V, you don't have to run this server, and other tests can be run normally.
+
+
 ## Run uwsgi on Host 4
         $ docker pull cloudsuite/django-workload:uwsgi
 
         # Edit uwsgi.cfg with endpoints (host-private-ip) of uWSGI, Graphite, Cassandra, Memcached and Seige
+        # You can give a fake address to "GRAPHITE_ENDPOINT" (e,g,. 127.0.0.1) if you don't run the graphite server.
 
         $ cd cloudsuite/benchmarks/django-workload-workload/uwsgi/
         $ . ./uwsgi.cfg
