@@ -295,7 +295,7 @@ import workload.driver.Web20Client.ClientState;
                 StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + SEARCH_URL + "?member_query=" + username);
                 context.recordTime();
 
-                if (sb.toString().contains("Results for")) {
+                if (sb.toString().contains("Member search for")) {
                     logger.fine("Successfully sent a search request for term "+username);
                     System.out.print("PRINT: Successfully sent a search request\n");
                 } else {
