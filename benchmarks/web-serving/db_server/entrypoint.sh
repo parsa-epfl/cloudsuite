@@ -1,7 +1,7 @@
 #!/bin/bash
 
 wget --no-check-certificate https://cloudsuite.ch/download/web-serving/ELGG_DB.tar.gz
-tar -xvf ELGG_DB.tar.gz /backup/.
+tar -xvf ELGG_DB.tar.gz
 
 
 # workaround for overlayfs:
