@@ -1,4 +1,4 @@
-FROM cloudsuitetest/hhvm:3.30
+FROM cloudsuite/hhvm:3.30
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \

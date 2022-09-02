@@ -4,12 +4,12 @@ The benchmark tests mainly collects RPS with MediaWiki, the main page is the Bar
 
 This benchmark configures and runs nginx webserver, siege client, and PHP5/PHP7/HHVM over FastCGI as the server engine.
 
-The script will run 300 warmup requests, then as many requests as possible in 1 minute.
+The script will run 300 warm-up requests, then as many requests as possible in 1 minute.
 
 The facebook benchmark readme file can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 
 ### Preparing the VM
-Facebook-Mediawiki workload needs specific network parameters to be set. Set the below params in `/etc/sysctl.conf` file as `root`.
+Facebook-Mediawiki workload needs specific network parameters to be set. Set the below parameters in `/etc/sysctl.conf` file as `root`.
 ```
 net.ipv4.tcp_tw_reuse = 1
 net.core.somaxconn = 1024
@@ -56,7 +56,7 @@ docker run --name=siege -dt --net=host cloudsuite/siege:4.0.3rc3 <HOST_IP_OF_FB_
 ---
 **NOTE**
 
-HOST_IP_OF_FB_SERVER = IP addr of the Host Machine where the `fb-oss-performance:4.0` docker will be started
+HOST_IP_OF_FB_SERVER = IP address of the Host Machine where the `fb-oss-performance:4.0` docker will be started
 HOSTNAME_OF_FB_SERVER = Hostname of the Host Machine where the `fb-oss-performance:4.0` docker will be started
 
 If siege is started on the same host as of `fb-oss-performance:4.0`, then HOST_IP_OF_FB_SERVER, HOSTNAME_OF_FB_SERVER can be skipped
@@ -73,7 +73,7 @@ Create a file `cmd.sh` on the host which contains the command to run mediawiki w
 chmod +x cmd.sh
 ```
 
-To run the benchmark using HHVM edit the below lines in `cmd.sh`, with their private IP's
+To run the benchmark using HHVM edit the below lines in `cmd.sh`, with their private IP
 ```
 MYSQL_IP
 SIEGE_IP
@@ -86,7 +86,7 @@ You can also use any one of the below parameters in `cmd.sh`
 --php=$PHP_FPM7_BIN
 ```
 
-More info on parameters which can be provided to the facebook worload can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
+More info on parameters which can be provided to the facebook workload can be found in [fb-readme.md](https://github.com/facebookarchive/oss-performance/blob/v2019.02.13.00/README.md)
 For information about the hhvm performance [hhvm-blog](https://hhvm.com/blog/9293/lockdown-results-and-hhvm-performance) can be referred.
 
 The following command will start the facebook workload:

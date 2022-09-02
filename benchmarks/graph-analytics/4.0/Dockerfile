@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 cloudsuitetest/spark:2.4.5 as build
+FROM --platform=linux/amd64 cloudsuite/spark:2.4.5 as build
      
 # Build the benchmark using sbt
 RUN apt-get update \
@@ -24,7 +24,7 @@ RUN mv /root/benchmark/target/scala-2.11/*.jar /root/benchmark/run_benchmark.sh 
     && rm -r /root/.sbt /root/.ivy2 \
     && chmod +x /root/entrypoint.sh
 
-FROM cloudsuitetest/spark:2.4.5
+FROM cloudsuite/spark:2.4.5
 RUN mkdir -p /benchmarks /root
 COPY --from=build /benchmarks /benchmarks
 COPY --from=build /root/entrypoint.sh /root/entrypoint.sh

@@ -1,4 +1,4 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/base-os:debian
 
 ENV DEBIAN_FRONTEND noninteractive
 #ENV http_proxy http://proxy-address:proxy-port

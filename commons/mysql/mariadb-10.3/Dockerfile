@@ -1,15 +1,14 @@
-FROM cloudsuitetest/debian:base-os
+FROM cloudsuite/base-os:debian
 
-LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV root_password root
 
-RUN echo mysql-server mysql-server/root_password password ${root_password} |  /usr/bin/debconf-set-selections	
-RUN echo mysql-server mysql-server/root_password_again password ${root_password} |  /usr/bin/debconf-set-selections
-	
-RUN apt-get update \
-    && apt-get install -y default-mysql-server
+RUN echo mariadb-server-10.3 mysql-server/root_password password ${root_password} |  /usr/bin/debconf-set-selections
+RUN echo mariadb-server-10.3 mysql-server/root_password_again password ${root_password} |  /usr/bin/debconf-set-selections
+
+RUN apt update -q \
+    && apt install -y default-mysql-server
 
 # Allow it to listen from outer world	
 RUN echo "[mysqld]" >> /etc/mysql/my.cnf

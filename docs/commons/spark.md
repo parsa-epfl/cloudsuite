@@ -3,8 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This repository contains a Docker image of Apache Spark. Currently we support
-Spark versions 1.5.1, 2.1.0, 2.3.1 and 2.4.5. The lastest tag corresponds to version 2.4.5.
+This repository contains a Docker image of Apache Spark 2.4.5.
 
 To obtain the image:
 
@@ -46,10 +45,10 @@ Again, this is just a shortcut for starting a container and running
 
 ### Multi Container
 
-Usually, we want to run Spark with multiple workers to parallelize some job. In
-Docker it is typical to run a single process in a single container. Here we
-show how to start a number of workers, a single Spark master that acts as a
-coordinator (cluster manager), and submit a job.
+Usually, we want to run Spark with multiple workers to parallelize some job. In Docker it is typical to run a single process in a single container. Here we show how to start a number of workers, a single Spark master that acts as a coordinator (cluster manager), and submit a job.
+
+**Note**: The following commands will run the Spark cluster within host's network. To make sure that slaves and master can communicate with each other, the master container's hostname, which should be host's hostname, must be able to be resolved to the same IP address by the master container and all slave containers. 
+
 
 Start a Spark master:
 

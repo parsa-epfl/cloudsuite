@@ -11,19 +11,17 @@ The YCSB client has a data generator. After starting Cassandra, YCSB can start l
 
 
 ### Server Container
+
+**Note**: The following commands will run the Cassandra within host's network. To make sure that slaves and master can communicate with each other, the master container's hostname, which should be host's hostname, must be able to be resolved to the same IP address by the master container and all slave containers. 
+
 Start the server container that will run cassandra server and installs a default keyspace usertable:
 
----
-**NOTE**
-
-Make sure the hostname of the machines where the server docker container are deployed must be reachable/pingable. 
-If the hostname is not pingable on the machine, add an entry in /etc/hosts file.
-
----
 ```bash
 $ docker run --name cassandra-server --privileged --net host cloudsuite/data-serving:server
 ```
 ### Multiple Server Containers
+
+Please note the server containers cannot be hosted on the same node when the host network configuration is used because they will all try to use the same port.
 
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
@@ -33,7 +31,7 @@ $ docker run --name cassandra-server-seed --privileged --net host cloudsuite/dat
 
 Then we prepare the server as previously.
 
-The other server containers are instantiated as follows on different VMs:
+The other server containers are instantiated as follows on **different VMs**:
 
 ```bash
 $ docker run --name cassandra-server(id) --privileged --net host -e CASSANDRA_SEEDS=cassandra-server-seed-IPADDRESS cloudsuite/data-serving:server
@@ -41,7 +39,7 @@ $ docker run --name cassandra-server(id) --privileged --net host -e CASSANDRA_SE
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
 
-Make sure all non-seed servers are stablished (adding them concurrently may lead to a [problem](https://docs.datastax.com/en/cassandra/2.1/cassandra/operations/ops_add_node_to_cluster_t.html)).
+Make sure all non-seed servers are established (adding them concurrently may lead to a [problem](https://docs.datastax.com/en/cassandra/2.1/cassandra/operations/ops_add_node_to_cluster_t.html)).
 
 ### Client Container
 After successfully creating the aforementioned schema, you are ready to benchmark with YCSB.

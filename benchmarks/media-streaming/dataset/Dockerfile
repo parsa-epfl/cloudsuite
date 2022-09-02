@@ -1,5 +1,4 @@
-FROM cloudsuitetest/debian:base-os
-MAINTAINER Alexandros Daglis <alexandros.daglis@epfl.ch>
+FROM cloudsuite/base-os:debian
 
 ENV DEBIAN_FRONTEND noninteractive
 

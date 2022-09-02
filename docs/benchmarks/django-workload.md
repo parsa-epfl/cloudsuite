@@ -44,16 +44,16 @@ Note: This server is optional. Since currently we cannot get Node.js running on 
         # Edit uwsgi.cfg with endpoints (host-private-ip) of uWSGI, Graphite, Cassandra, Memcached and Seige
         # You can give a fake address to "GRAPHITE_ENDPOINT" (e,g,. 127.0.0.1) if you don't run the graphite server.
 
-        $ cd cloudsuite/benchmarks/django-workload-workload/uwsgi/
+        $ cd cloudsuite/benchmarks/django-workload/uwsgi/
         $ . ./uwsgi.cfg
         $ docker run -tid --name uwsgi_container --network host -e GRAPHITE_ENDPOINT=$GRAPHITE_ENDPOINT -e CASSANDRA_ENDPOINT=$CASSANDRA_ENDPOINT -e MEMCACHED_ENDPOINT="$MEMCACHED_ENDPOINT" -e SIEGE_ENDPOINT=$SIEGE_ENDPOINT -e UWSGI_ENDPOINT=$UWSGI_ENDPOINT cloudsuite/django-workload:uwsgi
 
 ## Run siege on Host 5
         $ docker pull cloudsuite/django-workload:siege
 
-        # Edit siege.cfg withthe endpoint of uWSGI and the number of siege workers needed 
+        # Edit siege.cfg with the endpoint of uWSGI and the number of siege workers needed 
 
-        $ cd cloudsuite/benchmarks/django-workload-workload/siege/
+        $ cd cloudsuite/benchmarks/django-workload/siege/
         $ . ./siege.cfg
         $ docker run -ti --name siege_container --volume=/tmp:/tmp --network host -e TARGET_ENDPOINT=$UWSGI_ENDPOINT -e SIEGE_WORKERS=$SIEGE_WORKERS cloudsuite/django-workload:siege
 

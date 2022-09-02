@@ -21,6 +21,9 @@ Supported tags and their respective `Dockerfile` links:
 
 These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
+### IP Addresses ###
+Please note that all IP addresses should refer to the explicit IP address of the host server running each container.
+
 ### Starting the database server ####
 To start the database server, you have to first `pull` the server image. To `pull` the server image use the following command:
 
@@ -55,8 +58,7 @@ To run the web server *with HHVM enabled*, use the following command:
 
     $ docker run -e "HHVM=true" -dt --net=host --name=web_server_local cloudsuite/web-serving:web_server /etc/bootstrap.sh ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
 
-The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP (or the container name) of the database server, and the IP (or the container name) of the memcached server, respectively. For example, if you are running all the containers on the same machine and use the host network you can use the localhost IP (127.0.0.1). Their default values are database_server, and memcache_server, respectively, which are the default names of the containers. 
-The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
+The three ${DATABASE_SERVER_IP},${MEMCACHED_SERVER_IP}, and ${MAX_PM_CHILDREN} parameters are optional. The ${DATABASE_SERVER_IP}, and ${MEMCACHED_SERVER_IP} show the IP of the database server, and the IP of the memcached server, respectively. The ${MAX_PM_CHILDREN} set the pm.max_children in the php-fpm setting. The default value is 80. 
 
 ###  Running the benchmark ###
 
@@ -68,7 +70,7 @@ To start the client container which runs the benchmark, use the following comman
 
     $ docker run --net=host --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
 
-The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7).
+The last command has a mandatory parameter to set the IP of the web_server, and an optional parameter to set the load scale (default is 7). The `LOAD_SCALE` parameter controls the number of users that are simultaneously logging in to the web servers and requesting social networking pages. You can scale it up and down as much as you would like, keeping in mind that scaling the number of threads may stress the system. To tune the benchmark, we recommend testing your machines for the maximum possible request throughput, while maintaining your target QoS metric (we use 99th percentile latency). CPU utilization is less important than the latency and responsiveness for these benchmarks.
 
 The last command will output the summary of the benchmark results in XML at the end of the output. You can also access the summary and logs of the run by mounting the `/faban/output` directory of the container in the host filesystem (e.g. `-v /host/path:/faban/output`).
 

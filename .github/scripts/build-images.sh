@@ -55,7 +55,7 @@ if (grep -q "${DF_PATH#./}" <<<$modified_files) || # Rebuild the image if any fi
         DO_PUSH="--push"
     fi
     
-    if ([ $image_name = "debian" ] || [ $IMG_TAG = "openjdk11" ]); then
+    if ([ $image_name = "base-os" ] || [ $IMG_TAG = "openjdk11" ]); then
         cd $DF_PATH
         for arch in amd64 arm64 riscv64; do 
             if [ $IMG_TAG = "openjdk11" ]; then

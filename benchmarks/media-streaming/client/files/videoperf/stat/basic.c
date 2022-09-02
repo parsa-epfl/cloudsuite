@@ -537,8 +537,8 @@ conn_destroyed (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type c_arg)
 		++basic.num_lifetimes;
 		bin = lifetime*NUM_BINS/MAX_LIFETIME;
 		if (bin >= NUM_BINS)
-			bin = NUM_BINS;
-		++basic.conn_lifetime_hist[bin-1];
+			bin = NUM_BINS-1;
+		++basic.conn_lifetime_hist[bin];
 	}
 #endif /* UW_STABLE_STATS */
 

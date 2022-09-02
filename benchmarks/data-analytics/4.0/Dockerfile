@@ -1,7 +1,8 @@
-FROM cloudsuitetest/hadoop:2.10.1
+FROM cloudsuite/hadoop:2.10.1
 
-ENV MAHOUT_VERSION 0.13.0
+ENV MAHOUT_VERSION 14.1
 ENV MAHOUT_HOME /opt/mahout-${MAHOUT_VERSION}
+RUN mkdir ${MAHOUT_HOME}
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
@@ -11,8 +12,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 # Install Mahout
 RUN set -x \
     && URL=https://downloads.apache.org/mahout/${MAHOUT_VERSION}/apache-mahout-distribution-${MAHOUT_VERSION}.tar.gz \
-    && curl ${URL} | tar -xzC /opt \
-    && mv /opt/apache-mahout-distribution-${MAHOUT_VERSION} ${MAHOUT_HOME}
+    && curl ${URL} | tar -xzC ${MAHOUT_HOME} 
 
 # Download dataset
 # Use latest_link=$(curl -s https://dumps.wikimedia.org/enwiki/latest/ | grep  "enwiki-latest-pages-articles1.xml-" | grep -Eoi '<a [^>]+>' | cut -d '"' -f 2 | grep -E "*.bz2$") \
@@ -22,6 +22,8 @@ RUN curl https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles1
 COPY files/*-site.xml ${HADOOP_CONF_DIR}/
 COPY files/categories /root/
 COPY files/benchmark.sh /root/
+COPY files/mahout-examples-0.13.0-job.jar ${MAHOUT_HOME}/.
+
 RUN chmod +x /root/benchmark.sh && ln -s /root/benchmark.sh /bin/benchmark
 
 # Set JVM heap size to 1GB

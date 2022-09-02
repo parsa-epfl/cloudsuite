@@ -1,5 +1,4 @@
-FROM cloudsuitetest/faban:1.4
-LABEL maintainer="Mark Sutherland <mark.sutherland@epfl.ch>"
+FROM cloudsuite/faban:1.4
 
 RUN apt-get update && apt-get install -y \
 	ant \
