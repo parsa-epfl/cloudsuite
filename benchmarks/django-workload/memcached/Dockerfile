@@ -1,4 +1,4 @@
-FROM cloudsuite/memcached:1.6.10
+FROM cloudsuite/memcached:1.6.15
 
 COPY files/* /scripts/
 USER root
