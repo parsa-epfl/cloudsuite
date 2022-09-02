@@ -829,8 +829,8 @@ public class Web20Driver {
 
 
             if (sb.toString().contains("blogs</h2>") || sb.toString().contains("Blogs</h2>")) {
-                logger.fine("Successfully Checked blogs: "+thisClient.getUsername());
-                System.out.print("PRINT: Successfully Checked blogs\n");
+                logger.fine("Successfully checked blogs: "+thisClient.getUsername());
+                System.out.print("PRINT: Successfully checked blogs\n");
             } else {
                 logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check blogs :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
                 System.out.print("PRINT: Failed to Check blogs!\n");
@@ -890,8 +890,8 @@ public class Web20Driver {
             }
 
             if (sb.toString().contains("wire posts</h2>")) {
-                logger.fine("Successfully Checked wires: "+thisClient.getUsername());
-                System.out.print("PRINT: Successfully Checked wires\n");
+                logger.fine("Successfully checked wires: "+thisClient.getUsername());
+                System.out.print("PRINT: Successfully checked wires\n");
             } else {
                 logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check wires :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
                 System.out.print("PRINT: Failed to Check wires!\n");
@@ -935,8 +935,8 @@ public class Web20Driver {
             context.recordTime();
 
             if (sb.toString().contains("Activity</h2>")) {
-                logger.fine("Successfully Checked Activity: "+thisClient.getUsername());
-                System.out.print("PRINT: Successfully Checked Activity\n");
+                logger.fine("Successfully checked activity: "+thisClient.getUsername());
+                System.out.print("PRINT: Successfully checked activity\n");
             } else {
                 logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check Activity :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
                 System.out.print("PRINT: Failed to Check Activity!\n");
@@ -1234,8 +1234,8 @@ public class Web20Driver {
             context.recordTime();
 
             if (sb.toString().contains("My New Community")) {
-                logger.fine("Successfully AccessHomePage: "+thisClient.getUsername());
-                System.out.print("PRINT: Successfully AccessHomePage\n");
+                logger.fine("Successfully accessed the home page: "+thisClient.getUsername());
+                System.out.print("PRINT: Successfully accessed the home page\n");
             } else {
                 logger.fine("!!!!!!!!!!!!!!!!!! Failed to Access HomePage :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
                 System.out.print("PRINT: Failed to Access HomePage!\n");
