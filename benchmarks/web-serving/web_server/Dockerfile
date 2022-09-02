@@ -13,7 +13,7 @@ RUN apt-get update && \
 #    apt-get update && \
     apt-get install -y --force-yes \
     build-essential \
-    vim git \
+    vim git wget \
     nginx \
     php${VERSION} php${VERSION}-gd \
     php${VERSION}-mysql php${VERSION}-curl \
@@ -27,8 +27,11 @@ COPY files/limits.conf.append /tmp/
 RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf && rm -f /tmp/limits.conf.append
 
 # Checkout the Elgg installation
-COPY files/elgg_installation_4.3.0 /usr/share/nginx/html/elgg
-
+RUN mkdir /usr/share/nginx/html/elgg && \ 
+    wget --progress=bar:force -O - http://cloudsuite.ch/download/web-serving/elgg_installation_4.3.0.tar.gz | \
+    tar zxvf - -C ~ && \
+    mv ~/elgg_installation_4.3.0/* /usr/share/nginx/html/elgg/.
+   
 WORKDIR /usr/share/nginx/html
 
 # Copy over the settings.php
