@@ -1,4 +1,4 @@
-earch #
+# Web Search
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
