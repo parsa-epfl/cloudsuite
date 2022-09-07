@@ -44,7 +44,7 @@ $ docker run -it --name server --volumes-from web_search_dataset --net host clou
 At the beginning of the server booting process, the container prints the `server_address` of the index node. This address will be used in the client container to send the requests to the index node. The `server_address` message in the container should look like this (note that the IP address might change):
 
 ```sh
-$ Index Node IP Address: 192.168.1.47
+Index Node IP Address: 192.168.1.47
 ```
 
 The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using command `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/web_server/files/query.sh). If the server is up, you will see the following result.
