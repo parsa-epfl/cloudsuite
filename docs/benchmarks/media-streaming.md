@@ -67,6 +67,17 @@ The **`logs`** folder is mounted into the client container using `-v /path/to/lo
 
 At the end of the client's execution, the overall execution statistics will be found under the /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`. 
 
+### Guidelines for Tuning the Benchmark
+After running the benchmark, the client container periodically reports three metrics: throughput in Mbps, the total number of errors encountered during the benchmark's execution, and the number of concurrent established sessions to the server that are streaming media. A sample report looks like this:
+```
+Throughput (Mbps) = 1325.97 , total_errors = 0       , concurrent-sessions = 317
+```
+Note that each httperf client reports its own statistics. Therefore, the overall state of the benchmark will be the sum of individual reports by each httperf client. To tune the benchmark, start with a starting rate as the seed. It would take a few minutes for the benchmark to reach a steady state. Consequently, consider giving an appropriate number for `SESSIONS` to the client container. For example, if the benchmark did not reach the steady state in 5 minutes and the given rate was 10 sessions per second, the number of sessions would be larger than 5x60x10=3000. Otherwise, the benchmark won't generate enough sessions and the benchmark enters the ramp-down phase before reaching the steady state.
+
+The benchmark reaches the steady state when both throughput and concurrent-sessions are stabilized, and there are few encountered errors. The number of errors would be 0, but occasional errors may occur. If there is a problem in the tuning process, the number of errors will start increasing rapidly. In the ramp-up phase, both throughput and concurrent-sessions will be increasing. The throughput may stabilize, but concurrent-sessions continue to increase. It means that the rate of establishing new sessions is higher than the machine's capabilities. In this case, consider decreasing the `RATE` parameter of the client container. On the other hand, if you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the machine can handle a larger load.
+
+During the tuning process, make sure that the client container is not overloaded. You can check the client container's CPU utilization using different tools (e.g. docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g. by --cpuset-cpus option). An overloaded client would result in crashes or errors while the server can handle the given load. Note that each httperf client utilizes a single core. Therefore, make sure that the number of available cores to the client container is at least larger than `HTTPERF_CLIENTS`. The client container distributes the given load (declared by `SESSIONS` and `RATE`) equally among different httperf clients.
+
   [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
   [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
