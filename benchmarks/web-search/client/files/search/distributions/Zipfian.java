@@ -202,12 +202,8 @@ public class SearchDriver {
       }
       query = query + s;
     }
-    url = frontend + "/solr/cloudsuite_web_search/query?q=" + query + "&lang=en&fl=url&df=text&rows=10";
+    url = frontend + "/solr/cloudsuite_web_search/query?q=" + query + "&lang=en&fl=url&df=text&rows=10&q.op=AND";
     try {
-      /*int numb = http.readURL(url);
-      if (numb <= 0) {
-        logger.severe("ERROR ZERO!\n");
-      }*/
       StringBuilder sb = http.fetchURL(url);
       System.out.println(sb.toString());
     } catch (IOException e) {

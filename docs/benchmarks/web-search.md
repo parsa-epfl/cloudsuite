@@ -1,4 +1,4 @@
-# Web Search #
+earch #
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
@@ -86,16 +86,16 @@ $ docker pull cloudsuite/web-search:client
 To run the benchmark, start the client container by running the command below:
 
 ```sh
-$ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>  <The ramp-up time in secod> <the ramp-down time in second> <steady-state time in second>
+$ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>  <The ramp-up time in secod> <the ramp-down time in second> <steady-state time in second> <distribution>
 ```
 
 For example, consider the command below:
 
 ```sh
-$ docker run -it --name web_search_client --net host cloudsuite/web-search:client 172.19.0.2 50 90 60 60
+$ docker run -it --name web_search_client --net host cloudsuite/web-search:client 172.19.0.2 50 90 60 60 zipfian
 ```
 
-The `server_address` refers to the IP address of the index node that receives the client requests ("172.19.0.2" in our example). The four numbers after the server address refer to: the scale, which indicates the number of concurrent clients (50) sending search requests to the index server; the ramp-up time in seconds (90), which refers to the time required to warm up the server; the ramp-down time in seconds (60), which refers to the time to wait before ending the benchmark; and the steady-state time in seconds (60), which indicates the time the benchmark is in the steady state. Note that all statistics reported at the end of the benchmark's execution are measured during the steady-state period. Tune these parameters accordingly to stress your target system.
+The `server_address` refers to the IP address of the index node that receives the client requests ("172.19.0.2" in our example). The four numbers after the server address refer to: the scale, which indicates the number of concurrent clients (50) sending search requests to the index server; the ramp-up time in seconds (90), which refers to the time required to warm up the server; the ramp-down time in seconds (60), which refers to the time to wait before ending the benchmark; and the steady-state time in seconds (60), which indicates the time the benchmark is in the steady state. Note that all statistics reported at the end of the benchmark's execution are measured during the steady-state period. Tune these parameters accordingly to stress your target system. The final parameter can be either `zipfian` or `random`, and determines the distribution that will be used to generate the query terms. 
 
 The client container will show the output results on the screen after the benchmark finishes.
 
@@ -162,6 +162,11 @@ Accordingly, you can modify the server image to use your index instead of the in
 
 ```sh
 $ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
+```
+- The client container uses a list of prepared terms to generate the queries. You can find the list of the terms that are indexed in the Solr index along with their frequency of appearance in different urls by running the following query:
+
+```
+http://${SERVER_ADDRESS}:8983/solr/cloudsuite_web_search/terms?terms.fl=text&wt=xml&terms=true&terms.limit=10000
 ```
 
 More information about Solr can be found [here][solrmanual].
