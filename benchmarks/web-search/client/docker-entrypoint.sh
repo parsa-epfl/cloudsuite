@@ -17,6 +17,16 @@ export JAVA_HOME=`ls -d $JAVA_HOME`
 #PREPARE
 $FABAN_HOME/master/bin/startup.sh
 
+if [ $6 == 'zipfian' ]; then
+    SEARCH_DRIVER='Zipfian.java'
+    TERMS_FILE='terms_ordered'
+elif [ $6 == 'random' ]; then
+    SEARCH_DRIVER='Random.java'
+    TERMS_FILE='terms_random'
+fi
+
+echo "driver: $SEARCH_DRIVER and terms: $TERMS_FILE"
+
 #RUN
 cd $FABAN_HOME/search \
 	&& cp distributions/$SEARCH_DRIVER src/sample/searchdriver/SearchDriver.java
