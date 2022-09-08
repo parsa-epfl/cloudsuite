@@ -25,13 +25,16 @@ More information about the dataset is available at
 
 ### Running/Tweaking the Benchmark
 
-The benchmark runs the PageRank algorithm on GraphX through the spark-submit script distributed with Spark. Any arguments are passed to spark-submit.
+The benchmark can run three graph algorithms using GraphX through the spark-submit script distributed with Spark. The algorithms are page rank, connected components, and triangle count.
 
-For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, supply it with --driver-memory and  --executor-memory arguments:
+To run the benchmark, run the following command:
 
-    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pagerank cloudsuite/graph-analytics:4.0 \
+    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g
-The container can also run `connected components` and `triangle count` algorithms on the given dataset by setting the environment variable `WORKLOAD_NAME` to `cc` and `tc`, respectively. Allocate over 40g for the `driver-memory` if you run the triangle count algorithm on the twitter dataset.
+
+Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
+
+The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively.
 
 ### Multi-node deployment
 
