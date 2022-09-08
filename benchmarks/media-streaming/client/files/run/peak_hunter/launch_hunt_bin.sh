@@ -17,10 +17,10 @@ fi
 numHosts=$(wc -l < $hostFileName)
 numTotalClients=$[$numHosts*$numClientsPerHost]
 NumSessions=$[$totalNumSessions/$numTotalClients]
+rate=`echo "scale=2; $rate/$numTotalClients" | bc`
 
 echo "Total clients = $numTotalClients"
 echo "Total number of sessions = $totalNumSessions"
-
 
 outputDir="/output"
 backUpStdoutDir="/output-stdout"
