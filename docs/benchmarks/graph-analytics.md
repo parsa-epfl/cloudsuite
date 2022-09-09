@@ -25,12 +25,18 @@ More information about the dataset is available at
 
 ### Running/Tweaking the Benchmark
 
-The benchmark runs the PageRank algorithm on GraphX through the spark-submit script distributed with Spark. Any arguments are passed to spark-submit.
+The benchmark can run three graph algorithms using GraphX through the spark-submit script distributed with Spark. The algorithms are page rank, connected components, and triangle count.
 
-For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, supply it with --driver-memory and  --executor-memory arguments:
+To run the benchmark, run the following command:
 
-    $ docker run --rm --volumes-from twitter-data cloudsuite/graph-analytics:4.0 \
+    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g
+
+Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
+
+The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively. 
+
+All these analytics require huge memory to finish. As ar reference, running `tc` with single CPU core requires both 8GB driver-memory and executor-memory. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not allocate enough memory. 
 
 ### Multi-node deployment
 
@@ -58,7 +64,7 @@ Start Spark master and Spark workers. They should all run within the same Docker
 
 Finally, run the benchmark as the client to the Spark master:
 
-    $ docker run --rm --net host --volumes-from twitter-data \
+    $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pagerank \
                  cloudsuite/graph-analytics:4.0 \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077
