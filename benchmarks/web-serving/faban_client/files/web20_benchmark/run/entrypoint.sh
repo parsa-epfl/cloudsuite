@@ -23,7 +23,7 @@ while (( ${#@} )); do
     --max=*)        TMAX=${1#*=} ;;
     --type=*)       TYPE=${1#*=} ;;
     --dist=*)       DIST=${1#*=} ;;
-    --encryption=*) TLS= ${1#*=} ;;
+    --encryption=*) TLS=${1#*=}  ;;
     *)              ARGS+=(${1}) ;;
   esac
 
@@ -183,7 +183,6 @@ then
   run
   fini
 else
-then
     echo "Operation ${OPER} is not valid"
     exit 0
 fi
