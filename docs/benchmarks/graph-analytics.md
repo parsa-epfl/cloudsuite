@@ -36,7 +36,7 @@ Note that any argument passed to the container will be directed to spark-submit.
 
 The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively. 
 
-All these analytics require huge memory to finish. As ar reference, running `tc` with single CPU core requires both 8GB driver-memory and executor-memory. If you allocate more cores, more memory is necessary. You will see the OutOfMemoryError exception if you do not allocate enough memory. 
+All these analytics require huge memory to finish. As ar reference, running `tc` with single CPU core requires both 8GB driver-memory and executor-memory. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not allocate enough memory. 
 
 ### Multi-node deployment
 
