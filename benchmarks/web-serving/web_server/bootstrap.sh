@@ -16,7 +16,11 @@ sed -i -e"s/port_number/${PORT_NUMBER}/" elgg/elgg-config/settings.php
 sed -i -e"s/mysql_server/${DB_SERVER_IP}/" elgg/elgg-config/settings.php
 sed -i -e"s/'memcache_server'/'${MEMCACHE_SERVER_IP}'/" elgg/elgg-config/settings.php
 
-cat /tmp/nginx_sites_avail.append >> /etc/nginx/sites-available/default
+if [ $PROTOCOL == 'https' ]; then
+    cat /tmp/nginx_sites_avail_tls.append >> /etc/nginx/sites-available/default
+elif [ $PROTOCOL == 'http' ]; then
+    cat /tmp/nginx_sites_avail_pt.append >> /etc/nginx/sites-available/default
+fi
 
 FPM_CHILDREN=${5:-80}
 sed -i -e"s/pm.max_children = 5/pm.max_children = ${FPM_CHILDREN}/" /etc/php/${VERSION}/fpm/pool.d/www.conf
