@@ -1,4 +1,4 @@
-treaming
+#Media Streaming
 
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
@@ -50,7 +50,7 @@ For each of the resolutions, the dataset container creates a log file located in
 The session consists of multiple requests for different chunks of a video. There are the following fields in each request:
 - The first field is the name of the requested video. In our example, requests ask for `/full-240p-00004.mp4`.
 - `timeout` determines how many seconds the client waits to receive at least one byte of the response from the server after sending the request. The client container increments the client timeout counter if this timer expires and the server does not deliver any byte of the response to the client. The client container reports the client timeout counter at the end of the benchmark's execution as `client_timo`.
-- `pace_time` determines how many seconds the client waits to send the next request. By default, the first three requests of each session don't have this field which means they are sent together. From the fourth request to the end, the pace_time is 10 seconds.
+- `pace_time` determines how many seconds the client waits to send the next request. By default, the first three requests of each session doesn't have this field, which means they are sent together. From the fourth request to the end, the pace_time is 10 seconds.
 - `header` declares a range of bytes of the video that will be streamed as a result of sending a particular request. 
 
 These sessions will be read and processed by the client container. `SESSIONS_COUNT` specifies the number of sessions for each resolution with 5 as the default value. It would be good to give an appropriate value to `SESSIONS_COUNT` to make sure all videos in the dataset would be accessed. Note that the dataset container uses a specific distribution to simulate the behavior that some videos are more popular than others. Check the logs of the dataset container to see statistics regarding the generated sessions for various resolutions.
