@@ -183,7 +183,6 @@ then
   run
   fini
 else
-then
     echo "Operation ${OPER} is not valid"
     exit 0
 fi
