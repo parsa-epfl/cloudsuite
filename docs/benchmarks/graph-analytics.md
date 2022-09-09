@@ -34,7 +34,9 @@ To run the benchmark, run the following command:
 
 Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
 
-The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively.
+The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively. 
+
+All these analytics require huge memory to finish. As ar reference, running `tc` with single CPU core requires both 8GB driver-memory and executor-memory. If you allocate more cores, more memory is necessary. You will see the OutOfMemoryError exception if you do not allocate enough memory. 
 
 ### Multi-node deployment
 
