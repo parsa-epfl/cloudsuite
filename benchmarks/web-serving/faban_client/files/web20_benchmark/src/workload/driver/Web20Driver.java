@@ -1377,10 +1377,7 @@ public class Web20Driver {
 				rmFriendGuid = getRandomUserGUID();
 			}
 
-			System.out.println("User: " + thisClient.getGuid() + " removes friendship with " + rmFriendGuid);
-
 			thisClient.removeFriendsList(rmFriendGuid);
-
 
 			String queryString = "friend=" + rmFriendGuid + "&__elgg_ts="
 				+ thisClient.getElggTs() + "&__elgg_token="

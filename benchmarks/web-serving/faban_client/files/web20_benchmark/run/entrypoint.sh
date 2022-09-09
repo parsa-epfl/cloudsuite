@@ -171,19 +171,19 @@ then
   echo "Generating Users"
   init
   fini
-fi
-
-if [ ${OPER} = "usergen&run" ] 
+elif [ ${OPER} = "usergen&run" ] 
 then
   echo "Generating Users and Running the benchmark"
   init
   run
   fini
-fi
-
-if [ ${OPER} = "run" ]
+elif [ ${OPER} = "run" ]
 then
   echo "Running the benchmark"
   run
   fini
+else
+then
+    echo "Operation ${OPER} is not valid"
+    exit 0
 fi
