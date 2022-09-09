@@ -1,1 +1,0 @@
-<?php/** * Walled garden page shell * * Used for the walled garden index page */// Set the content typeheader("Content-type: text/html; charset=UTF-8");?>

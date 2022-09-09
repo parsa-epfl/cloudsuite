@@ -48,35 +48,13 @@ import workload.driver.RandomStringGenerator.Mode;
 import workload.driver.Web20Client.ClientState;
 
 
-@BenchmarkDefinition(
-    name    = "Elgg benchmark",
-    version = "1.0"
-)
-
-@BenchmarkDriver(
-    name             = "ElggDriver",
-    threadPerScale   = 1,
-    percentiles      = {"95", "99", "99.9"},
-    responseTimeUnit = java.util.concurrent.TimeUnit.MILLISECONDS
-)
-
-@FixedTime(
-    cycleTime      = 200,
-    cycleType      = CycleType.THINKTIME,
-    cycleDeviation = 2
-)
-
-@MatrixMix(
-    operations = {"BrowsetoElgg", "DoLogin", "AddFriend", "Register", "Logout", "CheckActivity", "Dashboard", "AccessHomePage", "RemoveFriend", "GetNotifications", "Inbox", "CheckProfile", "CheckFriends", "CheckWire", "PostWire", "SendMessage", "ReadMessage", "CheckBlog", "SentMessages", "PostBlog", "DeleteMessage", "Like", "ReplyWire", "Comment", "Search"},
-    mix        = {@Row({0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({70, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 2, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2})}
-)
-
+#include
 
 /**
  * The main driver class.
- *
+ * 
  * Operations :-
- *
+ * 
  * Browse the home page
  * Login existing user (X)
  * Send friend request
@@ -94,7 +72,7 @@ import workload.driver.Web20Client.ClientState;
  * Read a message
  * Browse the blogs page
  * Browse the send messages page
- * Post a blog
+ * Post a blog 
  * Delete a message
  * Like a post or wire
  * Reply to a wire
@@ -124,7 +102,7 @@ public class Web20Driver {
 	private Web20Client thisClient;
 
 
-	private Random random;
+	private Random random; 
 
 	private boolean inited;
 
@@ -273,7 +251,7 @@ public class Web20Driver {
 		logger.finer("Elgg Token = "+elggToken+" Elgg Ts = "+elggTs);
 	}
 
-	@BenchmarkOperation(name = "Search",
+	@BenchmarkOperation(name = "Search", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -319,7 +297,7 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "SentMessages",
+	@BenchmarkOperation(name = "SentMessages", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -362,7 +340,7 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "Comment",
+	@BenchmarkOperation(name = "Comment", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -391,8 +369,8 @@ public class Web20Driver {
 			guid = thisClient.getBlogsGuids(index);
 
 			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs()
-				+ "&generic_comment=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&__elgg_ts=" + thisClient.getElggTs() 
+				+ "&generic_comment=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA) 
 				+ "&entity_guid=" + guid;
 
 
@@ -412,7 +390,7 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "ReplyWire",
+	@BenchmarkOperation(name = "ReplyWire", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -441,8 +419,8 @@ public class Web20Driver {
 			guid = thisClient.getWiresGuids(index);
 
 			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs()
-				+ "&body=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&__elgg_ts=" + thisClient.getElggTs() 
+				+ "&body=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA) 
 				+ "&parent_guid=" + guid;
 
 
@@ -461,7 +439,7 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "Like",
+	@BenchmarkOperation(name = "Like", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -498,7 +476,7 @@ public class Web20Driver {
 			}
 
 			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs()
+				+ "&__elgg_ts=" + thisClient.getElggTs() 
 				+ "&guid=" + guid;
 
 
@@ -519,7 +497,7 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "DeleteMessage",
+	@BenchmarkOperation(name = "DeleteMessage", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -539,7 +517,7 @@ public class Web20Driver {
 			if(messages_size != 0){
 				int randomIndex = random.nextInt(messages_size);
 				message_guid = thisClient.getMessagesGuids(randomIndex);
-				thisClient.removeMessagesGuids(message_guid);
+				thisClient.removeMessagesGuids(message_guid);	
 				System.out.println("deleting message: "+message_guid+" from user: "+thisClient.getUsername()+" GUID: "+thisClient.getGuid());
 			}
 			else{
@@ -572,7 +550,7 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "ReadMessage",
+	@BenchmarkOperation(name = "ReadMessage", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -628,12 +606,12 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "CheckFriends",
+	@BenchmarkOperation(name = "CheckFriends", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client checks the friends' list
+		 * A client checks the friends' list	 
 		 * @throws Exception
 		 */
 		public void checkFriends() throws Exception {
@@ -671,7 +649,7 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "CheckProfile",
+	@BenchmarkOperation(name = "CheckProfile", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -716,12 +694,12 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "Inbox",
+	@BenchmarkOperation(name = "Inbox", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client reads the inbox
+		 * A client reads the inbox	 
 		 * @throws Exception
 		 */
 		public void inbox() throws Exception {
@@ -771,12 +749,12 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "Dashboard",
+	@BenchmarkOperation(name = "Dashboard", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client accesses the dashboard page.
+		 * A client accesses the dashboard page.	 
 		 * @throws Exception
 		 */
 		public void Dashboard() throws Exception {
@@ -810,12 +788,12 @@ public class Web20Driver {
 				elggMetrics.attemptDashboardCnt++;
 		}
 
-	@BenchmarkOperation(name = "CheckBlog",
+	@BenchmarkOperation(name = "CheckBlog", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client accesses the blog page.
+		 * A client accesses the blog page.	 
 		 * @throws Exception
 		 */
 		public void CheckBlog() throws Exception {
@@ -873,12 +851,12 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "CheckWire",
+	@BenchmarkOperation(name = "CheckWire", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client accesses the wire page.
+		 * A client accesses the wire page.	 
 		 * @throws Exception
 		 */
 		public void CheckWire() throws Exception {
@@ -932,12 +910,12 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "CheckActivity",
+	@BenchmarkOperation(name = "CheckActivity", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
-		 * A client accesses the activity page.
+		 * A client accesses the activity page.	 
 		 * @throws Exception
 		 */
 		public void CheckActivity() throws Exception {
@@ -977,7 +955,7 @@ public class Web20Driver {
 		}
 
 
-	@BenchmarkOperation(name = "BrowsetoElgg",
+	@BenchmarkOperation(name = "BrowsetoElgg", 
 	//max90th = 3.0,
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
@@ -999,7 +977,7 @@ public class Web20Driver {
 
 
 			boolean success = false;
-			if (!inited)
+			if (!inited) 
 				logger.info("Inited thread" + context.getThreadId());
 			inited = true;
 			logger.fine(context.getThreadId() +" : Doing operation: browseToElgg");
@@ -1035,13 +1013,13 @@ public class Web20Driver {
 			success = true;
 
 			if(success){
-				elggMetrics.attemptBrowseToElggCnt++;
+				elggMetrics.attemptBrowseToElggCnt++;		
 			}
 
 		}
 
-	@BenchmarkOperation(name = "GetNotifications",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "GetNotifications", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
@@ -1076,12 +1054,12 @@ public class Web20Driver {
 			success = true;
 
 			if(success){
-				elggMetrics.attemptGetNotificationsCnt++;
+				elggMetrics.attemptGetNotificationsCnt++;		
 			}
 		}
 
-	@BenchmarkOperation(name = "SendMessage",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "SendMessage", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		public void sendMessage() throws Exception {
@@ -1092,10 +1070,10 @@ public class Web20Driver {
 					+ thisClient.getUsername());
 
 			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs() + "&recipients=&match_on=users"
-				+ "&recipients[]=" + getRandomUserGUID() + "&subject="
-				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
-				+ "&body="
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&recipients=&match_on=users" 
+				+ "&recipients[]=" + getRandomUserGUID() + "&subject=" 
+				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA) 
+				+ "&body=" 
 				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
 
 
@@ -1126,8 +1104,8 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "PostBlog",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "PostBlog", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		public void postBlog() throws Exception {
@@ -1141,14 +1119,14 @@ public class Web20Driver {
 			String body = RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
 
 			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs() + "&title="
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&title=" 
 				+ title
 				+ "&excerpt="
 				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
 				+ "&description="
 				+ body
-				+ "&tags=" + "&comments_on=On" + "&access_id=2"
-				+ "&status=published" + "&container_guid=" + thisClient.getGuid()
+				+ "&tags=" + "&comments_on=On" + "&access_id=2" 
+				+ "&status=published" + "&container_guid=" + thisClient.getGuid() 
 				+ "&guid=" + "&save=Save";
 
 
@@ -1188,8 +1166,8 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "PostWire",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "PostWire", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		public void postWire() throws Exception {
@@ -1239,8 +1217,8 @@ public class Web20Driver {
 
 
 
-	@BenchmarkOperation(name = "AccessHomePage",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "AccessHomePage", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		/**
@@ -1275,12 +1253,12 @@ public class Web20Driver {
 
 			success = true;
 			if(success){
-				elggMetrics.attemptHomePageCnt++;
+				elggMetrics.attemptHomePageCnt++;		
 			}
 		}
 
-	@BenchmarkOperation(name = "DoLogin",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "DoLogin", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		public void doLogin() throws Exception {
@@ -1353,11 +1331,11 @@ public class Web20Driver {
 
 	/**
 	 * Remove friend
-	 *
+	 * 
 	 * @throws Exception
 	 */
-	@BenchmarkOperation(name = "RemoveFriend",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "RemoveFriend", 
+	//max90th = 3.0, 
 	percentileLimits= {500,750,1000},
 	timing = Timing.MANUAL)
 		public void removeFriend() throws Exception {
@@ -1374,7 +1352,7 @@ public class Web20Driver {
 				rmFriendGuid = thisClient.getFriendsList(randomIndex);
 			}
 			else{
-				rmFriendGuid = getRandomUserGUID();
+				rmFriendGuid = getRandomUserGUID(); 
 			}
 
 			thisClient.removeFriendsList(rmFriendGuid);
@@ -1416,11 +1394,11 @@ public class Web20Driver {
 
 	/**
 	 * Add friend
-	 *
+	 * 
 	 * @throws Exception
 	 */
-	@BenchmarkOperation(name = "AddFriend",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "AddFriend", 
+	//max90th = 3.0, 
 	percentileLimits= {500,750,1000},
 	timing = Timing.MANUAL)
 		public void addFriend() throws Exception {
@@ -1473,11 +1451,11 @@ public class Web20Driver {
 
 	/**
 	 * Logging out a logged in user
-	 *
+	 * 
 	 * @throws Exception
 	 */
-	@BenchmarkOperation(name = "Logout",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "Logout", 
+	//max90th = 3.0, 
 	percentileLimits= {500,750,1000},
 	timing = Timing.MANUAL)
 		public void logout() throws Exception {
@@ -1512,16 +1490,16 @@ public class Web20Driver {
 			success = true;
 			if (success) {
 				elggMetrics.attemptLogoutCnt++;
-			}
+			}	
 		}
 
 	/**
-	 *
+	 * 
 	 * Register a new user.
-	 *
+	 * 
 	 */
-	@BenchmarkOperation(name = "Register",
-	//max90th = 3.0,
+	@BenchmarkOperation(name = "Register", 
+	//max90th = 3.0, 
 	percentileLimits= {500,1000,2000},
 	timing = Timing.MANUAL)
 		public void register() throws Exception {
@@ -1593,8 +1571,8 @@ public class Web20Driver {
 
 
 			success = true;
-			if (success)
-				elggMetrics.attemptRegisterCnt++;
+			if (success) 
+				elggMetrics.attemptRegisterCnt++;		
 
 		}
 

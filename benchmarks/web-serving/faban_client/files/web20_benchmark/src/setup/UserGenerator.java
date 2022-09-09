@@ -1,6 +1,8 @@
 package setup;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import com.sun.faban.driver.HttpTransport;
 
 /**
@@ -102,12 +103,13 @@ public class UserGenerator {
 		// Get the token values
 		updateElggTokenAndTs(tokenTsPair, sb);
 
-		String loginPostRequest="__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="+tokenTsPair.getValue2()+"&username=admin&password=admin1234";
+		String loginPostRequest="__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="+tokenTsPair.getValue2()+"&username=admin&password=adminadmin";
 		
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		headers.put("Accept-Language", "en-US,en;q=0.5");
-		headers.put("Accept-Encoding", "gzip, deflate");
+		// commented by a_ansaarii, some server responses become unreadable, I tested different encodings and decided to comment the following line
+		//headers.put("Accept-Encoding", "*");
 		headers.put("Referer", hostURL+"/admin/users/add");
 		headers.put("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 
@@ -116,17 +118,20 @@ public class UserGenerator {
 		// Update token
 		updateElggTokenAndTs(tokenTsPair, sb);
 		
+		// Weird response from the server when fetching this page!	
 		headers.put("Referer", hostURL+"/activity");
 		sb = http.fetchURL(hostURL+"/admin", headers);
-			
 		updateElggTokenAndTs(tokenTsPair, sb);
-
+	
+		String outputFile = System.getenv("FABAN_HOME")+"/"+properties.getProperty("output_file").trim();
+		PrintWriter pw = new PrintWriter(new FileOutputStream(new File(outputFile), true));
+	
 		i = 0;
 		for (UserEntity user: userList) {
 			headers.put("Referer", hostURL+"/admin");
 			sb = http.fetchURL(hostURL+"/admin/users/add", headers);
-			updateElggTokenAndTs(tokenTsPair, sb);
-
+			updateElggTokenAndTs(tokenTsPair, sb);		
+			
 			String postRequest = "__elgg_token="+tokenTsPair.getValue1()+"&__elgg_ts="
 					+tokenTsPair.getValue2()+"&name="+user.getDisplayName()+"&username="+user.getUserName()+"&email="+user.getEmail()+"&password="+user.getPassword()
 					+"&password2="+user.getPassword()+"&admin=0";
@@ -137,7 +142,11 @@ public class UserGenerator {
 			String guid = sb.substring(startIndex, endIndex);
 			user.setGuid(guid);
 			System.out.println("User"+i+++" generated.");
+			pw.append(user.getGuid()+" "+user.getUserName()+" "+user.getPassword()+"\n");
+			pw.flush();
 		}
+		//pw.flush();
+		pw.close();
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -145,7 +154,7 @@ public class UserGenerator {
 		gen.loadProperties();
 		gen.generateUsers();
 		gen.createUsers();
-		gen.writeUserFile();
+		//gen.writeUserFile();
 	}
 
 	private void writeUserFile() throws FileNotFoundException {

@@ -1,7 +1,0 @@
-{
-	"name": "hypeGallery",
-	"version": "3.0.0",
-	"dependencies": {
-		"cropper": "0.6.*"
-	}
-}

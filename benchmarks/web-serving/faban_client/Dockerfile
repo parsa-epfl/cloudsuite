@@ -3,17 +3,14 @@ FROM cloudsuite/faban:1.4
 RUN apt-get update && apt-get install -y \
 	ant \
 	build-essential \
-        curl \
+    curl \
+    python3 \
 	wget
 
 # Setup Faban 
-
-
-
 COPY files/web20_benchmark /web20_benchmark
 
 WORKDIR /web20_benchmark
-
 
 # Build the Faban benchmark and the user-generation tool
 RUN sed -i "s@faban\.home.*@faban.home=$FABAN_HOME@" /web20_benchmark/build.properties
@@ -24,9 +21,9 @@ RUN ant usergen-jar
 RUN cp /web20_benchmark/build/Web20Driver.jar $FABAN_HOME/benchmarks/
 
 COPY files/usersetup.properties $FABAN_HOME/usersetup.properties
+COPY files/users.list $FABAN_HOME/users.list
 
-ADD bootstrap.sh /etc/bootstrap.sh
-RUN chown root:root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
+RUN chown root:root run/entrypoint.sh
+RUN chmod 700 run/entrypoint.sh
 
-ENTRYPOINT ["/etc/bootstrap.sh"]
+ENTRYPOINT ["run/entrypoint.sh"]
