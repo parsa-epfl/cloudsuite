@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 cloudsuite/spark:2.4.5 as build
+FROM --platform=linux/amd64 cloudsuitetest/spark:2.4.5 as build
 
 # Benchmark files
 COPY movielens-als /root/movielens-als

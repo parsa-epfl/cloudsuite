@@ -7,21 +7,7 @@ RUN groupadd -r memcache && useradd -r -g memcache memcache
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
-    case "${ARCH}" in \
-       aarch64|arm64|amd64|x86_64) \
-         LIBEVENT_VER='2.1-6'; \
-        ;; \
-       riscv64) \
-         LIBEVENT_VER='2.1-7'; \
-        ;; \
-       *) \
-         echo "Unsupported arch: ${ARCH}"; \
-         exit 1; \
-         ;; \
-    esac; \
-    apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER}
+RUN apt-get update && apt-get install -y --no-install-recommends libevent-2.1-7 && rm -rf /var/lib/apt/lists/*;
 
 ENV MEMCACHED_VERSION 1.6.15
 
@@ -30,7 +16,7 @@ ENV MEMCACHED_SHA1 badcfa0d65f5797cc9c2f957f3fbfedbd8c13411
 
 RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& set -x \
-	&& apt-get install -y $buildDeps --no-install-recommends \
+	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -SL "http://memcached.org/files/memcached-$MEMCACHED_VERSION.tar.gz" -o memcached.tar.gz \
 	&& echo "$MEMCACHED_SHA1 memcached.tar.gz" | sha1sum -c - \

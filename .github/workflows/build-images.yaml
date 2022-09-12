@@ -76,7 +76,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
       matrix:
-        tag: ["mariadb-10.3"]
+        tag: ["mariadb-10.6"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
