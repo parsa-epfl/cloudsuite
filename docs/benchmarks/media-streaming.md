@@ -88,7 +88,7 @@ Parameters are:
 - `VIDEOPERF_PROCESSES`: The number of videoperf processes, with a default value of 4. This value should not be larger than the number of the client container's available cores. 
 - `CLIENTS`: The total number of clients. Each client will pick one session from the `session list` and send the corresponding requests. Clients will be distributed to different videoperf processes to balance the load. 
 - `RATE`: The rate (client per second) for client generation. 
-- `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLSv1.3.
+- `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLS v1.3.
 
 #### Note for Client Generation
 
