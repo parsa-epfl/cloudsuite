@@ -3,40 +3,37 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. The client, based on [httperf][httperf_repo]'s `wsesslog` session generator, generates a request mix for different videos, to stress the server.
+This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. Based on [videoperf][httperf_repo]'s session generator, the client sends requests for different videos to stress the server.
 
-## Using the benchmark ##
-The benchmark has two tiers: the server and the clients. The server runs Nginx, and the clients send requests to stream videos from the server. Each tier has its own image which is identified by its tag.
+## Using the Benchmark ##
+The benchmark has two tiers: the server and the client. The server runs Nginx, and the client sends requests to stream videos. Each tier has its image, which is identified by its tag.
 
 ### Dockerfiles ###
 
 Supported tags and their respective `Dockerfile` links:
 
- - [`server`][serverdocker]: This represents the Nginx streaming server running as a daemon.
- - [`client`][clientdocker]: This represents the `httperf` client.
- - [`dataset`][datasetdocker]: This represents the video files dataset for the streaming server.
+ - [`server`][serverdocker]: This image represents the Nginx streaming server running as a daemon.
+ - [`client`][clientdocker]: This image represents the `videoperf` client.
+ - [`dataset`][datasetdocker]: This image provides the video dataset for the streaming server.
 
-These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
+### Running Dataset and Server on Host1
 
-### Running Dataset and server on Host1
+The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. 
+Then, based on the generated videos, it suggests the request lists for the client docker container. 
 
-The streaming server requires a video dataset to serve. We generate a synthetic dataset, comprising several videos of different lengths and qualities. We provide a separate docker image that handles the dataset generation, which is then used to launch a dataset container that exposes a volume containing the video dataset.
-
-To set up the dataset you have to first `pull` the dataset image and then run it. To `pull` the dataset image use the following command:
+First, use the following command to pull the dataset image:
 
     $ docker pull cloudsuite/media-streaming:dataset
 
-The following command will run the dataset container that exposes the video dataset volume, which will be used by the streaming server:
+Then, use the following command to run the dataset container:
 
-    $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSIONS_COUNT}
-
-Copy logs folder from container to Host1:
-
-    $ docker cp ${DATASET_CONTAINER_ID}:/videos/logs $HOME
+    $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
     
-`DATASET_SIZE`, in GBs, scales the size of the dataset to the given number. If you don't specify `DATASET_SIZE`, by default, the dataset container generates a collection of 10 videos for each of 240p, 360p, 480p, and 720p resolutions, having around 3.5 GB size altogether. 
+`DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates a collection of 10 videos for each of 240p, 360p, 480p, and 720p resolutions, having around 3.5 GB size altogether. 
 
-For each of the resolutions, the dataset container creates a log file located in the `/videos/logs` folder that you already copied from the container to the host machine. Each log file holds the sessions. Each session represents the behavior of a specific client streaming a specific media by mentioning the name of the requested media and the bytes streamed in each connection. The log file separates sessions by blank lines. A sample session is shown below:
+`SESSION_COUNT` denotes the number of sessions to stream the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client how to stress the server. By default, the value is five. 
+
+In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fetch a specific video chunk. As a reference, you can find a sample session below:
 
 ```
 /full-240p-00004.mp4 timeout=10 headers='Range: bytes=0-524287'
@@ -47,74 +44,89 @@ For each of the resolutions, the dataset container creates a log file located in
 /full-240p-00004.mp4 pace_time=10 timeout=10 headers='Range: bytes=2621440-3145727'
 /full-240p-00004.mp4 pace_time=10 timeout=10 headers='Range: bytes=3145728-3221180'
 ```
-The session consists of multiple requests for different chunks of a video. There are the following fields in each request:
-- The first field is the name of the requested video. In our example, requests ask for `/full-240p-00004.mp4`.
-- `timeout` determines how many seconds the client waits to receive at least one byte of the response from the server after sending the request. The client container increments the client timeout counter if this timer expires and the server does not deliver any byte of the response to the client. The client container reports the client timeout counter at the end of the benchmark's execution as `client_timo`.
-- `pace_time` determines how many seconds the client waits to send the next request. By default, the first three requests of each session doesn't have this field, which means they are sent together. From the fourth request to the end, the pace_time is 10 seconds.
-- `header` declares a range of bytes of the video that will be streamed as a result of sending a particular request. 
+Each line here defines an HTTP/HTTPS request with the following fields:
+- The name of the requested video. In our example, requests ask for `/full-240p-00004.mp4`.
+- `timeout` determines the maximum time the client waits before receiving any response after sending the request to the server. Once expired, the client closes the connections and increases the timeout counter. 
+- `pace_time` determines the latency between sending two consecutive requests. By default, the first three requests of each session don't have this field, which means they are sent together. 
+- `header` declares a range of video bytes for each request. 
 
-These sessions will be read and processed by the client container. `SESSIONS_COUNT` specifies the number of sessions for each resolution with 5 as the default value. It would be good to give an appropriate value to `SESSIONS_COUNT` to make sure all videos in the dataset would be accessed. Note that the dataset container uses a specific distribution to simulate the behavior that some videos are more popular than others. Check the logs of the dataset container to see statistics regarding the generated sessions for various resolutions.
+It is possible that sessions in the `session lists` don't touch the whole dataset. In this case, consider increasing the `SESSION_COUNT`. For each resolution, check the beginning of the `session lists` to see the related statistics.
 
-Note that the sessions in the log files are static and represent a hypothetical behavior of a client that streams a video from the server. We will explain how the client container uses these sessions later. 
-
-
-### Starting the Server ####
-To start the server you have to first `pull` the server image and then run it. To `pull` the server image use the following command:
+### Starting the Server on Host1 ####
+First,  pull the server image with the following command:
 
     $ docker pull cloudsuite/media-streaming:server
 
-The following command will start the server, mount the dataset volume, and attach it to the *host* network. The ${NGINX_WORKERS} parameter sets the number of NGINX workers. If it is not given, the default value is 2000. Adjust this number based on the computational resources of the server and the intended load.  
+Then, start the server on the same machine as the dataset container: 
 
-    $ docker run -d --name streaming_server --volumes-from ${DATASET_CONTAINER_ID} --net host cloudsuite/media-streaming:server ${NGINX_WORKERS}
+    $ docker run -d --name streaming_server --volumes-from streaming_dataset --net host cloudsuite/media-streaming:server ${NGINX_WORKERS}
 
+The `NGINX_WORKERS` parameter sets the number of Nginx workers. If not given, the default value is 2000. Adjust this number based on the server's computational resources and the intended load.  
 
 ### Starting the Client on Host2 ###
 
-Copy the **`logs`** folder from Host1 to Host2
+You need to copy the `session lists` from the dataset container and then transfer the files to Host2 where you want to launch the `videoperf` client. 
 
-    $ rsync -zarvh username@HOST1:$HOME/logs $HOME
+To copy `session lists` from the dataset container to Host 1, use the following command:
 
-Note: Pass the public key file, in case of authentication error using `-e "ssh -i /path/to/.pemfile"` to the `rsync` command.
+    $ docker cp streaming_dataset:/videos/logs <destination>
 
+Then, you can use any command (e.g., `scp`, `rsync`) to transfer files to Host2. 
 
-To start the client container you have to first `pull` the client image and then run it. To `pull` the client image use the following command:
+To start the client container, you must pull the client image and run it. To pull the client image, use the following command:
 
     $ docker pull cloudsuite/media-streaming:client
 
-To start the client container and connect it to the *host* network use the following command:
+To run the client container, use the following command:
 
-    $ docker run -t --name=streaming_client -v $HOME/logs:/videos/logs -v $HOME/output:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${HTTPERF_CLIENTS} ${SESSIONS} ${RATE} ${ENCRYPTION_MODE}
+    $ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${VIDEOPERF_PROCESSES} ${CLIENTS} ${RATE} ${ENCRYPTION_MODE}
 
-The **`logs`** folder is mounted into the client container using `-v /path/to/logs:/videos/logs`. `SERVER_IP` is the IP of Host1. `HTTPERF_CLIENTS` determines the number of distinct `httperf` processes on the client machine that will generate the load and its default value is 4. For higher loads, it would be beneficial to increase the number of httperf clients to distribute the load among multiple processes. Make sure that `HTTPERF_CLIENTS` is not larger than the number of cores available on the client machine or the number of the cores devoted to the client container.
+Parameters are:
+- `<lists>`: The path where the `session lists` is put. You should be able to find files like `cl-*.log`
+- `<results>`: The path for the benchmark statistics files. 
+- `SERVER_IP`: The IP address of the server, which should be the Host1 in this document. 
+- `VIDEOPERF_PROCESSES`: The number of videoperf processes, with a default value of 4. This value should not be larger than the number of the client container's available cores. 
+- `CLIENTS`: The total number of clients. Each client will pick one session from the `session list` and send the corresponding requests. Clients will be distributed to different videoperf processes to balance the load. 
+- `RATE`: The rate (client per second) for client generation. 
+- `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLSv1.3.
 
-`SESSIONS` sets the total number of sessions that will be read from the log files to emulate the behavior of the streaming clients. These sessions are first distributed among the httperf processes set by `HTTPERF_CLIENTS`. For example, if `SESSIONS` and `HTTPERF_CLIENTS` are equal to 1000 and 5, respectively, each httperf process will be responsible for handling 200 sessions. Then, these sessions are further distributed among different resolutions by 10%, 30%, 40%, and 20% probabilities for 240p, 360p, 480p, and 720p resolutions, respectively. You might want to change these probabilities based on your need by modifying [this](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/files/run/peak_hunter/launch_remote.sh) script. If the number of sessions that are going to be generated for a specific resolution becomes larger than the number of sessions available in the log file of the corresponding resolution, the client container starts from the beginning of the log to create the sessions. 
+#### Note for Client Generation
 
-In addition, `RATE` specifies the rate at which a new session will be generated. Its unit is sessions per second. For example, if `SESSIONS` is 1000 and `RATE` is 10, it takes 100 seconds until the client container generates all demanded sessions. 
+These clients are further distributed among different resolutions by 10%, 30%, 40%, and 20% probabilities for 240p, 360p, 480p, and 720p, respectively. You might want to change these probabilities based on your need by modifying [this](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/files/run/peak_hunter/launch_remote.sh) script. 
 
-Finally, `ENCRYPTION_MODE` has "PT" and "TLS" as valid values that determine whether the server transfers the videos in the plain text format over port 80, or it uses TLSv1.3 to encrypt the media and send them over port 443. 
-
-At the end of the client's execution, the overall execution statistics will be found under the /output directory of the container, which you can map to a directory on the host using `-v /path/to/output:/output`. 
+Suppose the number of clients for a specific resolution becomes larger than the number of sessions available in its `session list`. Then, the client container starts from the beginning of the `session list` to create further clients. 
 
 ### Guidelines for Tuning the Benchmark
-After running the benchmark, the client container periodically reports three metrics: throughput in Mbps, the total number of errors encountered during the benchmark's execution, and the number of concurrent established sessions to the server that are streaming media. A sample report looks like this:
+
+After running the benchmark, the client container periodically reports three metrics:
+- Throughput in Mbps
+- The total number of errors encountered during the benchmark's execution
+- The number of concurrent established clients to the server
+
+A sample report looks like this:
 ```
-Throughput (Mbps) = 1325.97 , total_errors = 0       , concurrent-sessions = 317
+Throughput (Mbps) = 1325.97 , total_errors = 0       , concurrent-clients = 317
 ```
-Note that each httperf client reports its own statistics. Therefore, the overall state of the benchmark will be the sum of individual reports by each httperf client. To tune the benchmark, start with a starting rate as the seed. Keep in mind that it would take a few minutes for the benchmark to reach a steady state. Consequently, consider giving an appropriate number for `SESSIONS` to the client container. For example, if the benchmark did not reach the steady state in 5 minutes and the given rate was 10 sessions per second, the number of sessions would be larger than 5x60x10=3000. Otherwise, the benchmark won't generate enough sessions and the benchmark enters the ramp-down phase before reaching the steady state.
+Note that each videoperf process reports its statistics. Therefore, the overall state of the benchmark will be the sum of individual reports. 
 
-The benchmark reaches the steady state when both throughput and concurrent-sessions are stabilized, and there are few encountered errors. The number of errors would be 0, but occasional errors may occur. If there is a problem in the tuning process, the number of errors will start increasing rapidly. In the ramp-up phase, both throughput and concurrent-sessions will be increasing. The throughput may stabilize, but concurrent-sessions continue to increase. It means that the rate of establishing new sessions is higher than the machine's capabilities. In this case, consider decreasing the `RATE` parameter of the client container. On the other hand, if you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the machine can handle a larger load.
+To tune the benchmark, give a starting rate as the seed (we suggest 1). The benchmark would take a few minutes to reach a steady state. Consequently, consider giving an appropriate number for `CLIENTS`. For example, if the benchmark did not reach the steady state in 5 minutes and the `RATE` was ten clients per second, the number of clients would be larger than 5x60x10=3000. Therefore, we suggest giving a large value to `CLIENTS` to sustain a long steady state. 
 
-During the tuning process, make sure that the client container is not overloaded. You can check the client container's CPU utilization using different tools (e.g. docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g. by --cpuset-cpus option). An overloaded client would result in crashes or errors while the server can handle the given load. Note that each httperf process utilizes a single core. Therefore, make sure that the number of available cores to the client container is at least equal to `HTTPERF_CLIENTS`. The client container distributes the given load (declared by `SESSIONS` and `RATE`) equally among different httperf clients.
+Other principles are:
+1. The benchmark reaches the steady state when both throughput and concurrent clients are stable while there are few encountered errors. The number of errors would be 0, but occasional errors may occur. 
+2. If there is a problem in the tuning process, the number of errors will increase rapidly. 
+3. In the ramp-up phase, both throughput and concurrent clients will be increasing. The throughput may be stable, but concurrent clients continue to increase. It means that the rate of establishing new clients is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
+4. If you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the server can handle a higher load.
+5. An overloaded client would result in client errors and crashes. In this case, consider allocating more cores to support more videoperf processes.  You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by --cpuset-cpus option).
 
-  [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
+[datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
-  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
+[serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
+[clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/parsa-epfl/cloudsuite/tree/main/benchmarks/media-streaming "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"
-  [nginx_repo]: https://github.com/nginx/nginx "Nginx repo"
-  [httperf_repo]: https://github.com/httperf/httperf "httperf repo"
+[repo]: https://github.com/parsa-epfl/cloudsuite/tree/main/benchmarks/media-streaming "GitHub Repo"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/media-streaming/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/media-streaming.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/media-streaming.svg "Go to DockerHub Page"
+[nginx_repo]: https://github.com/nginx/nginx "Nginx repo"
+[httperf_repo]: https://github.com/httperf/httperf "httperf repo"
