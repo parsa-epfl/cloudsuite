@@ -19,6 +19,8 @@ Cloudsuite's
 cmd
 conf
 cpufreq
+cpus
+cpuset
 csv
 datacenters
 dataset
@@ -42,6 +44,7 @@ fb
 filesystem
 fpm
 Gbit
+GBs
 github
 GraphX
 grouplens
@@ -60,6 +63,7 @@ localhost
 login
 MapReduce
 masterdocker
+Mbps
 md
 Mediawiki
 memcache
@@ -115,6 +119,7 @@ UI
 usertable
 usr
 uwsgi
+videoperf
 VM
 VMs
 WebServer
