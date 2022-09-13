@@ -13,7 +13,8 @@ export SCALE=$2 \
   && export RAMP_DOWN=$4 \
   && export STEADY_STATE=$5
 
-export JAVA_HOME=`ls -d $JAVA_HOME`
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+export SOLR_JAVA_HOME=$JAVA_HOME
 #PREPARE
 $FABAN_HOME/master/bin/startup.sh
 
