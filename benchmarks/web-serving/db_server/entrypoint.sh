@@ -26,5 +26,5 @@ mariabackup --copy-back --target-dir=/backup/
 
 chown -R mysql:mysql /var/lib/mysql/
 
-service mysql start
+service $MY_SQL start
 bash
