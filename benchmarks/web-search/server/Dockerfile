@@ -24,8 +24,8 @@ ENV ZOOKEEPER_PORT $SOLR_PORT
 
 #INSTALL SOLR
 RUN cd $BASE_PATH \ 
-  && wget --progress=bar:force -O solr.tar.gz "https://downloads.apache.org/solr/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
-	&& tar -zxf solr.tar.gz \
+  && wget --progress=bar:force -O solr.tar.gz "https://archive.apache.org/dist/solr/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \ 
+  && tar -zxf solr.tar.gz \
   && rm solr.tar.gz
 
 
