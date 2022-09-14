@@ -5,6 +5,8 @@ export SERVER_HEAP_SIZE=$1 &&
   export NUM_SERVERS=$2
 
 #Prepare Solr
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+export SOLR_JAVA_HOME=$JAVA_HOME
 $SOLR_HOME/bin/solr start -force -cloud -p $SOLR_PORT -s $SOLR_CORE_DIR -m $SERVER_HEAP_SIZE
 $SOLR_HOME/bin/solr status
 $SOLR_HOME/bin/solr create_collection -force -c cloudsuite_web_search -d cloudsuite_web_search -shards $NUM_SERVERS -p $SOLR_PORT
