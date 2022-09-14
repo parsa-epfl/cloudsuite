@@ -13,13 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Scanner;
 
+import javax.sql.rowset.serial.SerialException;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.json.JSONObject;
@@ -31,103 +36,73 @@ import com.sun.faban.driver.BenchmarkOperation;
 import com.sun.faban.driver.CustomMetrics;
 import com.sun.faban.driver.CycleType;
 import com.sun.faban.driver.DriverContext;
+import com.sun.faban.driver.Uniform;
 import com.sun.faban.driver.FixedTime;
+import com.sun.faban.driver.NegativeExponential;
 import com.sun.faban.driver.HttpTransport;
 import com.sun.faban.driver.MatrixMix;
-import com.sun.faban.driver.OnceAfter;
 import com.sun.faban.driver.Row;
 import com.sun.faban.driver.Timing;
 
 import workload.driver.RandomStringGenerator.Mode;
 import workload.driver.Web20Client.ClientState;
 
-@BenchmarkDefinition(name = "Elgg benchmark", version = "1.0")
-@BenchmarkDriver(name = "ElggDriver", 
-									/*
-									 * Should be the same as the name attribute
-									 * of driverConfig in run.xml
-									 */
-				 threadPerScale = 1,
-				 percentiles = {"95","99","99.9"},
-                 responseTimeUnit = java.util.concurrent.TimeUnit.MILLISECONDS )
 
-/**
- * The mix of operations and their proabilities.
- */
+@BenchmarkDefinition(
+    name    = "Elgg benchmark",
+    version = "1.0"
+)
 
-@MatrixMix (operations = {
-		"BrowsetoElgg",
-		"DoLogin",  
-		"PostSelfWall", 
-		"SendChatMessage", 
-		"AddFriend", 
-		"Register", 
-		"Logout"  },
-		mix = { 
-		@Row ({0, 100,0, 0,  0,  0, 0}),
-		@Row ({0, 0, 30, 55, 9, 0, 1}),
-		@Row ({0, 0, 30, 55, 9, 0, 1}),
-		@Row ({0, 0, 30, 55, 9, 0, 1}),
-		@Row ({0, 0, 30, 55, 9, 0, 1}),
-		@Row ({100, 0, 0, 0, 0, 0, 0}),
-		@Row ({90, 0, 0, 0, 0, 10, 0})
-		}
-		)
-/*
-@MatrixMix (operations = {"AccessHomepage", 
-		"DoLogin",  
-	"Logout"  },
-		mix = { 
-		@Row ({0, 100, 0}),
-		@Row ({0, 0, 100}),
-		@Row ({100, 0, 0})
-		}
-		)
-*/
-@Background(operations = 
-	{ "UpdateActivity", "ReceiveChatMessage"}, 
-	timings = { 
-		@FixedTime(cycleTime = 10000, cycleDeviation = 2),
-		@FixedTime(cycleTime = 10000, cycleDeviation = 2) }
-		
+@BenchmarkDriver(
+    name             = "ElggDriver",
+    threadPerScale   = 1,
+    percentiles      = {"95", "99", "99.9"},
+    responseTimeUnit = java.util.concurrent.TimeUnit.MILLISECONDS
+)
+
+@FixedTime(
+    cycleTime      = 200,
+    cycleType      = CycleType.THINKTIME,
+    cycleDeviation = 2
+)
+
+@MatrixMix(
+    operations = {"BrowsetoElgg", "DoLogin", "AddFriend", "Register", "Logout", "CheckActivity", "Dashboard", "AccessHomePage", "RemoveFriend", "GetNotifications", "Inbox", "CheckProfile", "CheckFriends", "CheckWire", "PostWire", "SendMessage", "ReadMessage", "CheckBlog", "SentMessages", "PostBlog", "DeleteMessage", "Like", "ReplyWire", "Comment", "Search"},
+    mix        = {@Row({0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({70, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 2, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2}), @Row({0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2})}
 )
 
 
-/*
-@NegativeExponential(cycleDeviation = 2, 
-						cycleMean = 4000, // 4 seconds
-						cycleType = CycleType.THINKTIME)
-*/
-
-/*
-@Uniform(cycleMax = 120000,
-		 cycleMin = 40000,
-		 cycleDeviation = 10,
-		 cycleType = CycleType.THINKTIME)
-
-*/
-@FixedTime(cycleTime = 2000,
-	cycleType = CycleType.THINKTIME, cycleDeviation = 10)
-// cycle time or think time - count from the start of prev operation or end
-
 /**
  * The main driver class.
- * 
+ *
  * Operations :-
- * 
- * Create new user (X)
+ *
+ * Browse the home page
  * Login existing user (X)
- * Logout logged in user
- * Activate user
- * Wall post (X)
- * New blog post 
- * Send friend request (X)
- * Send chat message (X)
- * Receive chat message (X)
- * Update live feed (X)
- * Refresh security token
- * 
+ * Send friend request
+ * Register a new user
+ * Logout a logged in user
+ * Check recent activites of the site
+ * Remove a friend
+ * Check the notifications
+ * Check the inbox
+ * Check a user's profile
+ * Browse the friends list
+ * Browse the wires page
+ * Post a wire
+ * Send a message
+ * Read a message
+ * Browse the blogs page
+ * Browse the send messages page
+ * Post a blog
+ * Delete a message
+ * Like a post or wire
+ * Reply to a wire
+ * Comment on a blog
+ * Search
+ *
  * @author Tapti Palit
+ * @author Ali Ansari
  *
  */
 public class Web20Driver {
@@ -148,83 +123,62 @@ public class Web20Driver {
 
 	private Web20Client thisClient;
 
-	
-	private Random random; 
-	
+
+	private Random random;
+
 	private boolean inited;
-	
+
+	private static Semaphore semaphore;
+	private static Timer     timer;
+
 	/* Constants : URL */
 	private final String ROOT_URL = "/";
-	private final String[] ROOT_URLS = new String[] {
-			"/vendors/requirejs/require-2.1.10.min.js",
-			"/vendors/jquery/jquery-1.11.0.min.js",
-			"/vendors/jquery/jquery-migrate-1.2.1.min.js",
-			"/vendors/jquery/jquery-ui-1.10.4.min.js",
-			"/_graphics/favicon-16.png", "/_graphics/favicon-32.png",
-			"/_graphics/icons/user/defaultsmall.gif",
-			"/_graphics/icons/user/defaulttiny.gif",
-			"/_graphics/header_shadow.png", "/_graphics/elgg_sprites.png",
-			"/_graphics/sidebar_background.gif",
-			"/_graphics/button_graduation.png", "/_graphics/favicon-128.png" };
-	private final String LOGIN_URL = "/action/login";
-	private final String[] LOGIN_URLS = new String[] { //"/js/lib/ui.river.js",
-			"/_graphics/icons/user/defaulttopbar.gif",
-//			"/mod/riverautoupdate/_graphics/loading.gif",
-			"/_graphics/toptoolbar_background.gif",
-			"/mod/reportedcontent/graphics/icon_reportthis.gif" };
-	private final String ACTIVITY_URL = "/activity";
-	private final String[] ACTIVITY_URLS = new String[] {
-			"/mod/hypeWall/vendors/fonts/font-awesome.css",
-			"/mod/hypeWall/vendors/fonts/open-sans.css" };
 
-	private final String RIVER_UPDATE_URL = "/activity/proc/updateriver";
-	private final String WALL_URL = "/action/wall/status";
+	private final String LOGIN_URL = "/action/login";
+
+	private final String[] ACTIVITY_URLS = new String[] {"/activity", "/activity/owner/", "/activity/friends/"};
+
+	private final String DASHBOARD_URL = "/dashboard";
 
 	private final String REGISTER_PAGE_URL = "/register";
 
 	private final String DO_REGISTER_URL = "/action/register";
 	private final String DO_ADD_FRIEND = "/action/friends/add";
-	
-	private final String CHAT_CREATE_URL = "/action/elggchat/create";
-	private final String CHAT_POST_URL = "/action/elggchat/post_message";
-	private final String CHAT_RECV_URL = "/action/elggchat/poll";
-	
-	private final String LEAVE_CHAT_URL = "/action/elggchat/leave";
+	private final String DO_REMOVE_FRIEND = "/action/friends/remove";
+
 	private final String LOGOUT_URL = "/action/logout";
-	
+	private final String NOTIFICATIONS_URL = "/site_notifications/owner/";
+	private final String INBOX_URL = "/messages/inbox/";
+	private final String PROFILE_URL = "/profile/";
+	private final String FRIENDS_URL = "/friends/";
+	private final String[] WIRE_URLS = new String[] {"/thewire", "/thewire/owner/", "/thewire/friends/"};
+	private final String POST_WIRE_URL = "/action/thewire/add";
+	private final String SEND_MESSAGE_URL = "/action/messages/send";
+	private final String READ_MESSAGE_URL = "/messages/read/";
+	private final String[] BLOG_URLS = new String[] {"/blog", "/blog/owner/", "/blog/friends/"};
+	private final String SENT_MESSAGES_URL = "/messages/sent/";
+	private final String POST_BLOG_URL = "/action/blog/save";
+	private final String DELETE_MESSAGE_URL = "/action/messages/process/";
+	private final String LIKE_URL = "/action/likes/add";
+	private final String COMMENT_URL = "/action/comment/save";
+	private final String SEARCH_URL = "/members/search";
+
 	public Web20Driver() throws SecurityException, IOException, XPathExpressionException {
 
 		thisClient = new Web20Client();
 		thisClient.setClientState(ClientState.LOGGED_OUT);
-		thisClient.setChatSessionList(new ArrayList<String>());
-		
+		thisClient.setFriendsList(new ArrayList<String>());
+		thisClient.setMessagesGuids(new ArrayList<String>());
+		thisClient.setBlogsGuids(new ArrayList<String>());
+		thisClient.setWiresGuids(new ArrayList<String>());
+		thisClient.setLoggedIn(false);
+
+
 		context = DriverContext.getContext();
 		userPasswordList = new ArrayList<UserPasswordPair>();
 
 		logger = context.getLogger();
 		logger.setLevel(Level.INFO);
-
-		//fileTxt = new FileHandler("Faban_3log%u.%g.txt", 0, 500);
-		//formatterTxt = new SimpleFormatter();
-		//fileTxt.setFormatter(formatterTxt);
-		
-		/*
-		Handler[] handlers = logger.getHandlers();
-		List<Handler> toRemoveHandlers = new ArrayList<Handler>();
-		for (Handler handler: handlers) {
-			toRemoveHandlers.add(handler);
-		}
-		for (Handler handler: toRemoveHandlers) {
-			logger.removeHandler(handler);
-		}
-		//logger.addHandler(fileTxt);
-
-		handlers = logger.getHandlers();
-		System.out.println("Handlers are:");
-		for (Handler handler: handlers) {
-			System.out.println(handler);
-		}
-		*/
 
 		File usersFile = new File(System.getenv("FABAN_HOME")+"/users.list");
 		BufferedReader bw = new BufferedReader(new FileReader(usersFile));
@@ -234,17 +188,35 @@ public class Web20Driver {
 			UserPasswordPair pair = new UserPasswordPair(tokens[0], tokens[1], tokens[2]);
 			userPasswordList.add(pair);
 		}
-		
+
 		bw.close();
-		
-		thisUserPasswordPair = userPasswordList.get(context.getThreadId());
+
 
 		elggMetrics = new ElggDriverMetrics();
 		context.attachMetrics(elggMetrics);
-		
-		hostUrl = "http://"+context.getXPathValue("/webbenchmark/serverConfig/host")+":"+context.getXPathValue("/webbenchmark/serverConfig/port");
-		//hostUrl = "http://spaten";
+
+		hostUrl = context.getXPathValue("/webbenchmark/serverConfig/protocol")+"://"+context.getXPathValue("/webbenchmark/serverConfig/host")+":"+context.getXPathValue("/webbenchmark/serverConfig/port");
 		random = new Random();
+
+
+		if (semaphore == null) {
+			String period = System.getenv("SERIALIZING");
+
+			if (period == null)
+				semaphore = new Semaphore(1 << 31);
+			else {
+				semaphore = new Semaphore(0, true);
+				timer     = new Timer();
+
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						if (semaphore.hasQueuedThreads())
+							semaphore.release();
+					}
+				}, 0, Integer.parseInt(period));
+			}
+		}
 	}
 
 	private String getRandomUserGUID() {
@@ -261,532 +233,1257 @@ public class Web20Driver {
 		int randomIndex = random.nextInt(userPasswordList.size());
 		return userPasswordList.get(randomIndex);
 	}
-	
+
 	Pattern pattern1 = Pattern.compile("input type=\"hidden\" name=\"__elgg_token\" value=\"(.*?)\"");
 	Pattern pattern2 = Pattern.compile("input type=\"hidden\" name=\"__elgg_ts\" value=\"(.*?)\"");
-	
-	private void updateElggTokenAndTs(Web20Client client, StringBuilder sb, boolean updateGUID) {
 
-		String elggToken = null;
-		String elggTs = null;
-		
-	    Matcher matcherToken = pattern1.matcher(sb.toString());
-	    while (matcherToken.find()) {
-	    	elggToken = matcherToken.group(1);
-	    }
-	    
-		Matcher matcherTs = pattern2.matcher(sb.toString());
-		while (matcherTs.find()) {
-			elggTs = matcherTs.group(1);
-		}
-		
+	private void updateElggTokenAndTs(Web20Client client, StringBuilder sb, boolean updateGUID) {
+		// The code for obtaining the token and ts is changed by a_ansaarii, the old code does not work
+		// this code is derived from UserGenerator.java
+		int elggTokenStartIndex = sb.indexOf("\"__elgg_token\":\"") + "\"__elgg_token\":\"".length();
+		int elggTokenEndIndex = sb.indexOf("\"", elggTokenStartIndex);
+		String elggToken = sb.substring(elggTokenStartIndex, elggTokenEndIndex);
+		//System.out.println("Elgg Token = "+elggToken);
+
+		int elggTsStartIndex = sb.indexOf("\"__elgg_ts\":") + "\"__elgg_ts\":".length();
+		int elggTsEndIndex = sb.indexOf(",", elggTsStartIndex);
+		String elggTs = sb.substring(elggTsStartIndex, elggTsEndIndex);
+		//System.out.println("Elgg Ts = "+elggTs);
+
+		client.setElggToken(elggToken);
+		client.setElggTs(elggTs);
+
+
 		if (updateGUID) {
 			// Get the Json
 			int startIndex = sb.indexOf("var elgg = ");
 			int endIndex = sb.indexOf(";", startIndex);
 			String elggJson = sb.substring(startIndex + "var elgg = ".length(),
 					endIndex);
-	
+
 			JSONObject elgg = new JSONObject(elggJson);
 			if (!elgg.getJSONObject("session").isNull("user")) {
 				JSONObject userSession = elgg.getJSONObject("session")
-						.getJSONObject("user");
+					.getJSONObject("user");
 				Integer elggGuid = userSession.getInt("guid");
-					client.setGuid(elggGuid.toString());
+				client.setGuid(elggGuid.toString());
 			}
 		}
-		
+
 		logger.finer("Elgg Token = "+elggToken+" Elgg Ts = "+elggTs);
-		
-		if (null != elggToken) {
-			client.setElggToken(elggToken);
-		}
-		
-		if (null != elggTs) {
-			client.setElggTs(elggTs);
-		}
 	}
 
-	private void updateNumActivities(Web20Client client, StringBuilder sb) {
-		//var numactivities = 582;
-		int startIndex = sb.indexOf("var numactivities = ")+"var numactivities = ".length();
-		int endIndex = sb.indexOf(";", startIndex);
-		client.setNumActivities(sb.substring(startIndex, endIndex));
-		
-	}
-	
-	@BenchmarkOperation(name = "BrowsetoElgg", 
-						//max90th = 3.0,
-						percentileLimits= {500,1000,2000},
-						timing = Timing.MANUAL)
-	/**
-	 * A new client accesses the home page. The "new client" is selected from a list maintained of possible users and their passwords.
-	 * The details of the new client are stored in the 
-	 * @throws Exception
-	 */
-	public void browseToElgg() throws Exception {
-		boolean success = false;
-		if (!inited) 
-			logger.info("Inited thread" + context.getThreadId());
-		inited = true;
-		logger.fine(context.getThreadId() +" : Doing operation: browsetoelgg");
-		context.recordTime();
+	@BenchmarkOperation(name = "Search",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client send a search request
+		 * @throws Exception
+		 */
+		public void search() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: sending a search request "
+					+ thisClient.getUsername());
 
-		if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
 
-			thisClient.setGuid(thisUserPasswordPair.getGuid());
-			thisClient.setUsername(thisUserPasswordPair.getUserName());
-			thisClient.setPassword(thisUserPasswordPair.getPassword());
-			thisClient.setLoggedIn(false);
-			System.out.println("Logging in: "+thisClient.getUsername());
-			/*
-			thisClient.setGuid("43");
-			thisClient.setUsername("tpalit");
-			thisClient.setPassword("password1234");
-			*/
-			
+			String username = getRandomUser().getUserName();
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + SEARCH_URL + "?member_query=" + username);
+			context.recordTime();
+
+			if (sb.toString().contains("Member search for")) {
+				logger.fine("Successfully sent a search request for term "+username);
+				System.out.print("PRINT: Successfully sent a search request\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to send a search request for term: "+username+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to send a search request!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After search: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptSearchCnt++;
+		}
+
+
+
+	@BenchmarkOperation(name = "SentMessages",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client reads a sent messages
+		 * @throws Exception
+		 */
+		public void sentMessages() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: checking sent messages with"
+					+ thisClient.getUsername());
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + SENT_MESSAGES_URL + thisClient.getUsername());
+			context.recordTime();
+
+			if (sb.toString().contains("Sent messages</h2>")) {
+				logger.fine("Successfully read the sent messages of: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully read the sent messages\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to read the sent messages of:"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to read the read the sent messages!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After read the sent messages: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptSentMessagesCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "Comment",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client comments on a blog post
+		 * @throws Exception
+		 */
+		public void comment() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: commenting on a post by "
+					+ thisClient.getUsername());
+
+
+			int blogs_size = thisClient.getBlogsGuidsSize();
+
+			if( blogs_size == 0){
+				context.recordTime();
+				context.recordTime();
+				elggMetrics.attemptCommentFailedCnt++;
+				return;
+			}
+
+			String guid = "";
+			int index = random.nextInt(blogs_size);
+			guid = thisClient.getBlogsGuids(index);
+
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs()
+				+ "&generic_comment=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&entity_guid=" + guid;
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + COMMENT_URL, postRequest);
+			context.recordTime();
+
+			System.out.println("PRINT: Successfully commented on a blog post");
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCommentCnt++;
+		}
+
+
+
+	@BenchmarkOperation(name = "ReplyWire",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client replies to a wire
+		 * @throws Exception
+		 */
+		public void replyWire() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: replying to a wire by "
+					+ thisClient.getUsername());
+
+
+			int wires_size = thisClient.getWiresGuidsSize();
+
+			if( wires_size == 0){
+				context.recordTime();
+				context.recordTime();
+				elggMetrics.attemptReplyWireFailedCnt++;
+				return;
+			}
+
+			String guid = "";
+			int index = random.nextInt(wires_size);
+			guid = thisClient.getWiresGuids(index);
+
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs()
+				+ "&body=" + RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&parent_guid=" + guid;
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + POST_WIRE_URL, postRequest);
+			context.recordTime();
+
+			System.out.println("PRINT: Successfully replied to a wire post");
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptReplyWireCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "Like",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client likes a blog or wire
+		 * @throws Exception
+		 */
+		public void doLike() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: liking a blog or wire post by "
+					+ thisClient.getUsername());
+
+
+			int blogs_size = thisClient.getBlogsGuidsSize();
+			int wires_size = thisClient.getWiresGuidsSize();
+
+			if( blogs_size == 0 && wires_size == 0){
+				context.recordTime();
+				context.recordTime();
+				elggMetrics.attemptLikeFailedCnt++;
+				return;
+			}
+
+			int randomIndex = random.nextInt(2);
+			String guid = "";
+			if( (randomIndex == 0 && blogs_size != 0) || (randomIndex == 1 && wires_size == 0)){
+				int index = random.nextInt(blogs_size);
+				guid = thisClient.getBlogsGuids(index);
+			}
+			else{
+				int index = random.nextInt(wires_size);
+				guid = thisClient.getWiresGuids(index);
+			}
+
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs()
+				+ "&guid=" + guid;
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LIKE_URL, postRequest);
+			context.recordTime();
+
+			printErrorMessageIfAny(sb, null);
+
+			System.out.println("PRINT: Successfully liked a blog or wire post");
+			success = true;
+
+			if (success)
+				elggMetrics.attemptLikeCnt++;
+		}
+
+
+
+
+	@BenchmarkOperation(name = "DeleteMessage",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client deletes a received message
+		 * @throws Exception
+		 */
+		public void deleteMessage() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: deleting a message of "
+					+ thisClient.getUsername());
+
+
+			int messages_size = thisClient.getMessagesGuidsSize();
+			String message_guid = "";
+			if(messages_size != 0){
+				int randomIndex = random.nextInt(messages_size);
+				message_guid = thisClient.getMessagesGuids(randomIndex);
+				thisClient.removeMessagesGuids(message_guid);
+				System.out.println("deleting message: "+message_guid+" from user: "+thisClient.getUsername()+" GUID: "+thisClient.getGuid());
+			}
+			else{
+				context.recordTime();
+				context.recordTime();
+				elggMetrics.attemptDeleteMessageFailedCnt++;
+				return;
+			}
+
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs()
+				+ "&message_id[]=" + message_guid
+				+ "&delete=Delete";
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + DELETE_MESSAGE_URL, postRequest);
+			context.recordTime();
+
+			printErrorMessageIfAny(sb, null);
+
+			System.out.println("PRINT: Successfully deleted a message");
+			success = true;
+
+			if (success)
+				elggMetrics.attemptDeleteMessageCnt++;
+		}
+
+
+
+
+	@BenchmarkOperation(name = "ReadMessage",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client reads a received message
+		 * @throws Exception
+		 */
+		public void readMessage() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: checking others friends' list with"
+					+ thisClient.getUsername());
+
+
+			int messages_size = thisClient.getMessagesGuidsSize();
+			String message_guid = "";
+			if(messages_size != 0){
+				int randomIndex = random.nextInt(messages_size);
+				message_guid = thisClient.getMessagesGuids(randomIndex);
+			}
+			else{
+				context.recordTime();
+				context.recordTime();
+				elggMetrics.attemptReadMessageFailedCnt++;
+				return;
+			}
+
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + READ_MESSAGE_URL + message_guid);
+			context.recordTime();
+
+			if (sb.toString().contains("Reply</span>")) {
+				logger.fine("Successfully read the message of: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully read the message\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to read the message of:"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to read the message!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After read the message: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptReadMessageCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "CheckFriends",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client checks the friends' list
+		 * @throws Exception
+		 */
+		public void checkFriends() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: checking others friends' list with"
+					+ thisClient.getUsername());
+
+
+			UserPasswordPair user = getRandomUser();
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + FRIENDS_URL + user.getUserName());
+			context.recordTime();
+
+			if (sb.toString().contains(user.getUserName()+"'s friends</h2>")) {
+				logger.fine("Successfully checked the friends of: "+user.getUserName());
+				System.out.print("PRINT: Successfully checked the friends\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to check friends of:"+user.getUserName()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to check friends!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After check friends: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCheckFriendsCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "CheckProfile",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client checks a user's profile
+		 * @throws Exception
+		 */
+		public void checkProfile() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: checking others profile with"
+					+ thisClient.getUsername());
+
+
+			UserPasswordPair user = getRandomUser();
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + PROFILE_URL + user.getUserName());
+			context.recordTime();
+
+
+
+			if (sb.toString().contains(user.getUserName()+"</h2>")) {
+				logger.fine("Successfully checked the profile: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully checked the profile\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to check profile :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to check profile!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After check profile: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCheckProfileCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "Inbox",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client reads the inbox
+		 * @throws Exception
+		 */
+		public void inbox() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: read inbox with"
+					+ thisClient.getUsername());
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + INBOX_URL + thisClient.getUsername());
+			context.recordTime();
+
+			if(sb.toString().contains("elgg-object")){
+				Scanner sc = new Scanner(sb.toString());
+				sc.useDelimiter("elgg-object-");
+				sc.next();
+				List<String> messages_guids = new ArrayList<String>();
+				while(sc.hasNext()){
+					String tk = sc.next();
+					int idx = tk.indexOf("\"");
+					//System.out.println("Next token: "+tk.substring(0, idx));
+					messages_guids.add(tk.substring(0, idx));
+				}
+				thisClient.setMessagesGuids(messages_guids);
+			}
+
+
+			if (sb.toString().contains("Inbox</h2>")) {
+				logger.fine("Successfully read the inbox: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully read the inbox\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to read inbox :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to read inbox!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After inbox: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptReadInboxCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "Dashboard",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client accesses the dashboard page.
+		 * @throws Exception
+		 */
+		public void Dashboard() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: Dashboard with"
+					+ thisClient.getUsername());
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + DASHBOARD_URL);
+			context.recordTime();
+
+			if (sb.toString().contains("My New Community")) {
+				logger.fine("Successfully loaded dashboard: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully loaded dashboard\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to load dashboard :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to load dashboard!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After dashboard: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptDashboardCnt++;
+		}
+
+	@BenchmarkOperation(name = "CheckBlog",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client accesses the blog page.
+		 * @throws Exception
+		 */
+		public void CheckBlog() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: CheckBlog with"
+					+ thisClient.getUsername());
+
+			int randomIndex = random.nextInt(BLOG_URLS.length);
+			String BLOG_URL = BLOG_URLS[randomIndex];
+			if (randomIndex != 0){
+				BLOG_URL += thisClient.getUsername();
+			}
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + BLOG_URL);
+			context.recordTime();
+
+			if(sb.toString().contains("elgg-object")){
+				Scanner sc = new Scanner(sb.toString());
+				sc.useDelimiter("elgg-object-");
+				sc.next();
+				List<String> blogs_guids = new ArrayList<String>();
+				while(sc.hasNext()){
+					String tk = sc.next();
+					int idx = tk.indexOf("\"");
+					//System.out.println("Next blog token: "+tk.substring(0, idx));
+					blogs_guids.add(tk.substring(0, idx));
+				}
+				thisClient.setBlogsGuids(blogs_guids);
+			}
+
+
+			if (sb.toString().contains("blogs</h2>") || sb.toString().contains("Blogs</h2>")) {
+				logger.fine("Successfully Checked blogs: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully Checked blogs\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check blogs :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to Check blogs!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After CheckBlog: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCheckBlogCnt++;
+		}
+
+
+
+
+	@BenchmarkOperation(name = "CheckWire",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client accesses the wire page.
+		 * @throws Exception
+		 */
+		public void CheckWire() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: CheckWire with"
+					+ thisClient.getUsername());
+
+			int randomIndex = random.nextInt(WIRE_URLS.length);
+			String WIRE_URL = WIRE_URLS[randomIndex];
+			if (randomIndex != 0){
+				WIRE_URL += thisClient.getUsername();
+			}
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + WIRE_URL);
+			context.recordTime();
+
+			if(sb.toString().contains("elgg-object")){
+				Scanner sc = new Scanner(sb.toString());
+				sc.useDelimiter("elgg-object-");
+				sc.next();
+				List<String> wires_guids = new ArrayList<String>();
+				while(sc.hasNext()){
+					String tk = sc.next();
+					int idx = tk.indexOf("\"");
+					//System.out.println("Next wire token: "+tk.substring(0, idx));
+					wires_guids.add(tk.substring(0, idx));
+				}
+				thisClient.setWiresGuids(wires_guids);
+			}
+
+			if (sb.toString().contains("wire posts</h2>")) {
+				logger.fine("Successfully Checked wires: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully Checked wires\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check wires :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to Check wires!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After CheckWire: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCheckWireCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "CheckActivity",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A client accesses the activity page.
+		 * @throws Exception
+		 */
+		public void CheckActivity() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: CheckActivity with"
+					+ thisClient.getUsername());
+
+			int randomIndex = random.nextInt(ACTIVITY_URLS.length);
+			String ACTIVITY_URL = ACTIVITY_URLS[randomIndex];
+			if (randomIndex != 0){
+				ACTIVITY_URL += thisClient.getUsername();
+			}
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + ACTIVITY_URL);
+			context.recordTime();
+
+			if (sb.toString().contains("Activity</h2>")) {
+				logger.fine("Successfully Checked Activity: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully Checked Activity\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to Check Activity :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to Check Activity!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After CheckActivity: __elgg_token=" + thisClient.getElggToken()
+			//                + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if (success)
+				elggMetrics.attemptCheckActivityCnt++;
+		}
+
+
+	@BenchmarkOperation(name = "BrowsetoElgg",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A logged out client accesses the home page.
+		 * @throws Exception
+		 */
+		public void browseToElgg() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_OUT);
+
+			UserPasswordPair user = getRandomUser();
+			thisClient.setGuid(user.getGuid());
+			thisClient.setUsername(user.getUserName());
+			thisClient.setPassword(user.getPassword());
+			thisClient.setFriendsList(new ArrayList<String>());
+			thisClient.setMessagesGuids(new ArrayList<String>());
+			thisClient.setBlogsGuids(new ArrayList<String>());
+			thisClient.setWiresGuids(new ArrayList<String>());
+
+
+			boolean success = false;
+			if (!inited)
+				logger.info("Inited thread" + context.getThreadId());
+			inited = true;
+			logger.fine(context.getThreadId() +" : Doing operation: browseToElgg");
+
+
 			HttpTransport http = HttpTransport.newInstance();
 			http.addTextType("application/xhtml+xml");
 			http.addTextType("application/xml");
 			http.addTextType("q=0.9,*/*");
 			http.addTextType("q=0.8");
 			http.setFollowRedirects(true);
-	
+
 			thisClient.setHttp(http);
+
+			semaphore.acquire();
+			context.recordTime();
 			StringBuilder sb = http.fetchURL(hostUrl + ROOT_URL);
-	
+			context.recordTime();
+
+			if (sb.toString().contains("My New Community")) {
+				logger.fine("Successfully browsed Elgg: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully browsed Elgg, user: "+user.getUserName()+" GUID: "+user.getGuid()+"\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to browse Elgg :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to browse Elgg!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
 			updateElggTokenAndTs(thisClient, sb, false);
-			updateNumActivities(thisClient, sb);
 			printErrorMessageIfAny(sb, null);
-			for (String url : ROOT_URLS) {
-				http.readURL(hostUrl + url);
+
+			success = true;
+
+			if(success){
+				elggMetrics.attemptBrowseToElggCnt++;
 			}
 
 		}
-		context.recordTime();
-			elggMetrics.attemptHomePageCnt++;		
 
-	}
-
-@BenchmarkOperation(name = "AccessHomepage", 
-						//max90th = 3.0, 
-						percentileLimits= {500,1000,2000},
-						timing = Timing.MANUAL)
-	/**
-	 * A logged in client accesses the home page
-	 * @throws Exception
-	 */
-	public void accessHomePage() throws Exception {
-		boolean success = false;
-		logger.fine(context.getThreadId()
-				+ " : Doing operation: accessHomePage");
-		context.recordTime();
-
-		/*
-		 * thisClient.setGuid("43"); thisClient.setUsername("tpalit");
-		 * thisClient.setPassword("password1234");
+	@BenchmarkOperation(name = "GetNotifications",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A logged in client accesses the notifications page
+		 * @throws Exception
 		 */
+		public void getNotifications() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
 
+			boolean success = false;
+			logger.fine(context.getThreadId() +" : Doing operation: getNotifications");
 
-//		thisClient.setClientState(ClientState.AT_HOME_PAGE);
-		StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + ROOT_URL);
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + NOTIFICATIONS_URL + thisClient.getUsername());
+			context.recordTime();
 
-		updateElggTokenAndTs(thisClient, sb, false);
-		updateNumActivities(thisClient, sb);
+			if (sb.toString().contains("Site Notifications")) {
+				logger.fine("Successfully got notifications: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully got notifications\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to get notifications :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to get notifications!\n");
+				throw new RuntimeException(sb.toString());
+			}
 
-		printErrorMessageIfAny(sb, null);
-		for (String url : ROOT_URLS) {
-			thisClient.getHttp().readURL(hostUrl + url);
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After GetNotifications: __elgg_token=" + thisClient.getElggToken()
+			//              + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+
+			if(success){
+				elggMetrics.attemptGetNotificationsCnt++;
+			}
 		}
 
-		context.recordTime();
-			elggMetrics.attemptHomePageCnt++;		
+	@BenchmarkOperation(name = "SendMessage",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		public void sendMessage() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
 
-	}
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: sendMessage with"
+					+ thisClient.getUsername());
 
-	@BenchmarkOperation(name = "DoLogin", 
-						//max90th = 3.0, 
-						percentileLimits= {500,1000,2000},
-						timing = Timing.MANUAL)
-	public void doLogin() throws Exception {
-		boolean success = false;
-		long loginStart = 0, loginEnd = 0;
-		context.recordTime();
-		logger.fine(context.getThreadId() + " : Doing operation: doLogin with"
-				+ thisClient.getUsername());
-
-		/*
-		 * To do the login, To login, we need four parameters in the POST query
-		 * 1. Elgg token 2. Elgg timestamp 3. user name 4. password
-		 */
-		String postRequest = "__elgg_token=" + thisClient.getElggToken()
-				+ "&__elgg_ts=" + thisClient.getElggTs() + "&username="
-				+ thisClient.getUsername() + "&password="
-				+ thisClient.getPassword();
-
-		for (String url : LOGIN_URLS) {
-			thisClient.getHttp().readURL(hostUrl + url);
-		}
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		headers.put("Accept-Language", "en-US,en;q=0.5");
-		headers.put("Accept-Encoding", "gzip, deflate");
-		headers.put("Referer", hostUrl + "/");
-		headers.put("User-Agent",
-				"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
-
-		StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
-				postRequest, headers);
-
-		updateElggTokenAndTs(thisClient, sb, true);
-		printErrorMessageIfAny(sb, postRequest);
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&recipients=&match_on=users"
+				+ "&recipients[]=" + getRandomUserGUID() + "&subject="
+				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&body="
+				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
 
 
-		if (sb.toString().contains("You have been logged in")) {
-			logger.fine("Successfully logged in: "+thisClient.getUsername());
-      System.out.print("PRINT: Successfully logged in\n");
-		} else {
-			logger.fine("!!!!!!!!!!!!!!!!!! Failed to log in :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
-			System.out.print("PRINT: Failed to login!\n");
-      throw new RuntimeException(sb.toString());
-		}
-		thisClient.setLoggedIn(true);
-		thisClient.setClientState(ClientState.LOGGED_IN);
-		success = true;
-
-		context.recordTime();
-
-		if (success)
-			elggMetrics.attemptLoginCnt++;
-	}
-
-	@BenchmarkOperation(name = "UpdateActivity",// max90th = 1.0, 
-                        //percentileLimits= {1.0}, 
-						percentileLimits= {500,750,1000},
-                        timing = Timing.MANUAL)
-	public void updateActivity() throws Exception {
-		boolean success = false;
-
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId() +" : Doing operation: updateActivity");
-			
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Accept",
 					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 			headers.put("Accept-Language", "en-US,en;q=0.5");
 			headers.put("Accept-Encoding", "gzip, deflate");
-			headers.put("Referer", hostUrl + "/activity");
+			headers.put("Referer", hostUrl + "/");
 			headers.put("User-Agent",
 					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 			headers.put("Content-Type", "application/x-www-form-urlencoded");
 
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + SEND_MESSAGE_URL,
+					postRequest, headers);
+			context.recordTime();
 
-			String postString = "options%5Bcount%5D=false&options%5Bpagination%5D=false&options%5Boffset%5D=0&options%5Blimit%5D=5&count="+thisClient.getNumActivities(); 
-			// Note: the %5B %5D are [ and ] respectively.
-			// #TODO: Fix the count value.
-			StringBuilder sb = thisClient.getHttp().fetchURL(
-					hostUrl + RIVER_UPDATE_URL, postString, headers);
-			if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-				logger.fine("startNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-			}
-			printErrorMessageIfAny(sb, postString);
+			updateElggTokenAndTs(thisClient, sb, false);
+			printErrorMessageIfAny(sb, postRequest);
 
+			System.out.println("PRINT: Successfully sent a message");
 			success = true;
+			if (success)
+				elggMetrics.attemptSendMessageCnt++;
 		}
-		context.recordTime();
-		if (success) {
-			elggMetrics.attemptUpdateActivityCnt++;
-		}
-	}
 
-	/**
-	 * Add friend
-	 * 
-	 * @throws Exception
-	 */
-	@BenchmarkOperation(name = "AddFriend", 
-						//max90th = 3.0, 
-						percentileLimits= {500,750,1000},
-						timing = Timing.MANUAL)
-	public void addFriend() throws Exception {
-		boolean success = false;
-		StringBuilder sb = null;
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId() +" : Doing operation: addFriend");
 
-			UserPasswordPair user = getRandomUser();
-			String friendeeGuid = user.getGuid();
-			String queryString = "friend=" + friendeeGuid + "&__elgg_ts="
-					+ thisClient.getElggTs() + "&__elgg_token="
-					+ thisClient.getElggToken();
-			String postString = "__elgg_ts="
-					+ thisClient.getElggTs() + "&__elgg_token="
-					+ thisClient.getElggToken();
-			
+
+	@BenchmarkOperation(name = "PostBlog",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		public void postBlog() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: postBlog with"
+					+ thisClient.getUsername());
+
+			String title = RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
+			String body = RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
+
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&title="
+				+ title
+				+ "&excerpt="
+				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA)
+				+ "&description="
+				+ body
+				+ "&tags=" + "&comments_on=On" + "&access_id=2"
+				+ "&status=published" + "&container_guid=" + thisClient.getGuid()
+				+ "&guid=" + "&save=Save";
+
+
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Accept",
 					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 			headers.put("Accept-Language", "en-US,en;q=0.5");
 			headers.put("Accept-Encoding", "gzip, deflate");
-			headers.put("Referer", hostUrl + "/profile/"+user.getUserName());
+			headers.put("Referer", hostUrl + "/blog");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
+			headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + POST_BLOG_URL,
+					postRequest); //, headers);
+			context.recordTime();
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			printErrorMessageIfAny(sb, postRequest);
+
+
+			if (sb.toString().contains(title) && sb.toString().contains(body)){
+				logger.fine("Successfully posted a blog: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully posted a blog\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to post a blog :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to post a blog!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			success = true;
+			if (success)
+				elggMetrics.attemptPostBlogCnt++;
+		}
+
+
+
+	@BenchmarkOperation(name = "PostWire",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		public void postWire() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: postWire with"
+					+ thisClient.getUsername());
+
+			String wire = RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&body=" + wire;
+
+
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			headers.put("Accept-Language", "en-US,en;q=0.5");
+			headers.put("Accept-Encoding", "gzip, deflate");
+			headers.put("Referer", hostUrl + "/thewire");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
+			headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + POST_WIRE_URL,
+					postRequest, headers);
+			context.recordTime();
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			printErrorMessageIfAny(sb, postRequest);
+
+			if (sb.toString().contains(wire)){
+				logger.fine("Successfully posted a wire: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully posted a wire\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to post a wire :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to post a wire!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+			success = true;
+			if (success)
+				elggMetrics.attemptPostWireCnt++;
+		}
+
+
+
+	@BenchmarkOperation(name = "AccessHomePage",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		/**
+		 * A logged in client accesses the home page
+		 * @throws Exception
+		 */
+		public void accessHomePage() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+
+			boolean success = false;
+			logger.fine(context.getThreadId() +" : Doing operation: AccessHomePage");
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + ROOT_URL);
+			context.recordTime();
+
+			if (sb.toString().contains("My New Community")) {
+				logger.fine("Successfully AccessHomePage: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully AccessHomePage\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to Access HomePage :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to Access HomePage!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
+			updateElggTokenAndTs(thisClient, sb, false);
+			//System.out.println("After AccessHomePage: __elgg_token=" + thisClient.getElggToken()
+			//           + "&__elgg_ts=" + thisClient.getElggTs());
+			printErrorMessageIfAny(sb, null);
+
+			success = true;
+			if(success){
+				elggMetrics.attemptHomePageCnt++;
+			}
+		}
+
+	@BenchmarkOperation(name = "DoLogin",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		public void doLogin() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_OUT);
+
+			boolean success = false;
+			logger.fine(context.getThreadId() + " : Doing operation: doLogin with"
+					+ thisClient.getUsername());
+
+			/*
+			 * To do the login, To login, we need four parameters in the POST query
+			 * 1. Elgg token 2. Elgg timestamp 3. user name 4. password
+			 */
+			String postRequest = "__elgg_token=" + thisClient.getElggToken()
+				+ "&__elgg_ts=" + thisClient.getElggTs() + "&username="
+				+ thisClient.getUsername() + "&password="
+				+ thisClient.getPassword();
+
+
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			headers.put("Accept-Language", "en-US,en;q=0.5");
+			headers.put("Accept-Encoding", "gzip, deflate");
+			headers.put("Referer", hostUrl + "/");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
+			headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
+					postRequest, headers);
+			context.recordTime();
+
+			updateElggTokenAndTs(thisClient, sb, true);
+			printErrorMessageIfAny(sb, postRequest);
+
+
+			if (sb.toString().contains("You have been logged in")) {
+				logger.fine("Successfully logged in: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully logged in\n");
+			} else {
+				// if a user could not login, try multiple times
+				boolean successful_login = false;
+				for(int i = 0; i < 10; i++){
+					System.out.println("Trying to login again, iter: " + i + "\tusername: " + thisClient.getUsername());
+					sb = thisClient.getHttp().fetchURL(hostUrl + LOGIN_URL,
+							postRequest, headers);
+					if(sb.toString().contains("You have been logged in")){
+						successful_login = true;
+						logger.fine("Successfully logged in: "+thisClient.getUsername());
+						System.out.print("PRINT: Successfully logged in\n");
+						break;
+					}
+				}
+				if(!successful_login){
+					logger.fine("!!!!!!!!!!!!!!!!!! Failed to log in :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+					System.out.print("PRINT: Failed to login: " + thisClient.getUsername() + "\n");
+					throw new RuntimeException(sb.toString());
+				}
+			}
+			thisClient.setLoggedIn(true);
+			thisClient.setClientState(ClientState.LOGGED_IN);
+
+			success = true;
+			if (success)
+				elggMetrics.attemptLoginCnt++;
+		}
+
+	/**
+	 * Remove friend
+	 *
+	 * @throws Exception
+	 */
+	@BenchmarkOperation(name = "RemoveFriend",
+	//max90th = 3.0,
+	percentileLimits= {500,750,1000},
+	timing = Timing.MANUAL)
+		public void removeFriend() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			StringBuilder sb = null;
+			logger.fine(context.getThreadId() +" : Doing operation: removeFriend");
+
+			int friendsListSize = thisClient.getFriendsListSize();
+			int randomIndex = 0;
+			String rmFriendGuid = "";
+			if(friendsListSize != 0){
+				randomIndex = random.nextInt(friendsListSize);
+				rmFriendGuid = thisClient.getFriendsList(randomIndex);
+			}
+			else{
+				rmFriendGuid = getRandomUserGUID();
+			}
+
+			thisClient.removeFriendsList(rmFriendGuid);
+
+			String queryString = "friend=" + rmFriendGuid + "&__elgg_ts="
+				+ thisClient.getElggTs() + "&__elgg_token="
+				+ thisClient.getElggToken();
+			String postString = "__elgg_ts="
+				+ thisClient.getElggTs() + "&__elgg_token="
+				+ thisClient.getElggToken();
+
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			headers.put("Accept-Language", "en-US,en;q=0.5");
+			headers.put("Accept-Encoding", "gzip, deflate");
+			headers.put("Referer", hostUrl + "/profile/"+thisClient.getUsername());
 			headers.put("User-Agent",
 					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 			headers.put("Content-Type", "application/x-www-form-urlencoded");
 			headers.put("X-Requested-With", "XMLHttpRequest");
 
-
+			semaphore.acquire();
+			context.recordTime();
 			sb = thisClient.getHttp().fetchURL(
-					hostUrl + DO_ADD_FRIEND + "?" + queryString, postString, headers);
+					hostUrl + DO_REMOVE_FRIEND + "?" + queryString, postString, headers);
+			context.recordTime();
 
-			if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-				logger.fine("startNewChat:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-			}
 			printErrorMessageIfAny(sb, postString);
 			success = true;
-		}
-		context.recordTime();
 
-		if (success) {
-					elggMetrics.attemptAddFriendsCnt++;
-		}/* else {
-			if (thisClient.getClientState() == ClientState.AT_HOME_PAGE) {
-				doLogin();
-			} else if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
-				accessHomePage();
-				doLogin();
+			System.out.println("PRINT: Successfully removed a friend");
+			if (success) {
+				elggMetrics.attemptRemoveFriendsCnt++;
 			}
-		}*/
+		}
 
-	}
+
 
 	/**
-	 * Receive a chat message.
-	 */
-	@BenchmarkOperation(name = "ReceiveChatMessage", 
-			//max90th = 1.0, 
-            //percentileLimits= {1.0},
-			percentileLimits= {500,750,1000},
-			timing = Timing.MANUAL)
-	public void receiveChatMessage() throws Exception {
-		boolean success = false;
-		StringBuilder sb = null;
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId() +" : Doing operation: receiveChatMessage");
-
-			Map<String, String> headers = new HashMap<String, String>();
-			headers.put("Accept",
-					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			headers.put("Accept-Language", "en-US,en;q=0.5");
-			headers.put("Accept-Encoding", "gzip, deflate");
-			headers.put("Referer", hostUrl + "/activity");
-			headers.put("User-Agent",
-					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-
-			
-			sb = thisClient.getHttp().fetchURL(hostUrl+CHAT_RECV_URL+"?__elgg_ts="+thisClient.getElggTs()+"&__elgg_token="+thisClient.getElggToken(), headers);
-			if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-				logger.fine("receiveNewChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-			}
-			printErrorMessageIfAny(sb, null);
-			success = true;
-		}
-		context.recordTime();
-		
-		if (success) {
-				elggMetrics.attemptRecvChatMessageCnt ++;
-		} 
-	}
-	
-	/**
-	 * Send a chat message
-	 * 
+	 * Add friend
+	 *
 	 * @throws Exception
 	 */
-	@BenchmarkOperation(name = "SendChatMessage", 
-						//max90th = 1.0, 
-			            percentileLimits= {500,750,1000},
-						timing = Timing.MANUAL)
-	public void sendChatMessage() throws Exception {
-		boolean success = false;
-		StringBuilder sb = null;
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId() +" : Doing operation: sendChatMessage");
+	@BenchmarkOperation(name = "AddFriend",
+	//max90th = 3.0,
+	percentileLimits= {500,750,1000},
+	timing = Timing.MANUAL)
+		public void addFriend() throws Exception {
+			assert(thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
+			StringBuilder sb = null;
 
-			if (thisClient.getChatSessionList().isEmpty()) {
-				startNewChat();
-			} else {
-				// Continue an existing chat conversation
-				logger.fine(context.getThreadId() +" : Doing suboperation: continue existing conversation");
-				String chatGuid = thisClient.getChatSessionList().get(random.nextInt(thisClient.getChatSessionList().size()));
-				
-					Map<String, String> headers = new HashMap<String, String>();
-					headers.put("Accept",
-							"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-					headers.put("Accept-Language", "en-US,en;q=0.5");
-					headers.put("Accept-Encoding", "gzip, deflate");
-					headers.put("Referer", hostUrl + "/activity");
-					headers.put("User-Agent",
-							"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-					headers.put("Content-Type", "application/x-www-form-urlencoded");
+			logger.fine(context.getThreadId() +" : Doing operation: addFriend");
 
-	
-					String postString = "chatsession="+chatGuid+"&chatmessage="
-							+RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
-					sb = thisClient.getHttp().fetchURL(hostUrl+CHAT_POST_URL
-														+"?__elgg_token="+thisClient.getElggToken()
-														+"&__elgg_ts="+thisClient.getElggTs()
-													, postString, headers);
-					if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-						logger.fine("continueChat: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-					}
-					printErrorMessageIfAny(sb, postString);
+			thisClient.getHttp().setFollowRedirects(true);
 
-			}
-			success = true;
-		}
-		context.recordTime();
-		if (success) {
-				elggMetrics.attemptSendChatMessageCnt ++;
-		} /*else {
-			if (thisClient.getClientState() == ClientState.AT_HOME_PAGE) {
-				doLogin();
-			} else if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
-				accessHomePage();
-				doLogin();
-			}
-		}*/
-	}
+			UserPasswordPair user = getRandomUser();
+			String friendeeGuid = user.getGuid();
 
-	private void startNewChat() throws Exception {
-		StringBuilder sb = null;
-		String postString = null;
-		String chatGuid = null;
-		
-		logger.fine(context.getThreadId() +" : Doing suboperation: start new conversation");
-		// Create a new chat communication between two logged in users
-		String chateeGuid = getRandomUserGUID();
-		
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		headers.put("Accept-Language", "en-US,en;q=0.5");
-		headers.put("Accept-Encoding", "gzip, deflate");
-		headers.put("Referer", hostUrl + "/activity");
-		headers.put("User-Agent",
-				"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
+			thisClient.addFriendsList(friendeeGuid);
 
-			
-		postString = "invite=" + chateeGuid + "&__elgg_ts="
+
+			String queryString = "friend=" + friendeeGuid + "&__elgg_ts="
 				+ thisClient.getElggTs() + "&__elgg_token="
 				+ thisClient.getElggToken();
-		sb = thisClient.getHttp().fetchURL(hostUrl + CHAT_CREATE_URL,
-				postString, headers);
-		assert (thisClient.getHttp().getResponseCode() == 200);
-		
-		if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-			logger.fine("startNewChat: create session: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-		}
+			String postString = "__elgg_ts="
+				+ thisClient.getElggTs() + "&__elgg_token="
+				+ thisClient.getElggToken();
 
-		chatGuid = sb.toString();
-
-		thisClient.getChatSessionList().add(chatGuid);
-
-		/*
-		headers.put("Referer", hostUrl + "/activity");
-
-		// Send a message
-		postString = "chatsession=" + chatGuid + "&chatmessage="
-				+ RandomStringGenerator.generateRandomString(15, Mode.ALPHA);
-		sb = thisClient.getHttp().fetchURL(
-				hostUrl + CHAT_POST_URL + "?__elgg_token="
-						+ thisClient.getElggToken() + "&__elgg_ts="
-						+ thisClient.getElggTs(), postString, headers);
-		if (sb.toString().contains("Sorry, you cannot perform this action while logged out.")) {
-			logger.fine("startNewChat: send Message: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!User logged out!!");
-		}
-		printErrorMessageIfAny(sb, postString);
-		assert (thisClient.getHttp().getResponseCode() == 200);
-	*/	
-	}
-	
-	/**
-	 * Post something on the Wall (actually on the Wire but from the Wall!).
-	 * 
-	 * @throws Exception
-	 */
-	@BenchmarkOperation(name = "PostSelfWall", 
-						//max90th = 1.0, 
-			            percentileLimits= {500,750,1000},
-						timing = Timing.MANUAL)
-	public void postSelfWall() throws Exception {
-		boolean success = false;
-
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
-			logger.fine(context.getThreadId()+context.getThreadId() +" : Doing operation: post wall");
-
-			String status = "Hello world! "
-					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-							.format(new Date());
-			String postRequest = "__elgg_token=" + thisClient.getElggToken()
-					+ "&__elgg_ts=" + thisClient.getElggTs() + "&status=" + status
-					+ "&address=&access_id=-2&origin=wall&container_guid="
-					+ thisClient.getGuid()+"&X-Requested-With=XMLHttpRequest&river=true&widget=0";	
-			//&X-Requested-With=XMLHttpRequest&container_guid=43&river=true&widget=0 
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Accept",
-					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			headers.put("Accept-Language", "en-US,en;q=0.5");
+					"application/json, text/javascript, */*; q=0.01");
+
+			headers.put("Accept-Language", "en-US,en;q=0.9");
 			headers.put("Accept-Encoding", "gzip, deflate");
-			headers.put("Referer", hostUrl + "/activity");
+			headers.put("Referer", hostUrl + "/profile/"+user.getUserName());
 			headers.put("User-Agent",
 					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-			headers.put("Content-Type", "application/x-www-form-urlencoded");
+			headers.put("X-Requested-With", "XMLHttpRequest");
 
-	
-			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + WALL_URL,
-					postRequest, headers);
-			printErrorMessageIfAny(sb, postRequest);
-			updateElggTokenAndTs(thisClient, sb, false);
+			semaphore.acquire();
+			context.recordTime();
+			sb = thisClient.getHttp().fetchURL(
+					hostUrl + DO_ADD_FRIEND + "?" + queryString, postString, headers);
+			context.recordTime();
+
+			printErrorMessageIfAny(sb, postString);
+			System.out.println("PRINT: Successfully added a friend");
+
 			success = true;
-		}
-		context.recordTime();
-
-		if (success) {
-			elggMetrics.attemptPostWallCnt++;
-		} /*else {
-			if (thisClient.getClientState() == ClientState.AT_HOME_PAGE) {
-				doLogin();
-			} else if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
-				accessHomePage();
-				doLogin();
+			if (success) {
+				elggMetrics.attemptAddFriendsCnt++;
 			}
-		}	*/	
-
-	}
+		}
 
 	/**
-	 * Post something on the Wall (actually on the Wire but from the Wall!).
-	 * 
+	 * Logging out a logged in user
+	 *
 	 * @throws Exception
 	 */
-	@BenchmarkOperation(name = "Logout", 
-						//max90th = 3.0, 
-			            percentileLimits= {500,750,1000},
-						timing = Timing.MANUAL)
-	public void logout() throws Exception {
-		boolean success = false;
+	@BenchmarkOperation(name = "Logout",
+	//max90th = 3.0,
+	percentileLimits= {500,750,1000},
+	timing = Timing.MANUAL)
+		public void logout() throws Exception {
+			assert (thisClient.getClientState() == ClientState.LOGGED_IN);
+			boolean success = false;
 
-		context.recordTime();
-		if (thisClient.getClientState() == ClientState.LOGGED_IN) {
 			logger.fine(context.getThreadId() +" : Doing operation: logout");
 
 			Map<String, String> headers = new HashMap<String, String>();
@@ -798,90 +1495,71 @@ public class Web20Driver {
 			headers.put("User-Agent",
 					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 
-	
+			semaphore.acquire();
+			context.recordTime();
 			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LOGOUT_URL
 					+"?__elgg_ts="+thisClient.getElggTs()+"&__elgg_token="+thisClient.getElggToken(), headers);
+			context.recordTime();
+
 			printErrorMessageIfAny(sb, null);
-			//System.out.println(sb);
 			updateElggTokenAndTs(thisClient, sb, false);
+
 			thisClient.setClientState(ClientState.LOGGED_OUT);
 			thisClient.setLoggedIn(false);
+
+			System.out.println("PRINT: Successfully logged out");
+
 			success = true;
-
-		}
-		context.recordTime();
-
-		if (success) {
-			elggMetrics.attemptLogoutCnt++;
-		} /*else {
-			if (thisClient.getClientState() == ClientState.AT_HOME_PAGE) {
-				doLogin();
-			} else if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
-				accessHomePage();
-				doLogin();
+			if (success) {
+				elggMetrics.attemptLogoutCnt++;
 			}
-		}*/		
-
-	}
+		}
 
 	/**
-	 * 
+	 *
 	 * Register a new user.
-	 * 
+	 *
 	 */
-	@BenchmarkOperation(name = "Register", 
-						//max90th = 3.0, 
-						percentileLimits= {500,1000,2000},
-						timing = Timing.MANUAL)
-	public void register() throws Exception {
-		boolean success = false;
+	@BenchmarkOperation(name = "Register",
+	//max90th = 3.0,
+	percentileLimits= {500,1000,2000},
+	timing = Timing.MANUAL)
+		public void register() throws Exception {
+			assert (thisClient.getClientState() == ClientState.LOGGED_OUT);
+			boolean success = false;
 
-		Web20Client tempClient = new Web20Client();
-		HttpTransport http;
-		
-		context.recordTime();
+			Web20Client tempClient = new Web20Client();
+			HttpTransport http;
 
-		if (thisClient.getClientState() == ClientState.LOGGED_OUT) {
 			http = HttpTransport.newInstance();
+			http.setFollowRedirects(true);
 			tempClient.setHttp(http);
 
 			logger.fine(context.getThreadId() +" : Doing operation: register");
 
-			// Navigate to the home page
-	
-			StringBuilder sb = tempClient.getHttp().fetchURL(hostUrl + ROOT_URL);
-	
-			updateElggTokenAndTs(tempClient, sb, false);
-			for (String url : ROOT_URLS) {
-				tempClient.getHttp().readURL(hostUrl + url);
-				// System.out.println(sb.indexOf("__elgg_token"));
-			}
-	
-	
-			// Click on Register link and generate user name and password
-	
-			tempClient.getHttp().fetchURL(hostUrl + REGISTER_PAGE_URL);
+
+			// prepare metadata for registering a new user
 			String userName = RandomStringGenerator.generateRandomString(10,
 					RandomStringGenerator.Mode.ALPHA);
 			String password = RandomStringGenerator.generateRandomString(10,
 					RandomStringGenerator.Mode.ALPHA);
 			String email = RandomStringGenerator.generateRandomString(7,
 					RandomStringGenerator.Mode.ALPHA)
-					+ "@"
-					+ RandomStringGenerator.generateRandomString(5,
-							RandomStringGenerator.Mode.ALPHA) + ".co.in";
+				+ "@"
+				+ RandomStringGenerator.generateRandomString(5,
+						RandomStringGenerator.Mode.ALPHA) + ".co.in";
+
 			tempClient.setUsername(userName);
 			tempClient.setPassword(password);
 			tempClient.setEmail(email);
-	
+
 			String postString = "__elgg_token=" + tempClient.getElggToken()
-					+ "&__elgg_ts=" + tempClient.getElggTs() + "&name="
-					+ tempClient.getUsername() + "&email=" + tempClient.getEmail()
-					+ "&username=" + tempClient.getUsername() + "&password="
-					+ tempClient.getPassword() + "&password2=" + tempClient.getPassword()
-					+ "&friend_guid=0+&invitecode=&submit=Register";
-			// __elgg_token=0c3a778d2b74a7e7faf63a6ba55d4832&__elgg_ts=1434992983&name=display_name&email=tapti.palit%40gmail.com&username=user_name&password=pass_word&password2=pass_word&friend_guid=0&invitecode=&submit=Register
-	
+				+ "&__elgg_ts=" + tempClient.getElggTs() + "&name="
+				+ tempClient.getUsername() + "&email=" + tempClient.getEmail()
+				+ "&username=" + tempClient.getUsername() + "&password="
+				+ tempClient.getPassword() + "&password2=" + tempClient.getPassword()
+				+ "&friend_guid=&invitecode=";
+
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Accept",
 					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -891,21 +1569,37 @@ public class Web20Driver {
 			headers.put("User-Agent",
 					"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
 			headers.put("Content-Type", "application/x-www-form-urlencoded");
-	
-			sb = tempClient.getHttp().fetchURL(hostUrl + DO_REGISTER_URL, postString,
-					headers);
-			printErrorMessageIfAny(sb, postString);
-			// System.out.println(sb);
-		}
-		context.recordTime();
-		if (success) 
-			elggMetrics.attemptRegisterCnt++;		
 
-	}
-	
+			// Click on Register link and generate user name and password
+			semaphore.acquire();
+			context.recordTime();
+			StringBuilder sb = tempClient.getHttp().fetchURL(hostUrl + REGISTER_PAGE_URL);
+			updateElggTokenAndTs(tempClient, sb, false);
+
+			sb = tempClient.getHttp().fetchURL(hostUrl + DO_REGISTER_URL, postString, headers);
+			context.recordTime();
+
+
+			printErrorMessageIfAny(sb, postString);
+
+			if (sb.toString().contains("Email sent to")) {
+				logger.fine("Successfully registered a new user: "+thisClient.getUsername());
+				System.out.print("PRINT: Successfully registered a new user\n");
+			} else {
+				logger.fine("!!!!!!!!!!!!!!!!!! Failed to register :"+thisClient.getUsername()+"!!!!!!!!!!!!!!!!!!!!!");
+				System.out.print("PRINT: Failed to register!\n");
+				throw new RuntimeException(sb.toString());
+			}
+
+
+			success = true;
+			if (success)
+				elggMetrics.attemptRegisterCnt++;
+
+		}
+
 	private void printErrorMessageIfAny(StringBuilder sb, String postRequest) {
 		String htmlContent = sb.toString();
-		//tem.out.println(htmlContent);
 		String startTag = "<li class=\"elgg-message elgg-state-error\">";
 		String endTag = "</li>";
 		if (htmlContent.contains("elgg-system-messages")) {
@@ -921,38 +1615,40 @@ public class Web20Driver {
 		}
 	}
 
-	@OnceAfter 
-	public void cleanUp() throws IOException {
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		headers.put("Accept-Language", "en-US,en;q=0.5");
-		headers.put("Accept-Encoding", "gzip, deflate");
-		headers.put("Referer", hostUrl + "/activity");
-		headers.put("User-Agent",
-				"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0");
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
-		headers.put("X-Requested-With", "XMLHttpRequest");
-
-		// Go over all chat sessions and leave them.
-		logger.fine("Cleaning up chat sessions");
-		for (String chatGuid: thisClient.getChatSessionList()) {
-			String postString = "chatsession="+chatGuid+"&__elgg_ts="+thisClient.getElggTs()+"&__elgg_token="+thisClient.getElggToken();
-			StringBuilder sb = thisClient.getHttp().fetchURL(hostUrl + LEAVE_CHAT_URL, postString, headers);
-			System.out.println(sb.toString());
-		}
-	}
 	static class ElggDriverMetrics implements CustomMetrics {
-		
+
 		int attemptLoginCnt = 0;
 		int attemptHomePageCnt = 0;
 		int attemptPostWallCnt = 0;
 		int attemptUpdateActivityCnt = 0;
 		int attemptAddFriendsCnt = 0;
-		int attemptSendChatMessageCnt = 0;
-		int attemptRecvChatMessageCnt = 0;
 		int attemptLogoutCnt = 0;
 		int attemptRegisterCnt = 0;
+		int attemptCheckActivityCnt = 0;
+		int attemptDashboardCnt = 0;
+		int attemptBrowseToElggCnt = 0;
+		int attemptRemoveFriendsCnt = 0;
+		int attemptGetNotificationsCnt = 0;
+		int attemptReadInboxCnt = 0;
+		int attemptCheckProfileCnt = 0;
+		int attemptCheckFriendsCnt = 0;
+		int attemptCheckWireCnt = 0;
+		int attemptPostWireCnt = 0;
+		int attemptSendMessageCnt = 0;
+		int attemptReadMessageCnt = 0;
+		int attemptCheckBlogCnt = 0;
+		int attemptReadMessageFailedCnt = 0;
+		int attemptSentMessagesCnt = 0;
+		int attemptPostBlogCnt = 0;
+		int attemptDeleteMessageCnt = 0;
+		int attemptDeleteMessageFailedCnt = 0;
+		int attemptLikeCnt = 0;
+		int attemptLikeFailedCnt = 0;
+		int attemptReplyWireCnt = 0;
+		int attemptReplyWireFailedCnt = 0;
+		int attemptCommentCnt = 0;
+		int attemptCommentFailedCnt = 0;
+		int attemptSearchCnt = 0;
 
 		@Override
 		public void add(CustomMetrics arg0) {
@@ -962,15 +1658,39 @@ public class Web20Driver {
 			this.attemptPostWallCnt += e.attemptPostWallCnt;
 			this.attemptUpdateActivityCnt += e.attemptUpdateActivityCnt;
 			this.attemptAddFriendsCnt += e.attemptAddFriendsCnt;
-			this.attemptSendChatMessageCnt += e.attemptSendChatMessageCnt;
-			this.attemptRecvChatMessageCnt += e.attemptRecvChatMessageCnt;
 			this.attemptLogoutCnt += e.attemptLogoutCnt;
 			this.attemptRegisterCnt += e.attemptRegisterCnt;
+			this.attemptCheckActivityCnt += e.attemptCheckActivityCnt;
+			this.attemptDashboardCnt += e.attemptDashboardCnt;
+			this.attemptBrowseToElggCnt += e.attemptBrowseToElggCnt;
+			this.attemptRemoveFriendsCnt += e.attemptRemoveFriendsCnt;
+			this.attemptGetNotificationsCnt += e.attemptGetNotificationsCnt;
+			this.attemptReadInboxCnt += e.attemptReadInboxCnt;
+			this.attemptCheckProfileCnt += e.attemptCheckProfileCnt;
+			this.attemptCheckFriendsCnt += e.attemptCheckFriendsCnt;
+			this.attemptCheckWireCnt += e.attemptCheckWireCnt;
+			this.attemptPostWireCnt += e.attemptPostWireCnt;
+			this.attemptSendMessageCnt += e.attemptSendMessageCnt;
+			this.attemptReadMessageCnt += e.attemptReadMessageCnt;
+			this.attemptCheckBlogCnt += e.attemptCheckBlogCnt;
+			this.attemptReadMessageFailedCnt += e.attemptReadMessageFailedCnt;
+			this.attemptSentMessagesCnt += e.attemptSentMessagesCnt;
+			this.attemptPostBlogCnt += e.attemptPostBlogCnt;
+			this.attemptDeleteMessageCnt += e.attemptDeleteMessageCnt;
+			this.attemptDeleteMessageFailedCnt += e.attemptDeleteMessageFailedCnt;
+			this.attemptLikeCnt += e.attemptLikeCnt;
+			this.attemptLikeFailedCnt += e.attemptLikeFailedCnt;
+			this.attemptReplyWireCnt += e.attemptReplyWireCnt;
+			this.attemptReplyWireFailedCnt += e.attemptReplyWireFailedCnt;
+			this.attemptCommentCnt += e.attemptCommentCnt;
+			this.attemptCommentFailedCnt += e.attemptCommentFailedCnt;
+			this.attemptSearchCnt += e.attemptSearchCnt;
+
 		}
 
 		@Override
 		public Element[] getResults() {
-			Element[] el = new Element[9];
+			Element[] el = new Element[30];
 			el[0] = new Element();
 			el[0].description = "Number of times home page was actually attempted to be accessed.";
 			el[0].passed = true;
@@ -980,33 +1700,119 @@ public class Web20Driver {
 			el[1].passed = true;
 			el[1].result = "" + this.attemptLoginCnt;
 			el[2] = new Element();
-			el[2].description = "Number of times posting on wall was actually attempted.";
+			el[2].description = "Number of times add friends was actually attempted.";
 			el[2].passed = true;
-			el[2].result = "" + this.attemptPostWallCnt;
+			el[2].result = "" + this.attemptAddFriendsCnt;
 			el[3] = new Element();
-			el[3].description = "Number of times update activity was actually attempted.";
+			el[3].description = "Number of times logout was actually attempted.";
 			el[3].passed = true;
-			el[3].result = "" + this.attemptUpdateActivityCnt;
+			el[3].result = "" + this.attemptLogoutCnt;
 			el[4] = new Element();
-			el[4].description = "Number of times add friends was actually attempted.";
+			el[4].description = "Number of times register was actually attempted.";
 			el[4].passed = true;
-			el[4].result = "" + this.attemptAddFriendsCnt;
+			el[4].result = "" + this.attemptRegisterCnt;
 			el[5] = new Element();
-			el[5].description = "Number of times send message was actually attempted.";
+			el[5].description = "Number of times check activity was actually attempted.";
 			el[5].passed = true;
-			el[5].result = "" + this.attemptSendChatMessageCnt;
+			el[5].result = "" + this.attemptCheckActivityCnt;
 			el[6] = new Element();
-			el[6].description = "Number of times receive message was actually attempted.";
+			el[6].description = "Number of times dashboard was actually attempted.";
 			el[6].passed = true;
-			el[6].result = "" + this.attemptRecvChatMessageCnt;
+			el[6].result = "" + this.attemptDashboardCnt;
 			el[7] = new Element();
-			el[7].description = "Number of times logout was actually attempted.";
+			el[7].description = "Number of times BrowseToElgg was actually attempted.";
 			el[7].passed = true;
-			el[7].result = "" + this.attemptLogoutCnt;
+			el[7].result = "" + this.attemptBrowseToElggCnt;
 			el[8] = new Element();
-			el[8].description = "Number of times register was actually attempted.";
+			el[8].description = "Number of times removeFriends was actually attempted.";
 			el[8].passed = true;
-			el[8].result = "" + this.attemptRegisterCnt;
+			el[8].result = "" + this.attemptRemoveFriendsCnt;
+			el[9] = new Element();
+			el[9].description = "Number of times GetNotifications was actually attempted.";
+			el[9].passed = true;
+			el[9].result = "" + this.attemptGetNotificationsCnt;
+			el[10] = new Element();
+			el[10].description = "Number of times readInbox was actually attempted.";
+			el[10].passed = true;
+			el[10].result = "" + this.attemptReadInboxCnt;
+			el[11] = new Element();
+			el[11].description = "Number of times checkProfile was actually attempted.";
+			el[11].passed = true;
+			el[11].result = "" + this.attemptCheckProfileCnt;
+			el[12] = new Element();
+			el[12].description = "Number of times checkFriends was actually attempted.";
+			el[12].passed = true;
+			el[12].result = "" + this.attemptCheckFriendsCnt;
+			el[13] = new Element();
+			el[13].description = "Number of times checkWire was actually attempted.";
+			el[13].passed = true;
+			el[13].result = "" + this.attemptCheckWireCnt;
+			el[14] = new Element();
+			el[14].description = "Number of times postWire was actually attempted.";
+			el[14].passed = true;
+			el[14].result = "" + this.attemptPostWireCnt;
+			el[15] = new Element();
+			el[15].description = "Number of times sendMessage was actually attempted.";
+			el[15].passed = true;
+			el[15].result = "" + this.attemptSendMessageCnt;
+			el[16] = new Element();
+			el[16].description = "Number of times readMessage was successfully attempted.";
+			el[16].passed = true;
+			el[16].result = "" + this.attemptReadMessageCnt;
+			el[17] = new Element();
+			el[17].description = "Number of times checkBlog was actually attempted.";
+			el[17].passed = true;
+			el[17].result = "" + this.attemptCheckBlogCnt;
+			el[18] = new Element();
+			el[18].description = "Number of times readMessage was actually attempted.";
+			el[18].passed = true;
+			el[18].result = "" + this.attemptReadMessageFailedCnt;
+			el[19] = new Element();
+			el[19].description = "Number of times sentMessages was not attempted.";
+			el[19].passed = true;
+			el[19].result = "" + this.attemptSentMessagesCnt;
+			el[20] = new Element();
+			el[20].description = "Number of times postBlog was actually attempted.";
+			el[20].passed = true;
+			el[20].result = "" + this.attemptPostBlogCnt;
+			el[21] = new Element();
+			el[21].description = "Number of times deleteMessage was successfully attempted.";
+			el[21].passed = true;
+			el[21].result = "" + this.attemptDeleteMessageCnt;
+			el[22] = new Element();
+			el[22].description = "Number of times deleteMessage was not attempted.";
+			el[22].passed = true;
+			el[22].result = "" + this.attemptDeleteMessageFailedCnt;
+			el[23] = new Element();
+			el[23].description = "Number of times like was successfully attempted.";
+			el[23].passed = true;
+			el[23].result = "" + this.attemptLikeCnt;
+			el[24] = new Element();
+			el[24].description = "Number of times like was not attempted.";
+			el[24].passed = true;
+			el[24].result = "" + this.attemptLikeFailedCnt;
+			el[25] = new Element();
+			el[25].description = "Number of times replyWire was successfully attempted.";
+			el[25].passed = true;
+			el[25].result = "" + this.attemptReplyWireCnt;
+			el[26] = new Element();
+			el[26].description = "Number of times replyWire was not attempted.";
+			el[26].passed = true;
+			el[26].result = "" + this.attemptReplyWireFailedCnt;
+			el[27] = new Element();
+			el[27].description = "Number of times comment was successfully attempted.";
+			el[27].passed = true;
+			el[27].result = "" + this.attemptCommentCnt;
+			el[28] = new Element();
+			el[28].description = "Number of times comment was not attempted.";
+			el[28].passed = true;
+			el[28].result = "" + this.attemptCommentFailedCnt;
+			el[29] = new Element();
+			el[29].description = "Number of times search was acctually attempted.";
+			el[29].passed = true;
+			el[29].result = "" + this.attemptSearchCnt;
+
+
 			return el;
 		}
 
@@ -1017,44 +1823,36 @@ public class Web20Driver {
 			clone.attemptPostWallCnt = this.attemptPostWallCnt;
 			clone.attemptUpdateActivityCnt = this.attemptUpdateActivityCnt;
 			clone.attemptAddFriendsCnt = this.attemptAddFriendsCnt;
-			clone.attemptSendChatMessageCnt = this.attemptSendChatMessageCnt;
-			clone.attemptRecvChatMessageCnt = this.attemptRecvChatMessageCnt;
 			clone.attemptLogoutCnt = this.attemptLogoutCnt;
 			clone.attemptRegisterCnt = this.attemptRegisterCnt;
+			clone.attemptCheckActivityCnt = this.attemptCheckActivityCnt;
+			clone.attemptDashboardCnt = this.attemptDashboardCnt;
+			clone.attemptBrowseToElggCnt = this.attemptBrowseToElggCnt;
+			clone.attemptRemoveFriendsCnt = this.attemptRemoveFriendsCnt;
+			clone.attemptGetNotificationsCnt = this.attemptGetNotificationsCnt;
+			clone.attemptReadInboxCnt = this.attemptReadInboxCnt;
+			clone.attemptCheckProfileCnt = this.attemptCheckProfileCnt;
+			clone.attemptCheckFriendsCnt = this.attemptCheckFriendsCnt;
+			clone.attemptCheckWireCnt = this.attemptCheckWireCnt;
+			clone.attemptPostWireCnt = this.attemptPostWireCnt;
+			clone.attemptSendMessageCnt = this.attemptSendMessageCnt;
+			clone.attemptReadMessageCnt = this.attemptReadMessageCnt;
+			clone.attemptCheckBlogCnt = this.attemptCheckBlogCnt;
+			clone.attemptReadMessageFailedCnt = this.attemptReadMessageFailedCnt;
+			clone.attemptSentMessagesCnt = this.attemptSentMessagesCnt;
+			clone.attemptPostBlogCnt = this.attemptPostBlogCnt;
+			clone.attemptDeleteMessageCnt = this.attemptDeleteMessageCnt;
+			clone.attemptDeleteMessageFailedCnt = this.attemptDeleteMessageFailedCnt;
+			clone.attemptLikeCnt = this.attemptLikeCnt;
+			clone.attemptLikeFailedCnt = this.attemptLikeFailedCnt;
+			clone.attemptReplyWireCnt = this.attemptReplyWireCnt;
+			clone.attemptReplyWireFailedCnt = this.attemptReplyWireFailedCnt;
+			clone.attemptCommentCnt = this.attemptCommentCnt;
+			clone.attemptCommentFailedCnt = this.attemptCommentFailedCnt;
+			clone.attemptSearchCnt = this.attemptSearchCnt;
+
 			return clone;
 		}
 	}
-
-	public static void main(String[] pp) throws Exception {
-		Web20Driver driver = new Web20Driver();
-		for (int i= 0; i<1; i++) {
-			//System.out.println("Initing RUN..."+i);
-			driver.browseToElgg();
-			//System.out.println("Doing login ......................................");
-			long start = System.currentTimeMillis();
-			driver.doLogin();
-			long end = System.currentTimeMillis();
-			System.out.println("RUN\t"+i+"\t"+(end-start));
-			System.out.println("Doing add friend ....................................");
-			driver.addFriend();
-			System.out.println("Doing post wall ............................");
-			driver.postSelfWall();
-			
-			System.out.println("Doing send chat .................................");
-			driver.sendChatMessage();
-			System.out.println("Doing recv chat ......................................");
-			driver.receiveChatMessage();
-			System.out.println("Cleaning up chat ..................................");
-			driver.cleanUp();
-			System.out.println("Doing logout ................................");
-			driver.logout();
-			System.out.println("Doing register ...........................");
-			driver.register();
-			
-		}
-	}
-	
-
-
 }
 

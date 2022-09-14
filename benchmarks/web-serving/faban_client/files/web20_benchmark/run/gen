@@ -1,0 +1,334 @@
+#!/usr/bin/python3
+
+import argparse
+
+
+def identity(x):
+    return x
+
+
+class Dic(object):
+
+    def __init__(self, **kw):
+        self.ifunc = kw
+
+    def __call__(self, k, v):
+        h, *t = k
+        x     = getattr(self,  h)
+
+        if t:
+            x(t, v)
+        else:
+            setattr(self, h, self.ifunc.get(h, identity)(v))
+
+    def __getattr__(self, k):
+        return None
+
+
+class Arr(object):
+
+    def __init__(self, *a, **kw):
+        self.ifunc = kw.get('ifunc', identity)
+        self.ofunc = kw.get('ofunc', identity)
+
+        if not a:
+            self.arr = []
+        elif isinstance(a[0], str):
+            self.arr = list(map(self.ifunc, a))
+        else:
+            self.arr = list(a)
+
+    def __call__(self, k, v):
+        h, *t = k
+        x     = int(h)
+
+        if t:
+            self.arr[x](t, v)
+        else:
+            self.arr[x] = self.ifunc(v)
+
+    def __repr__(self):
+        return '{{{}}}'.format(', '.join(map(lambda x: self.ofunc(str(x)), self.arr)))
+
+    def __getitem__(self, *a):
+        return self.arr.__getitem__(*a)
+
+    def __setitem__(self, *a):
+        return self.arr.__setitem__(*a)
+
+
+class Gen(Dic):
+
+    def to_string(s):
+        return '"{}"'.format(s)
+
+    def to_embed(s):
+        return ' '.join(s.split()).replace('( ', '(').replace(' )', ')')
+
+    def to_arr(s, **kw):
+        return Arr(*Gen.split(s, ','), **kw)
+
+    def to_row(s):
+        return Gen.Row(*Gen.split(s, ','))
+
+    def to_timing(s):
+        h, *t = Gen.split(s, ',')
+        o     = Gen.Timing(h)
+
+        return Gen.to_parse(o, t)
+
+    def to_parse(o, a):
+        for c in a:
+            c = c.strip()
+            if not c or c.startswith('#'):
+                continue
+
+            k, v = Gen.split(c, '=', 1)
+            o(Gen.split(k, '.'), v)
+
+        return o
+
+    def split(s, *a):
+        return list(map(lambda x: x.strip(), s.split(*a)))
+
+    def align(s):
+        return '\n'.join(map(lambda x: x.split('|', 1)[1], s.split('\n')))
+
+    class Row(Dic):
+
+        def __init__(self, *a):
+            super().__init__(row = Gen.to_arr)
+
+            self.row = Arr(*a)
+
+        def __repr__(self):
+            return '@Row({})'.format(self.row)
+
+    class Definition(Dic):
+
+        def __init__(self):
+            super().__init__()
+
+            self.name = 'Elgg benchmark'
+            self.ver  = '1.0'
+
+        def __repr__(self):
+            return Gen.align("""\
+                            |@BenchmarkDefinition(
+                            |    name    = {},
+                            |    version = {}
+                            |)
+                            |""".format(Gen.to_string(self.name),
+                                        Gen.to_string(self.ver)))
+
+    class Driver(Dic):
+
+        def __init__(self):
+            super().__init__(pct = lambda v: Gen.to_arr(v, ofunc = Gen.to_string))
+
+            self.name = 'ElggDriver'
+            self.thd  =  1
+            self.pct  =  Arr(95, 99, 99.9, ofunc = Gen.to_string)
+
+        def __repr__(self):
+            return Gen.align("""\
+                            |@BenchmarkDriver(
+                            |    name             = {},
+                            |    threadPerScale   = {},
+                            |    percentiles      = {},
+                            |    responseTimeUnit = java.util.concurrent.TimeUnit.MILLISECONDS
+                            |)
+                            |""".format(Gen.to_string(self.name),
+                                        self.thd,
+                                        self.pct))
+
+    class Matrix(Dic):
+
+        def __init__(self):
+            super().__init__(ops = lambda v: Arr(*Gen.split(v, '|'), ofunc = Gen.to_string),
+                             mix = lambda v: Arr(*Gen.split(v, '|'), ifunc = Gen.to_row))
+
+            self.ops = Arr('BrowsetoElgg',
+                           'DoLogin',
+                           'AddFriend',
+                           'Register',
+                           'Logout',
+                           'CheckActivity',
+                           'Dashboard',
+                           'AccessHomePage',
+                           'RemoveFriend',
+                           'GetNotifications',
+                           'Inbox',
+                           'CheckProfile',
+                           'CheckFriends',
+                           'CheckWire',
+                           'PostWire',
+                           'SendMessage',
+                           'ReadMessage',
+                           'CheckBlog',
+                           'SentMessages',
+                           'PostBlog',
+                           'DeleteMessage',
+                           'Like',
+                           'ReplyWire',
+                           'Comment',
+                           'Search',
+                           ofunc = Gen.to_string)
+            self.mix = Arr(Gen.Row( 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # BrowsetoElgg
+                           Gen.Row( 0, 0, 5,  0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # DoLogin
+                           Gen.Row( 0, 0, 5,  0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # AddFriend
+                           Gen.Row( 100, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # Register
+                           Gen.Row( 70, 0,  0,  30, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), # Logout
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Check Activity
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Dashboard
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # AccessHomePage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # RemoveFriend
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 3, 2), # GetNotifications
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Inbox
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckProfile
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5, 3, 2), # CheckFriends
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # PostWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # SendMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # ReadMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # CheckBlog
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 2, 5, 3, 2), # SentMessages
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # PostBlog
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # DeleteMessage
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Like
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # ReplyWire
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Comment
+                           Gen.Row( 0, 0, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 3, 2), # Search
+                           ifunc = Gen.to_row)
+
+        def __repr__(self):
+            return Gen.align("""\
+                            |@MatrixMix(
+                            |    operations = {},
+                            |    mix        = {}
+                            |)
+                            |""".format(self.ops,
+                                        self.mix))
+
+    class Timing(Dic):
+
+        def __init__(self, n = 'fixed'):
+            super().__init__()
+
+            self.name =  n
+            self.min  =  1000
+            self.max  =  1500
+            self.type = 'CYCLETIME'
+            self.dev  =  2
+
+        def __repr__(self):
+            if self.name == 'fixed':
+                return Gen.align("""\
+                                |@FixedTime(
+                                |    cycleTime      = {},
+                                |    cycleType      = CycleType.{},
+                                |    cycleDeviation = {}
+                                |)
+                                |""".format(self.min,
+                                            self.type,
+                                            self.dev))
+            if self.name == 'uniform':
+                return Gen.align("""\
+                                |@Uniform(
+                                |    cycleMin       = {},
+                                |    cycleMax       = {},
+                                |    cycleType      = CycleType.{},
+                                |    cycleDeviation = {}
+                                |)
+                                |""".format(self.min,
+                                            self.max,
+                                            self.type,
+                                            self.dev))
+            if self.name == 'negexp':
+                mean = int((float(self.min) * float(self.max)) ** 0.5)
+
+                return Gen.align("""\
+                                |@NegativeExponential(
+                                |    cycleMin       = {},
+                                |    cycleMax       = {},
+                                |    cycleMean      = {},
+                                |    cycleType      = CycleType.{},
+                                |    cycleDeviation = {}
+                                |)
+                                |""".format(self.min,
+                                            self.max,
+                                            mean,
+                                            self.type,
+                                            self.dev))
+            return 'ERROR'
+
+    class Background(Dic):
+
+        def __init__(self):
+            super().__init__(ops  = lambda v: Arr(*Gen.split(v, '|'), ofunc = Gen.to_string),
+                             time = lambda v: Arr(*Gen.split(v, '|'), ofunc = Gen.to_embed, ifunc = Gen.to_timing))
+
+            self.ops  = Arr('ReceiveChatMessage', ofunc = Gen.to_string)
+            self.time = Arr( Gen.Timing(),        ofunc = Gen.to_embed, ifunc = Gen.to_timing)
+
+            self.time[0].time =  10000
+            self.time[0].type = 'CYCLETIME'
+
+        def __repr__(self):
+            return Gen.align("""\
+                            |@Background(
+                            |    operations = {},
+                            |    timings    = {}
+                            |)
+                            |""".format(self.ops,
+                                        self.time))
+
+    def __init__(self):
+        super().__init__(timing = Gen.to_timing)
+
+        self.definition = Gen.Definition()
+        self.driver     = Gen.Driver()
+        self.timing     = Gen.Timing()
+        self.matrix     = Gen.Matrix()
+        self.background = Gen.Background()
+
+    def __repr__(self):
+        return '\n'.join(repr(m) for m in [
+            self.definition,
+            self.driver,
+            self.timing,
+            self.matrix,
+            #self.background  # uncomment this line if there is any background operation
+        ])
+
+    def parse(self, fn):
+        with open(fn) as fd:
+            Gen.to_parse(self, fd)
+
+
+if __name__ == '__main__':
+    args = argparse.ArgumentParser(description = 'gen')
+    args.add_argument('-i')
+    args.add_argument('-o')
+    args.add_argument( 'c', nargs = '+')
+    args = args.parse_args()
+
+    # patch
+    gen = Gen()
+    txt = []
+
+    for c in args.c:
+        gen.parse(c)
+
+    with open(args.i, 'r') as fd:
+        for cs in fd:
+            cs = cs.rstrip()
+
+            if cs == '#include':
+                txt.append(repr(gen))
+            else:
+                txt.append(cs)
+
+    with open(args.o, 'w') as fd:
+        for cs in txt:
+            fd.write('{}\n'.format(cs))

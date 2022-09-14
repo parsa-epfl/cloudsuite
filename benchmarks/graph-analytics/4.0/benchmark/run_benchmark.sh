@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 BENCHMARK_DIR=/benchmarks
-WORKLOAD_NAME=pagerank
+
+#WORKLOAD_NAME can be pr, cc, or tc
+if [ $WORKLOAD_NAME == 'pr' ]; then
+  WORKLOAD_NAME='pagerank'
+fi
 
 read -r -d '' USAGE << EOS
 Usage: graph-analytics [SPARK_OPTIONS]

@@ -1,0 +1,32 @@
+server {
+  listen 8443 ssl;
+
+  server_name localhost;
+  root /usr/share/nginx/html/elgg;
+
+  index index.php;
+
+  access_log /var/log/nginx/elgg_access.log;
+  error_log /var/log/nginx/elgg_error.log;
+
+  #ssl on;
+  ssl_certificate web_serving_CS_4.crt;
+  ssl_certificate_key web_serving_CS_4.key;
+  ssl_protocols TLSv1.3;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    try_files $uri $uri/ /index.php?$query_string;
+  }
+
+  location ~ \.php$ {
+    fastcgi_index index.php;
+    fastcgi_split_path_info ^(.+\.php)(.*)$;
+    fastcgi_keep_conn on;
+    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  }
+}
+

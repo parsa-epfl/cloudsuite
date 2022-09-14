@@ -77,7 +77,7 @@ jobs:
     strategy:
       matrix:
         tag: ["mariadb-10.3"]
-        platform: ["linux/amd64,linux/arm64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -103,7 +103,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
       matrix:
-        tag: ["1.6.10"]
+        tag: ["1.6.15"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -537,7 +537,7 @@ jobs:
     strategy:
       matrix:
         tag: ["db_server", "faban_client", "memcached_server", "web_server"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -562,7 +562,7 @@ jobs:
     strategy:
       matrix:
         tag: ["4.0"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -585,7 +585,7 @@ jobs:
     strategy:
       matrix:
         tag: ["4.0"]
-        platform: ["linux/amd64"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
         uses: actions/checkout@v2

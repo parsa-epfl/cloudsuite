@@ -12,6 +12,7 @@ RUN apt update -q \
 
 # Allow it to listen from outer world	
 RUN echo "[mysqld]" >> /etc/mysql/my.cnf
+RUN echo "user = mysql" >> /etc/mysql/my.cnf
 RUN echo "bind-address = 0.0.0.0" >> /etc/mysql/my.cnf
 
 # Copy the scripts
