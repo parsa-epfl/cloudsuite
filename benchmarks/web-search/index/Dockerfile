@@ -23,14 +23,14 @@ ENV ZOOKEEPER_PORT $SOLR_PORT
 
 #INSTALL NUTCH
 RUN cd $BASE_PATH \
-  && wget --progress=bar:force -O nutch.tar.gz "https://downloads.apache.org/nutch/${NUTCH_VERSION}/apache-nutch-${NUTCH_VERSION}-bin.tar.gz" \
+  && wget --progress=bar:force -O nutch.tar.gz "https://archive.apache.org/dist/nutch/${NUTCH_VERSION}/apache-nutch-${NUTCH_VERSION}-bin.tar.gz" \
   && tar -zxf nutch.tar.gz \
   && rm nutch.tar.gz
 
 
 #INSTALL SOLR
 RUN cd $BASE_PATH \
-  && wget --progress=bar:force -O solr.tar.gz "https://downloads.apache.org/solr/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
+  && wget --progress=bar:force -O solr.tar.gz "https://archive.apache.org/dist/solr/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz" \
   && tar -zxf solr.tar.gz \
   && rm solr.tar.gz
 
