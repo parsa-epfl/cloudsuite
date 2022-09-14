@@ -109,7 +109,7 @@ $ docker pull cloudsuite/web-search:index
 Then, create a list of websites that you want to crawl in a file named `seed.txt`. Write each URL in a different line. Then, run the index container using the command below:
 
 ```sh
-$ docker run -dt --name web_search_index -v ${PATH_TO_SEED.TXT}:/usr/src/apache-nutch-1.18/urls/. cloudsuite/web-search:index 
+$ docker run -dt --name web_search_index -v ${PATH_TO_SEED.TXT}:/usr/src/apache-nutch-1.18/urls/seed.txt cloudsuite/web-search:index 
 ```
 
 This command will run Nutch and Solr on the container and override the given set of URLs for crawling with the original one. 
@@ -120,7 +120,7 @@ To start the indexing process, run the command below:
 $ docker exec -it web_search_index generate_index
 ```
    
-This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total size of the generated index. You can continuously run this command until the number of crawled pages or the size of the index reaches your desired value. The index is located at `/usr/src/solr-9.0.0/nutch/data` in the index container. You can copy the index from the index container to the host machine by running the following command:
+This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the size of the index reaches your desired value. The index is located at `/usr/src/solr-9.0.0/nutch/data` in the index container. You can copy the index from the index container to the host machine by running the following command:
 
 ```sh
 $ docker cp web_search_index:/usr/src/solr-9.0.0/nutch/data ${PATH_TO_SAVE_INDEX}
