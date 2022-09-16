@@ -31,7 +31,7 @@ Then, use the following command to run the dataset container:
     
 `DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates a collection of 10 videos for each of 240p, 360p, 480p, and 720p resolutions, having around 3.5 GB size altogether. 
 
-`SESSION_COUNT` denotes the number of sessions to stream the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client how to stress the server. By default, the value is five. 
+`SESSION_COUNT` denotes the number of sessions to stream the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
 
 In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fetch a specific video chunk. As a reference, you can find a sample session below:
 
@@ -65,7 +65,7 @@ The `NGINX_WORKERS` parameter sets the number of Nginx workers. If not given, th
 
 ### Starting the Client on Host2 ###
 
-You need to copy the `session lists` from the dataset container and then transfer the files to Host2 where you want to launch the `videoperf` client. 
+You need to copy the `session lists` from the dataset container and then transfer the files to Host2, where you want to launch the `videoperf` client. 
 
 To copy `session lists` from the dataset container to Host 1, use the following command:
 
@@ -85,16 +85,20 @@ Parameters are:
 - `<lists>`: The path where the `session lists` is put. You should be able to find files like `cl-*.log`
 - `<results>`: The path for the benchmark statistics files. 
 - `SERVER_IP`: The IP address of the server, which should be the Host1 in this document. 
-- `VIDEOPERF_PROCESSES`: The number of videoperf processes, with a default value of 4. This value should not be larger than the number of the client container's available cores. 
-- `CLIENTS`: The total number of clients. Each client will pick one session from the `session list` and send the corresponding requests. Clients will be distributed to different videoperf processes to balance the load. 
+- `VIDEOPERF_PROCESSES`: The number of videoperf processes, with a default value of 4. 
+- `CLIENTS`: The total number of clients. Each client will pick one session from the `session list` and send the corresponding requests. 
 - `RATE`: The rate (client per second) for client generation. 
 - `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLS v1.3.
 
 #### Note for Client Generation
 
-These clients are further distributed among different resolutions by 10%, 30%, 40%, and 20% probabilities for 240p, 360p, 480p, and 720p, respectively. You might want to change these probabilities based on your need by modifying [this](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/files/run/peak_hunter/launch_remote.sh) script. 
+Clients are distributed equally among different videoperf processes to balance the load. For example, if you have 1000 clients and 5 videoperf processes, each process will handle 200 clients. Then, each videoperf process further distributes its clients among different resolutions by 10%, 30%, 40%, and 20% probabilities for 240p, 360p, 480p, and 720p, respectively. You might want to change these probabilities based on your need by modifying [this](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/files/run/peak_hunter/launch_remote.sh) script. 
 
 Suppose the number of clients for a specific resolution becomes larger than the number of sessions available in its `session list`. Then, the client container starts from the beginning of the `session list` to create further clients. 
+
+Some load generators implement a thread pool and assign each client to a thread. On the contrary, videoperf is a single-thread process. Its programming model is based on scheduling timers, which call the corresponding function once expired. For example, there is a [periodic timer](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/client/files/videoperf/gen/rate.c#L132) that is set based on the `RATE` parameter, and is used to generate new clients. 
+
+Videoperf represents an open-loop load generator that sends subsequent requests independent of the server's responses to the previous requests. 
 
 ### Guidelines for Tuning the Benchmark
 
@@ -116,7 +120,8 @@ Other principles are:
 2. If there is a problem in the tuning process, the number of errors will increase rapidly. 
 3. In the ramp-up phase, both throughput and concurrent clients will be increasing. The throughput may be stable, but concurrent clients continue to increase. It means that the rate of establishing new clients is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
 4. If you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the server can handle a higher load.
-5. An overloaded client would result in client errors and crashes. In this case, consider allocating more cores to support more videoperf processes.  You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by --cpuset-cpus option).
+5. An overloaded client container would result in errors and crashes. In this case, consider allocating more cores to support more videoperf processes. You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by --cpuset-cpus option). 
+6. Remember that videoperf is a highly demanding single-thread process. We recommend that you ensure the number of available cores for the client container is higher than the number of videoperf processes. 
 
 [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
 
