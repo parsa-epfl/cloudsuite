@@ -47,8 +47,9 @@ At the beginning of the server booting process, the container prints the `server
 Index Node IP Address: 192.168.1.47
 ```
 
-The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using command `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/web_server/files/query.sh). If the server is up, you will see the following result.
+The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using command `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
 ```
+$ ./query.sh `server_address`
 200
 {
   "responseHeader":{
