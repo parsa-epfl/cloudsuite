@@ -86,24 +86,35 @@ server {
 
 # HTTPS server
 #
-#server {
-#	listen 443;
-#	server_name localhost;
+server {
+	listen 443 ssl;
+  listen [::]:443 ssl ipv6only=on;
+	
+  server_name localhost;
+
+  root /videos;
+  rewrite ^/$ $scheme://$http_host/HTMLWebPlayer/ last;
+
+  location /HTMLWebPlayer {
+    root /usr/share/nginx/html;
+    index index.html;
+  }
+
 #
 #	root html;
 #	index index.html index.htm;
 #
-#	ssl on;
-#	ssl_certificate cert.pem;
-#	ssl_certificate_key cert.key;
+	ssl on;
+	ssl_certificate media_streaming_CS_4.crt;
+	ssl_certificate_key media_streaming_CS_4.key;
 #
 #	ssl_session_timeout 5m;
 #
-#	ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-#	ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
-#	ssl_prefer_server_ciphers on;
+	ssl_protocols TLSv1.3;
+	ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+	ssl_prefer_server_ciphers on;
 #
 #	location / {
 #		try_files $uri $uri/ =404;
 #	}
-#}
+}

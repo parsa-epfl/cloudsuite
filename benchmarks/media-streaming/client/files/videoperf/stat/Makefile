@@ -30,7 +30,7 @@ DEFS    += -DUW_PACE_REQUESTS
 # Uncomment this to enable statistics that ignore specified ramp up and ramp down periods
 #DEFS    += -DUW_STABLE_STATS
 # Uncomment this to generate stats about the variation in throughput
-#DEFS    += -DUW_THROUGHPUT_STATS
+DEFS    += -DUW_THROUGHPUT_STATS
 
 CPPFLAGS	+= -DBIG_FD_SETSIZE
 
