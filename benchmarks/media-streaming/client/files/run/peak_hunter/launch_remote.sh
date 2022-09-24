@@ -16,7 +16,7 @@ fi
 if [ $mode = "PT" ];then
   mode="--port 80"
 elif [ $mode = "TLS" ]; then
-  mode="--ssl --port 443"
+  mode="--ssl --port 443 --ssl-ciphers TLS_AES_128_GCM_SHA256"
 else 
   echo "invalid encryption mode flag"
   exit

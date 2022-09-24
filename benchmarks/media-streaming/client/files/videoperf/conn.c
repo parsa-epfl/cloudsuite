@@ -88,7 +88,7 @@ conn_init (Conn *conn)
       if (param.ssl_cipher_list)
 	{
 	  /* set order of ciphers  */
-	  int ssl_err = SSL_set_cipher_list (conn->ssl, param.ssl_cipher_list);
+	  int ssl_err = SSL_set_ciphersuites (conn->ssl, param.ssl_cipher_list);
 
 	  if (DBG > 2)
 	    fprintf (stderr, "core_ssl_connect: set_cipher_list returned %d\n",
