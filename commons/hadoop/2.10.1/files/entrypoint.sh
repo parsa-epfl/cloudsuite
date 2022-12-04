@@ -21,7 +21,7 @@ case $1 in
     # update /etc/hosts with IP (only needed when using host networking)
     if [[ $2 ]]; then
       cp /etc/hosts /tmp/hosts
-      sed -i "s/127.0.1.1/$2/g" /tmp/hosts
+      sed -i "s/0.0.0.0/$2/g" /tmp/hosts
       cp /tmp/hosts /etc/hosts
     fi
     # start Hadoop daemons
@@ -40,7 +40,7 @@ case $1 in
     # update /etc/hosts with IP (only needed when using host networking)
     if [[ $3 ]]; then
       cp /etc/hosts /tmp/hosts
-      sed -i "s/127.0.1.1/$3/g" /tmp/hosts
+      sed -i "s/0.0.0.0/$3/g" /tmp/hosts
       cp /tmp/hosts /etc/hosts
     fi
     # start Hadoop daemons
