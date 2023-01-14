@@ -1,12 +1,19 @@
 #!/bin/bash
 
 # This script helps to fill the server database with given data set size. 
-# Usage: warmup.sh <server_ip> <record_count>
+# Usage: warmup.sh <server_ip> <record_count> <threads=1>
 # Each record takes 1KB to store, so if you want a 10GB database, just giving 10M records.
+
+if [ -z $3 ]; then
+	THREADS=1
+else
+	THREADS=$3
+fi
 
 echo '======================================================'
 echo "server IP: $1"
 echo "Fill the database with $2 records"
+echo "Load generator threads count: $THREADS"
 echo '======================================================'
 
 
@@ -34,7 +41,7 @@ echo '======================================================'
 echo 'Populate the database'
 echo '======================================================'
 
-/ycsb/bin/ycsb load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada -p recordcount=$RECORDCOUNT -j
+/ycsb/bin/ycsb load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada -p recordcount=$2 -s -threads $THREADS
 
 echo '======================================================'
 echo 'Warm up is done.'
