@@ -1,1 +1,0 @@
-This image is deprecated in CloudSuite 4 and not maintained by us anymore. However, you can still pull the binary image if you want to run the workload.
