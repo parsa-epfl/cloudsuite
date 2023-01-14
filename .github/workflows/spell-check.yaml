@@ -16,4 +16,4 @@ jobs:
         with:
           fetch-depth: 0
       - name: spell-check
-        uses: rojopolis/spellcheck-github-actions@0.20.0
+        uses: rojopolis/spellcheck-github-actions@0.29.0
