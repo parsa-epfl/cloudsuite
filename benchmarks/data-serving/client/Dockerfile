@@ -16,9 +16,13 @@ RUN wget -q --show-progress --progress=bar:force https://github.com/brianfrankco
     && chown cassandra:cassandra -R /ycsb/workloads
 
 COPY setup_tables.txt /setup_tables.txt
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY warmup.sh /warmup.sh
+COPY load.sh /load.sh
+RUN chmod +x /load.sh /warmup.sh
+RUN chown cassandra:cassandra /load.sh /warmup.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# The load generator might be useful for modifying these script
+RUN apt-get install -y vim
 
 USER cassandra
+
