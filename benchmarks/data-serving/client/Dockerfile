@@ -5,7 +5,7 @@ ENV YCSB_VERSION 0.14.0
 
 RUN set -ex \
     && apt-get update \
-    && apt-get install -y wget \
+    && apt-get install -y wget vim \
     && wget -q --show-progress --progress=bar:force -O /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb http://archive.apache.org/dist/cassandra/${CASSANDRA_VERSION}/debian/cassandra-tools_${CASSANDRA_VERSION}_all.deb \
     && dpkg --force-depends -i /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb \
     && rm -rf /tmp/cassandra-tools_${CASSANDRA_VERSION}_all.deb
@@ -16,9 +16,10 @@ RUN wget -q --show-progress --progress=bar:force https://github.com/brianfrankco
     && chown cassandra:cassandra -R /ycsb/workloads
 
 COPY setup_tables.txt /setup_tables.txt
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY warmup.sh /warmup.sh
+COPY load.sh /load.sh
+RUN chmod +x /load.sh /warmup.sh
+RUN chown cassandra:cassandra /load.sh /warmup.sh
 
 USER cassandra
+

@@ -17,7 +17,7 @@ The YCSB client has a data generator. After starting Cassandra, YCSB can start l
 Start the server container that will run cassandra server and installs a default keyspace usertable:
 
 ```bash
-$ docker run --name cassandra-server --privileged --net host cloudsuite/data-serving:server
+$ docker run --name cassandra-server --net host cloudsuite/data-serving:server
 ```
 ### Multiple Server Containers
 
