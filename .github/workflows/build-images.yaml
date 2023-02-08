@@ -328,35 +328,6 @@ jobs:
           DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
 
-  django-workload:
-    runs-on: ubuntu-latest
-    needs: [cassandra, graphite-statsd, memcached, siege]
-    env:
-      DH_REPO: "cloudsuite/${{ github.job }}"
-    strategy:
-      matrix:
-        tag: ["cassandra", "graphite", "memcached", "siege"]
-        platform: ["linux/amd64,linux/arm64"]
-        include:
-          - tag: "uwsgi"
-            platform: "linux/amd64,linux/arm64"
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - if: ${{ needs.cassandra.outputs.is_parent_modified == 'true' || 
-          needs.graphite-statsd.outputs.is_parent_modified == 'true' ||
-          needs.memcached.outputs.is_parent_modified == 'true' ||
-          needs.siege.outputs.is_parent_modified == 'true' }}
-        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
-      - name: build and push
-        run: "./.github/scripts/build-images.sh"
-        env:
-          IMG_TAG: "${{ matrix.tag }}"
-          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
-          DBX_PLATFORM: ${{ matrix.platform }}
-  
   graph-analytics:
     runs-on: ubuntu-latest
     needs: spark
