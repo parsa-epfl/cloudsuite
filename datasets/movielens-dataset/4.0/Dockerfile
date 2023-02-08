@@ -1,4 +1,4 @@
-FROM cloudsuitetest/base-os:ubuntu
+FROM cloudsuite/base-os:ubuntu
 
 # Download datasets
 RUN BUILD_DEPS="curl unzip" \

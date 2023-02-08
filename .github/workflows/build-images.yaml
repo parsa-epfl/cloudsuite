@@ -47,8 +47,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - tag: "adoptopenjdk8"
-            platform: "linux/amd64,linux/arm64"
           - tag: "openjdk11"
             platform: "linux/amd64,linux/arm64,linux/riscv64"
     steps:

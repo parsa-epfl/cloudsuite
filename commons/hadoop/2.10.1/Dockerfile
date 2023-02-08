@@ -1,4 +1,4 @@
-FROM cloudsuitetest/java:openjdk11
+FROM cloudsuite/java:openjdk11
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \

@@ -1,4 +1,4 @@
-FROM cloudsuitetest/base-os:ubuntu
+FROM cloudsuite/base-os:ubuntu
 #socialcomputing.asu.edu/uploads/1296759055/Twitter-dataset.zip
 # Install packages
 RUN BUILD_DEPS="wget unzip" \

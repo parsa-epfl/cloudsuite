@@ -1,4 +1,4 @@
-FROM cloudsuitetest/faban:1.4
+FROM cloudsuite/faban:1.4
 
 RUN apt-get update && apt-get install -y \
 	ant \

@@ -1,4 +1,4 @@
-FROM cloudsuitetest/base-os:ubuntu
+FROM cloudsuite/base-os:ubuntu
 
 # This is based on the official memcached Dockerfile
 

@@ -1,4 +1,4 @@
-FROM cloudsuitetest/java:openjdk11
+FROM cloudsuite/java:openjdk11
 
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends procps telnet lsof wget unzip \

@@ -1,4 +1,4 @@
-FROM cloudsuitetest/base-os:ubuntu
+FROM cloudsuite/base-os:ubuntu
 
 
 ENV DEBIAN_FRONTEND noninteractive
