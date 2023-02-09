@@ -27,7 +27,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: build and push
@@ -35,7 +35,7 @@ jobs:
         env:
           IMG_TAG: "debian"
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
       
   java:
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
             platform: "linux/amd64,linux/arm64,linux/riscv64"
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
@@ -63,7 +63,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
     
   mysql:
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
@@ -90,7 +90,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
     
   memcached:
     runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
@@ -117,7 +117,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
   
   faban:
     runs-on: ubuntu-latest
@@ -132,7 +132,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
@@ -144,7 +144,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
     
   spark:
     runs-on: ubuntu-latest
@@ -159,7 +159,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
@@ -171,7 +171,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
 
   cassandra:
     runs-on: ubuntu-latest
@@ -186,7 +186,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
@@ -198,7 +198,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
 
   hadoop:
     runs-on: ubuntu-latest
@@ -213,7 +213,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
@@ -225,7 +225,7 @@ jobs:
           DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
       - id: set_is_parent_modified
-        run: echo "::set-output name=is_parent_modified::${MODIFIED}"
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
 
   data-analytics:
     runs-on: ubuntu-latest
@@ -238,7 +238,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.hadoop.outputs.is_parent_modified == 'true' }}
@@ -264,7 +264,7 @@ jobs:
             platform: "linux/amd64,linux/arm64,linux/riscv64"
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.memcached.outputs.is_parent_modified == 'true' }}
@@ -287,7 +287,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.cassandra.outputs.is_parent_modified == 'true' }}
@@ -310,7 +310,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.spark.outputs.is_parent_modified == 'true' }}
@@ -334,7 +334,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.spark.outputs.is_parent_modified == 'true' }}
@@ -357,7 +357,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
@@ -380,7 +380,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.faban.outputs.is_parent_modified == 'true' }}
@@ -403,7 +403,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.faban.outputs.is_parent_modified == 'true' ||
@@ -428,7 +428,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
@@ -451,7 +451,7 @@ jobs:
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
