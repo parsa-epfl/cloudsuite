@@ -1,5 +1,4 @@
-FROM ubuntu:22.04
-
+FROM cloudsuite/base-os:ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 
 USER root
