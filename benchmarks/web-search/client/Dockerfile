@@ -18,6 +18,8 @@ ENV SCALE 50
 ENV AGENT_ID 1
 ENV NUM_AGENTS 1
 
+RUN apt update && apt install python3
+
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
 	&& tar -zxf apache-ant-$ANT_VERSION-bin.tar.gz \
@@ -30,9 +32,10 @@ RUN cd $FABAN_HOME/search \
 	&& sed -i "/ant.home/c\\ant.home=$ANT_HOME" build.properties \
 	&& sed -i "/faban.url/c\\faban.url=http://localhost:$FABAN_PORT/" build.properties
 
-COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+#COPY docker-entrypoint.sh /entrypoint.sh
+COPY docker-entrypoint.py /docker-entrypoint.py
+RUN chmod +x /docker-entrypoint.py
 
 EXPOSE $FABAN_PORT
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.py"]

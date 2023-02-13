@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<searchBenchmark>
+    <jvmConfig xmlns="http://faban.sunsource.net/ns/fabanharness">
+	    <javaHome>/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.9.x86_64</javaHome>
+        <jvmOptions>-Xmx8g -Xms8g -XX:+DisableExplicitGC</jvmOptions>
+    </jvmConfig>
+    <!-- The definition binds the config file with the benchmark class -->
+    <!-- We declare the driver as the default namespace 'cause it is most common here -->
+    <fa:runConfig definition="sample.searchdriver.SearchDriver"
+                  xmlns:fa="http://faban.sunsource.net/ns/faban"
+                  xmlns:fh="http://faban.sunsource.net/ns/fabanharness"
+                  xmlns="http://faban.sunsource.net/ns/fabandriver">
+        <fh:description>Search Benchmark</fh:description>
+        <!-- The hostConfig section is used by the harness to control hosts -->
+        <fa:hostConfig>
+            <fa:host>localhost</fa:host>
+            <fh:enabled>true</fh:enabled>
+            <fh:cpus>0</fh:cpus>
+            <fh:tools>NONE</fh:tools>
+            <fh:userCommands></fh:userCommands>
+        </fa:hostConfig>
+        <!-- The scale of the benchmark run, the driver definition
+        defines the number of threads for each driver scale
+        and each driver type. -->
+        <fa:scale>{SCALE}</fa:scale>
+        <!-- The rampup, steadystate, and rampdown of the driver -->
+        <fa:runControl unit="time">
+            <fa:rampUp>{RAMP_UP_TIME}</fa:rampUp>
+            <fa:steadyState>{STEADY_TIME}</fa:steadyState>
+            <fa:rampDown>{RAMP_DOWN_TIME}</fa:rampDown>
+        </fa:runControl>
+        <!-- The place where results are written -->
+        <outputDir>{FABAN_OUTPUT_DIR}</outputDir>
+        <!-- Audit is a flag for benchmarks to audit results
+        at the end of the run. It is not currently used
+        and subject to change in the near future -->
+        <audit>false</audit>
+        <threadStart>
+            <!-- The avg time between the start of each thread in
+            an agent -->
+            <delay>1</delay>
+            <!-- Whether the agents will wait until all threads to
+            be up and then start the load all at once. If
+            set to false, each thread will start executing the
+            operations as soon as it is started. This will
+            gradually load up the server. -->
+            <simultaneous>true</simultaneous>
+            <!-- Whether the agents will start up threads in parallel
+            or not. If set to false, an agent will start all it's
+            threads before the next agent gets to start the
+            threads. The socket connection queue will be less
+            loaded when it is set to false. -->
+            <parallel>true</parallel>
+        </threadStart>
+
+        <!-- Run-time stats exposed or not and the interval to update
+        the stats. A graphing package is required to display the
+        real time stats. It is not yet integrated into Faban. -->
+        <runtimeStats enabled="false">
+            <interval>5</interval>
+        </runtimeStats>
+
+        <!-- The driver-specific config.  -->
+        <driverConfig name="SearchDriver">
+            <!-- The number of agents, or host:agents pairs
+            separated by space -->
+            <agents>{AGENTS}</agents>
+            <!-- The stats interval, overrides the ones specified for
+            the benchmark. -->
+            <stats>
+                <interval>30</interval>
+            </stats>
+
+            <!-- Port to send the runtime stats. -->
+            <runtimeStats target="9988"/>
+            <operationMix>
+                <name>GET</name>
+                <r>100</r>
+            </operationMix>
+        </driverConfig>
+    </fa:runConfig>
+    <!-- This shows a way to set different configurations of resources outside
+    the driver. Such parameters are generally used by the Faban Harness.-->
+    <serverConfig>
+        <ipAddress1>{SERVER_IP}</ipAddress1>
+        <portNumber1>{PORT_NUMBER}</portNumber1>
+    </serverConfig>
+    <!-- This configures the paths and the filenames of the input terms and the log.-->
+    <filesConfig>
+	    <termsFile>{TERM_FILE}</termsFile>
+    </filesConfig>
+</searchBenchmark>

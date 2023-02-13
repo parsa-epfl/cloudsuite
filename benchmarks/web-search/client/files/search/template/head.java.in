@@ -1,0 +1,28 @@
+package sample.searchdriver;
+
+import com.sun.faban.driver.*;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.*;
+import java.util.Vector;
+import java.util.logging.Logger;
+import java.util.Random;
+
+@BenchmarkDefinition(
+  name = "Sample Search Workload",
+  version = "0.4",
+  configPrecedence = true
+)
+@BenchmarkDriver(
+  name = "SearchDriver",
+  threadPerScale = 1
+)
+@FlatMix(
+  operations = {
+    "GET"
+  },
+  mix = {
+    100
+  },
+  deviation = 0
+)
+
