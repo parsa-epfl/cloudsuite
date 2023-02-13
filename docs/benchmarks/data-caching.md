@@ -26,17 +26,17 @@ To start the server you have to first `pull` the server image and then run it. T
     $ docker pull cloudsuite/data-caching:server
 
 It takes some time to download the image, but this is only required the first time.
-The following command will start the server with four threads and 4096MB of dedicated memory, with a minimal object size of 550 bytes listening on port 11211 as default:
+The following command will start the server with four threads and 10GB of dedicated memory, with a minimal object size of 550 bytes listening on port 11211 as default:
 
-    $ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
 
  The following commands create Memcached server instances:
 
     $ # on VM1
-    $ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
 
     $ # on VM2
-    $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4 -m 4096 -n 550
+    $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
     ...
     
 
@@ -45,25 +45,10 @@ The following command will start the server with four threads and 4096MB of dedi
 To start the client you have to first `pull` the client image and then run it. To `pull` the server image use the following command:
 
     $ docker pull cloudsuite/data-caching:client
-
+    
 It takes some time to download the image, but this is only required the first time.
-
-To start the client container use the following command:
-
-    $ docker run -it --name dc-client --net host cloudsuite/data-caching:client bash
-
-This boots up the client container and you'll be logged in as the `memcache` user. 
-
-Before running the actual benchmark, you need to prepare the client.
-
-#### Preparing the Client #####
-
-All the required files for benchmarking are already placed in a directory in this image.
-Use the following command to change your active directory to this directory:
-
-    $ cd /usr/src/memcached/memcached_client/
-
-Prepare the server configuration file, `docker_servers.txt`, which includes the server address and the port number to connect to, in the following format:
+    
+Create an empty folder and then create the server configuration file, named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to, in the following format:
 
     server_address, port
 
@@ -73,43 +58,47 @@ The client can simultaneously use multiple servers, one server with several ip a
     IP_ADDRESS_VM2, 11211
     ...
 
-You can use the `vim` command for modifying this file inside the container.
+
+
+To start the client container use the following command:
+
+    $ docker run -idt --name dc-client --net host -v PATH_TO_DOCKER_SERVERS_FOLDER:/usr/src/memcached/memcached_client/docker_servers/ cloudsuite/data-caching:client
+
+Please note that the command mounts the folder containing the 'docker_servers.txt' file instead of mounting only the file. This way, further changes to the docker_servers.txt file in the host will be reflected inside of the container. 
 
 #### Scaling the dataset and warming up the server ####
 
-The following command will create the dataset by scaling up the Twitter dataset, while preserving both the popularity and object size distributions. The original dataset consumes 300MB of server memory, while the recommended scaled dataset requires around 10GB of main memory dedicated to the Memcached server (scaling factor of 30).
+The following command will create the dataset by scaling up the Twitter dataset, while preserving both the popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommended scaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
 
-    $ ./loader -a ../twitter_dataset/twitter_dataset_unscaled -o ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -w 4 -S 30 -D 4096 -j -T 1
+    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
+    
+(`m` - the mode of operation, `S&W` means scale the dataset and warm up the server, `w` - number of client threads which has to be divisible to the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval).
 
-(`w` - number of client threads which has to be divisible to the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval, `s` - server configuration file, `j` - an indicator that the server should be warmed up).
+If the scaled file is already created, but the server is not warmed up, use the following command to warm up the server. `W` refers to the _warm up_ mode of operation.
 
-If the scaled file is already created, but the server is not warmed up, use the following command to warm up the server:
-
-    $ ./loader -a ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -w 4 -S 1 -D 4096 -j -T 1
+    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="W" --S=28 --D=10240 --w=8 --T=1
 
 ### Running the benchmark ###
 
 To determine the maximum throughput while running the workload with eight client threads,
-200 TCP/IP connections, and a get/set ratio of 0.8, use the following command:
+200 TCP/IP connections, and a get/set ratio of 0.8, use the following command. `TH` refers to the _throughput_ mode of operation.
 
-    $ ./loader -a ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -g 0.8 -T 1 -c 200 -w 8
+    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="TH" --S=28 --g=0.8 --c=200 --w=8 --T=1 
 
-This command will run the benchmark with the maximum throughput; however, the QoS requirements will highly likely be violated. Once the maximum throughput is determined, you should run the benchmark using the following command:
+This command will run the benchmark with the maximum throughput; however, the QoS requirements will highly likely be violated. Once the maximum throughput is determined, you should run the benchmark using the following command. `RPS` means that the client container will keep the load at the given load (requests per second).   
 
-    $ ./loader -a ../twitter_dataset/twitter_dataset_30x -s docker_servers.txt -g 0.8 -T 1 -c 200 -w 8 -e -r rps
+    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps 
 
 where `rps` is 90% of the maximum number of requests per second achieved using the previous command. You should experiment with different values of `rps` to achieve the maximum throughput without violating the target QoS requirements.
 
-When you are done with benchmarking, just type `exit` to quit the client container.
-As the server containers are running as daemons, you have to stop them using `docker`:
+Note that the last two commands will continue forever if you do not stop or kill the command. For running the command for a given amount of time, you can use the timeout command. The following example will run the benchmark in the `RPS` mode for 20 seconds:
 
-    $ docker stop dc-server1
-
+    $ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=100000 
 
 ## Important remarks ##
 - It takes several minutes for the server to reach a stable state.
 
-- The target QoS requires that 95% of the requests are serviced within 10ms.
+- The target QoS requires that 95% of the requests are serviced within 1ms.
 
 - Memcached has known scalability problems, scaling very poorly beyond four threads.
 To utilize a machine with more than four cores,
