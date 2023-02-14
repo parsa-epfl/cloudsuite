@@ -26,11 +26,8 @@ public class SearchDriver {
     DataInputStream in = new DataInputStream(fstream);
     BufferedReader br = new BufferedReader(new InputStreamReader( in ));
     String strLine;
-    while ((strLine = br.readLine()) != null) {
-      String[] tokens = strLine.split(" ");
-      int count = Integer.parseInt(tokens[0]);
-      termsCount += count;
-    } in .close();
+    while ((strLine = br.readLine()) != null)
+      termsCount++; in .close();
     http = HttpTransport.newInstance();
   }
   private void Prefetch(int num) throws IOException {
@@ -84,22 +81,16 @@ public class SearchDriver {
       }
     }
     int lineNum = 0;
-    int passed = 0;
     while ((strLine = br.readLine()) != null) {
-      String[] tokens = strLine.split(" ");
       int i = 0;
-      int count = Integer.parseInt(tokens[0]);
-      int currCount = passed + count;
       for (int lineToGet: linesToGet) {
-        if (lineToGet <= currCount && lineToGet >= 0) {
+        if (lineToGet == lineNum) {
           int j = wordBelonging.get(i);
-          queries.get(j).add(tokens[1]);
-          linesToGet.set(i, -1);
+          queries.get(j).add(strLine);
         }
         i++;
       }
       lineNum++;
-      passed += count;
     } in .close();
     wordBelonging.removeAllElements();
     linesToGet.removeAllElements();
