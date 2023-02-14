@@ -18,7 +18,8 @@ ENV SCALE 50
 ENV AGENT_ID 1
 ENV NUM_AGENTS 1
 
-RUN apt update && apt install python3
+# The entrypoint is a Python script
+RUN apt update && apt install python3 -y
 
 RUN cd $BASE_PATH \
 	&& wget "archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" \
