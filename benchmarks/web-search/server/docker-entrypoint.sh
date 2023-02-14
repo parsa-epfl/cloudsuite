@@ -11,7 +11,12 @@ $SOLR_HOME/bin/solr start -force -cloud -p $SOLR_PORT -s $SOLR_CORE_DIR -m $SERV
 $SOLR_HOME/bin/solr status
 $SOLR_HOME/bin/solr create_collection -force -c cloudsuite_web_search -d cloudsuite_web_search -shards $NUM_SERVERS -p $SOLR_PORT
 
-kill -9 $(pgrep java) $(pgrep java)
+kill -9 $(pgrep java)
+
+# Wait for the process to finish.
+while kill -0 $(pgrep java); do
+  sleep 1
+done 
 
 cd $SOLR_CORE_DIR/cloudsuite_web_search*
 rm -rf data
