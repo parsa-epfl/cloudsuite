@@ -1,6 +1,6 @@
 # Memcached Server #
 
-This `Dockerfile` creates a debian image containing the latest version of Memcached (1.6.10).
+This `Dockerfile` creates a docker image containing the latest version of Memcached (1.6.10).
 Memcached will be started as a daemon with the passed parameters.
 Example:
 
