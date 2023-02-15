@@ -31,7 +31,9 @@ COPY files $FABAN_HOME/.
 RUN cd $FABAN_HOME/search \
 	&& sed -i "/faban.home/c\\faban.home=$FABAN_HOME" build.properties \
 	&& sed -i "/ant.home/c\\ant.home=$ANT_HOME" build.properties \
-	&& sed -i "/faban.url/c\\faban.url=http://localhost:$FABAN_PORT/" build.properties
+	&& sed -i "/faban.url/c\\faban.url=http://localhost:$FABAN_PORT/" build.properties \
+	&& mkdir -p $FABAN_HOME/search/deploy
+
 
 #COPY docker-entrypoint.sh /entrypoint.sh
 COPY docker-entrypoint.py /docker-entrypoint.py
