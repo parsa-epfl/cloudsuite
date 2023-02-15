@@ -228,7 +228,7 @@ perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)
   /* convert throughput into Mbps */
   double throughput = weight * bytes_received * 8.0 / 1000000;
 
-  printf("Throughput (Mbps) = %-8.2lf, total-errors = %-8d, concurrent-clients = %-8d, reply-rate:%-8.1lf\n", 
+  printf("Throughput (Mbps) = %-8.2lf, total-errors = %-8d, concurrent-clients = %-8d, reply-rate = %-8.1lf\n", 
       throughput, total_errors, basic.num_connected_conns, rate);  
 
   fflush(stdout);
