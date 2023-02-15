@@ -25,15 +25,21 @@ for resultFile in $output_dir/*.log; do
   fi
 done
 
-echo Requests: $nRequests
-echo Replies: $nReplies
-echo Reply rate: $(echo "scale=2; $replyRateAcc / $nFiles" | bc)
-echo Reply time: $(echo "scale=2; $replyTimeAcc / $nFiles" | bc)
-echo Net I/O: $netIOAcc
+if [ $nFiles -eq 0 ]; then
+  echo "No log is found from the log folder: $outputDir"
+  echo "Please check the the folder exists, or whether any request is sent during the test"
+else
+  echo Requests: $nRequests
+  echo Replies: $nReplies
+  echo Reply rate: $(echo "scale=2; $replyRateAcc / $nFiles" | bc)
+  echo Reply time: $(echo "scale=2; $replyTimeAcc / $nFiles" | bc)
+  echo Net I/O: $netIOAcc
 
-for btFile in $output_dir/*.trace; do
-  if [ -f $btFile ]; then
-    cat $btFile | /root/videoperf/bt2line $(which httperf)
-  fi
-done
+  for btFile in $output_dir/*.trace; do
+    if [ -f $btFile ]; then
+      cat $btFile | /root/videoperf/bt2line $(which httperf)
+    fi
+  done
+fi
+
 

@@ -50,8 +50,8 @@ function launchRemote () {
   done
 
   if [ $totalConns -eq 0 ]; then
-    echo "No log is found from the log folder: %outputDir"
-    echo "Please check the the folder exists, or whether the test is finished"
+    echo "No log is found from the log folder: $outputDir"
+    echo "Please check the the folder exists, or whether any request is sent during the test"
   else
     percFailure=$[$totalErrors*100/$totalConns]
     echo "Total connections = $totalConns"
