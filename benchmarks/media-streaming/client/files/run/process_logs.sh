@@ -26,7 +26,7 @@ for resultFile in $output_dir/*.log; do
 done
 
 if [ $nFiles -eq 0 ]; then
-  echo "No log is found from the log folder: $outputDir"
+  echo "No log is found from the log folder: $output_dir"
   echo "Please check the the folder exists, or whether any request is sent during the test"
 else
   echo Requests: $nRequests
