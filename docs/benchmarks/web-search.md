@@ -35,10 +35,10 @@ To start the server, you have to first `pull` the server image and then, run it.
  $ docker pull cloudsuite/web-search:server
  ```
 
-The following command will start the server on port 8983 on the host so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pre-generated Solr index occupies 12GB of memory, and therefore we use `12g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
+The following command will start the server on port 8983 on the host so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pre-generated Solr index occupies 12GB of memory, and therefore we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
 
 ```sh
-$ docker run -it --name server --volumes-from web_search_dataset --net host cloudsuite/web-search:server 12g 1
+$ docker run -it --name server --volumes-from web_search_dataset --net host cloudsuite/web-search:server 14g 1
 ```
 
 At the beginning of the server booting process, the container prints the `server_address` of the index node. This address will be used in the client container to send the requests to the index node. The `server_address` message in the container should look like this (note that the IP address might change):
@@ -87,18 +87,19 @@ $ docker pull cloudsuite/web-search:client
 To run the benchmark, start the client container by running the command below:
 
 ```sh
-$ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>  <The ramp-up time in secod> <the ramp-down time in second> <steady-state time in second> <distribution>
+$ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>
 ```
 
-For example, consider the command below:
+`server_address` is the IP address of the Solr index server, and `scale` defines the number of load generators' workers. Additionally, you can customize the load generator and request distribution by applying the following options:
 
-```sh
-$ docker run -it --name web_search_client --net host cloudsuite/web-search:client 172.19.0.2 50 90 60 60 zipfian
-```
-
-The `server_address` refers to the IP address of the index node that receives the client requests ("172.19.0.2" in our example). The four numbers after the server address refer to: the scale, which indicates the number of concurrent clients (50) sending search requests to the index server; the ramp-up time in seconds (90), which refers to the time required to warm up the server; the ramp-down time in seconds (60), which refers to the time to wait before ending the benchmark; and the steady-state time in seconds (60), which indicates the time the benchmark is in the steady state. Note that all statistics reported at the end of the benchmark's execution are measured during the steady-state period. Tune these parameters accordingly to stress your target system. The final parameter can be either `zipfian` or `random`, and determines the distribution that will be used to generate the query terms. 
-
-The client container will show the output results on the screen after the benchmark finishes.
+- `--ramp-up=<integer>`: The ramp-up time, which is the time when the load generator sends request to warm up the server, before the actual measurement starts. The unit is seconds, and its default value is 20.
+- `--ramp-down=<integer>`: The ramp-down time. Similar to the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues. The unit is seconds, and its default value is 10.
+- `--steady=<integer>`: The measurement time. The unit is seconds, and its default value is 60.
+- `--interval-type=<ThinkTime|CycleTime>`: The method to define the interval for each load generator. `ThinkTime` defines the interval as the duration between the receiving reply and the sending the next request, which `CycleTime` defines the interval as the duration between sending two continuous requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than single requests' latency, thus the load generator is closed. 
+- `--interval-distribution=<Fixed|Uniform|NegativeExponential>`: The distribution of the interval. Its default value is `Fixed`
+- `--interval-min=int`: The minimal interval to send requests. The unit is milliseconds and its default value is 1000. 
+- `--interval-max=int`: The maximal interval of sending requests. The unit is in milliseconds and its default value is 1500. When using the `Fixed` distribution, this value should be identical with the minimal interval.
+- `--interval-deviation=float`: The deviation of the interval. The unit is percentage, and its default value is 0.
 
 ### Generating a custom index
 You can use the index image to generate your own customized index. To start generating an index, first `pull` the index image by running the following command:
