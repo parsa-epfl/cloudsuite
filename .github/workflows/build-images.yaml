@@ -33,7 +33,7 @@ jobs:
       - name: build and push
         run: "./.github/scripts/build-images.sh"
         env:
-          IMG_TAG: "debian"
+          IMG_TAG: "ubuntu"
       - id: set_is_parent_modified
         run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
       
