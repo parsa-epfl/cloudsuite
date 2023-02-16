@@ -40,6 +40,7 @@ function launchRemote () {
     exit
   fi
   # Open each file in output directory
+  totalConns=0
   for outputFile in $outputDir/*;
   do
     numConns="$(grep 'Total: connections' $outputFile | awk '{print $3}')"
@@ -47,15 +48,21 @@ function launchRemote () {
     totalConns=$[totalConns+numConns]
     totalErrors=$[totalErrors+numErrors]
   done
-  percFailure=$[$totalErrors*100/$totalConns]
-  echo "Total connections = $totalConns"
-  echo "Total errors = $totalErrors"
-  echo "Percentage failure = $percFailure"
-  if [ "$percFailure" -gt 5 ]; then
-    cp $backUpStdoutDir/* $outputDir
-    sleep 10
+
+  if [ $totalConns -eq 0 ]; then
+    echo "No log is found from the log folder: $outputDir"
+    echo "Please check the the folder exists, or whether any request is sent during the test"
   else
-    cp $outputDir/* $backUpStdoutDir
+    percFailure=$[$totalErrors*100/$totalConns]
+    echo "Total connections = $totalConns"
+    echo "Total errors = $totalErrors"
+    echo "Percentage failure = $percFailure"
+    if [ "$percFailure" -gt 5 ]; then
+      cp $backUpStdoutDir/* $outputDir
+      sleep 10
+    else
+      cp $outputDir/* $backUpStdoutDir
+    fi
   fi
 }
 
