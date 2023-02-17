@@ -63,16 +63,16 @@ Before running the measurement, you have to fill the server with the dataset. Us
 $ ./warmup.sh <server_ip> <record_count> <threads=1>
 ```
 
-During warmup period, the script create a table to the seed server, and populate the table with given number of record. Based on the definition(see setup_tables.txt) of the record, the size of each record is 1KiB. As a result, a typical 10GiB dataset requires 10M records. You can also increase the number of YCSB threads to improve the writing speed, in case the load generator becomes the bottleneck.
+During warm up period, the script create a table to the seed server, and populate the table with given number of record. Based on the definition(see setup_tables.txt) of the record, the size of each record is 1KB. As a result, a typical 10GB dataset requires 10M records. You can also increase the number of YCSB threads to improve the writing speed, in case the load generator becomes the bottleneck.
 
 
-After the warmup is finished, you can use `load.sh` to apply load to the server:
+After the warm up is finished, you can use `load.sh` to apply load to the server:
 
 ```bash
 $ ./load.sh <server_ip> <record_count> <target_load> <threads=1> <operation_count=load * 60>
 ```
 
-You can give your expected load and YCSB would try to meet the requirement. In case the server cannot sustain the given load, the reported throughput would be smaller. You can also control the operation count to control the running time. Similar to warmup stage, you can also increase the YCSB thread count if the load generator is the bottleneck.
+You can give your expected load and YCSB would try to meet the requirement. In case the server cannot sustain the given load, the reported throughput would be smaller. You can also control the operation count to control the running time. Similar to the warm up stage, you can also increase the YCSB thread count if the load generator is the bottleneck.
 
 More detailed instructions on generating the dataset and load can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings. In this case, our scripts (`warmup.sh` and `load.sh`) are good template for further customization.
 
