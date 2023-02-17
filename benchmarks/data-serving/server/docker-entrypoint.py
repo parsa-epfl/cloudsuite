@@ -24,7 +24,6 @@ parser.add_argument("--writer-count", "-w", type=int, help="The number of writer
 parser.add_argument("--heap-size", type=int, help="The size of JVM heap in GB. Default is max(min(1/2 ram, 1024MB), min(1/4 ram, 8GB)).")
 parser.add_argument("--server-seed", help="The IP address of the seed server. This option is only for multiple-node deployment.")
 parser.add_argument("--affinity", help="The CPU ids (separated by comma) given to Cassandra to set JVM affinity. By default, Cassandra would use all CPU cores.")
-parser.add_argument("remaining", nargs=argparse.REMAINDER, default=['-R', '-f'], help="Additional parameter passed to start Cassandra. Its default value is -R -f.")
 
 
 args = parser.parse_args()
@@ -93,5 +92,5 @@ if args.affinity:
 with open(f"{CASSANDRA_CONFIG}/jvm-server.options", "w") as f:
     f.writelines(jvm_options)
 
-os.execvp("cassandra", ["cassandra", *args.remaining])
+os.execvp("cassandra", ["cassandra", "-R", "-f"])
 
