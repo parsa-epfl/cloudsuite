@@ -22,7 +22,7 @@ parser.add_argument("--listen-ip", "-a", help="The listening IP address of Cassa
 parser.add_argument("--reader-count", "-r", type=int, help="The number of reader threads. Recommended value: 16 per disk to store data. Default is 16", default=16)
 parser.add_argument("--writer-count", "-w", type=int, help="The number of writer threads. Recommended value: 8 per CPU core. Default is 32.", default=32)
 parser.add_argument("--heap-size", type=int, help="The size of JVM heap in GB. Default is max(min(1/2 ram, 1024MB), min(1/4 ram, 8GB)).")
-parser.add_argument("--server-seed", help="The IP address of the seed server. This option is only for multiple-node deployment.")
+parser.add_argument("--seed-server-ip", help="The IP address of the seed server. This option is only for multiple-node deployment.")
 parser.add_argument("--affinity", help="The CPU ids (separated by comma) given to Cassandra to set JVM affinity. By default, Cassandra would use all CPU cores.")
 
 
@@ -57,9 +57,9 @@ config["concurrent_reads"] = args.reader_count
 config["concurrent_counter_writes"] = args.reader_count
 config["concurrent_writes"] = args.writer_count
 
-if args.server_seed:
-    config["seed_provider"][0]["parameters"][0]["seeds"] = f"{args.server_seed}:7000"
-    print(f"A regular server is listened on {args.listen_ip} and will search for seed at {args.server_seed}.")
+if args.seed_server_ip:
+    config["seed_provider"][0]["parameters"][0]["seeds"] = f"{args.seed_server_ip}:7000"
+    print(f"A regular server is listened on {args.listen_ip} and will search for seed at {args.seed_server_ip}.")
 else:
     print(f"A seed server is listened on {args.listen_ip}")
 
@@ -84,9 +84,13 @@ if args.heap_size:
     jvm_options.append(f"-Xmx{args.heap_size}G\n")
 
 if args.affinity:
+    found = False
     for idx, l in enumerate(jvm_options):
         if l.startswith("-Dcassandra.available_processors"):
             jvm_options[idx] = f"-Dcassandra.available_processors={args.affinity}\n"
+            found = True
+    if not found:
+        jvm_options.append("-Dcassandra.available_processors={args.affinity}\n")
 
 # Write it back
 with open(f"{CASSANDRA_CONFIG}/jvm-server.options", "w") as f:
