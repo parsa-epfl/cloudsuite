@@ -32,3 +32,5 @@ mkdir -p "$CASSANDRA_CONFIG" /var/lib/cassandra /var/log/cassandra
 ln -sT /var/lib/cassandra "$CASSANDRA_HOME/data"
 ln -sT /var/log/cassandra "$CASSANDRA_HOME/logs"
 
+# Remove apt cacheh file
+rm -rf /var/lib/apt/lists/*
