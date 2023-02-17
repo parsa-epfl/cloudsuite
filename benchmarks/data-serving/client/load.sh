@@ -24,7 +24,7 @@ echo "Opeartion count: $OP_COUNT"
 echo "Make sure you have run the warmup.sh before loading the server, and use the same record count here."
 echo '======================================================'
 
-/ycsb/bin/ycsb run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada \
+/ycsb/bin/ycsb.sh run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada \
         -p recordcount=$2 -p operationcount=$OP_COUNT \
         -threads $THREADS -target $3 -s
 

@@ -41,7 +41,7 @@ echo '======================================================'
 echo 'Populate the database'
 echo '======================================================'
 
-/ycsb/bin/ycsb load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada -p recordcount=$2 -s -threads $THREADS
+/ycsb/bin/ycsb.sh load cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada -p recordcount=$2 -s -threads $THREADS
 
 echo '======================================================'
 echo 'Warm up is done.'
