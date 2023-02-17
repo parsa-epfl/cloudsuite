@@ -19,6 +19,14 @@ Start the server container that will run cassandra server and installs a default
 ```bash
 $ docker run --name cassandra-server --net host cloudsuite/data-serving:server
 ```
+
+The following options can be used to modify the setting of the server:
+- `--listen-ip=<u8.u8.u8.u8>`: Cassandra's listening IP address. By default, the script would automatically detect the active IP address and use it for Cassandra. When the default setting does not work, or you have multiple IP addresses, you can use this option to specify one.
+- `--reader-count=<int>`: The number of reader threads Cassandra uses. According to Cassandra's suggestion, each disk containing the database could have 16 threads to hide its latency. The default value is 16, assuming all the data is stored in on a single disk.
+- `--writer-count=<int>`: The number of writer threads Cassandra uses. Cassandra recommends 8 thread per CPU core. The default value is 32.
+- `--heap-size=<int>`: The size of JVM heap. Its unit is GB and by default, JVM uses `max(min(1/2 ram, 1GB), min(1/4 ram, 8GB))`. It is good to overload the value when the server has enough DRAM for better performance, or restrict the value for explicit resource restriction.
+- `--affinity=<cpu_id, ...>`: The CPU Cassandra works on. This setting is useful to explicitly set CPU affinity. Usually, it is combined with container's resource management option (e.g., `--cpuset-cpus`). 
+
 ### Multiple Server Containers
 
 Please note the server containers cannot be hosted on the same node when the host network configuration is used because they will all try to use the same port.
@@ -26,7 +34,7 @@ Please note the server containers cannot be hosted on the same node when the hos
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
 ```bash
-$ docker run --name cassandra-server-seed --privileged --net host cloudsuite/data-serving:server
+$ docker run --name cassandra-server-seed --net host cloudsuite/data-serving:server
 ```
 
 Then we prepare the server as previously.
@@ -34,7 +42,7 @@ Then we prepare the server as previously.
 The other server containers are instantiated as follows on **different VMs**:
 
 ```bash
-$ docker run --name cassandra-server(id) --privileged --net host -e CASSANDRA_SEEDS=cassandra-server-seed-IPADDRESS cloudsuite/data-serving:server
+$ docker run --name cassandra-server(id) --net host cloudsuite/data-serving:server --seed-server-ip=<seed node IP address>
 ```
 
 You can find more details at the websites: http://wiki.apache.org/cassandra/GettingStarted and https://hub.docker.com/_/cassandra/.
@@ -46,10 +54,27 @@ After successfully creating the aforementioned schema, you are ready to benchmar
 Start the client container specifying server name(s), or IP address(es), separated with commas, as the last command argument:
 
 ```bash
-$ docker run --name cassandra-client --net host cloudsuite/data-serving:client "cassandra-server-seed-IPADDRESS,cassandra-server1-IPADDRESS"
+$ docker run --name cassandra-client --net host cloudsuite/data-serving:client bash
 ```
 
-More detailed instructions on generating the dataset can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings.
+Before running the measurement, you have to fill the server with the dataset. Use the script `warmup.sh` for a quick setting:
+
+```bash
+$ ./warmup.sh <server_ip> <record_count> <threads=1>
+```
+
+During warmup period, the script create a table to the seed server, and populate the table with given number of record. Based on the definition(see setup_tables.txt) of the record, the size of each record is 1KiB. As a result, a typical 10GiB dataset requires 10M records. You can also increase the number of YCSB threads to improve the writing speed, in case the load generator becomes the bottleneck.
+
+
+After the warmup is finished, you can use `load.sh` to apply load to the server:
+
+```bash
+$ ./load.sh <server_ip> <record_count> <target_load> <threads=1> <operation_count=load * 60>
+```
+
+You can give your expected load and YCSB would try to meet the requirement. In case the server cannot sustain the given load, the reported throughput would be smaller. You can also control the operation count to control the running time. Similar to warmup stage, you can also increase the YCSB thread count if the load generator is the bottleneck.
+
+More detailed instructions on generating the dataset and load can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are very useful to understand the YCSB settings. In this case, our scripts (`warmup.sh` and `load.sh`) are good template for further customization.
 
 A rule of thumb on the dataset size
 -----------------------------------
@@ -67,12 +92,6 @@ Tuning the server performance
 
 	b. http://wiki.apache.org/cassandra/MemtableThresholds
 
-Running the benchmark
----------------------
-The benchmark is run automatically with the client container. One can modify the record count in the database and/or the number of operations performed by the benchmark specifying the corresponding variables when running the client container:
-```
-$ docker run -e RECORDCOUNT=<#> -e OPERATIONCOUNT=<#> --name cassandra-client --net host cloudsuite/data-serving:client "cassandra-server-seed,cassandra-server1"
-```
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-serving.svg "Go to DockerHub Page"

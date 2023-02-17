@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--listen-ip", "-a", help="The listening IP address of Cassandra. If no value provided, the script tries to find the primary IP address by itself.", default=get_ip())
 parser.add_argument("--reader-count", "-r", type=int, help="The number of reader threads. Recommended value: 16 per disk to store data. Default is 16", default=16)
 parser.add_argument("--writer-count", "-w", type=int, help="The number of writer threads. Recommended value: 8 per CPU core. Default is 32.", default=32)
-parser.add_argument("--heap-size", type=int, help="The size of JVM heap in GB. Default is max(min(1/2 ram, 1024MB), min(1/4 ram, 8GB)).")
+parser.add_argument("--heap-size", type=int, help="The size of JVM heap in GB. Default is max(min(1/2 ram, 1GB), min(1/4 ram, 8GB)).")
 parser.add_argument("--seed-server-ip", help="The IP address of the seed server. This option is only for multiple-node deployment.")
 parser.add_argument("--affinity", help="The CPU ids (separated by comma) given to Cassandra to set JVM affinity. By default, Cassandra would use all CPU cores.")
 
