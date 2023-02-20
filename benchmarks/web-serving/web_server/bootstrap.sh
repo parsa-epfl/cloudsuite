@@ -22,8 +22,14 @@ elif [ $PROTOCOL == 'http' ]; then
     cat /tmp/nginx_sites_avail_pt.append >> /etc/nginx/sites-available/default
 fi
 
-FPM_CHILDREN=${5:-80}
+FPM_CHILDREN=${5:-4}
 sed -i -e"s/pm.max_children = 5/pm.max_children = ${FPM_CHILDREN}/" /etc/php/${VERSION}/fpm/pool.d/www.conf
+sed -i -e"s/pm = dynamic/pm = static/" /etc/php/${VERSION}/fpm/pool.d/www.conf
+
+
+sed -i -e"s/worker_processes auto;/worker_processes 1;/" /etc/nginx/nginx.conf
+sed -i -e's/;opcache.file_cache=/opcache.file_cache=\/tmp/' /etc/php/${VERSION}/fpm/php.ini 
+
 
 service php${VERSION}-fpm restart
 
