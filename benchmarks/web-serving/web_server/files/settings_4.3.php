@@ -188,7 +188,7 @@ $CONFIG->memcache_servers = array (
  * and CSS files. If you uncomment and configure these settings, you will not be able
  * to change them from the Elgg advanced settings page.
  */
-//$CONFIG->simplecache_enabled = true;
+$CONFIG->simplecache_enabled = true;
 
 /**
  * Configure the boot cache TTL

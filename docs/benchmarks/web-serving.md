@@ -49,9 +49,9 @@ To start the web server, you first have to `pull` the server image by running th
 
 To run the web server, use the following command:
 
-    $ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${PROTOCOL} ${WEB_SERVER_IP} ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN}
+    $ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${PROTOCOL} ${WEB_SERVER_IP} ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN} ${WORKER_PROCESS}
 
-The `PROTOCOL` parameter can either be `http` or `https` and determines the web server's protocol. The `WEB_SERVER_IP`, `DATABASE_SERVER_IP`, and `MEMCACHED_SERVER_IP` parameters refer to the explicit IP of the server running each server. The `MAX_PM_CHILDREN` sets the pm.max_children in the php-fpm setting. The default value is 80. 
+The `PROTOCOL` parameter can either be `http` or `https` and determines the web server's protocol. The `WEB_SERVER_IP`, `DATABASE_SERVER_IP`, and `MEMCACHED_SERVER_IP` parameters refer to the explicit IP of the server running each server. The `MAX_PM_CHILDREN` sets the pm.max_children in the php-fpm setting. The default value is 4 and we recommend considering 4 per core. `WORKER_PROCESS` sets the number of Nginx worker processes. The default is `auto`. We recommend to have 1 Nginx worker process per 32 cores. 
 
 To check whether the web server is up, you can access Elgg's home page through a web browser by `http://<web_server's IP>:8080` or `https://<web_server's IP>:8443` URLs for HTTP and HTTPS web servers, respectively. For example, Elgg's home page is shown in the figure below:
 
