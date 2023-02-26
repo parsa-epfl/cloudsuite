@@ -8,7 +8,7 @@ COPY files/limits.txt /root/.
 RUN cat /root/limits.txt >> /etc/security/limits.conf
 
 ENV BASE_PATH /usr/src
-ENV SOLR_VERSION 9.0.0
+ENV SOLR_VERSION 9.1.1
 ENV SOLR_HOME $BASE_PATH/solr-$SOLR_VERSION
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV INDEX_URL $PACKAGES_URL/index
