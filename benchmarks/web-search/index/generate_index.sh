@@ -1,5 +1,7 @@
 #! bin/bash
 
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+
 cd $NUTCH_HOME
 $NUTCH_HOME/bin/nutch generate crawl/crawldb crawl/segments -topN 100
 segLast=`ls -d crawl/segments/2* | tail -1`
