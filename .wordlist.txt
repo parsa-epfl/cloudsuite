@@ -57,6 +57,7 @@ httperf
 https
 IP
 IPAddress
+JVM
 JIT
 keyspace
 localhost

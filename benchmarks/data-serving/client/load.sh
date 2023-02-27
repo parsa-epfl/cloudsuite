@@ -2,6 +2,11 @@
 
 # Usage: load.sh <server_ip> <record_count> <target_load> <threads=1> <operation_count=load * 60>
 
+if [ $# -le 2 ]; then
+	echo "usage: load.sh <server_ip> <record_count> <target_load> <threads=1> <operation_count=load * 60>"
+	exit 0
+fi
+
 if [ -z $4 ]; then
 	THREADS=1
 else
@@ -24,7 +29,7 @@ echo "Opeartion count: $OP_COUNT"
 echo "Make sure you have run the warmup.sh before loading the server, and use the same record count here."
 echo '======================================================'
 
-/ycsb/bin/ycsb run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada \
+/ycsb/bin/ycsb.sh run cassandra-cql -p hosts=$1 -P /ycsb/workloads/workloada \
         -p recordcount=$2 -p operationcount=$OP_COUNT \
         -threads $THREADS -target $3 -s
 
