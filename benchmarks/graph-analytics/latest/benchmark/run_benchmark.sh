@@ -17,7 +17,7 @@ if [ -n "$NUM_ITER" ]; then
   ARG_NITERS=-niter="${NUM_ITER}"
 fi
 
-BENCHMARK_JAR=./target/scala-2.13/graph-analytics-2.0.jar
+BENCHMARK_JAR=/root/graph-analytics-2.0.jar
 
 echo "Executing with: $ARG_FILENAME $ARG_WORKLOAD $ARG_NITERS"
 echo "                SPARK_OPTIONS:"$@""
