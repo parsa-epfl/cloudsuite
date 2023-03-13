@@ -426,7 +426,7 @@ jobs:
       DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["4.0"]
+        tag: ["latest"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -449,7 +449,31 @@ jobs:
       DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["4.0"]
+        tag: ["latest"]
+        platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.base-os.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./datasets/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+
+  wikimedia-pages-dataset:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuite/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["latest"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
