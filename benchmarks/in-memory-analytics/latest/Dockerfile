@@ -30,7 +30,7 @@ RUN cd /root/movielens-als \
     && chmod +x /root/entrypoint.sh
 
 FROM cloudsuite/spark:3.3.2
-COPY --from=build /files/entrypoint.sh /root/entrypoint.sh
+COPY /files/entrypoint.sh /root/entrypoint.sh
 
 ENV BENCHMARK_JAR /root/movielens-als-2.0.jar
 ENTRYPOINT ["/root/entrypoint.sh"]
