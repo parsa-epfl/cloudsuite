@@ -11,14 +11,14 @@ The Graph Analytics benchmark relies the Spark framework to perform graph analyt
 
 Current version of the benchmark is 4.0. To obtain the image:
 
-    $ docker pull cloudsuite/graph-analytics:4.0
+    $ docker pull cloudsuite/graph-analytics
 
 ### Datasets
 
 The benchmark uses a graph dataset generated from Twitter. To get the dataset image:
 
-    $ docker pull cloudsuite/twitter-dataset-graph:4.0
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:4.0
+    $ docker pull cloudsuite/twitter-dataset-graph
+    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph
 
 More information about the dataset is available at
 [cloudsuite/twitter-dataset-graph][ml-dhrepo].
@@ -29,7 +29,7 @@ The benchmark can run three graph algorithms using GraphX through the spark-subm
 
 To run the benchmark, run the following command:
 
-    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics:4.0 \
+    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics \
                  --driver-memory 4g --executor-memory 4g
 
 Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
@@ -43,29 +43,29 @@ All these analytics require huge memory to finish. As ar reference, running `tc`
 This section explains how to run the benchmark using multiple Spark
 workers (each running in a Docker container) that can be spread across
 multiple nodes in a cluster. For more information on running Spark
-with Docker look at [cloudsuite/spark:2.4.5][spark-dhrepo].
+with Docker look at [cloudsuite/spark:3.3.2][spark-dhrepo].
 
 **Note**: The following commands will run the Spark cluster within host's network. To make sure that slaves and master can communicate with each other, the master container's hostname, which should be host's hostname, must be able to be resolved to the same IP address by the master container and all slave containers. 
 
 First, create a dataset image on every physical node where Spark
 workers will be running.
 
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph:4.0
+    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph
 
 Start Spark master and Spark workers. They should all run within the same Docker network, which we call spark-net here. The workers get access to the datasets with --volumes-from twitter-data.
 
     $ docker run -dP --net host --name spark-master \
-                 cloudsuite/spark:2.4.5 master
+                 cloudsuite/spark:3.3.2 master
     $ docker run -dP --net host --volumes-from twitter-data --name spark-worker-01 \
-                 cloudsuite/spark:2.4.5 worker spark://SPARK-MASTER-IPADDRESS:7077
+                 cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER-IPADDRESS:7077
     $ docker run -dP --net host --volumes-from twitter-data --name spark-worker-02 \
-                 cloudsuite/spark:2.4.5 worker spark://SPARK-MASTER-IPADDRESS:7077
+                 cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER-IPADDRESS:7077
     $ ...
 
 Finally, run the benchmark as the client to the Spark master:
 
-    $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pagerank \
-                 cloudsuite/graph-analytics:4.0 \
+    $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
+                 cloudsuite/graph-analytics \
                  --driver-memory 4g --executor-memory 4g \
                  --master spark://SPARK-MASTER-IPADDRESS:7077
 

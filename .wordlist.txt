@@ -49,6 +49,7 @@ github
 GraphX
 grouplens
 hadoop
+HDFS
 HHVM
 HipHop
 hostname

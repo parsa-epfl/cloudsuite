@@ -23,7 +23,7 @@ The benchmark is designed to run on a Hadoop cluster, where the single master ru
 First, start the container for the dataset:
 
 ```bash
-$ docker run --name cloudsuite/wikimedia-pages-dataset wikimedia-dataset
+$ docker create --name wikimedia-dataset cloudsuite/wikimedia-pages-dataset 
 ```
 
 **Note**: The following commands will start the master for the cluster. To make sure that slaves and master can communicate with each other, the slave container's must point to the master's IP address. 
@@ -49,14 +49,14 @@ $ docker run -d --net host --name data-slave02 cloudsuite/data-analytics --slave
 Run the benchmark with:
 
 ```bash
-$ docker exec master benchmark
+$ docker exec data-master benchmark
 ```
 
 ### Configuring Hadoop parameters ###
 
 We can configure a few parameters for Hadoop depending on requirements. 
 
-Hadoop infers the number of workers with how many partitions it created with HDFS. We can increase or reduce the HDFS patition size to `N` mb with `--hdfs-block-size=N`, 128mb being the default. The current dataset included here weights 900s MBs, thus the default `--hdfs-block-size=128` of 128mb resulting in splits between 1 and 8 parts depending on the benchmark phase.
+Hadoop infers the number of workers with how many partitions it created with HDFS. We can increase or reduce the HDFS partition size to `N` mb with `--hdfs-block-size=N`, 128mb being the default. The current dataset included here weights 900MB, thus the default `--hdfs-block-size=128` of 128mb resulting in splits between 1 and 8 parts depending on the benchmark phase.
 
 The maximum number of workers is configured by `--yarn-cores=C`, default is 8, if there's more splits than number of workers, YARN will only allow up to `C` workers threads to process them and multiplex the tasks.
 
