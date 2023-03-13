@@ -1,4 +1,4 @@
-FROM cloudsuite/java:openjdk11
+FROM cloudsuite/java:openjdk17
 
 # Install dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
@@ -28,8 +28,8 @@ RUN ssh-keygen -t rsa -P '' -f /root/.ssh/id_rsa \
     && echo "Host *\n  StrictHostKeyChecking no" > /root/.ssh/config
 
 COPY files/*.xml.template ${HADOOP_CONF_DIR}/
-COPY files/hadoop-start.py files/entrypoint.sh files/example_benchmark.sh /root/
-RUN chmod +x /root/entrypoint.sh /root/example_benchmark.sh /root/hadoop-start.py
+COPY files/hadoop-start.py /root/
+RUN chmod +x /root/hadoop-start.py
 
 WORKDIR /root
 ENTRYPOINT ["/root/hadoop-start.py"]
