@@ -157,7 +157,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
       matrix:
-        tag: ["2.4.5"]
+        tag: ["3.3.2"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -211,7 +211,7 @@ jobs:
       is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
     strategy:
       matrix:
-        tag: ["2.10.1"]
+        tag: ["2.10.2", "3.3.4"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -236,7 +236,7 @@ jobs:
       DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["4.0"]
+        tag: ["latest"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -308,7 +308,7 @@ jobs:
       DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["4.0"]
+        tag: ["latest"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
@@ -332,7 +332,7 @@ jobs:
       DH_REPO: "cloudsuite/${{ github.job }}"
     strategy:
       matrix:
-        tag: ["4.0"]
+        tag: ["latest"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
     steps:
       - name: checkout
