@@ -13,13 +13,13 @@ import org.apache.spark.mllib.recommendation.{ALS, Rating, MatrixFactorizationMo
 
 object MovieLensALS {
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]) : Unit = {
 
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     Logger.getLogger("org.eclipse.jetty.server").setLevel(Level.OFF)
 
     if (args.length != 2) {
-      println("Usage: /path/to/spark/bin/spark-submit --driver-memory 2g --class MovieLensALS " +
+      println("Example: /path/to/spark/bin/spark-submit --driver-memory 2g --class MovieLensALS " +
         "target/scala-*/movielens-als-ssembly-*.jar movieLensHomeDir personalRatingsFile")
       sys.exit(1)
     }
@@ -29,6 +29,7 @@ object MovieLensALS {
     val conf = new SparkConf()
       .setAppName("MovieLensALS")
       .set("spark.executor.memory", "2g")
+    println(conf)
     val sc = new SparkContext(conf)
 
     // time the execution
@@ -44,7 +45,7 @@ object MovieLensALS {
     val movieLensHomeDir = args(0)
 
     val ratingsFile = sc.textFile(new File(movieLensHomeDir, "ratings.csv").toString)
-    val ratingsFileHeader = ratingsFile.first
+    val ratingsFileHeader = ratingsFile.first()
     val ratings = ratingsFile.filter{ line => line != ratingsFileHeader }.map { line =>
       val fields = line.split(",")
       // format: (timestamp % 10, Rating(userId, movieId, rating))
@@ -52,7 +53,7 @@ object MovieLensALS {
     }
 
     val moviesFile = sc.textFile(new File(movieLensHomeDir, "movies.csv").toString)
-    val moviesFileHeader = moviesFile.first
+    val moviesFileHeader = moviesFile.first()
     val movies = moviesFile.filter{ line => line != moviesFileHeader }.map { line =>
       val fields = line.split(",")
       // format: (movieId, movieName)
@@ -120,9 +121,9 @@ object MovieLensALS {
 
     // create a naive baseline and compare it with the best model
 
-    val meanRating = training.union(validation).map(_.rating).mean
+    val meanRating = training.union(validation).map(_.rating).mean()
     val baselineRmse = 
-      math.sqrt(test.map(x => (meanRating - x.rating) * (meanRating - x.rating)).mean)
+      math.sqrt(test.map(x => (meanRating - x.rating) * (meanRating - x.rating)).mean())
     val improvement = (baselineRmse - testRmse) / baselineRmse * 100
     println("The best model improves the baseline by " + "%1.2f".format(improvement) + "%.")
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-BENCHMARK_DIR=/benchmarks
-
 read -r -d '' USAGE << EOS
 Usage: in-memory-analytics DATASET RATINGS [SPARK_OPTIONS]
 
@@ -20,6 +18,8 @@ shift
 RATINGS=$1
 shift
 
+echo "Executing with: DATASET:${DATASET} RATINGS:${RATINGS}"
+echo "                SPARK_OPTIONS:"$@""
 exec ${SPARK_HOME}/bin/spark-submit --class MovieLensALS "$@" \
-       ${BENCHMARK_DIR}/movielens-als/movielens-als-1.0.jar $DATASET $RATINGS
+       ${BENCHMARK_JAR} $DATASET $RATINGS
 

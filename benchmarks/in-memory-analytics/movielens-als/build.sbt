@@ -1,14 +1,18 @@
 name := "movielens-als"
 
-version := "1.0"
+version := "2.0"
 
 organization := "PARSA"
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.13.10"
 
 artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
   artifact.name + "-" + module.revision + "." + artifact.extension
 }
 
-libraryDependencies += "org.apache.spark" % "spark-mllib_2.11" % "2.4.5" % "provided"
+libraryDependencies ++= Seq(
+  "org.apache.spark" %% "spark-core" % "3.3.1",
+  "org.apache.spark" %% "spark-sql" % "3.3.1",
+  "org.apache.spark" %% "spark-mllib" % "3.3.1"
+)
 

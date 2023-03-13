@@ -1,9 +1,12 @@
-FROM --platform=linux/amd64 cloudsuite/spark:2.4.5 as build
+FROM cloudsuite/spark:3.3.2
+
+WORKDIR /root
 
 # Benchmark files
 COPY movielens-als /root/movielens-als
+COPY files /root/
 
-WORKDIR /root
+ENV SCALA_VERSION 2.13
 
 # Build the benchmark using sbt
 RUN set -ex \
@@ -20,16 +23,14 @@ RUN set -ex \
 
 RUN cd /root/movielens-als \
     && sbt package \
-    && mkdir -p /benchmarks/movielens-als \
-    && mv /root/movielens-als/target/scala-2.11/*.jar /root/movielens-als/run_benchmark.sh /benchmarks/movielens-als \
-    && rm -r /root/movielens-als \
+    && mv /root/movielens-als/target/scala-${SCALA_VERSION}/*.jar /root/movielens-als/run_benchmark.sh /root \
     && apt-get purge -y --auto-remove sbt \
-    && rm -r /root/.sbt /root/.cache
+    && rm -r /root/movielens-als \
+    && rm -r /root/.sbt /root/.cache \
+    && chmod +x /root/entrypoint.sh
 
-COPY files /root/
+FROM cloudsuite/spark:3.3.2
+COPY --from=build /files/entrypoint.sh /root/entrypoint.sh
 
-FROM cloudsuite/spark:2.4.5
-RUN mkdir -p /benchmarks/movielens-als /root
-COPY --from=build /benchmarks/movielens-als /benchmarks/movielens-als
-COPY --from=build /root/entrypoint.sh /root/entrypoint.sh
+ENV BENCHMARK_JAR /root/movielens-als-2.0.jar
 ENTRYPOINT ["/root/entrypoint.sh"]

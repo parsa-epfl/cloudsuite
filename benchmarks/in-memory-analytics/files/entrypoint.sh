@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-exec /benchmarks/movielens-als/run_benchmark.sh "$@"
+exec /root/run_benchmark.sh "$@"
 
