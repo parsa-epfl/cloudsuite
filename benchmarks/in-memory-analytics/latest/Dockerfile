@@ -1,4 +1,4 @@
-FROM cloudsuite/spark:3.3.2
+FROM --platform=linux/amd64 cloudsuite/spark:3.3.2 as build
 
 WORKDIR /root
 
@@ -30,6 +30,9 @@ RUN cd /root/movielens-als \
     && chmod +x /root/entrypoint.sh
 
 FROM cloudsuite/spark:3.3.2
+# copy the old file
+COPY --from=build /root/movielens-als-2.0.jar /root
+COPY --from=build /root/run_benchmark.sh /root
 COPY /files/entrypoint.sh /root/entrypoint.sh
 
 ENV BENCHMARK_JAR /root/movielens-als-2.0.jar

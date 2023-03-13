@@ -1,4 +1,4 @@
-FROM cloudsuite/spark:3.3.2
+FROM --platform=linux/amd64 cloudsuite/spark:3.3.2 as build
 
 WORKDIR /root
      
@@ -30,8 +30,11 @@ RUN cd /root/benchmark \
     && rm -r /root/.sbt /root/.cache \
     && chmod +x /root/entrypoint.sh
 
+FROM cloudsuite/spark:3.3.2
+# copy dat from the build container
+COPY --from=build /root/graph-analytics-2.0.jar /root
+COPY --from=build /root/run_benchmark.sh /root
 
-# built with sbt
 ENV BENCHMARK_JAR /root/graph-analytics-2.0.jar
 # This input file comes from in `datasets/twitter-dataset-graph`
 ENV INPUT_FILE /data/edges.csv
