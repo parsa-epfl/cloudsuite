@@ -4,8 +4,7 @@ WORKDIR /root
      
 # Copy files
 COPY benchmark /root/benchmark
-COPY files /root/
-COPY files/entrypoint.sh /root/entrypoint.sh
+
 
 ENV SCALA_VERSION 2.13
 
@@ -34,6 +33,7 @@ FROM cloudsuite/spark:3.3.2
 # copy dat from the build container
 COPY --from=build /root/graph-analytics-2.0.jar /root
 COPY --from=build /root/run_benchmark.sh /root
+COPY files/entrypoint.sh /root/entrypoint.sh
 
 ENV BENCHMARK_JAR /root/graph-analytics-2.0.jar
 # This input file comes from in `datasets/twitter-dataset-graph`
