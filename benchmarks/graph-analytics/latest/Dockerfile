@@ -30,7 +30,7 @@ RUN cd /root/benchmark \
     && chmod +x /root/entrypoint.sh
 
 FROM cloudsuite/spark:3.3.2
-# copy dat from the build container
+# copy data from the build container
 COPY --from=build /root/graph-analytics-2.0.jar /root
 COPY --from=build /root/run_benchmark.sh /root
 COPY files/entrypoint.sh /root/entrypoint.sh

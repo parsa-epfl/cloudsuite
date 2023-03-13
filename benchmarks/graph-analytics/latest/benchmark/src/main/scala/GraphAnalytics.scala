@@ -20,7 +20,7 @@ object GraphAnalytics {
         }
     }
 
-    var app = "pagerank"
+    var app = "pr"
     var niter = 3
     var edgesFilename = "EDGES_FILES"
 
@@ -39,7 +39,7 @@ object GraphAnalytics {
 
     var startTime = System.currentTimeMillis()
 
-    if (app == "pagerank") {
+    if (app == "pr") {
       println("Running PageRank")
       val totalPR = graph.staticPageRank(niter).vertices.map(_._2).sum()
       println(s"Total PageRank = $totalPR")
