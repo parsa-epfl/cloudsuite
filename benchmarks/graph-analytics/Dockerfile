@@ -1,5 +1,14 @@
-FROM --platform=linux/amd64 cloudsuite/spark:2.4.5 as build
+FROM cloudsuite/spark:3.3.2
+
+WORKDIR /root
      
+# Copy files
+COPY benchmark /root/benchmark
+COPY files /root/
+COPY files/entrypoint.sh /root/entrypoint.sh
+
+ENV SCALA_VERSION 2.13
+
 # Build the benchmark using sbt
 RUN set -ex \
     && apt-get update \
@@ -12,24 +21,19 @@ RUN set -ex \
     && apt-get install -y --no-install-recommends sbt \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy files
-COPY benchmark /root/benchmark
-COPY files /root/
-
+# build and save `.jar`
 RUN cd /root/benchmark \
-    && sed -i "s/EDGES_FILE/\/data\/edges\.csv/g" /root/benchmark/src/main/scala/GraphAnalytics.scala \
     && sbt package \
-    && mkdir -p /benchmarks 
-
-RUN mv /root/benchmark/target/scala-2.11/*.jar /root/benchmark/run_benchmark.sh /benchmarks \
-    && rm -r /root/benchmark \
+    && mv /root/benchmark/target/scala-$SCALA_VERSION/*.jar /root/benchmark/run_benchmark.sh /root \
     && apt-get purge -y --auto-remove sbt \
+    && rm -r /root/benchmark \
     && rm -r /root/.sbt /root/.cache \
     && chmod +x /root/entrypoint.sh
 
-FROM cloudsuite/spark:2.4.5
-RUN mkdir -p /benchmarks /root
-COPY --from=build /benchmarks /benchmarks
-COPY --from=build /root/entrypoint.sh /root/entrypoint.sh
-WORKDIR /root
+
+# built with sbt
+ENV BENCHMARK_JAR /root/graph-analytics-2.0.jar
+# This input file comes from in `datasets/twitter-dataset-graph`
+ENV INPUT_FILE /data/edges.csv
+
 ENTRYPOINT ["/root/entrypoint.sh"]

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-exec /benchmarks/run_benchmark.sh "$@"
+exec /root/run_benchmark.sh "$@"
