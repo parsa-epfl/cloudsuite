@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+  <!--
+  <property>
+    <name>mapreduce.map.resource.vcores</name>
+    <value>MAPREDUCE_MAP_NUM_CORES</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.resource.vcores</name>
+    <value>MAPREDUCE_REDUCE_NUM_CORES</value>
+  </property>
+  -->
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>{MAPREDUCE_MAP_MEM}</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>{MAPREDUCE_REDUCE_MEM}</value>
+  </property>
+  <property>
+    <name>mapreduce.map.java.opts</name>
+    <value>-Xmx{MAPREDUCE_JAVA_MAP_MEM}m</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.java.opts</name>
+    <value>-Xmx{MAPREDUCE_JAVA_REDUCE_MEM}m</value>
+  </property>
+</configuration>

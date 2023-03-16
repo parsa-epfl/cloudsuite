@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <!-- Master -->
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>{MASTER_IP}</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value>{YARN_MEM}</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.maximum-allocation-vcores</name>
+    <value>{YARN_CORES}</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.resource.cpu-vcores</name>
+    <value>{YARN_CORES}</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.resource.maximum-allocation-vcores</name>
+    <value>{YARN_CORES}</value>
+  </property>
+ 
+  <!-- Nodes -->
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>{YARN_MEM}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.resource.cpu-vcores</name>
+    <value>{YARN_CORES}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.resource.maximum-allocation-vcores</name>
+    <value>{YARN_CORES}</value>
+  </property>
+</configuration>

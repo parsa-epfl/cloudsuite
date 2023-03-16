@@ -18,18 +18,14 @@ general. Because these applications suffer from I/O operations, nowadays, most
 of them are running in memory. This benchmark runs the alternating least
 squares (ALS) algorithm which is provided by Spark MLlib.
 
-### Getting the Image
-
-Current version of the benchmark is 4.0. To obtain the image:
-
-    $ docker pull cloudsuite/in-memory-analytics:4.0
-
 ### Datasets
 
 The benchmark uses user-movie ratings datasets provided by Movielens. To get
 the dataset image:
 
-    $ docker pull cloudsuite/movielens-dataset:4.0
+```sh
+    $ docker pull cloudsuite/movielens-dataset
+```
 
 More information about the dataset is available at
 [cloudsuite/movielens-dataset][ml-dhrepo].
@@ -47,9 +43,11 @@ large), and a sample personal ratings file.
 To run a benchmark with the small dataset and the provided personal ratings
 file:
 
-    $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
-    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics:4.0 \
+```sh
+    $ docker create --name movielens-data cloudsuite/movielens-dataset
+    $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
         /data/ml-latest-small /data/myratings.csv
+```
 
 ### Tweaking the Benchmark
 
@@ -58,42 +56,57 @@ be used to tweak execution. For example, to ensure that Spark has enough memory
 allocated to be able to execute the benchmark in-memory, supply it with
 --driver-memory and --executor-memory arguments:
 
-    $ docker run --rm --volumes-from movielens-data cloudsuite/in-memory-analytics:4.0 \
+```sh
+    $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
         /data/ml-latest /data/myratings.csv \
-        --driver-memory 2g --executor-memory 2g
+        --driver-memory 4g --executor-memory 4g
+```
 
 ### Multi-node deployment
 
 This section explains how to run the benchmark using multiple Spark workers
 (each running in a Docker container) that can be spread across multiple nodes
 in a cluster. For more information on running Spark with Docker look at
-[cloudsuite/spark:2.4.5][spark-dhrepo].
-
-**Note**: The following commands will run the Spark cluster within host's network. To make sure that slaves and master can communicate with each other, the master container's hostname, which should be host's hostname, must be able to be resolved to the same IP address by the master container and all slave containers. 
+[cloudsuite/spark:3.3.2][spark-dhrepo].
 
 First, create a dataset image on every physical node where Spark workers will
 be running.
 
-    $ docker create --name movielens-data cloudsuite/movielens-dataset:4.0
+```sh
+    $ docker create --name movielens-data cloudsuite/movielens-dataset
+```
 
-Start Spark master and Spark workers. The workers get access to the
-datasets with --volumes-from movielens-data.
+Start Spark master and Spark workers. You can start the master node with the following command:
 
+```sh
     $ docker run -dP --net host --name spark-master \
-        cloudsuite/spark:2.4.5 master
+        cloudsuite/spark:3.3.2 master
+```
+
+By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Make sure all worker machines can access the master machine using the master host name if the listening IP is kept by default.
+You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` by starting container with `-e SPARK_MASTER_IP=X.X.X.X`.
+
+The workers get access to the datasets with `--volumes-from movielens-data`.
+
+```
     $ docker run -dP --net host --volumes-from movielens-data --name spark-worker-01 \
-        cloudsuite/spark:2.4.5 worker spark://SPARK-MASTER-IPADDRESS:7077
+        cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
     $ docker run -dP --net host --volumes-from movielens-data --name spark-worker-02 \
-        cloudsuite/spark:2.4.5 worker spark://SPARK-MASTER-IPADDRESS:7077
+        cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
     $ ...
+```
+
+`SPARK_MASTER` is Spark master's listening address.
 
 Finally, run the benchmark as the client to the Spark master:
 
+```
     $ docker run --rm --net host --volumes-from movielens-data \
-                 cloudsuite/in-memory-analytics:4.0 \
+                 cloudsuite/in-memory-analytics \
                  /data/ml-latest-small /data/myratings.csv \
                  --driver-memory 4g --executor-memory 4g \
-                 --master spark://SPARK-MASTER-IPADDRESS:7077
+                 --master spark://SPARK-MASTER:7077
+```
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/in-memory-analytics/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/in-memory-analytics.svg "Go to DockerHub Page"
