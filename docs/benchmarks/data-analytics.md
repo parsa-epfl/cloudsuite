@@ -34,6 +34,8 @@ Start the master with:
 $ docker run -d --net host --volumes-from wikimedia-dataset --name data-master cloudsuite/data-analytics --master
 ```
 
+By default, Hadoop master node is listened on the NIC with network access. You can overwrite the listening address by adding `--master-ip=X.X.X.X` to change the setting.
+
 Start any number of Hadoop slaves with:
 ```
 $ # on VM1
@@ -44,9 +46,9 @@ $ docker run -d --net host --name data-slave02 cloudsuite/data-analytics --slave
 
 ...
 ```
-**Note**: You should set `IP_ADDRESS_MASTER` to master's IP address.
+**Note**: You should set `IP_ADDRESS_MASTER` to master's IP address. 
 
-Run the benchmark with:
+After both master and slave are set up (you can use `docker logs` to observe if the log is still generating), run the benchmark with:
 
 ```bash
 $ docker exec data-master benchmark
