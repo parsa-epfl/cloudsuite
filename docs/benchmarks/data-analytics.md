@@ -34,7 +34,7 @@ Start the master with:
 $ docker run -d --net host --volumes-from wikimedia-dataset --name data-master cloudsuite/data-analytics --master
 ```
 
-By default, Hadoop master node is listened on the NIC with network access. You can overwrite the listening address by adding `--master-ip=X.X.X.X` to change the setting.
+By default, Hadoop master node is listened on the first interface accessing to network . You can overwrite the listening address by adding `--master-ip=X.X.X.X` to change the setting.
 
 Start any number of Hadoop slaves with:
 ```
