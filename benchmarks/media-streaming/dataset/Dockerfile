@@ -19,23 +19,12 @@ RUN wget https://downloads.xiph.org/releases/ogg/libogg-1.3.4.tar.gz \
         && cpack -G DEB \
         && dpkg -i /libogg-1.3.4/build/libogg0-1.3.4-Linux.deb
 
-RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
-    case "${ARCH}" in \
-       aarch64|arm64|amd64|x86_64) \
-          LIBS='libavcodec58 libavfilter7 libavdevice58 libavformat58 libchromaprint1 libflac8 libvorbisenc2'; \
-        ;; \
-       riscv64) \
-          LIBS='libavcodec59 libavfilter8 libavdevice59 libavformat59 libchromaprint1 libflac8 libvorbisenc2'; \
-        ;; \
-       *) \
-         echo "Unsupported arch: ${ARCH}"; \
-         exit 1; \
-         ;; \
-    esac; 
-
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y \
-        && apt-get install -y --no-install-recommends ${LIBS}  \
+        && apt-get install -y --no-install-recommends \
+	libavcodec58 libavfilter7 \
+	libavdevice58 libavformat58 \
+	libchromaprint1 libflac8 \
+	libvorbisenc2  \
         software-properties-common \
         build-essential \
         curl \
