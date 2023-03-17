@@ -9,7 +9,7 @@ workloads can be run on processors using x86, ARM, and RISC-V architectures.
 
 # How to Run #
 
-Please follow the detailed document of each workload:
+For more details on how to run the workloads, please follow the individual workload documentation here:
 
 - [Data Analytics](docs/benchmarks/data-analytics.md)
 - [Data Caching](docs/benchmarks/data-caching.md)
