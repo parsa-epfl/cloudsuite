@@ -54,7 +54,7 @@ After successfully creating the aforementioned schema, you are ready to benchmar
 Start the client container specifying server name(s), or IP address(es), separated with commas, as the last command argument:
 
 ```bash
-$ docker run --name cassandra-client --net host cloudsuite/data-serving:client bash
+$ docker run -it --name cassandra-client --net host cloudsuite/data-serving:client bash
 ```
 
 Before running the measurement, you have to fill the server with the dataset. Use the script `warmup.sh` for a quick setting:
