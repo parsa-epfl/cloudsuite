@@ -11,8 +11,8 @@ workloads can be run on processors using x86, ARM, and RISC-V architectures.
 
 Please follow the detailed document of each workload:
 
-- [Data Analytics](docs/benchmark/data-analytics.md)
-- [Data Caching](docs/benchmark/data-caching.md)
+- [Data Analytics](docs/benchmarks/data-analytics.md)
+- [Data Caching](docs/benchmarks/data-caching.md)
 - [Data Serving](docs/benchmarks/data-serving.md)
 - [Graph Analytics](docs/benchmarks/graph-analytics.md)
 - [In-memory Analytics](docs/benchmarks/in-memory-analytics.md)
