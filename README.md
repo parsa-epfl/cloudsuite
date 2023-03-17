@@ -7,6 +7,19 @@ been selected based on their popularity in today's datacenters. The benchmarks a
 stacks and represent real-world setups. In v4.0, we have added multi-architecture support to Cloudsuite, so that the
 workloads can be run on processors using x86, ARM, and RISC-V architectures.
 
+# How to Run #
+
+For more details on how to run the workloads, please follow each workload's documentation:
+
+- [Data Analytics](docs/benchmarks/data-analytics.md)
+- [Data Caching](docs/benchmarks/data-caching.md)
+- [Data Serving](docs/benchmarks/data-serving.md)
+- [Graph Analytics](docs/benchmarks/graph-analytics.md)
+- [In-memory Analytics](docs/benchmarks/in-memory-analytics.md)
+- [Media Streaming](docs/benchmarks/media-streaming.md)
+- [Web Search](docs/benchmarks/web-search.md)
+- [Web Serving](docs/benchmarks/web-serving.md)
+
 # Workload Status #
 To see which workloads are currently functioning on the new architectures, you can find the status matrix [here][status_pg].
 

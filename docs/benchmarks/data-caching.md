@@ -98,7 +98,7 @@ Note that the last two commands will continue forever if you do not stop or kill
 ## Important remarks ##
 - It takes several minutes for the server to reach a stable state.
 
-- The target QoS requires that 95% of the requests are serviced within 1ms.
+- The target QoS requires that 99% of the requests are serviced within 1ms.
 
 - Memcached has known scalability problems, scaling very poorly beyond four threads.
 To utilize a machine with more than four cores,
