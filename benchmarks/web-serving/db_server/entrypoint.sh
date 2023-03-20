@@ -1,7 +1,6 @@
 #!/bin/bash
 
-wget --no-check-certificate https://cloudsuite.ch/download/web-serving/ELGG_DB.tar.gz
-tar -xvf ELGG_DB.tar.gz
+wget --progress=bar:force -O - --no-check-certificate https://cloudsuite.ch/download/web-serving/ELGG_DB.tar.gz | tar -zxvf -
 
 
 # workaround for overlayfs:
@@ -22,7 +21,7 @@ service $MY_SQL stop
 rm -rf /var/lib/mysql/*
 
 mariabackup --prepare --target-dir=/backup/
-mariabackup --copy-back --target-dir=/backup/
+mariabackup --move-back --target-dir=/backup/
 
 chown -R mysql:mysql /var/lib/mysql/
 
