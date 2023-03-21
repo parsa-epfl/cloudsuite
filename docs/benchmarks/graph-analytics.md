@@ -27,7 +27,7 @@ To run the benchmark, run the following command:
 
 ```sh
     $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics \
-                 --driver-memory 4g --executor-memory 4g
+                 --driver-memory 8g --executor-memory 8g
 ```
 
 Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
