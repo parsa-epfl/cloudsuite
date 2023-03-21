@@ -5,7 +5,7 @@
 
 This repository contains the docker image for Cloudsuite's Graph Analytics benchmark.
 
-The Graph Analytics benchmark relies the Spark framework to perform graph analytics on large-scale datasets. Apache provides a graph processing library, GraphX, designed to run on top of Spark. The benchmark performs PageRank on a Twitter dataset.
+The Graph Analytics benchmark relies on the Spark framework to perform graph analytics on large-scale datasets. Apache provides a graph processing library, GraphX, designed to run on top of Spark. As an example, this benchmark performs PageRank on a Twitter dataset.
 
 ### Datasets
 
@@ -30,18 +30,15 @@ To run the benchmark, run the following command:
                  --driver-memory 4g --executor-memory 4g
 ```
 
-Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in-memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
+Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, --driver-memory and --executor-memory arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
 
-The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count, respectively. Page rank is selected by default if no process 
+The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count. Page rank is selected by default if not set. 
 
-All these analytics require huge memory to finish when more cores are involved. As ar reference, running `tc` with single CPU core requires both 8GB driver-memory and executor-memory. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not allocate enough memory. 
+All these analytics require huge memory to finish when more cores are involved. As a reference, running `tc` with a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to avoid GC activities, which should be considered if you are profiling the program and analyzing its behavior. 
 
 ### Multi-node deployment
 
-This section explains how to run the benchmark using multiple Spark
-workers (each running in a Docker container) that can be spread across
-multiple nodes in a cluster. For more information on running Spark
-with Docker look at [cloudsuite/spark:3.3.2][spark-dhrepo].
+This section explains how to run the benchmark using multiple Spark workers (each running in a Docker container) that can be spread across multiple nodes in a cluster. 
 
 
 First, create a dataset image on every physical node where Spark
@@ -57,8 +54,8 @@ Start Spark master and Spark workers. You can start the master node with the fol
         cloudsuite/spark:3.3.2 master
 ```
 
-By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Make sure all worker machines can access the master machine using the master host name if the listening IP is kept by default.
-You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` by starting container with `-e SPARK_MASTER_IP=X.X.X.X`.
+By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Therefore, make sure all worker machines can access the master machine using the master hostname if the listening IP is kept by default.
+You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` using the container option `-e SPARK_MASTER_IP=X.X.X.X`.
 
 The workers get access to the datasets with `--volumes-from twitter-data`.
 

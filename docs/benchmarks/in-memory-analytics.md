@@ -3,20 +3,9 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses Apache Spark and runs a collaborative filtering algorithm
-in-memory on a dataset of user-movie ratings. The metric of interest is the
-time in seconds of computing movie recommendations.
+This benchmark uses Apache Spark and runs a collaborative filtering algorithm in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds of computing movie recommendations.
 
-The explosion of accessible human-generated information necessitates automated
-analytical processing to cluster, classify, and filter this information.
-Recommender systems are a subclass of information filtering system that seek to
-predict the 'rating' or 'preference' that a user would give to an item.
-Recommender systems have become extremely common in recent years, and are
-applied in a variety of applications. The most popular ones are movies, music,
-news, books, research articles, search queries, social tags, and products in
-general. Because these applications suffer from I/O operations, nowadays, most
-of them are running in memory. This benchmark runs the alternating least
-squares (ALS) algorithm which is provided by Spark MLlib.
+The explosion of accessible human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications. The most popular ones are movies, music, news, books, research articles, search queries, social tags, and products in general. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm which Spark MLlib provides.
 
 ### Datasets
 
@@ -32,16 +21,9 @@ More information about the dataset is available at
 
 ### Running the Benchmark
 
-The benchmark runs the ALS algorithm on Spark through the spark-submit script
-distributed with Spark. It takes two arguments: the dataset to use for
-training, and the personal ratings file to give recommendations for. Any
-remaining arguments are passed to spark-submit.
+The benchmark runs the ALS algorithm on Spark through the spark-submit script distributed with Spark. It takes two arguments: the dataset for training and the personal ratings file for recommendations. We provide two training datasets (one small and one large) and a sample personal ratings file.
 
-The cloudsuite/movielens-dataset image has two datasets (one small and one
-large), and a sample personal ratings file.
-
-To run a benchmark with the small dataset and the provided personal ratings
-file:
+To run a benchmark with the small dataset and the provided personal ratings file:
 
 ```sh
     $ docker create --name movielens-data cloudsuite/movielens-dataset
@@ -49,12 +31,11 @@ file:
         /data/ml-latest-small /data/myratings.csv
 ```
 
+Any remaining arguments are passed to `spark-submit`.
+
 ### Tweaking the Benchmark
 
-Any arguments after the two mandatory ones are passed to spark-submit and can
-be used to tweak execution. For example, to ensure that Spark has enough memory
-allocated to be able to execute the benchmark in-memory, supply it with
---driver-memory and --executor-memory arguments:
+Any arguments after the two mandatory ones are passed to spark-submit and used to tweak execution. For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, supply it with --driver-memory and --executor-memory arguments:
 
 ```sh
     $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
@@ -64,13 +45,9 @@ allocated to be able to execute the benchmark in-memory, supply it with
 
 ### Multi-node deployment
 
-This section explains how to run the benchmark using multiple Spark workers
-(each running in a Docker container) that can be spread across multiple nodes
-in a cluster. For more information on running Spark with Docker look at
-[cloudsuite/spark:3.3.2][spark-dhrepo].
+This section explains how to run the benchmark using multiple Spark workers (each running in a Docker container) that can be spread across multiple nodes in a cluster. 
 
-First, create a dataset image on every physical node where Spark workers will
-be running.
+First, create a dataset image on every physical node where Spark workers will be running.
 
 ```sh
     $ docker create --name movielens-data cloudsuite/movielens-dataset
@@ -83,8 +60,7 @@ Start Spark master and Spark workers. You can start the master node with the fol
         cloudsuite/spark:3.3.2 master
 ```
 
-By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Make sure all worker machines can access the master machine using the master host name if the listening IP is kept by default.
-You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` by starting container with `-e SPARK_MASTER_IP=X.X.X.X`.
+By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Ensure all worker machines can access the master machine using the master hostname if the listening IP is kept by default. You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` with the container option `-e SPARK_MASTER_IP=X.X.X.X`.
 
 The workers get access to the datasets with `--volumes-from movielens-data`.
 

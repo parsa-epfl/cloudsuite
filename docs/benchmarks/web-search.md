@@ -5,14 +5,14 @@
 
 This repository contains the docker image for Cloudsuite's Web Search benchmark.
 
-The Web Search benchmark relies on the [Apache Solr][apachesolr] search engine framework. The benchmark includes a client machine that simulates real-world clients that send requests to the index nodes. The index nodes contain an index of the text and fields found in a set of crawled websites.
+The Web Search benchmark relies on the [Apache Solr][apachesolr] search engine framework. The benchmark includes a client machine that simulates real-world clients that send requests to the index nodes. The index nodes contain an index of the text and fields found in crawled websites.
 
 ## Using the benchmark ##
 
 ### Dockerfiles ###
 
 Supported tags and their respective `Dockerfile` links:
-- [`index`][indexdocker] This builds an image that crawls a set of given websites to generate an index.
+- [`index`][indexdocker] This builds an image that crawls a set of websites to generate an index.
 - [`dataset`][datasetdocker] This downloads an already generated index and mounts it to be used by the server.
 - [`server`][serverdocker] This builds an image for the Apache Solr index nodes. You may spawn several nodes.
 - [`client`][clientdocker] This builds an image with the client node. The client is used to start the benchmark and query the index nodes.
@@ -27,15 +27,11 @@ The following command downloads and mounts the dataset index:
  $ docker run --name web_search_dataset cloudsuite/web-search:dataset
  ```
 
+It then downloads the dataset from our website.
+
 ### Starting the server (Index Node) ###
 
-To start the server, you have to first `pull` the server image and then, run it. To `pull` the server image, use the following command (to be done on the same host as the dataset):
-
- ```sh
- $ docker pull cloudsuite/web-search:server
- ```
-
-The following command will start the server on port 8983 on the host so that the Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the memory allocated for the JAVA process. The pre-generated Solr index occupies 12GB of memory, and therefore we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, the aforesaid parameter should be `1` always.
+The following command will start the server on port 8983 on the host so that Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the heap memory allocated for the JAVA process. The pre-generated Solr index occupies 12GB of memory; therefore, we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, this parameter should be `1` always.
 
 ```sh
 $ docker run -it --name server --volumes-from web_search_dataset --net host cloudsuite/web-search:server 14g 1
@@ -47,7 +43,7 @@ At the beginning of the server booting process, the container prints the `server
 Index Node IP Address: 192.168.1.47
 ```
 
-The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using command `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
+The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using script `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
 ```
 $ ./query.sh `server_address`
 200
@@ -78,13 +74,7 @@ While the benchmark works fine with this warning, to fix it and benefit from hug
 
 ### Starting the client and running the benchmark ###
 
-To start a client you have to first `pull` the client image and then run it. To `pull` the client image, use the following command:
-
-```sh
-$ docker pull cloudsuite/web-search:client
-```
-
-To run the benchmark, start the client container by running the command below:
+To load the server, start the client container by running the command below:
 
 ```sh
 $ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>
@@ -93,16 +83,16 @@ $ docker run -it --name web_search_client --net host cloudsuite/web-search:clien
 `server_address` is the IP address of the Solr index server, and `scale` defines the number of load generators' workers. Additionally, you can customize the load generator and request distribution by applying the following options:
 
 - `--ramp-up=<integer>`: The ramp-up time, which is the time when the load generator sends request to warm up the server, before the actual measurement starts. The unit is seconds, and its default value is 20.
-- `--ramp-down=<integer>`: The ramp-down time. Similar to the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues. The unit is seconds, and its default value is 10.
+- `--ramp-down=<integer>`: The ramp-down time. Like the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues. The unit is seconds, and its default value is 10.
 - `--steady=<integer>`: The measurement time. The unit is seconds, and its default value is 60.
-- `--interval-type=<ThinkTime|CycleTime>`: The method to define the interval for each load generator. `ThinkTime` defines the interval as the duration between the receiving reply and the sending the next request, which `CycleTime` defines the interval as the duration between sending two continuous requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than single requests' latency, thus the load generator is closed. 
-- `--interval-distribution=<Fixed|Uniform|NegativeExponential>`: The distribution of the interval. Its default value is `Fixed`
-- `--interval-min=int`: The minimal interval to send requests. The unit is milliseconds and its default value is 1000. 
-- `--interval-max=int`: The maximal interval of sending requests. The unit is in milliseconds and its default value is 1500. When using the `Fixed` distribution, this value should be identical with the minimal interval.
-- `--interval-deviation=float`: The deviation of the interval. The unit is percentage, and its default value is 0.
+- `--interval-type=<ThinkTime|CycleTime>`: The method to define the interval for each load generator. `ThinkTime` defines the interval as the duration between the receiving reply and the sending of the next request, while `CycleTime` defines the interval as the duration between sending two loclstep requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than the single requests' latency: the load generator is closed-loop. 
+- `--interval-distribution=<Fixed|Uniform|NegativeExponential>`: The distribution of the interval. Its default value is `Fixed`.
+- `--interval-min=int`: The minimal interval between sending requests. The unit is milliseconds, and its default value is 1000. 
+- `--interval-max=int`: The maximal interval of sending requests. The unit is in milliseconds, and its default value is 1500. When using the `Fixed` distribution, this value should be identical to the minimal interval.
+- `--interval-deviation=float`: The deviation of the interval. The unit is a percentage, and its default value is 0.
 
 ### Generating a custom index
-You can use the index image to generate your own customized index. To start generating an index, first `pull` the index image by running the following command:
+You can use the index image to generate your customized index. To start generating an index, first `pull` the index image by running the following command:
 
 ```sh 
 $ docker pull cloudsuite/web-search:index
@@ -122,7 +112,7 @@ To start the indexing process, run the command below:
 $ docker exec -it web_search_index generate_index
 ```
    
-This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the size of the index reaches your desired value. The index is located at `/usr/src/solr-9.0.0/nutch/data` in the index container. You can copy the index from the index container to the host machine by running the following command:
+This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the index size reaches your desired value. The index is in the index container at `/usr/src/solr-9.0.0/nutch/data`. You can copy the index from the index container to the host machine by running the following command:
 
 ```sh
 $ docker cp web_search_index:/usr/src/solr-9.0.0/nutch/data ${PATH_TO_SAVE_INDEX}
@@ -165,7 +155,7 @@ Accordingly, you can modify the server image to use your index instead of the in
 ```sh
 $ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
 ```
-- The client container uses a list of prepared terms to generate the queries. You can find the list of the terms that are indexed in the Solr index along with their frequency of appearance in different urls by running the following query:
+- The client container uses a list of prepared terms to generate the queries. You can find the list of the terms that are indexed in the Solr index, along with their frequency of appearance in different URLs by running the following query:
 
 ```
 http://${SERVER_ADDRESS}:8983/solr/cloudsuite_web_search/terms?terms.fl=text&wt=xml&terms=true&terms.limit=10000
