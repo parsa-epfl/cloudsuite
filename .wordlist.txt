@@ -45,6 +45,7 @@ filesystem
 fpm
 Gbit
 GBs
+GC
 github
 GraphX
 grouplens
@@ -61,6 +62,7 @@ IPAddress
 JVM
 JIT
 keyspace
+LLC
 localhost
 login
 MapReduce
@@ -106,6 +108,7 @@ RECORDCOUNT
 repo
 runtime
 scalability
+Skylake
 slavedocker
 solr
 solr's
@@ -124,6 +127,7 @@ uwsgi
 videoperf
 VM
 VMs
+warmup
 WebServer
 webserverdocker
 webserverdocker

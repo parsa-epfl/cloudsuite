@@ -18,14 +18,9 @@ Supported tags and their respective `Dockerfile` links:
 
 ### Running Dataset and Server on Host1
 
-The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. 
-Then, based on the generated videos, it suggests the request lists for the client docker container. 
+The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. Then, based on the generated videos, it suggests the request lists for the client docker container. 
 
-First, use the following command to pull the dataset image:
-
-    $ docker pull cloudsuite/media-streaming:dataset
-
-Then, use the following command to run the dataset container:
+use the following command to run the dataset container:
 
     $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
     
@@ -98,7 +93,7 @@ After running the benchmark, the client container periodically reports three met
 - Throughput in Mbps
 - The total number of errors encountered during the benchmark's execution
 - The number of concurrent established requests to the server
-- The reply rate, which is thenumber of HTTP requests finished per second
+- The reply rate, which is the number of HTTP requests finished per second
 
 A sample report looks like this:
 ```
