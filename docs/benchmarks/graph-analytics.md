@@ -74,7 +74,7 @@ Finally, run the benchmark as the client to the Spark master:
 ```
     $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
                  cloudsuite/graph-analytics \
-                 --driver-memory 4g --executor-memory 4g \
+                 --driver-memory 8g --executor-memory 8g \
                  --master spark://SPARK-MASTER:7077
 ```
 
