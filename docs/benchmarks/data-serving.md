@@ -42,8 +42,8 @@ Then we prepare the server as previously.
 The other server containers are instantiated as follows on **different VMs**:
 
 ```bash
-$ docker run --name cassandra-server(id) --net host cloudsuite/data-serving:server --seed-server-ip=<seed node IP address>
-```
+$ docker run --name cassandra-subserver --net host cloudsuite/data-serving:server --seed-server-ip=<seed node IP address>
+``` 
 
 You may find a more detailed tutorial on checking the status and customizing the yaml file [here](https://www.digitalocean.com/community/tutorials/how-to-install-cassandra-and-run-a-multi-node-cluster-on-ubuntu-22-04).
 
