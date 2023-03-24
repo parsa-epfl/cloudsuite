@@ -3,9 +3,9 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses Apache Spark and runs a collaborative filtering algorithm in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds of computing movie recommendations.
+This benchmark uses Apache Spark and runs a collaborative filtering algorithm in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds for computing movie recommendations.
 
-The explosion of accessible human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications. The most popular ones are movies, music, news, books, research articles, search queries, social tags, and products in general. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm which Spark MLlib provides.
+The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications. Movies, music, news, books, research articles, search queries, and social tags are the most popular. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm provided by Spark MLlib.
 
 ### Datasets
 
@@ -23,7 +23,7 @@ More information about the dataset is available at
 
 The benchmark runs the ALS algorithm on Spark through the spark-submit script distributed with Spark. It takes two arguments: the dataset for training and the personal ratings file for recommendations. We provide two training datasets (one small and one large) and a sample personal ratings file.
 
-To run a benchmark with the small dataset and the provided personal ratings file:
+To run the benchmark with the small dataset and the provided personal ratings file:
 
 ```sh
     $ docker create --name movielens-data cloudsuite/movielens-dataset
@@ -35,7 +35,7 @@ Any remaining arguments are passed to `spark-submit`.
 
 ### Tweaking the Benchmark
 
-Any arguments after the two mandatory ones are passed to spark-submit and used to tweak execution. For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, supply it with --driver-memory and --executor-memory arguments:
+Any arguments after the two mandatory ones are passed to spark-submit and are used to tweak execution. For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, supply it with --driver-memory and --executor-memory arguments:
 
 ```sh
     $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
