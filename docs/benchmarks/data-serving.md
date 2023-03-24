@@ -6,17 +6,17 @@ The data serving benchmark relies on the Yahoo! Cloud Serving Benchmark (YCSB). 
 
 ### Server Container
 
-Start the server container that will run cassandra server and installs a default keyspace usertable:
+Start the server container that will run the Cassandra server and installs a default keyspace usertable:
 
 ```bash
 $ docker run --name cassandra-server --net host cloudsuite/data-serving:server
 ```
 
-The following options can be used to modify the setting of the server:
-- `--listen-ip=<u8.u8.u8.u8>`: Cassandra's listening IP address. By default, the script would automatically detect and use the active IP address for Cassandra. However, when the default setting does not work or you have multiple IP addresses, you can use this option to specify one. Please make sure this IP address is accessible by the client. 
-- `--reader-count=<int>`: The number of reader threads Cassandra uses. According to Cassandra's suggestion, each disk containing the database could have 16 threads to hide its latency. The default value is 16, assuming all the data is stored on a single disk.
+The following options can be used to modify the settings of the server:
+- `--listen-ip=<u8.u8.u8.u8>`: Cassandra's listening IP address. By default, the script will automatically detect and use the active IP address for Cassandra. However, when the default setting does not work or you have multiple IP addresses, you can use this option to specify one. Please make sure this IP address is accessible by the client. 
+- `--reader-count=<int>`: The number of reader threads Cassandra uses. According to Cassandra's suggestions, each disk containing the database should have 16 threads to hide its latency. The default value is 16, assuming all the data is stored on a single disk.
 - `--writer-count=<int>`: The number of writer threads Cassandra uses. Cassandra recommends eight threads per CPU core. The default value is 32.
-- `--heap-size=<int>`: JVM heap size. Its unit is GB, and by default, JVM uses `max(min(1/2 ram, 1GB), min(1/4 ram, 8GB))`. It is good to overload the value when the server has enough DRAM for better performance or restrict the value for explicit resource restriction.
+- `--heap-size=<int>`: JVM heap size. Its unit is GB, and by default, JVM uses `max(min(1/2 ram, 1GB), min(1/4 ram, 8GB))`. It is good to increase the value when the server has enough DRAM for better performance or lower the value for explicit resource restriction.
 - `--affinity=<cpu_id, ...>`: The CPU Cassandra works on. This setting is useful to set CPU affinity explicitly. Usually, it is combined with the container's resource management option (e.g., `--cpuset-cpus`). 
 
 ### Multiple Server Containers
