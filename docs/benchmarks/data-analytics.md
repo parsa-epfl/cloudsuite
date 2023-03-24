@@ -53,7 +53,7 @@ Hadoop infers the number of workers based on how many partitions it created with
 
 The maximum number of workers is configured by `--yarn-cores=C`, whose default value is 8. If there are more blocks than the number of workers, YARN will only allow up to `C` worker threads to process them. Please note that **at least two cores** should be given in total: One core for the map operation and another for the reduce operation. Otherwise, the process can get stuck. 
 
-The maximum memory used by each worker is configured by `--mapreduce-mem=N`, and the default value is 2096MB. Note that depending on the number of `--yarn-cores=C`, the total physical memory required will be at least `C*N`. To avoid out-of-memory errors, you are recommended to allocate atleast 8GB of memory (even for a single worker with two cores) in total.
+The maximum memory used by each worker is configured by `--mapreduce-mem=N`, and the default value is 2096MB. Note that depending on the number of `--yarn-cores=C`, the total physical memory required will be at least `C*N`. To avoid out-of-memory errors, you are recommended to allocate at least 8GB of memory (even for a single worker with two cores) in total.
 
 To increase the number of workers, please use a bigger dataset from Wikimedia. Using partition sizes smaller than 128MB can increase the number of workers but slow down the execution due to overheads of the small partition size. 
 
