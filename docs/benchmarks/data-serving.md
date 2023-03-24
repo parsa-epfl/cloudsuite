@@ -29,14 +29,6 @@ For a cluster setup with multiple servers, we need to instantiate a seed server 
 $ docker run --name cassandra-server-seed --net host cloudsuite/data-serving:server
 ```
 
-Please note the server containers cannot be hosted on the same node when the host network configuration is used because they will all try to use the same port.
-
-For a cluster setup with multiple servers, we need to instantiate a seed server :
-
-```bash
-$ docker run --name cassandra-server-seed --net host cloudsuite/data-serving:server
-```
-
 Then we prepare the server as previously.
 
 The other server containers are instantiated as follows on **different VMs**:
