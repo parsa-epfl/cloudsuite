@@ -6,7 +6,7 @@
 This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. Based on [videoperf][httperf_repo]'s session generator, the client requests different videos to stress the server.
 
 ## Using the Benchmark ##
-The benchmark has two tiers: the server and the client. The server runs Nginx, and the client sends requests to stream videos. Each tier has its image, which is identified by its tag.
+The benchmark has two tiers: the server and the client. The server runs Nginx, and the client sends requests to stream videos. Each tier has its own image, identified by its tag.
 
 ### Dockerfiles ###
 
@@ -20,13 +20,13 @@ Supported tags and their respective `Dockerfile` links:
 
 The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. Then, based on the generated videos, it suggests the request lists for the client docker container. 
 
-use the following command to run the dataset container:
+Use the following command to run the dataset container:
 
     $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
     
-`DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates ten videos for each of 240p, 360p, 480p, and 720p resolutions, having around 3.5 GB size altogether. 
+`DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates ten videos for each of 240p, 360p, 480p, and 720p resolutions, each with around 3.5 GB size. 
 
-`SESSION_COUNT` denotes the number of sessions to stream the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
+`SESSION_COUNT` denotes the number of sessions for streaming the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
 
 In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fetch a specific video chunk. As a reference, you can find a sample session below:
 
@@ -41,7 +41,7 @@ In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fe
 ```
 Each line here defines an HTTP/HTTPS request with the following fields:
 - The name of the requested video. In our example, requests ask for `/full-240p-00004.mp4`.
-- `timeout` determines the maximum time the client waits before receiving any response after sending the request to the server. Once expired, the client closes the connections and increases the timeout counter. 
+- `timeout` determines the maximum time the client waits before receiving any response after sending the request to the server. Once expired, the client closes the connection and increases the timeout counter. 
 - `pace_time` determines the latency between sending two consecutive requests. By default, the first three requests of each session don't have this field, which means they are sent together. 
 - `header` declares a range of video bytes for each request. 
 
@@ -101,14 +101,14 @@ Throughput (Mbps) = 1325.97 , total_errors = 0       , concurrent-clients = 317 
 ```
 Note that each videoperf process reports its statistics. Therefore, the overall state of the benchmark will be the sum of individual reports. 
 
-To tune the benchmark, give a starting rate as the seed (we suggest 1). The benchmark would take a few minutes to reach a steady state. Consequently, consider giving an appropriate number for `VIDEO_COUNT`. For example, if the benchmark did not reach steady in 5 minutes and the `RATE` was ten clients per second, the number of streaming videos would be larger than 5x60x10=3000. Therefore, we suggest giving a large value to `VIDEO_COUNT` to sustain a long steady state. 
+To tune the benchmark, give a starting rate as the seed (we suggest 1). The benchmark will take a few minutes to reach a steady state. Consequently, consider giving an appropriate number for `VIDEO_COUNT`. For example, if the benchmark did not reach steady state in 5 minutes and the `RATE` was ten clients per second, the number of streamed videos would be larger than 5x60x10=3000. Therefore, we suggest giving a large value to `VIDEO_COUNT` to sustain a long steady state. 
 
 Other principles are:
-1. The benchmark reaches the steady state when both throughput and concurrent clients are stable while there are few encountered errors. The number of errors would be 0, but occasional errors may occur. 
+1. The benchmark reaches a steady state when both throughput and concurrent clients are stable while there are few encountered errors. The number of errors should be 0, but occasional errors may occur. 
 2. If there is a problem in the tuning process, the number of errors will increase rapidly. 
-3. In the ramp-up phase, both throughput and concurrent clients will be increasing. The throughput may be stable, but concurrent clients continue to increase. It means that the rate of establishing new clients is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
+3. In the ramp-up phase, both throughput and concurrent clients will increase. The throughput may become stable, but concurrent clients can continue to increase. It means that the rate of establishing new clients is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
 4. If you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the server can handle a higher load.
-5. An overloaded client container would result in errors and crashes. In this case, consider allocating more cores to support more videoperf processes. You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by --cpuset-cpus option). 
+5. An overloaded client container will result in errors and crashes. In this case, consider allocating more cores to support more videoperf processes. You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by `--cpuset-cpus` option). 
 6. Remember that videoperf is a highly demanding single-thread process. Therefore, we recommend that you ensure the number of available cores for the client container is higher or equal to the number of videoperf processes. 
 
 
