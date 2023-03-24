@@ -25,7 +25,7 @@ Please note that all IP addresses should refer to the explicit IP address of the
 ### Starting the database server ####
 The following command will start the database server:
 
-    $ docker run -dt --net=host --name=database_server cloudsuite/web-serving:db_server
+    $ docker run -it --net=host --name=database_server cloudsuite/web-serving:db_server
 
 The benchmark starts with a pre-populated database that stores around 100 K users and their data, such as their friends list and sent messages. The size of the database is around 2.5 GB. Based on your need, you can extend the database size by running the benchmark for some time and inspecting whether the database size has reached your desired number.
 
