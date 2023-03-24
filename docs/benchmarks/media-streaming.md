@@ -97,7 +97,7 @@ After running the benchmark, the client container periodically reports three met
 
 A sample report looks like this:
 ```
-Throughput (Mbps) = 1325.97 , total_errors = 0       , concurrent-clients = 317       ,reply-rate=22.3,
+Throughput (Mbps) = 465.59  , total-errors = 0       , concurrent-clients = 161     , reply-rate = 17.6
 ```
 Note that each videoperf process reports its statistics. Therefore, the overall state of the benchmark will be the sum of individual reports. 
 
