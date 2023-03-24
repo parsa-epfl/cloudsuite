@@ -3,8 +3,6 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This repository contains the docker image for Cloudsuite's Web Search benchmark.
-
 The Web Search benchmark relies on the [Apache Solr][apachesolr] search engine framework. The benchmark includes a client machine that simulates real-world clients that send requests to the index nodes. The index nodes contain an index of the text and fields found in crawled websites.
 
 ## Using the benchmark ##
@@ -31,19 +29,19 @@ It then downloads the dataset from our website.
 
 ### Starting the server (Index Node) ###
 
-The following command will start the server on port 8983 on the host so that Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter past to the image indicates the heap memory allocated for the JAVA process. The pre-generated Solr index occupies 12GB of memory; therefore, we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, this parameter should be `1` always.
+The following command will start the server on port 8983 on the host so that Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter passed to the image indicates the heap memory allocated for JAVA processes. The pre-generated Solr index occupies 14GB of memory; therefore, we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, this parameter should be `1` always.
 
 ```sh
 $ docker run -it --name server --volumes-from web_search_dataset --net host cloudsuite/web-search:server 14g 1
 ```
 
-At the beginning of the server booting process, the container prints the `server_address` of the index node. This address will be used in the client container to send the requests to the index node. The `server_address` message in the container should look like this (note that the IP address might change):
+At the beginning of the server booting process, the container prints the `server_address` of the index node. This address will be used in the client container to send requests to the index node. The `server_address` message in the container should look like this (note that the IP address might change):
 
 ```sh
 Index Node IP Address: 192.168.1.47
 ```
 
-The server's boot process might take some time. To see whether the index node is up and responsive, you might want to send a simple query using script `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
+The server's boot process might take some time. To see whether the index node is up and responsive, you can send a simple query using script `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
 ```
 $ ./query.sh `server_address`
 200
@@ -82,13 +80,13 @@ $ docker run -it --name web_search_client --net host cloudsuite/web-search:clien
 
 `server_address` is the IP address of the Solr index server, and `scale` defines the number of load generators' workers. Additionally, you can customize the load generator and request distribution by applying the following options:
 
-- `--ramp-up=<integer>`: The ramp-up time, which is the time when the load generator sends request to warm up the server, before the actual measurement starts. The unit is seconds, and its default value is 20.
-- `--ramp-down=<integer>`: The ramp-down time. Like the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues. The unit is seconds, and its default value is 10.
+- `--ramp-up=<integer>`: The ramp-up time, which is the time when the load generator sends requests to warm up the server, before the actual measurement starts. The unit is seconds, and its default value is 20.
+- `--ramp-down=<integer>`: The ramp-down time. Like the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues, but does not send any new requests and waits for all previous requests to finish. The unit is seconds, and its default value is 10.
 - `--steady=<integer>`: The measurement time. The unit is seconds, and its default value is 60.
-- `--interval-type=<ThinkTime|CycleTime>`: The method to define the interval for each load generator. `ThinkTime` defines the interval as the duration between the receiving reply and the sending of the next request, while `CycleTime` defines the interval as the duration between sending two lockstep requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than the single requests' latency: the load generator is closed-loop. 
+- `--interval-type=<ThinkTime|CycleTime>`: The method used to define the interval for each load generator. `ThinkTime` defines the interval as the duration between receiving a reply and sending the next request, while `CycleTime` defines the interval as the duration between sending two lockstep requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than a single request's latency: the load generator is closed-loop. 
 - `--interval-distribution=<Fixed|Uniform|NegativeExponential>`: The distribution of the interval. Its default value is `Fixed`.
-- `--interval-min=int`: The minimal interval between sending requests. The unit is milliseconds, and its default value is 1000. 
-- `--interval-max=int`: The maximal interval of sending requests. The unit is in milliseconds, and its default value is 1500. When using the `Fixed` distribution, this value should be identical to the minimal interval.
+- `--interval-min=int`: The minimal interval between sending two requests. The unit is milliseconds, and its default value is 1000. 
+- `--interval-max=int`: The maximal interval between sending two requests. The unit is in milliseconds, and its default value is 1500. When using the `Fixed` distribution, this value should be identical to the minimal interval.
 - `--interval-deviation=float`: The deviation of the interval. The unit is a percentage, and its default value is 0.
 
 ### Generating a custom index
@@ -130,7 +128,7 @@ Accordingly, you can modify the server image to use your index instead of the in
   <metric unit="ops/sec">25.133</metric>
 ```
 
-- The response time statistics, average, maximum, standard deviation, 90-th, and 99-th percentiles, are shown as:
+- The response time statistics: average, maximum, standard deviation, 90-th, and 99-th percentiles, are shown as:
 
 ```xml
   <responseTimes unit="seconds">
@@ -147,13 +145,13 @@ Accordingly, you can modify the server image to use your index instead of the in
 
 ### Additional Information ###
 
-- This repository contains a 12GB index for a single node. The index was generated by crawling a set of websites with [Apache Nutch][apachenutch]. It's possible to generate indexes for Apache Solr that are both larger and for multiple index nodes. More information on how to generate indexes can be found [here][nutchtutorial].
+- This repository contains a 14GB index for a single node. The index was generated by crawling a set of websites with [Apache Nutch][apachenutch]. It is possible to generate indexes for Apache Solr that are both larger and for multiple index nodes. More information on how to generate indexes can be found [here][nutchtutorial].
 
-- The commands to add multiple index nodes are almost identical to the commands executed in the server image. An index has to be copied to Apache Solr's core folder, and then the server is started. The only difference is that the new server nodes have to know the address and the port of the first index node. In our example, it should be `server_address` and `8983`. Note that we also need to use a different port for the servers, for example, `9983`.
+- The commands to add multiple index nodes are almost identical to the commands executed for the server image. An index has to be copied to Apache Solr's core folder, and then the server can be started. The only difference is that the new server nodes have to know the address and the port of the first index node. In our example, it should be `server_address` and `8983`. Note that we also need to use a different port for the servers, for example, `9983`.
 
 
 ```sh
-$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 12g
+$ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 14g
 ```
 - The client container uses a list of prepared terms to generate the queries. You can find the list of the terms that are indexed in the Solr index, along with their frequency of appearance in different URLs by running the following query:
 
