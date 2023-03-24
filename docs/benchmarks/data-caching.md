@@ -3,13 +3,10 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the [Memcached][memcachedWeb] data caching server,
-simulating the behavior of a Twitter caching server using a Twitter dataset.
-The metric of interest is throughput, expressed as the number of requests served per second.
-The workload assumes the strict (1ms 99th tail latency) quality of service guarantees.
+This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes strict (1ms 99th percentile tail latency) quality of service guarantees.
 
 ## Using the benchmark ##
-This benchmark features two tiers: the server(s), running Memcached, and the client(s), which request data cached on the Memcached servers. Each tier has its own image which is identified by its tag.
+This benchmark features two tiers: the server(s) running Memcached and the client(s) requesting data cached on the Memcached servers. Each tier has its own image, identified by its tag.
 
 ### Dockerfiles ###
 
@@ -22,11 +19,11 @@ These images are automatically built using the mentioned Dockerfiles available o
 
 ### Starting the Server ####
 
-The following command will start the server with four threads and 10GB of dedicated memory, with a minimum object size of 550 bytes listening on port 11211 as default:
+The following command will start a single Memcached server with four threads and 10GB of dedicated memory, with a minimum object size of 550 bytes listening on port 11211 as default:
 
     $ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
 
- The following commands create Memcached server instances:
+ The following commands can be used to create multiple Memcached server instances:
 
     $ # on VM1
     $ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
@@ -42,7 +39,7 @@ Create an empty folder and then create the server configuration file named `dock
 
     server_address, port
 
-The client can simultaneously use multiple servers, one server with several IP addresses (in case the server machine has multiple ethernet cards active), and one server through multiple ports, measuring the overall throughput and quality of service. In that case, each line in the configuration file should contain the server address and the port number. To illustrate, in the case of our example, it should be:
+The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and quality of service (QoS) in each case. In that case, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
 
     IP_ADDRESS_VM1, 11211
     IP_ADDRESS_VM2, 11211
@@ -62,7 +59,7 @@ The following command will create the dataset by scaling up the Twitter dataset 
 
     $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
     
-(`m` - the mode of operation, `S&W` means scale the dataset and warm up the server, `w` - number of client threads which has to be divisible to the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval).
+(`m` - the mode of operation, `S&W` means scale the dataset and warm up the server, `w` - number of client threads which has to be divisible by the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval).
 
 If the scaled file is already created, but the server is not warmed up, use the following command to warm up the server. `W` refers to the _warm-up_ mode of operation.
 
@@ -75,7 +72,7 @@ To determine the maximum throughput while running the workload with eight client
 
     $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="TH" --S=28 --g=0.8 --c=200 --w=8 --T=1 
 
-This command will run the benchmark with the maximum throughput; however, the QoS requirements will highly likely be violated. Once the maximum throughput is determined, run the benchmark using the following command. `RPS` means the target load the client container will keep.
+This command will run the benchmark with the maximum throughput; however, the requirements will likely be violated. Once the maximum throughput is determined, run the benchmark using the following command. `RPS` means the target load the client container will keep.
 
     $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps 
 
