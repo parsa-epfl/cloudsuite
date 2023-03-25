@@ -89,7 +89,7 @@ This command will run the benchmark with the maximum throughput; however, the Qo
 
     $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps 
 
-where `rps` is 90% of the maximum number of requests per second achieved using the previous command. You should experiment with different values of `rps` to achieve the maximum throughput without violating the target QoS requirements.
+where `rps` is 90% of the maximum number of requests per second achieved using the previous command. You should experiment with different values of `rps` to achieve the maximum throughput without violating the target QoS requirements. By default, the request interval is fixed. You can add `--ne` to make the interval follow negative exponential distribution
 
 Note that the last two commands will continue forever if you do not stop or kill the command. For running the command for a given amount of time, you can use the timeout command. The following example will run the benchmark in the `RPS` mode for 20 seconds:
 
