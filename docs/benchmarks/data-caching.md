@@ -39,7 +39,7 @@ $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4
 
 ### Starting the Client ####
 
-Create an empty folder and then create the server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to in the following format:
+Create an empty folder and then create a server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to in the following format:
 ```
     server_address, port
 ```
@@ -61,7 +61,7 @@ Please note that the command mounts the folder containing the 'docker_servers.tx
 
 #### Scaling the dataset and warming up the server ####
 
-The following command will create the dataset by scaling up the Twitter dataset while preserving both the popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommended scaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
+The following command will create the dataset by scaling up the Twitter dataset while preserving both popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommendedscaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
 
 ```bash
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
@@ -69,7 +69,7 @@ $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 
 
 (`m` - the mode of operation, `S&W` means scale the dataset and warm up the server, `w` - number of client threads which has to be divisible by the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval).
 
-If the scaled file is already created, but the server is not warmed up, use the following command to warm up the server. `W` refers to the _warm-up_ mode of operation.
+If the scaled file already exists, but the server is not warmed up, use the following command to warm up the server. `W` refers to the _warm-up_ mode of operation.
 
 ```bash
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="W" --S=28 --D=10240 --w=8 --T=1
@@ -83,7 +83,7 @@ To determine the maximum throughput while running the workload with eight client
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="TH" --S=28 --g=0.8 --c=200 --w=8 --T=1
 ```
 
-This command will run the benchmark with the maximum throughput; however, the requirements will likely be violated. Once the maximum throughput is determined, run the benchmark using the following command. `RPS` means the target load the client container will keep.
+This command will run the benchmark with maximum throughput; however, the QoS requirements will likely be violated. Once the maximum throughput is determined, run the benchmark using the following command. `RPS` means the target load supplied by the client container.
 
 ```bash
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps
@@ -92,7 +92,7 @@ $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --
 
 Where `rps` is 90% of the maximum number of requests per second achieved using the previous command. It would be best to experiment with different `rps` values to achieve the maximum throughput without violating the target QoS requirements.
 
-Note that the last two commands will continue forever if you do not stop or kill the command. You can use the timeout command to run the command for a given amount of time. The following example will run the benchmark in the `RPS` mode for 20 seconds:
+Note that the last two commands will continue forever if you do not stop or kill the command. You can use the timeout command to run a command for a given amount of time. The following example will run the benchmark in `RPS` mode for 20 seconds:
 
 ```bash
 $ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=100000 
@@ -107,7 +107,7 @@ $ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28
 To utilize a machine with more than four cores,
 you should start several server processes and add the corresponding parameters
 into the client configuration file.
-- The benchmark is network-intensive and thus requires a 10Gbit Ethernet card not to be network-bound. Multiple ethernet cards could be used as well, each with a different IP address (two servers in the client configuration file with the same socket but different IP addresses).
+- The benchmark is network-intensive and thus requires a 10Gbit Ethernet card to not be network-bound. Multiple ethernet cards could be used as well, each with a different IP address, resulting in multiple servers in the client configuration file with the same socket but different IP addresses.
 
 
 [memcachedWeb]: http://memcached.org/ "Memcached Website"
