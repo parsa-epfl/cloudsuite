@@ -21,7 +21,7 @@ These images are automatically built using the mentioned Dockerfiles available [
 
 The following command downloads and mounts the dataset index:
 
- ```sh
+ ```bash
  $ docker run --name web_search_dataset cloudsuite/web-search:dataset
  ```
 
@@ -31,18 +31,18 @@ It then downloads the dataset from our website.
 
 The following command will start the server on port 8983 on the host so that Apache Solr's web interface can be accessed from the web browser using the host's IP address. More information on Apache Solr's web interface can be found [here][solrui]. The first parameter passed to the image indicates the heap memory allocated for JAVA processes. The pre-generated Solr index occupies 14GB of memory; therefore, we use `14g` to avoid disk access. The second parameter indicates the number of Solr nodes. Because the index is for a single node only, this parameter should be `1` always.
 
-```sh
+```bash
 $ docker run -it --name server --volumes-from web_search_dataset --net host cloudsuite/web-search:server 14g 1
 ```
 
 At the beginning of the server booting process, the container prints the `server_address` of the index node. This address will be used in the client container to send requests to the index node. The `server_address` message in the container should look like this (note that the IP address might change):
 
-```sh
+```
 Index Node IP Address: 192.168.1.47
 ```
 
 The server's boot process might take some time. To see whether the index node is up and responsive, you can send a simple query using script `query.sh` provided [here](https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-search/server/files/query.sh). If the server is up, you will see the following result.
-```
+```bash
 $ ./query.sh `server_address`
 200
 {
@@ -74,7 +74,7 @@ While the benchmark works fine with this warning, to fix it and benefit from hug
 
 To load the server, start the client container by running the command below:
 
-```sh
+```bash
 $ docker run -it --name web_search_client --net host cloudsuite/web-search:client <server_address> <scale>
 ```
 
@@ -90,15 +90,9 @@ $ docker run -it --name web_search_client --net host cloudsuite/web-search:clien
 - `--interval-deviation=float`: The deviation of the interval. The unit is a percentage, and its default value is 0.
 
 ### Generating a custom index
-You can use the index image to generate your customized index. To start generating an index, first `pull` the index image by running the following command:
+You can use the index image to generate your customized index. To start generating an index, create a list of websites that you want to crawl in a file named `seed.txt`. Write each URL in a different line. Then, run the index container using the command below:
 
-```sh 
-$ docker pull cloudsuite/web-search:index
-```
-  
-Then, create a list of websites that you want to crawl in a file named `seed.txt`. Write each URL in a different line. Then, run the index container using the command below:
-
-```sh
+```bash
 $ docker run -dt --name web_search_index -v ${PATH_TO_SEED.TXT}:/usr/src/apache-nutch-1.18/urls/seed.txt cloudsuite/web-search:index 
 ```
 
@@ -106,13 +100,13 @@ This command will run Nutch and Solr on the container and override the given set
 
 To start the indexing process, run the command below:
 
-```sh
+```bash
 $ docker exec -it web_search_index generate_index
 ```
    
 This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the index size reaches your desired value. The index is in the index container at `/usr/src/solr-9.0.0/nutch/data`. You can copy the index from the index container to the host machine by running the following command:
 
-```sh
+```bash
 $ docker cp web_search_index:/usr/src/solr-9.0.0/nutch/data ${PATH_TO_SAVE_INDEX}
 ```
   
@@ -150,7 +144,7 @@ Accordingly, you can modify the server image to use your index instead of the in
 - The commands to add multiple index nodes are almost identical to the commands executed for the server image. An index has to be copied to Apache Solr's core folder, and then the server can be started. The only difference is that the new server nodes have to know the address and the port of the first index node. In our example, it should be `server_address` and `8983`. Note that we also need to use a different port for the new servers, for example, `9983`.
 
 
-```sh
+```bash
 $ bin/solr start -cloud -p 9983 -z server_address:8983 -s /usr/src/solr_cores/ -m 14g
 ```
 - The client container uses a list of prepared terms to generate the queries. You can find the list of the terms that are indexed in the Solr index, along with their frequency of appearance in different URLs by running the following query:

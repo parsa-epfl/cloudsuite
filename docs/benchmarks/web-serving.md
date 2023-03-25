@@ -25,14 +25,18 @@ Please note that all IP addresses should refer to the explicit IP address of the
 ### Starting the database server ####
 The following command will start the database server:
 
-    $ docker run -it --net=host --name=database_server cloudsuite/web-serving:db_server
+```bash
+$ docker run -it --net=host --name=database_server cloudsuite/web-serving:db_server
+```
 
 The benchmark starts with a pre-populated database that stores around 100 K users and their data, such as their friends list and sent messages. The size of the database is around 2.5 GB. Based on your need, you can extend the database size by running the benchmark for some time and inspecting whether the database size has reached your desired number.
 
 ### Starting the Memcached server ####
 The following command will start the Memcached server:
 
-    $ docker run -dt --net=host --name=memcache_server cloudsuite/web-serving:memcached_server
+```bash
+$ docker run -dt --net=host --name=memcache_server cloudsuite/web-serving:memcached_server
+```
 
 By default, the Memcached instance has 4 threads and 64GB buffer size.
 
@@ -40,7 +44,9 @@ By default, the Memcached instance has 4 threads and 64GB buffer size.
 
 To run the web server, use the following command:
 
-    $ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${PROTOCOL} ${WEB_SERVER_IP} ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN} ${WORKER_PROCESS}
+```bash
+$ docker run -dt --net=host --name=web_server cloudsuite/web-serving:web_server /etc/bootstrap.sh ${PROTOCOL} ${WEB_SERVER_IP} ${DATABASE_SERVER_IP} ${MEMCACHED_SERVER_IP} ${MAX_PM_CHILDREN} ${WORKER_PROCESS}
+```
 
 The `PROTOCOL` parameter can either be `http` or `https` and determines the web server's protocol. The `WEB_SERVER_IP`, `DATABASE_SERVER_IP`, and `MEMCACHED_SERVER_IP` parameters refer to the explicit IP of the host server running each container. The `MAX_PM_CHILDREN` sets the pm.max_children in the php-fpm setting. The default value is 4, and we recommend considering 4 per core. `WORKER_PROCESS` specifies the number of Nginx worker processes. The default is `auto`. We recommend having 1 Nginx worker process per 32 cores. 
 
@@ -56,7 +62,9 @@ You can find the list of usernames and passwords of regular users in [this](http
 
 To start the client container which runs the benchmark, use the following commands:
 
-    $ docker run --net=host --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
+```bash
+$ docker run --net=host --name=faban_client cloudsuite/web-serving:faban_client ${WEB_SERVER_IP} ${LOAD_SCALE}
+```
 
 The last command has a mandatory parameter to set the IP of the web server and an optional parameter to specify the load scale (default is 1). The `LOAD_SCALE` parameter controls the number of users that log in to the web server and request social networking pages. You can scale it up and down as much as you would like, considering that scaling the number of users may stress the system. To tune the benchmark, we recommend testing your machines for the maximum possible request throughput while maintaining your target QoS metric (we use 99th percentile latency). CPU utilization is less important than the latency and responsiveness for these benchmarks.
 

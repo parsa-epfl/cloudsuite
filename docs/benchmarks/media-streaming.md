@@ -22,8 +22,10 @@ The dataset image has two purposes. First, it generates video files with differe
 
 Use the following command to run the dataset container:
 
-    $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
-    
+```bash
+$ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
+```
+
 `DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates ten videos for each of 240p, 360p, 480p, and 720p resolutions, each with around 3.5 GB size. 
 
 `SESSION_COUNT` denotes the number of sessions for streaming the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
@@ -50,7 +52,9 @@ It is possible that sessions in the `session lists` don't touch the whole datase
 ### Starting the Server on Host1 ####
 Start the server on the same machine as the dataset container: 
 
-    $ docker run -d --name streaming_server --volumes-from streaming_dataset --net host cloudsuite/media-streaming:server ${NGINX_WORKERS}
+```bash
+$ docker run -d --name streaming_server --volumes-from streaming_dataset --net host cloudsuite/media-streaming:server ${NGINX_WORKERS}
+```
 
 The `NGINX_WORKERS` parameter sets the number of Nginx workers. If not given, the default value is 2000. Adjust this number based on the server's computational resources and the intended load.
 
@@ -60,13 +64,17 @@ You need to copy the `session lists` from the dataset container and then transfe
 
 To copy `session lists` from the dataset container to Host 1, use the following command:
 
-    $ docker cp streaming_dataset:/videos/logs <destination>
+```bash
+$ docker cp streaming_dataset:/videos/logs <destination>
+```
 
 Then, you can use any command (e.g., `scp`, `rsync`) to transfer files to Host2. 
 
 To run the client container, use the following command:
 
-    $ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${VIDEOPERF_PROCESSES} ${VIDEO_COUNT} ${RATE} ${ENCRYPTION_MODE}
+```bash
+$ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${VIDEOPERF_PROCESSES} ${VIDEO_COUNT} ${RATE} ${ENCRYPTION_MODE}
+```
 
 Parameters are:
 - `<lists>`: The path where the `session lists` is put. You should be able to find files like `cl-*.log`

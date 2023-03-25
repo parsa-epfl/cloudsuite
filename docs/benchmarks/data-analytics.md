@@ -27,7 +27,7 @@ By default, the Hadoop master node is listening on the first interface accessing
 
 Start any number of Hadoop workers with:
 
-```
+```bash
 $ # on VM1
 $ docker run -d --net host --name data-slave01 cloudsuite/data-analytics --slave --master-ip=<IP_ADDRESS_MASTER>
 

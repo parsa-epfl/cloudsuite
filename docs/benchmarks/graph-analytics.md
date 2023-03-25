@@ -7,11 +7,10 @@ The Graph Analytics benchmark relies on the Spark framework to perform graph ana
 
 ### Datasets
 
-The benchmark uses a graph dataset generated from Twitter. To get the dataset image:
+The benchmark uses a graph dataset generated from Twitter. To create the dataset image:
 
-```sh
-    $ docker pull cloudsuite/twitter-dataset-graph
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph
+```bash
+$ docker create --name twitter-data cloudsuite/twitter-dataset-graph
 ```
 
 More information about the dataset is available at
@@ -23,9 +22,9 @@ The benchmark can run three graph algorithms using GraphX through the spark-subm
 
 To run the benchmark, run the following command:
 
-```sh
-    $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics \
-                 --driver-memory 8g --executor-memory 8g
+```bash
+$ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/graph-analytics \
+    --driver-memory 8g --executor-memory 8g
 ```
 
 Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
@@ -42,14 +41,14 @@ This section explains how to run the benchmark using multiple Spark workers (eac
 First, create a dataset image on every physical node where Spark
 workers will be running.
 
-```sh
-    $ docker create --name twitter-data cloudsuite/twitter-dataset-graph
+```bash
+$ docker create --name twitter-data cloudsuite/twitter-dataset-graph
 ```
 Start Spark master and Spark workers. You can start the master node with the following command:
 
-```sh
-    $ docker run -dP --net host --name spark-master \
-        cloudsuite/spark:3.3.2 master
+```bash
+$ docker run -dP --net host --name spark-master \
+    cloudsuite/spark:3.3.2 master
 ```
 
 By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Therefore, ensure all worker machines can access the master machine using the master hostname if the listening IP is kept by default.
@@ -57,23 +56,27 @@ You can also override the listening address by overriding the environment variab
 
 The workers get access to the dataset with `--volumes-from twitter-data`.
 
-```sh
-    $ docker run -dP --net host --volumes-from twitter-data --name spark-worker-01 \
-                 cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
-    $ docker run -dP --net host --volumes-from twitter-data --name spark-worker-02 \
-                 cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
-    $ ...
+```bash
+# Set up worker 1
+$ docker run -dP --net host --volumes-from twitter-data --name spark-worker-01 \
+    cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
+
+# Set up worker 2
+$ docker run -dP --net host --volumes-from twitter-data --name spark-worker-02 \
+    cloudsuite/spark:3.3.2 worker spark://SPARK-MASTER:7077
+    
+# ...
 ```
 
 `SPARK_MASTER` is Spark master's listening address.
 
 Finally, run the benchmark as the client to the Spark master:
 
-```
-    $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
-                 cloudsuite/graph-analytics \
-                 --driver-memory 8g --executor-memory 8g \
-                 --master spark://SPARK-MASTER:7077
+```bash
+$ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
+    cloudsuite/graph-analytics \
+    --driver-memory 8g --executor-memory 8g \
+    --master spark://SPARK-MASTER:7077
 ```
 
 
