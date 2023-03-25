@@ -49,9 +49,9 @@ $ docker exec data-master benchmark
 
 A few parameters for Hadoop can be configured depending on requirements.
 
-Hadoop infers the number of workers based on how many partitions it created with HDFS. You can increase or reduce the HDFS partition size to `N` MB with `--hdfs-block-size=N`, with 128MB being the default. The default dataset weighs 900MB. Thus, depending on the benchmark phase, the default option `-hdfs-block-size=128` results in a split between 1 and 8 parts.
+Hadoop infers the number of workers based on how many partitions it created with HDFS (HaDoop File System, a distributed file system for handing out dataset to workers). You can increase or reduce the HDFS partition size to `N` MB with `--hdfs-block-size=N`, with 128MB being the default. The default dataset weighs 900MB. Thus, depending on the benchmark phase, the default option `-hdfs-block-size=128` results in a split between 1 and 8 parts.
 
-Hadoop relies on [yarn][yarn] (Yet Another Resource Negotiator) to manage its resource, and the maximum number of workers is configured by `--yarn-cores=C`, whose default value is 8. If there are more blocks than the number of workers, YARN will only allow up to `C` worker threads to process them. Please note that **at least two cores** should be given in total: One core for the map operation and another for the reduce operation. Otherwise, the process can get stuck. 
+Hadoop relies on [YARN][yarn] (Yet Another Resource Negotiator) to manage its resource, and the maximum number of workers is configured by `--yarn-cores=C`, whose default value is 8. If there are more blocks than the number of workers, YARN will only allow up to `C` worker threads to process them. Please note that **at least two cores** should be given in total: One core for the map operation and another for the reduce operation. Otherwise, the process can get stuck. 
 
 The maximum memory used by each worker is configured by `--mapreduce-mem=N`, and the default value is 2096MB. Note that depending on the number of `--yarn-cores=C`, the total physical memory required will be at least `C*N`. To avoid out-of-memory errors, We recommend to allocate at least 8GB of memory (even for a single worker with two cores) in total.
 
