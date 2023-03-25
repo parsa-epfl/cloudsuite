@@ -21,35 +21,41 @@ These images are automatically built using the mentioned Dockerfiles available o
 
 The following command will start a single Memcached server with four threads and 10GB of dedicated memory, with a minimum object size of 550 bytes listening on port 11211 as default:
 
-    $ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
+```sh
+$ docker run --name dc-server --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
+```
 
- The following commands can be used to create multiple Memcached server instances:
+You may also set up multiple Memcached server instances using the following commands:
 
-    $ # on VM1
-    $ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
+```sh
+# on VM1
+$ docker run --name dc-server1 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
 
-    $ # on VM2
-    $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
-    ...
-    
+# on VM2
+$ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4 -m 10240 -n 550
+
+# ...
+```    
 
 ### Starting the Client ####
 
 Create an empty folder and then create the server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to in the following format:
-
+```
     server_address, port
-
+```
 The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and quality of service (QoS) in each case. In that case, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
-
+```
     IP_ADDRESS_VM1, 11211
     IP_ADDRESS_VM2, 11211
     ...
-
+```
 
 
 To start the client container, use the following command:
 
-    $ docker run -idt --name dc-client --net host -v PATH_TO_DOCKER_SERVERS_FOLDER:/usr/src/memcached/memcached_client/docker_servers/ cloudsuite/data-caching:client
+```sh
+$ docker run -idt --name dc-client --net host -v PATH_TO_DOCKER_SERVERS_FOLDER:/usr/src/memcached/memcached_client/docker_servers/ cloudsuite/data-caching:client
+```
 
 Please note that the command mounts the folder containing the 'docker_servers.txt' file instead of only the file. This way, further changes to the docker_servers.txt file in the host will be reflected inside the container. 
 
@@ -57,30 +63,40 @@ Please note that the command mounts the folder containing the 'docker_servers.tx
 
 The following command will create the dataset by scaling up the Twitter dataset while preserving both the popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommended scaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
 
-    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
-    
+```sh
+$ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
+```
+
 (`m` - the mode of operation, `S&W` means scale the dataset and warm up the server, `w` - number of client threads which has to be divisible by the number of servers, `S` - scaling factor, `D` - target server memory, `T` - statistics interval).
 
 If the scaled file is already created, but the server is not warmed up, use the following command to warm up the server. `W` refers to the _warm-up_ mode of operation.
 
-    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="W" --S=28 --D=10240 --w=8 --T=1
-
+```sh
+$ docker exec -it dc-client /bin/bash /entrypoint.sh --m="W" --S=28 --D=10240 --w=8 --T=1
+```
 ### Running the benchmark ###
 
 To determine the maximum throughput while running the workload with eight client threads,
 200 TCP/IP connections, and a get/set ratio of 0.8, use the following command. `TH` refers to the _throughput_ mode of operation.
 
-    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="TH" --S=28 --g=0.8 --c=200 --w=8 --T=1 
+```sh
+$ docker exec -it dc-client /bin/bash /entrypoint.sh --m="TH" --S=28 --g=0.8 --c=200 --w=8 --T=1
+```
 
 This command will run the benchmark with the maximum throughput; however, the requirements will likely be violated. Once the maximum throughput is determined, run the benchmark using the following command. `RPS` means the target load the client container will keep.
 
-    $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps 
+```sh
+$ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps
+```
+
 
 Where `rps` is 90% of the maximum number of requests per second achieved using the previous command. It would be best to experiment with different `rps` values to achieve the maximum throughput without violating the target QoS requirements.
 
 Note that the last two commands will continue forever if you do not stop or kill the command. You can use the timeout command to run the command for a given amount of time. The following example will run the benchmark in the `RPS` mode for 20 seconds:
 
-    $ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=100000 
+```sh
+$ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=100000 
+```
 
 ## Important remarks ##
 - It takes several minutes for the server to reach a stable state.
@@ -94,13 +110,13 @@ into the client configuration file.
 - The benchmark is network-intensive and thus requires a 10Gbit Ethernet card not to be network-bound. Multiple ethernet cards could be used as well, each with a different IP address (two servers in the client configuration file with the same socket but different IP addresses).
 
 
-  [memcachedWeb]: http://memcached.org/ "Memcached Website"
+[memcachedWeb]: http://memcached.org/ "Memcached Website"
 
-  [serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
+[serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/server/Dockerfile "Server Dockerfile"
 
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
+[clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/master/benchmarks/data-caching/client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/parsa-epfl/cloudsuite "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/data-caching/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-caching.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-caching.svg "Go to DockerHub Page"
+[repo]: https://github.com/parsa-epfl/cloudsuite "GitHub Repo"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/data-caching/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-caching.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-caching.svg "Go to DockerHub Page"
