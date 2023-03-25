@@ -28,8 +28,6 @@ done
 
 set -- ${ARGS[@]}
 
-echo "mode: ${MODE}, scale: ${SCALE}, workers: ${WORKERS}, server_memory: ${SERVER_MEMORY}, interval: ${INTERVAL}, get_ratio: ${GET_RATIO}, connections: ${CONNECTION}, rps: ${RPS}"
-
 if [ "$MODE" = 'S&W' ]; then
         echo "scale and warmup"
         /usr/src/memcached/memcached_client/loader \
@@ -54,7 +52,7 @@ elif [ "$MODE" = 'RPS' ]; then
         /usr/src/memcached/memcached_client/loader \
                 -a /usr/src/memcached/twitter_dataset/twitter_dataset_${SCALE}x \
                 -s /usr/src/memcached/memcached_client/docker_servers/docker_servers.txt \
-                -g ${GET_RATIO} -w ${WORKERS} -c ${CONNECTION} -T ${INTERVAL} -e -r ${RPS}
+                -g ${GET_RATIO} -w ${WORKERS} -c ${CONNECTION} -T ${INTERVAL} -r ${RPS}
 elif [ "$MODE" = "bash" ]; then
         # bash
         exec /bin/bash
