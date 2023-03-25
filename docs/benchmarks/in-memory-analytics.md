@@ -5,12 +5,12 @@
 
 This benchmark uses Apache Spark and runs a collaborative filtering algorithm in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds for computing movie recommendations.
 
-The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications. Movies, music, news, books, research articles, search queries, and social tags are the most popular. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm provided by Spark MLlib.
+The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications like movies, music, news, books, research articles, search queries, and social tags. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm provided by Spark MLlib.
+
 
 ### Datasets
 
-The benchmark uses user-movie ratings datasets provided by Movielens. To create
-the dataset image for further step:
+The benchmark uses user-movie ratings datasets provided by Movielens. Run the following command to create the dataset container:
 
 ```bash
 $ docker create --name movielens-data cloudsuite/movielens-dataset
@@ -59,7 +59,7 @@ $ docker run -dP --net host --name spark-master \
     cloudsuite/spark:3.3.2 master
 ```
 
-By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Ensure all worker machines can access the master machine using the master hostname if the listening IP is kept by default. You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` with the container option `-e SPARK_MASTER_IP=X.X.X.X`.
+By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Ensure all worker machines can access the master machine using the master hostname if the listening IP is kept by default. You can also override the listening address by setting the environment variable `SPARK_MASTER_IP` with the container option `-e SPARK_MASTER_IP=X.X.X.X`.
 
 The workers get access to the datasets with `--volumes-from movielens-data`.
 
@@ -77,7 +77,7 @@ $ docker run -dP --net host --volumes-from movielens-data --name spark-worker-02
 
 `SPARK_MASTER` is Spark master's listening address.
 
-Finally, run the benchmark as the client to the Spark master:
+Finally, run the benchmark as the client to activate the Spark master:
 
 ```bash
 $ docker run --rm --net host --volumes-from movielens-data \

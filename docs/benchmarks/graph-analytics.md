@@ -18,7 +18,7 @@ More information about the dataset is available at
 
 ### Running/Tweaking the Benchmark
 
-The benchmark can run three graph algorithms using GraphX through the spark-submit script distributed with Spark. The algorithms are page rank, connected components, and triangle count.
+The benchmark can run three graph algorithms using GraphX through the spark-submit script distributed with Spark. Available algorithms are PageRank, connected components, and triangle count.
 
 To run the benchmark, run the following command:
 
@@ -29,9 +29,9 @@ $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/gra
 
 Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
 
-The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for page rank, connected components, and triangle count respectively. Page rank is selected by default if not set. 
+The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for PageRank, connected components, and triangle count respectively. PageRank is selected by default if not set. 
 
-All of these analytics workloads require huge memory to finish when more cores are involved. As a reference, running `tc` on a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which should be considered if you are profiling the workload and analyzing its behavior. 
+All of these analytics workloads require huge memory to finish when more cores are involved. As a reference, running `tc` on a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which should be considered if you are collecting the workload trace and analyzing its behavior. 
 
 ### Multi-node deployment
 
@@ -52,7 +52,7 @@ $ docker run -dP --net host --name spark-master \
 ```
 
 By default, the container uses the hostname as the listening IP for the connections to the worker nodes. Therefore, ensure all worker machines can access the master machine using the master hostname if the listening IP is kept by default.
-You can also override the listening address by overriding the environment variable `SPARK_MASTER_IP` using the container option `-e SPARK_MASTER_IP=X.X.X.X`.
+You can also override the listening address by setting the environment variable `SPARK_MASTER_IP` using the container option `-e SPARK_MASTER_IP=X.X.X.X`.
 
 The workers get access to the dataset with `--volumes-from twitter-data`.
 
@@ -70,7 +70,7 @@ $ docker run -dP --net host --volumes-from twitter-data --name spark-worker-02 \
 
 `SPARK_MASTER` is Spark master's listening address.
 
-Finally, run the benchmark as the client to the Spark master:
+Finally, run the benchmark as the client to activate the Spark master:
 
 ```bash
 $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
