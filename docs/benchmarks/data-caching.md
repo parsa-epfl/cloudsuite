@@ -61,7 +61,7 @@ Please note that the command mounts the folder containing the 'docker_servers.tx
 
 #### Scaling the dataset and warming up the server ####
 
-The following command will create the dataset by scaling up the Twitter dataset while preserving both popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommendedscaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
+The following command will create the dataset by scaling up the Twitter dataset while preserving both popularity and object size distributions. The original dataset consumes ~360MB of server memory, while the recommended scaled dataset requires around 10GB of main memory dedicated to the Memcached server. Therefore, we use a scaling factor of 28 to have a 10GB dataset.
 
 ```bash
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="S&W" --S=28 --D=10240 --w=8 --T=1
