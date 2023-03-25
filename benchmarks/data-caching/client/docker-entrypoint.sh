@@ -9,6 +9,7 @@ INTERVAL=1
 GET_RATIO=0.8
 CONNECTION=200
 RPS=10000
+NEGATIVE_EXPONENTIAL=false
 
 while (( ${#@} )); do
   case ${1} in
@@ -20,6 +21,7 @@ while (( ${#@} )); do
     --g=*)       GET_RATIO=${1#*=} ;;
     --c=*)       CONNECTION=${1#*=} ;;
     --r=*)       RPS=${1#*=} ;;
+    --ne)        NEGATIVE_EXPONENTIAL=true ;;       
     *)           ARGS+=(${1}) ;;
   esac
 
@@ -27,8 +29,6 @@ while (( ${#@} )); do
 done
 
 set -- ${ARGS[@]}
-
-echo "mode: ${MODE}, scale: ${SCALE}, workers: ${WORKERS}, server_memory: ${SERVER_MEMORY}, interval: ${INTERVAL}, get_ratio: ${GET_RATIO}, connections: ${CONNECTION}, rps: ${RPS}"
 
 if [ "$MODE" = 'S&W' ]; then
         echo "scale and warmup"
@@ -51,10 +51,13 @@ elif [ "$MODE" = 'TH' ]; then
                 -g ${GET_RATIO} -w ${WORKERS} -c ${CONNECTION} -T ${INTERVAL}
 elif [ "$MODE" = 'RPS' ]; then
         echo "RPS"
+        if [ "$NEGATIVE_EXPONENTIAL" = true ]; then
+                ADDITIONA_OPTION="-e"
+        fi
         /usr/src/memcached/memcached_client/loader \
                 -a /usr/src/memcached/twitter_dataset/twitter_dataset_${SCALE}x \
                 -s /usr/src/memcached/memcached_client/docker_servers/docker_servers.txt \
-                -g ${GET_RATIO} -w ${WORKERS} -c ${CONNECTION} -T ${INTERVAL} -e -r ${RPS}
+                -g ${GET_RATIO} -w ${WORKERS} -c ${CONNECTION} -T ${INTERVAL} $ADDITIONA_OPTION -r ${RPS}
 elif [ "$MODE" = "bash" ]; then
         # bash
         exec /bin/bash
