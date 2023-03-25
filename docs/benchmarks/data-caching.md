@@ -43,7 +43,7 @@ Create an empty folder and then create the server configuration file named `dock
 ```
     server_address, port
 ```
-The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and quality of service (QoS) in each case. In that case, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
+The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and quality of service (QoS). As a result, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
 ```
     IP_ADDRESS_VM1, 11211
     IP_ADDRESS_VM2, 11211
@@ -57,7 +57,7 @@ To start the client container, use the following command:
 $ docker run -idt --name dc-client --net host -v PATH_TO_DOCKER_SERVERS_FOLDER:/usr/src/memcached/memcached_client/docker_servers/ cloudsuite/data-caching:client
 ```
 
-Please note that the command mounts the folder containing the 'docker_servers.txt' file instead of only the file. This way, further changes to the docker_servers.txt file in the host will be reflected inside the container. 
+Please note that the command mounts the folder containing the 'docker_servers.txt' file instead of only the file. This way, further changes to `docker_servers.txt` in the host will be reflected inside the container. 
 
 #### Scaling the dataset and warming up the server ####
 
