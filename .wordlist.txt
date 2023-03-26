@@ -36,6 +36,7 @@ DockerHub
 dP
 dt
 Elgg
+entrypoint
 epfl
 ethernet
 faban
@@ -43,6 +44,7 @@ FastCGI
 fb
 filesystem
 fpm
+frontend
 Gbit
 GBs
 GC
@@ -104,6 +106,7 @@ qemu
 QEMU
 QoS
 README
+realtime
 Recommender
 RECORDCOUNT
 repo
@@ -125,6 +128,7 @@ UI
 usertable
 usr
 uwsgi
+vectorization
 videoperf
 VM
 VMs
