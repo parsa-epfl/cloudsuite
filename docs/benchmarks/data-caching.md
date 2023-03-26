@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes a strict quality of service guarantee: the 99 percentile tail latency should be less than 1ms.
+This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes a strict quality of service guarantee: the 99 percentile latency should be less than 1ms.
 
 ## Using the benchmark ##
 This benchmark features two tiers: the server(s) running Memcached and the client(s) requesting data cached on the Memcached servers. Each tier has its own image, identified by its tag.
