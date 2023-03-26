@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes strict (1ms 99th percentile tail latency) quality of service guarantees.
+This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes a strict quality of service guarantee: the 99 percentile tail latency should be less than 1ms.
 
 ## Using the benchmark ##
 This benchmark features two tiers: the server(s) running Memcached and the client(s) requesting data cached on the Memcached servers. Each tier has its own image, identified by its tag.
@@ -39,7 +39,7 @@ $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4
 
 ### Starting the Client ####
 
-Create an empty folder and then create a server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to in the following format:
+Create an empty folder and then create a server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to, in the following format:
 ```
     server_address, port
 ```
