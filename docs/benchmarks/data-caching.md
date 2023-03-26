@@ -15,8 +15,6 @@ Supported tags and their respective `Dockerfile` links:
  - [`server`][serverdocker] represents the Memcached server running as a daemon.
  - [`client`][clientdocker] represents the client which requests to access the server's data.
 
-These images are automatically built using the mentioned Dockerfiles available on `parsa-epfl/cloudsuite` [GitHub repo][repo].
-
 ### Starting the Server ####
 
 The following command will start a single Memcached server with four threads and 10GB of dedicated memory, with a minimum object size of 550 bytes listening on port 11211 as default:
@@ -89,8 +87,7 @@ This command will run the benchmark with maximum throughput; however, the QoS re
 $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="RPS" --S=28 --g=0.8 --c=200 --w=8 --T=1 --r=rps
 ```
 
-
-Where `rps` is 90% of the maximum number of requests per second achieved using the previous command. It would be best to experiment with different `rps` values to achieve the maximum throughput without violating the target QoS requirements.
+Where `rps` can start from the 90% of the maximum number of requests per second achieved using the previous command. It would be best to experiment with different `rps` values to achieve the maximum throughput without violating the target QoS requirements.
 
 Note that the last two commands will continue forever if you do not stop or kill the command. You can use the timeout command to run a command for a given amount of time. The following example will run the benchmark in `RPS` mode for 20 seconds:
 
@@ -99,8 +96,6 @@ $ docker exec -it dc-client timeout 20 /bin/bash /entrypoint.sh --m="RPS" --S=28
 ```
 
 ## Important remarks ##
-- It takes several minutes for the server to reach a stable state.
-
 - The target QoS requires that 99% of the requests are serviced within 1ms.
 
 - Memcached has known scalability problems, scaling very poorly beyond four threads.

@@ -2,7 +2,7 @@
 
 [![Pulls on DockerHub][dhpulls]][dhrepo] [![Stars on DockerHub][dhstars]][dhrepo]
 
-The Data Serving benchmark relies on the Yahoo! Cloud Serving Benchmark (YCSB). YCSB is a framework to benchmark data store systems. This framework has an appropriate interface to populate and stress many popular database management systems. This benchmark loads one of the most popular NoSQL databases Cassandra with YCSB to mimic the representative NoSQL database state in the cloud.
+The Data Serving benchmark relies on the Yahoo! Cloud Serving Benchmark (YCSB). YCSB is a framework to benchmark data storage systems. This framework has an appropriate interface to populate and stress many popular database management systems. This benchmark loads one of the most popular NoSQL databases Cassandra with YCSB to mimic the representative NoSQL database state in the cloud.
 
 ### Dockerfiles
 
@@ -23,11 +23,11 @@ The following options can modify the settings of the server:
 - `--reader-count=<int>`: The number of reader threads Cassandra uses. According to Cassandra's suggestions, each disk containing the database should have 16 threads to hide its latency. The default value is 16, assuming all the data is stored on a single disk.
 - `--writer-count=<int>`: The number of writer threads Cassandra uses. Cassandra recommends 8 threads per CPU core. The default value is 32.
 - `--heap-size=<int>`: JVM heap size. Its unit is GB, and by default, JVM uses `max(min(1/2 ram, 1GB), min(1/4 ram, 8GB))`. It is good to increase the value when the server has enough DRAM for better performance or lower the value for explicit resource restriction.
-- `--affinity=<cpu_id, ...>`: The CPU Cassandra works on. This setting is useful to set CPU affinity explicitly. Usually, it is combined with the container's resource management option (e.g., `--cpuset-cpus`). 
+- `--affinity=<cpu_id, ...>`: The CPUs Cassandra works on. This setting is useful to set CPU affinity explicitly. Usually, it is combined with the container's resource management option (e.g., `--cpuset-cpus`). 
 
 ### Multiple Server Containers
 
-Please note the server containers cannot be hosted on the same node when the host network configuration is used, because they all use the same port.
+Please note  server containers cannot be hosted on the same node when the host network configuration is used, because they all use the same port.
 
 For a cluster setup with multiple servers, we need to instantiate a seed server :
 
@@ -71,7 +71,7 @@ More detailed instructions on generating the dataset and load can be found in St
 
 A rule of thumb on the dataset size
 -----------------------------------
-If you are only profiling CPU microarchitectures, you should ensure that the hot data part (3% ~ 5% of the dataset) cannot be buffered on-chip to mimic the realistic situation. Usually, a 10GB dataset is enough for a typical CPU with less than 100MB LLC.
+If you are only profiling CPU microarchitectures, you should ensure that the hot data part (3% ~ 5% of the dataset) cannot be buffered on-chip to mimic the realistic situation. Usually, a 10GB dataset is enough for a typical CPU with less than 50MB LLC.
 
 Tuning the server performance
 -----------------------------

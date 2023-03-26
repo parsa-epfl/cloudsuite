@@ -30,7 +30,7 @@ $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/gra
     --driver-memory 8g --executor-memory 8g
 ```
 
-Note that any argument passed to the container will be directed to `spark-submit`, the interface to submit jobs to spark. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to `spark-submit`. Adjust the `spark-submit` arguments based on the chosen algorithm and your system and container's configurations.
+Note that any argument passed to the container will be directed to `spark-submit`, the interface to submit jobs to Spark. In the given command, to ensure that Spark has enough memory allocated to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to `spark-submit`. 
 
 The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for PageRank, connected components, and triangle count respectively. PageRank is selected by default if not set. 
 
@@ -41,8 +41,7 @@ All of these analytics require huge memory to finish. As a reference, running `t
 This section explains how to run the benchmark using multiple Spark workers (each running in a Docker container) that can be spread across multiple nodes in a cluster. 
 
 
-First, create a dataset image on every physical node where Spark
-workers will be running.
+First, create a dataset image on every physical node where Spark workers will be running.
 
 ```bash
 $ docker create --name twitter-data cloudsuite/twitter-dataset-graph

@@ -3,9 +3,9 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Hadoop is a popular approach for handling large-scale analysis. Its distributed file system and compute capabilities allow it to scale to PetaBytes of data. The Data Analytics benchmark is included in CloudSuite to cover the increasing importance of classification tasks in analyzing large amounts of data in datacenters using the MapReduce framework Hadoop. It is based on Mahout, a set of machine learning libraries running on top of Hadoop. 
+The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. The Data Analytics benchmark is included in CloudSuite to cover the increasing importance of classification tasks in analyzing large amounts of data in datacenters using the MapReduce framework Hadoop, which is a popular approach for handling large-scale analysis. Its distributed file system and compute capabilities allow it to scale to petabytes of data. 
 
-The benchmark runs a Naive Bayes classifier on a [Wikimedia dataset](https://dumps.wikimedia.org/backup-index.html). It uses Hadoop version 2.10.2 and Mahout version 14.1.
+This workload is based on Mahout, a set of machine learning libraries running on top of Hadoop. It runs a Naive Bayes classifier on a [Wikimedia dataset](https://dumps.wikimedia.org/backup-index.html), and uses Hadoop version 2.10.2 and Mahout version 14.1.
 
 
 ## Dockerfiles
@@ -15,7 +15,7 @@ Supported tags and their respective `Dockerfile` tags:
 
 ## Running the benchmark ##
 
-The benchmark is designed to run on a Hadoop cluster, where a single master runs the driver program, and the slaves run the mappers and reducers.
+The benchmark is designed to run on a Hadoop cluster, where a single master runs the driver program, and workers run the mappers and reducers.
 
 First, start the container for the dataset:
 
