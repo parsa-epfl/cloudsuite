@@ -41,7 +41,7 @@ Create an empty folder and then create a server configuration file named docker_
 ```
     server_address, port
 ```
-The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and quality of service (QoS). As a result, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
+The client can simultaneously use multiple servers or one server with several IP addresses (in case the server machine has multiple ethernet cards active) or one server through multiple ports, while measuring the overall throughput and QoS. As a result, each line in the configuration file should contain the corresponding server address and port number. To illustrate, in the case of our example, it would be:
 ```
     IP_ADDRESS_VM1, 11211
     IP_ADDRESS_VM2, 11211
