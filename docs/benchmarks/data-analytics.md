@@ -3,22 +3,19 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-The explosion of accessible human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Hadoop has emerged as a popular approach to handling large-scale analysis with its distributed file system and compute capabilities, allowing it to scale to PetaBytes of data. The Data Analytics benchmark is included in CloudSuite to cover the increasing importance of classification tasks analyzing large amounts of data in datacenters using the MapReduce framework. It is composed of Mahout, a set of machine learning libraries, running on top of Hadoop, an open-source implementation of MapReduce.
+The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information.The Data Analytics benchmark is included in CloudSuite to cover the increasing importance of classification tasks in analyzing large amounts of data in datacenters. It uses the MapReduce framework Hadoop, which is a popular approach for handling large-scale analysis. Its distributed file system and compute capabilities allow it to scale to PetaBytes of data. 
 
-The benchmark consists of running a Naive Bayes classifier on a (Wikimedia dataset)[https://dumps.wikimedia.org/backup-index.html]. It uses Hadoop version 2.10.2 and Mahout version 14.1.
+This workload is based on Mahout, a set of machine learning libraries running on top of Hadoop. It runs a Naive Bayes classifier on a [Wikimedia dataset](https://dumps.wikimedia.org/backup-index.html), and uses Hadoop version 2.10.2 and Mahout version 14.1.
 
-## Images ##
 
-To obtain the images:
+## Dockerfiles
 
-```bash
-$ docker pull cloudsuite/data-analytics
-$ docker pull cloudsuite/wikimedia-pages-dataset
-```
+Supported tags and their respective `Dockerfile` tags:
+- [`latest`][latestcontainer] contains the application logic.
 
 ## Running the benchmark ##
 
-The benchmark is designed to run on a Hadoop cluster, where the single master runs the driver program, and the slaves run the mappers and reducers.
+The benchmark is designed to run on a Hadoop cluster, where a single master runs the driver program, and workers run the mappers and reducers.
 
 First, start the container for the dataset:
 
@@ -26,18 +23,17 @@ First, start the container for the dataset:
 $ docker create --name wikimedia-dataset cloudsuite/wikimedia-pages-dataset 
 ```
 
-**Note**: The following commands will start the master for the cluster. To make sure that slaves and master can communicate with each other, the slave container's must point to the master's IP address. 
-
 Start the master with:
 
 ```bash
 $ docker run -d --net host --volumes-from wikimedia-dataset --name data-master cloudsuite/data-analytics --master
 ```
 
-By default, Hadoop master node is listened on the first interface accessing to network . You can overwrite the listening address by adding `--master-ip=X.X.X.X` to change the setting.
+By default, the Hadoop master node is listening on the first interface accessing the network. You can overwrite the listening address by adding `--master-ip=X.X.X.X`.
 
-Start any number of Hadoop slaves with:
-```
+Start any number of Hadoop workers with:
+
+```bash
 $ # on VM1
 $ docker run -d --net host --name data-slave01 cloudsuite/data-analytics --slave --master-ip=<IP_ADDRESS_MASTER>
 
@@ -46,9 +42,10 @@ $ docker run -d --net host --name data-slave02 cloudsuite/data-analytics --slave
 
 ...
 ```
-**Note**: You should set `IP_ADDRESS_MASTER` to master's IP address. 
 
-After both master and slave are set up (you can use `docker logs` to observe if the log is still generating), run the benchmark with:
+**Note**: You should set `IP_ADDRESS_MASTER` to the master's IP address and make sure that address is accessible from each worker.
+
+After both master and worker are set up (you can use `docker logs` to observe if the log is still being updated), run the benchmark with the following command:
 
 ```bash
 $ docker exec data-master benchmark
@@ -56,17 +53,20 @@ $ docker exec data-master benchmark
 
 ### Configuring Hadoop parameters ###
 
-We can configure a few parameters for Hadoop depending on requirements. 
+A few parameters for Hadoop can be configured depending on requirements.
 
-Hadoop infers the number of workers with how many partitions it created with HDFS. We can increase or reduce the HDFS partition size to `N` mb with `--hdfs-block-size=N`, 128mb being the default. The current dataset included here weights 900MB, thus the default `--hdfs-block-size=128` of 128mb resulting in splits between 1 and 8 parts depending on the benchmark phase.
+Hadoop infers the number of workers based on how many partitions it created with HDFS (HaDoop File System, a distributed file system for handing out dataset chunks to workers). You can increase or reduce the HDFS partition size to `N` MB with `--hdfs-block-size=N`, with 128MB being the default. The default dataset weighs 900MB. Thus, depending on the benchmark phase (sequencing, vectorization, pre-training, training, and inference), the default option `--hdfs-block-size=128` results in a split between 1 and 8 parts.
 
-The maximum number of workers is configured by `--yarn-cores=C`, default is 8, if there's more splits than number of workers, YARN will only allow up to `C` workers threads to process them and multiplex the tasks. Please note that **at least 2 cores** should be given for all workers in total: One core for the map operation and another core for the reduce operation. Otherwise, the process can get stuck. 
+Hadoop relies on [YARN][yarn] (Yet Another Resource Negotiator) to manage its resources, and the maximum number of workers is configured by `--yarn-cores=C`, whose default value is 8. If there are more blocks than the number of workers, YARN will only allow up to `C` worker threads to process them. Please note that **at least two cores** should be given in total: One core for the map operation and another for the reduce operation. Otherwise, the process can get stuck. 
 
-The maximum memory used by each worker is configured by `--mapreduce-mem=N`, default is 2096mb. Note that depending on the number of `--yarn-cores=C`, the total actual physical memory required will be of at least `C*N`. You are recommended to allocate 8GB memory (even for single worker with 2 CPUs) in total to avoid out of memory errors.
+The maximum memory used by each worker is configured by `--mapreduce-mem=N`, and the default value is 2096MB. Note that depending on the number of `--yarn-cores=C`, the total physical memory required will be at least `C*N`. To avoid out-of-memory errors, we recommend allocating at least 8GB of memory (even for a single worker with two cores) in total.
 
-For increasing total number of workers, please use a bigger dataset from wikimedia. Using a smaller partition sizes than 128 mb will result in increasing number of workers but also will actually slowdown the execution due to overheads of small partition size. 
+To increase the number of workers, please use a bigger dataset from Wikimedia. Using partition sizes smaller than 128MB can increase the number of workers but slow down the execution due to overheads of the small partition size. 
 
 
 [dhrepo]: https://hub.docker.com/r/cloudsuite/data-analytics/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-analytics.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-analytics.svg "Go to DockerHub Page"
+[yarn]: https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html "YARN explanation"
+
+[latestcontainer]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/data-analytics/latest/Dockerfile "link to container, github"
