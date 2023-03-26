@@ -4,6 +4,12 @@
 
 The Data Serving benchmark relies on the Yahoo! Cloud Serving Benchmark (YCSB). YCSB is a framework to benchmark data store systems. This framework has an appropriate interface to populate and stress many popular database management systems. This benchmark loads one of the most popular NoSQL databases Cassandra with YCSB to mimic the representative NoSQL database state in the cloud.
 
+### Dockerfiles
+
+Supported tags and their respective `Dockerfile` links:
+ - [`server`][serverdocker] contains the Cassandra and the script to initialize its configuration.
+ - [`client`][clientdocker] contains the YCSB load generator.
+
 ### Server Container
 
 Start the server container that will run the Cassandra server:
@@ -82,3 +88,7 @@ Tuning the server performance
 [dhrepo]: https://hub.docker.com/r/cloudsuite/data-serving/ "DockerHub Page"
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-serving.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-serving.svg "Go to DockerHub Page"
+
+[serverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/data-serving/server/Dockerfile "Server Dockerfile"
+
+[clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/data-serving/client/Dockerfile "Client Dockerfile"

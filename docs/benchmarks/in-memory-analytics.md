@@ -7,6 +7,11 @@ The explosion of human-generated information necessitates automated analytical p
 
 This benchmark uses Apache Spark and runs a collaborative filtering algorithm (alternating least squares, ALS) provided by Spark MLlib in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds for computing movie recommendations.
 
+### Dockerfiles
+
+Supported tags and their respective `Dockerfile` tags:
+- [`latest`][latestcontainer] contains the algorithm and application entrypoint.
+
 ### Datasets
 
 The benchmark uses user-movie ratings datasets provided by Movielens. Run the following command to create the dataset container:
@@ -91,3 +96,5 @@ $ docker run --rm --net host --volumes-from movielens-data \
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/in-memory-analytics.svg "Go to DockerHub Page"
 [ml-dhrepo]: https://hub.docker.com/r/cloudsuite/movielens-dataset/ 
 [spark-dhrepo]: https://hub.docker.com/r/cloudsuite/spark/
+
+[latestcontainer]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/in-memory-analytics/latest/Dockerfile "link to container, github"

@@ -12,8 +12,8 @@ The Web Search benchmark relies on the [Apache Solr][apachesolr] search engine f
 Supported tags and their respective `Dockerfile` tags:
 - [`index`][indexdocker] builds an image that crawls a set of websites to generate an index.
 - [`dataset`][datasetdocker] downloads an pre-generated index and mounts it to be used by the server.
-- [`server`][serverdocker] builds an image for the Apache Solr index nodes. You may spawn several nodes.
-- [`client`][clientdocker] builds an image for the client node. The client is used to start the benchmark and query index nodes.
+- [`server`][serverdocker] contains the Apache Solr index nodes. You may spawn several nodes.
+- [`client`][clientdocker] contains the client node based on Faban. The client is used to start the benchmark and query index nodes.
 
 These images are automatically built using the mentioned Dockerfiles available [`here`][repo].
 

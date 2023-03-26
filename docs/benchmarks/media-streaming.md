@@ -12,8 +12,8 @@ The benchmark has two tiers: the server and the client. The server runs Nginx, a
 
 Supported tags and their respective `Dockerfile` links:
 
- - [`server`][serverdocker] represents the Nginx streaming server running as a daemon.
- - [`client`][clientdocker] represents the `videoperf` client.
+ - [`server`][serverdocker] contains the Nginx streaming server running as a daemon.
+ - [`client`][clientdocker] contains the `videoperf` client.
  - [`dataset`][datasetdocker] provides the video dataset for the streaming server.
 
 ### Running Dataset and Server

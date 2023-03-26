@@ -7,6 +7,12 @@ The explosion of human-generated information necessitates automated analytical p
 
 The benchmark runs a Naive Bayes classifier on a [Wikimedia dataset](https://dumps.wikimedia.org/backup-index.html). It uses Hadoop version 2.10.2 and Mahout version 14.1.
 
+
+## Dockerfiles
+
+Supported tags and their respective `Dockerfile` tags:
+- [`latest`][latestcontainer] contains the application logic.
+
 ## Running the benchmark ##
 
 The benchmark is designed to run on a Hadoop cluster, where a single master runs the driver program, and the slaves run the mappers and reducers.
@@ -62,3 +68,5 @@ To increase the number of workers, please use a bigger dataset from Wikimedia. U
 [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/data-analytics.svg "Go to DockerHub Page"
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/data-analytics.svg "Go to DockerHub Page"
 [yarn]: https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html "YARN explanation"
+
+[latestcontainer]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/data-analytics/latest/Dockerfile "link to container, github"

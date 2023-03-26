@@ -5,6 +5,12 @@
 
 The Graph Analytics benchmark relies on the Spark framework to perform graph analytics on large-scale datasets. Apache provides a graph processing library, GraphX, designed to run on top of Spark. This benchmark performs various algorithms including PageRank on a Twitter dataset.
 
+
+### Dockerfiles
+
+Supported tags and their respective `Dockerfile` tags:
+- [`latest`][latestcontainer] contains the algorithm and application entrypoint.
+
 ### Datasets
 
 The benchmark uses a graph dataset generated from Twitter. To create the dataset image:
@@ -82,3 +88,5 @@ $ docker run --rm --net host --volumes-from twitter-data -e WORKLOAD_NAME=pr \
 [dhstars]: https://img.shields.io/docker/stars/cloudsuite/graph-analytics.svg "Go to DockerHub Page"
 [ml-dhrepo]: https://hub.docker.com/r/cloudsuite/twitter-dataset-graph/
 [spark-dhrepo]: https://hub.docker.com/r/cloudsuite/spark/
+
+[latestcontainer]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/graph-analytics/latest/Dockerfile "link to container, github"

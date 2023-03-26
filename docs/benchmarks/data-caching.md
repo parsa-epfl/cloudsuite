@@ -12,8 +12,8 @@ This benchmark features two tiers: the server(s) running Memcached and the clien
 
 Supported tags and their respective `Dockerfile` links:
 
- - [`server`][serverdocker]: This represents the Memcached server running as a daemon.
- - [`client`][clientdocker]: This represents the client which requests to access the server's data.
+ - [`server`][serverdocker] represents the Memcached server running as a daemon.
+ - [`client`][clientdocker] represents the client which requests to access the server's data.
 
 These images are automatically built using the mentioned Dockerfiles available on `parsa-epfl/cloudsuite` [GitHub repo][repo].
 

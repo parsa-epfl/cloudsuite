@@ -12,10 +12,10 @@ The benchmark has four tiers: web server, database server, Memcached server, and
 
 Supported tags and their respective `Dockerfile` links:
 
- - [`web_server`][webserverdocker]
- - [`memcached_server`][memcacheserverdocker]
- - [`db_server`][databaseserverdocker]
- - [`faban_client`][clientdocker]
+ - [`web_server`][webserverdocker] contains the application code and the web frontend PHP engine.
+ - [`memcached_server`][memcacheserverdocker] contains the Memcached server as the caching layer.
+ - [`db_server`][databaseserverdocker] contains the MariaDB database.
+ - [`faban_client`][clientdocker] contains the load generator based on Faban.
 
 These images are automatically built using the mentioned Dockerfiles available on the `parsa-epfl/cloudsuite` [GitHub repo][repo].
 
@@ -110,12 +110,12 @@ Elgg provides different features for the users. The client image implements a su
 - Comment on a blog
 - Search for a site member
 
-  [webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
-  [memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/memcached_server "MemcacheServer Dockerfile"
-  [databaseserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/db_server/Dockerfile "DatabaseServer(MariaDB) Dockerfile"
-  [clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
+[webserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/web_server/Dockerfile "WebServer Dockerfile"
+[memcacheserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/memcached_server "MemcacheServer Dockerfile"
+[databaseserverdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/db_server/Dockerfile "DatabaseServer(MariaDB) Dockerfile"
+[clientdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/web-serving/faban_client/Dockerfile "Client Dockerfile"
 
-  [repo]: https://github.com/parsa-epfl/cloudsuite/tree/main/benchmarks/web-serving "GitHub Repo"
-  [dhrepo]: https://hub.docker.com/r/cloudsuite/web-serving/ "DockerHub Page"
-  [dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-serving.svg "Go to DockerHub Page"
-  [dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-serving.svg "Go to DockerHub Page"
+[repo]: https://github.com/parsa-epfl/cloudsuite/tree/main/benchmarks/web-serving "GitHub Repo"
+[dhrepo]: https://hub.docker.com/r/cloudsuite/web-serving/ "DockerHub Page"
+[dhpulls]: https://img.shields.io/docker/pulls/cloudsuite/web-serving.svg "Go to DockerHub Page"
+[dhstars]: https://img.shields.io/docker/stars/cloudsuite/web-serving.svg "Go to DockerHub Page"
