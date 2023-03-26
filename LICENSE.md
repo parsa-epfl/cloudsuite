@@ -3,7 +3,6 @@ CloudSuite consists of several software components that are governed by various 
 ### Software developed externally (not by the CloudSuite group)
 
 * [Nginx Web Server](http://nginx.org/LICENSE)
-* [MySQL DBMS](http://www.gnu.org/licenses/gpl.html)
 * [PHP](http://www.php.net/license/3_01.txt)
 * [APC (Alternative PHP Cache)](http://www.php.net/license/3_01.txt)
 * [Nutch](http://www.apache.org/licenses/LICENSE-2.0)
@@ -24,12 +23,12 @@ CloudSuite consists of several software components that are governed by various 
 * [Elgg](https://www.gnu.org/licenses/gpl-2.0.html)
 
 ### Software developed internally (by the CloudSuite group)
-**CloudSuite 3.0 License**
+**CloudSuite 4.0 License**
 
 
-CloudSuite 3.0 Benchmark Suite
+CloudSuite 4.0 Benchmark Suite
 
-Copyright &copy; 2011-2018, Parallel Systems Architecture Lab, EPFL
+Copyright &copy; 2011-2023, Parallel Systems Architecture Lab, EPFL
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
