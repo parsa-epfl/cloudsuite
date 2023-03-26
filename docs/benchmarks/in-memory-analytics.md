@@ -3,10 +3,9 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses Apache Spark and runs a collaborative filtering algorithm in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds for computing movie recommendations.
+The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications like movies, music, news, books, research articles, search queries, and social tags. Because these applications suffer from I/O operations, most are running in memory nowadays to provide realtime results. 
 
-The explosion of human-generated information necessitates automated analytical processing to cluster, classify, and filter this information. Recommender systems are a subclass of information filtering systems that seek to predict the 'rating' or 'preference' that a user would give to an item. They have become extremely popular in recent years and are applied in various applications like movies, music, news, books, research articles, search queries, and social tags. Because these applications suffer from I/O operations, most are running in memory nowadays. This benchmark runs the alternating least squares (ALS) algorithm provided by Spark MLlib.
-
+This benchmark uses Apache Spark and runs a collaborative filtering algorithm (alternating least squares, ALS) provided by Spark MLlib in memory on a dataset of user-movie ratings. The metric of interest is the time in seconds for computing movie recommendations.
 
 ### Datasets
 
@@ -30,11 +29,11 @@ $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
     /data/ml-latest-small /data/myratings.csv
 ```
 
-Any remaining arguments are passed to `spark-submit`.
+Any additional arguments are passed to `spark-submit`, which is the interface to submit jobs to Spark.
 
 ### Tweaking the Benchmark
 
-Any arguments after the two mandatory ones are passed to spark-submit and are used to tweak execution. For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, supply it with --driver-memory and --executor-memory arguments:
+Any arguments after the two mandatory ones are passed to `spark-submit` and are used to tweak execution parameters. For example, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, supply it with `--driver-memory` and `--executor-memory` arguments:
 
 ```bash
 $ docker run --volumes-from movielens-data cloudsuite/in-memory-analytics \
