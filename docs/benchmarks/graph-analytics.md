@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-The Graph Analytics benchmark relies on the Spark framework to perform graph analytics on large-scale datasets. Apache provides a graph processing library, GraphX, designed to run on top of Spark. As an example, this benchmark performs PageRank on a Twitter dataset.
+The Graph Analytics benchmark relies on the Spark framework to perform graph analytics on large-scale datasets. Apache provides a graph processing library, GraphX, designed to run on top of Spark. This benchmark performs various algorithms including PageRank on a Twitter dataset.
 
 ### Datasets
 
@@ -13,12 +13,9 @@ The benchmark uses a graph dataset generated from Twitter. To create the dataset
 $ docker create --name twitter-data cloudsuite/twitter-dataset-graph
 ```
 
-More information about the dataset is available at
-[cloudsuite/twitter-dataset-graph][ml-dhrepo].
-
 ### Running/Tweaking the Benchmark
 
-The benchmark can run three graph algorithms using GraphX through the spark-submit script distributed with Spark. Available algorithms are PageRank, connected components, and triangle count.
+The benchmark can run three graph algorithms using GraphX: PageRank, connected components, and triangle count.
 
 To run the benchmark, run the following command:
 
@@ -27,11 +24,11 @@ $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/gra
     --driver-memory 8g --executor-memory 8g
 ```
 
-Note that any argument passed to the container will be directed to spark-submit. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to spark-submit. Adjust the spark-submit arguments based on the chosen algorithm and your system and container's configurations.
+Note that any argument passed to the container will be directed to `spark-submit`, the interface to submit jobs to spark. In the given command, to ensure that Spark has enough memory allocated to be able to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to `spark-submit`. Adjust the `spark-submit` arguments based on the chosen algorithm and your system and container's configurations.
 
 The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for PageRank, connected components, and triangle count respectively. PageRank is selected by default if not set. 
 
-All of these analytics workloads require huge memory to finish when more cores are involved. As a reference, running `tc` on a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which should be considered if you are collecting the workload trace and analyzing its behavior. 
+All of these analytics require huge memory to finish. As a reference, running `tc` on a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which should be considered if you are collecting the workload trace and analyzing its behavior. 
 
 ### Multi-node deployment
 
