@@ -12,7 +12,7 @@ arg.add_argument("--interval-min", type=int, help="The minimum interval for requ
 arg.add_argument("--interval-max", type=int, help="The maximum interval for request generation, in milliseconds", default=1500)
 arg.add_argument("--interval-deviation", type=float, help="The deviation of the interval, in percentage.", default=0)
 arg.add_argument("--interval-type", choices=["ThinkTime", "CycleTime"], help="The interval type.", default="ThinkTime")
-arg.add_argument("--interval-distribution", choices=["Fixed", "Uniform", "NegativeExponential"], help="The distribution of interval", default="Fixed")
+arg.add_argument("--interval-distribution", choices=["Fixed", "Uniform", "NegExp"], help="The distribution of interval", default="Fixed")
 
 arg.add_argument("--dataset-distribution", choices=["Random", "Zipfian"], help="The distribution of the request", default="Zipfian")
 arg.add_argument("--output-query-result", "-q", action="store_true", help="Whether let Faban output search query. Can be a potential performance bottleneck.")
@@ -59,7 +59,7 @@ with open(f"{FABAN_HOME}/search/src/sample/searchdriver/SearchDriver.java", "x")
             arg.interval_type.upper(),
             arg.interval_deviation
         ))
-    elif arg.interval_distribution == "NegativeExponential":
+    elif arg.interval_distribution == "NegExp":
         f.write("@NegativeExponential(cycleMin = {}, cycleMax = {}, cycleMean = {}, cycleType = CycleType.{}, cycleDeviation = {})\n".format(
             arg.interval_min,
             arg.interval_max,
