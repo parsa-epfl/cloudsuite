@@ -1,6 +1,6 @@
 # CloudSuite 4.0 #
 
-**This branch is WIP and contains the upcoming release of CloudSuite v4.0. If you are looking for CloudSuite 3, please checkout the [CSv3][CSv3] branch.**
+**This branch contains the release of CloudSuite v4.0. If you are looking for CloudSuite 3, please checkout the [CSv3][CSv3] branch.**
 
 [CloudSuite][csp] is a benchmark suite for cloud services. The fourth release consists of ten applications that have 
 been selected based on their popularity in today's datacenters. The benchmarks are based on real-world software 
