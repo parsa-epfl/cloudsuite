@@ -51,7 +51,7 @@ with open(f"{FABAN_HOME}/search/src/sample/searchdriver/SearchDriver.java", "x")
             arg.interval_deviation
         ))
         if arg.interval_min != arg.interval_max:
-            print("Warning: the maximal interval should be same as the minimal interval when fixed distribution is used. The program uses minimal interval as the fixed interval.")
+            print("Warning: the maximum interval should be same as the minimum interval when fixed distribution is used. The program uses minimum interval as the fixed interval.")
     elif arg.interval_distribution == "Uniform":
         f.write("@Uniform(cycleMin = {}, cycleMax = {}, cycleType = CycleType.{}, cycleDeviation = {})\n".format(
             arg.interval_min,

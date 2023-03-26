@@ -81,12 +81,12 @@ $ docker run -it --name web_search_client --net host cloudsuite/web-search:clien
 `server_address` is the IP address of the Solr index server, and `scale` defines the number of load generators' workers. Additionally, you can customize the load generator and request distribution by applying the following options:
 
 - `--ramp-up=<integer>`: The ramp-up time, which is the time when the load generator sends requests to warm up the server, before the actual measurement starts. The unit is seconds, and its default value is 20.
-- `--ramp-down=<integer>`: The ramp-down time. Like the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues, but does not send any new requests and waits for all previous requests to finish. The unit is seconds, and its default value is 10.
+- `--ramp-down=<integer>`: The ramp-down time. Like the ramp-up time, the ramp-down time defines the duration after measurement when the load generator continues. Loads generating in this period are not included in the final statistics. The unit is seconds, and its default value is 10.
 - `--steady=<integer>`: The measurement time. The unit is seconds, and its default value is 60.
-- `--interval-type=<ThinkTime|CycleTime>`: The method used to define the interval for each load generator. `ThinkTime` defines the interval as the duration between receiving a reply and sending the next request, while `CycleTime` defines the interval as the duration between sending two lockstep requests. The default value is `ThinkTime`. Note using `CycleTime` will not change anything if the interval is smaller than a single request's latency: the load generator is closed-loop. 
+- `--interval-type=<ThinkTime|CycleTime>`: The method used to define the interval for each load generator. `ThinkTime` defines the interval as the duration between receiving a reply and sending the next request, while `CycleTime` defines the interval as the duration between sending two lockstep requests. The default value is `ThinkTime`. Note that the load generator cannot follow the given cycle interval if its value is smaller than a single request's latency: the load generator is closed-loop. 
 - `--interval-distribution=<Fixed|Uniform|NegativeExponential>`: The distribution of the interval. Its default value is `Fixed`.
-- `--interval-min=int`: The minimal interval between sending two requests. The unit is milliseconds, and its default value is 1000. 
-- `--interval-max=int`: The maximal interval between sending two requests. The unit is in milliseconds, and its default value is 1500. When using the `Fixed` distribution, this value should be identical to the minimal interval.
+- `--interval-min=int`: The minimum interval between sending two requests. The unit is milliseconds, and its default value is 1000. 
+- `--interval-max=int`: The maximum interval between sending two requests. The unit is in milliseconds, and its default value is 1500. When using the `Fixed` distribution, this value should be identical to the minimum interval.
 - `--interval-deviation=float`: The deviation of the interval. The unit is a percentage, and its default value is 0.
 
 ### Generating a custom index
@@ -104,10 +104,10 @@ To start the indexing process, run the command below:
 $ docker exec -it web_search_index generate_index
 ```
    
-This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the index size reaches your desired value. The index is in the index container at `/usr/src/solr-9.0.0/nutch/data`. You can copy the index from the index container to the host machine by running the following command:
+This command crawls up to 100 web pages, starting from the seed URLs, and generates an index for the crawled pages. Finally, it reports the total number of indexed documents. You can continuously run this command until the number of crawled pages or the index size reaches your desired value. The index is in the index container at `/usr/src/solr-9.1.1/nutch/data`. You can copy the index from the index container to the host machine by running the following command:
 
 ```bash
-$ docker cp web_search_index:/usr/src/solr-9.0.0/nutch/data ${PATH_TO_SAVE_INDEX}
+$ docker cp web_search_index:/usr/src/solr-9.1.1/nutch/data ${PATH_TO_SAVE_INDEX}
 ```
   
 Accordingly, you can modify the server image to use your index instead of the index given by the dataset container. 
