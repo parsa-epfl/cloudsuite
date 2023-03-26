@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosted videos of various lengths and qualities. Based on [videoperf][httperf_repo]'s session generator, the client requests different videos to stress the server.
+This benchmark uses the [Nginx][nginx_repo] web server as a streaming server for hosting videos of various lengths and qualities. Based on [videoperf][httperf_repo]'s session generator, the client requests different videos to stress the server.
 
 ## Using the Benchmark ##
 The benchmark has two tiers: the server and the client. The server runs Nginx, and the client requests videos. Each tier has its own image, identified by its tag.
@@ -12,13 +12,13 @@ The benchmark has two tiers: the server and the client. The server runs Nginx, a
 
 Supported tags and their respective `Dockerfile` links:
 
- - [`server`][serverdocker]: This image represents the Nginx streaming server running as a daemon.
- - [`client`][clientdocker]: This image represents the `videoperf` client.
- - [`dataset`][datasetdocker]: This image provides the video dataset for the streaming server.
+ - [`server`][serverdocker] represents the Nginx streaming server running as a daemon.
+ - [`client`][clientdocker] represents the `videoperf` client.
+ - [`dataset`][datasetdocker] provides the video dataset for the streaming server.
 
-### Running Dataset and Server on Host1
+### Running Dataset and Server
 
-The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. Then, based on the generated videos, it suggests the request lists for the client docker container. 
+The dataset image has two purposes. First, it generates video files with different resolutions (from 240p to 720p) for the server docker container. Then, based on the generated videos, it suggests request lists for the client docker container. 
 
 Use the following command to run the dataset container:
 
@@ -26,11 +26,11 @@ Use the following command to run the dataset container:
 $ docker run --name streaming_dataset cloudsuite/media-streaming:dataset ${DATASET_SIZE} ${SESSION_COUNT}
 ```
 
-`DATASET_SIZE` in GBs, scales the size of the dataset to the given number. By default, the dataset container generates ten videos for each of 240p, 360p, 480p, and 720p resolutions, totally with around 3.5 GB size. 
+The parameter `DATASET_SIZE`, in GBs, scales the size of the dataset to the given number. By default, the dataset container generates ten videos for each of 240p, 360p, 480p, and 720p resolutions, resulting in 3.5 GB size in total. 
 
-`SESSION_COUNT` denotes the number of sessions for streaming the video files. For every resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
+The parameter `SESSION_COUNT` denotes the number of sessions for requesting video files. For each resolution, the dataset container generates a list of sessions (named `session lists`) to guide the client on how to stress the server. By default, the value is five. 
 
-In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fetch a specific video chunk. As a reference, you can find a sample session below:
+In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS queries to fetch a specific video chunk. As a reference, you can find a sample session below:
 
 ```
 /full-240p-00004.mp4 timeout=10 headers='Range: bytes=0-524287'
@@ -41,15 +41,15 @@ In `videoperf`'s context, a `session` is a sequence of HTTP/HTTPS requests to fe
 /full-240p-00004.mp4 pace_time=10 timeout=10 headers='Range: bytes=2621440-3145727'
 /full-240p-00004.mp4 pace_time=10 timeout=10 headers='Range: bytes=3145728-3221180'
 ```
-Each line here defines an HTTP/HTTPS request with the following fields:
-- The name of the requested video. In our example, requests ask for `/full-240p-00004.mp4`.
-- `timeout` determines the maximum time the client waits before receiving any response after sending the request to the server. Once expired, the client closes the connection and increases the timeout counter. 
-- `pace_time` determines the latency between sending two consecutive requests. By default, the first three requests of each session don't have this field, which means they are sent together. 
-- `header` declares a range of video bytes for each request. 
+Each line here defines an HTTP/HTTPS query with the following fields:
+- The name of the requested video. In our example, all queries ask for `/full-240p-00004.mp4`.
+- `timeout` determines the maximum time the client waits to receive any response after sending a query to the server. Once expired, the client closes the connection and increases the timeout counter. 
+- `pace_time` determines the latency between sending consecutive queries. By default, the first three queries of each session don't have this field, which means they are sent together. 
+- `header` declares a range of video bytes for each query. 
 
 It is possible that sessions in the `session lists` don't touch the whole dataset. In this case, consider increasing the `SESSION_COUNT`. Check the beginning of the `session lists` for each resolution to see the related statistics.
 
-### Starting the Server on Host1 ####
+### Starting the Server ####
 Start the server on the same machine as the dataset container: 
 
 ```bash
@@ -58,17 +58,17 @@ $ docker run -d --name streaming_server --volumes-from streaming_dataset --net h
 
 The `NGINX_WORKERS` parameter sets the number of Nginx workers. If not given, the default value is 2000. Adjust this number based on the server's computational resources and the intended load.
 
-### Starting the Client on Host2 ###
+### Starting the Client ###
 
-You need to copy the `session lists` from the dataset container and then transfer the files to Host2, where you want to launch the `videoperf` client. 
+You need to copy the `session lists` from the dataset container and then transfer them to the server where you want to launch the `videoperf` client. 
 
-To copy `session lists` from the dataset container to Host 1, use the following command:
+To copy `session lists` from the dataset container to server, use the following command:
 
 ```bash
 $ docker cp streaming_dataset:/videos/logs <destination>
 ```
 
-Then, you can use any command (e.g., `scp`, `rsync`) to transfer files to Host2. 
+Then, you can use any command (e.g., `scp`, `rsync`) to transfer files to the client machine. 
 
 To run the client container, use the following command:
 
@@ -79,9 +79,9 @@ $ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/ou
 Parameters are:
 - `<lists>`: The path where the `session lists` is put. You should be able to find files like `cl-*.log`
 - `<results>`: The path for the benchmark statistics files. 
-- `SERVER_IP`: The IP address of the server, which should be the Host1 in this document. 
+- `SERVER_IP`: The IP address of the server. 
 - `VIDEOPERF_PROCESSES`: The number of videoperf processes, with a default value of 4. 
-- `VIDEO_COUNT`: The total number of videos to request. Each video requests will use one session from the `session list` and send the corresponding requests. 
+- `VIDEO_COUNT`: The total number of videos to request. Each video is represented by one session from the `session list`, and the client requests the video by sending HTTP queries to get video chunks sequentially. 
 - `RATE`: The rate (videos per second) for new video request generation. 
 - `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLS v1.3.
 
@@ -109,15 +109,14 @@ Throughput (Mbps) = 465.59  , total-errors = 0       , concurrent-clients = 161 
 ```
 Note that each videoperf process reports its statistics. Therefore, the overall state of the benchmark will be the sum of individual reports. 
 
-To tune the benchmark, give a starting rate as the seed (we suggest 1). The benchmark will take a few minutes to reach a steady state. Consequently, consider giving an appropriate number for `VIDEO_COUNT`. For example, if the benchmark did not reach steady state in 5 minutes and the `RATE` was ten video requests per second, the number of requested videos would be larger than 5x60x10=3000. Therefore, we suggest giving a large value to `VIDEO_COUNT` to sustain a long steady state. 
+To tune the benchmark, give a starting rate as the seed (we suggest 1). The benchmark will take a few minutes to reach a steady state. Consequently, consider giving an appropriate number for `VIDEO_COUNT`. For example, if the benchmark did not reach steady state in 5 minutes and the `RATE` was ten video requests per second, the number of requested videos need to be larger than 5x60x10=3000. Therefore, we suggest giving a large value to `VIDEO_COUNT` to sustain a long steady state. 
 
-Other principles are:
-1. The benchmark reaches a steady state when both throughput and concurrent video requests are stable while there are few encountered errors. The number of errors should be 0, but occasional errors may occur. 
+Other points to consider are:
+1. The benchmark reaches a steady state when both throughput and the number of concurrent video requests are stable while there are few encountered errors. The number of errors should be 0, but occasional errors may occur. 
 2. If there is a problem in the tuning process, the number of errors will increase rapidly. 
-3. In the ramp-up phase, both throughput and concurrent video requests will increase. The throughput may become stable, but concurrent video requests can continue to increase. It means that the rate of establishing new video requests is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
-4. If you find the benchmark in a steady state, you might want to increase the `RATE` to see whether the server can handle a higher load.
-5. An overloaded client container will result in errors and crashes. In this case, consider allocating more cores to support more videoperf processes. You can check the client container's CPU utilization using different tools (e.g., docker stats) and compare it against the number of cores on the client machine or the number of cores devoted to the container by docker (e.g., by `--cpuset-cpus` option). 
-6. Remember that videoperf is a highly demanding single-thread process. Therefore, we recommend that you ensure the number of available cores for the client container is higher or equal to the number of videoperf processes. 
+3. In the ramp-up phase, both throughput and the number of concurrent video requests will increase. The throughput may become stable, but the number of concurrent video requests can continue to increase. It means that the rate of establishing new video requests is higher than the server's capabilities. In this case, consider decreasing the `RATE` parameter of the client container.
+4. If you find the benchmark is in a steady state, you might want to increase the `RATE` parameter to see whether the server can handle a higher load.
+5. Remember that videoperf is a highly demanding single-thread process. Therefore, we recommend that you ensure the number of available cores for the client container is higher than or equal to the number of videoperf processes. 
 
 
 [datasetdocker]: https://github.com/parsa-epfl/cloudsuite/blob/main/benchmarks/media-streaming/dataset/Dockerfile "Dataset Dockerfile"  
