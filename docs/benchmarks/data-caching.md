@@ -3,7 +3,7 @@
 [![Pulls on DockerHub][dhpulls]][dhrepo]
 [![Stars on DockerHub][dhstars]][dhrepo]
 
-This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes a strict quality of service guarantee: the 99 percentile latency should be less than 1ms.
+This benchmark uses the Memcached data caching server. It simulates the behavior of a Twitter data caching server using a Twitter dataset. The metric of interest is throughput, expressed as the number of requests served per second. The workload assumes a strict Quality of Service (QoS) guarantee: the 99 percentile latency should be less than 1ms.
 
 ## Using the benchmark ##
 This benchmark features two tiers: the server(s) running Memcached and the client(s) requesting data cached on the Memcached servers. Each tier has its own image, identified by its tag.
@@ -37,7 +37,7 @@ $ docker run --name dc-server2 --net host -d cloudsuite/data-caching:server -t 4
 
 ### Starting the Client ####
 
-Create an empty folder and then create a server configuration file named `docker_servers.txt` inside the folder. This file includes the server address and the port number to connect to, in the following format:
+Create an empty folder and then create a server configuration file named docker_servers.txt inside the folder. This file includes the server address and the port number to connect to, in the following format:
 ```
     server_address, port
 ```
@@ -55,7 +55,7 @@ To start the client container, use the following command:
 $ docker run -idt --name dc-client --net host -v PATH_TO_DOCKER_SERVERS_FOLDER:/usr/src/memcached/memcached_client/docker_servers/ cloudsuite/data-caching:client
 ```
 
-Please note that the command mounts the folder containing the 'docker_servers.txt' file instead of only the file. This way, further changes to `docker_servers.txt` in the host will be reflected inside the container. 
+Please note that the command mounts the folder containing the docker_servers.txt file instead of only the file. This way, further changes to docker_servers.txt in the host will be reflected inside the container. 
 
 #### Scaling the dataset and warming up the server ####
 
@@ -74,7 +74,7 @@ $ docker exec -it dc-client /bin/bash /entrypoint.sh --m="W" --S=28 --D=10240 --
 ```
 ### Running the benchmark ###
 
-To determine the maximum throughput while running the workload with eight client threads,
+To determine the maximum throughput while running the workload with 8 client threads,
 200 TCP/IP connections, and a get/set ratio of 0.8, use the following command. `TH` refers to the _throughput_ mode of operation.
 
 ```bash

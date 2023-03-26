@@ -30,11 +30,11 @@ $ docker run --rm --volumes-from twitter-data -e WORKLOAD_NAME=pr cloudsuite/gra
     --driver-memory 8g --executor-memory 8g
 ```
 
-Note that any argument passed to the container will be directed to `spark-submit`, the interface to submit jobs to Spark. In the given command, to ensure that Spark has enough memory allocated to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to `spark-submit`. 
+Note that any arguments passed to the container will be directed to `spark-submit`, the interface to submit jobs to Spark. In the given command, to ensure that Spark has enough memory allocated to execute the benchmark in memory, `--driver-memory` and `--executor-memory` arguments are passed to `spark-submit`. 
 
 The environment variable `WORKLOAD_NAME` sets the graph algorithm that the container executes. Use `pr`, `cc`, and `tc` for PageRank, connected components, and triangle count respectively. PageRank is selected by default if not set. 
 
-All of these analytics require huge memory to finish. As a reference, running `tc` on a single CPU core requires 8GB `driver-memory` and `executor-memory`. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which should be considered if you are collecting the workload trace and analyzing its behavior. 
+All of these analytic workloads require huge memory to finish. As a reference, running `tc` on a single CPU core requires 8GB each. If you allocate more cores, more memory is necessary. You will see the `OutOfMemoryError` exception if you do not give enough memory. We recommend giving more than 16GB of memory for each core to minimize GC activities, which can influence your measurements. 
 
 ### Multi-node deployment
 
