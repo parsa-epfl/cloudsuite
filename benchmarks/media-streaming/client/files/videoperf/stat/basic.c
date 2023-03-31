@@ -42,6 +42,8 @@
 #include <stats.h>
 #include <spec_stats.h>
 
+#include <sys/time.h>
+
 #ifdef UW_CALL_STATS
 #include <call_stats.h>
 #endif /* UW_CALL_STATS */
@@ -228,8 +230,11 @@ perf_sample (Event_Type et, Object *obj, Any_Type reg_arg, Any_Type call_arg)
   /* convert throughput into Mbps */
   double throughput = weight * bytes_received * 8.0 / 1000000;
 
-  printf("Throughput (Mbps) = %-8.2lf, total-errors = %-8d, concurrent-clients = %-8d, reply-rate = %-8.1lf\n", 
-      throughput, total_errors, basic.num_connected_conns, rate);  
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  
+  printf("UnixTs = %10ld,Throughput (Mbps) = %-8.2lf, total-errors = %-8d, concurrent-clients = %-8d, reply-rate = %-8.1lf\n", 
+      currentTime.tv_sec, throughput, total_errors, basic.num_connected_conns, rate);  
 
   fflush(stdout);
 #else
