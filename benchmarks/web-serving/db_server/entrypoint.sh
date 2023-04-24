@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget --no-check-certificate https://cloudsuite.ch/download/web-serving/ELGG_DB.tar.gz
+wget --no-check-certificate https://datasets.epfl.ch/cloudsuite/ELGG_DB.tar.gz
 tar -xvf ELGG_DB.tar.gz
 
 

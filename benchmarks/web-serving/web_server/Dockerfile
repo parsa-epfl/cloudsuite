@@ -27,7 +27,7 @@ RUN cat /tmp/limits.conf.append >> /etc/security/limits.conf && rm -f /tmp/limit
 
 # Checkout the Elgg installation
 RUN mkdir /usr/share/nginx/html/elgg && \ 
-    wget --progress=bar:force -O - http://cloudsuite.ch/download/web-serving/elgg_installation_4.3.0.tar.gz | \
+    wget --progress=bar:force -O - http://datasets.epfl.ch/cloudsuite/elgg_installation_4.3.0.tar.gz | \
     tar zxvf - -C ~ && \
     mv ~/elgg_installation_4.3.0/* /usr/share/nginx/html/elgg/.
    
