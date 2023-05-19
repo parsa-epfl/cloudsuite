@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget --progress=bar:force -O - --no-check-certificate https://cloudsuite.ch/download/web-serving/ELGG_DB.tar.gz | tar -zxvf -
+wget --progress=bar:force -O - --no-check-certificate http://datasets.epfl.ch/cloudsuite/ELGG_DB.tar.gz | tar -zxvf -
 
 
 # workaround for overlayfs:
