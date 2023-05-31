@@ -118,10 +118,14 @@ solr
 solr's
 SQL
 src
+stddev
 sudo
 sys
+sysbench
 taskset
 TCP
+TPC
+tpcc
 threadcount
 txt
 UI

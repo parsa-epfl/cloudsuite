@@ -4,8 +4,8 @@ The Data Serving benchmark (based on PostgreSQL 15) uses [sysbench][sysbench] an
 
 ### Dockerfiles
 Supported tags and their respective `Dockerfile` links:
-    - `server` cintains PostgreSQL 15, and by default it opens the prompt using user `postgres`.
-    - `client` contains sysbench, sysbenc-tpcc, and template load generation script to run the workload.
+    - `server` contains PostgreSQL 15, and by default it opens the prompt using user `postgres`.
+    - `client` contains sysbench, sysbench-tpcc, and template load generation script to run the workload.
 
 ### Server Container
 
@@ -17,7 +17,7 @@ $ docker run --name postgresql-server -it --net host cloudsuite/data-serving-rat
 
 ```
 
-It creates a postgre user `cloudsuite` (password is `cloudsuite` as well), a database `sbtest`, and grant database's permission to the user. The user has the permission to access the database remotely. 
+It creates a database user `cloudsuite` (password is `cloudsuite` as well), a database `sbtest`, and grant database's permission to the user. The user has the permission to access the database remotely. 
 
 
 ### Client Container
