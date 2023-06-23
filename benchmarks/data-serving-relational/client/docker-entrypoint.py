@@ -8,7 +8,7 @@ import argparse
 args = sys.argv[1:]
 parser = argparse.ArgumentParser()
 parser.add_argument("--tpcc", help="Run TPC-C benchmark", action='store_true')
-parser.add_argument("--oltp", help="Run OLTP benchmark", action='store_true')
+parser.add_argument("--oltp-rw", help="Run sysbench OLTP Read/Write workload", action='store_true')
 parser.add_argument("--server-ip", help="IP of the server to load")
 
 args_parsed, unknown = parser.parse_known_args()
@@ -18,8 +18,8 @@ if not args_parsed.server_ip:
     sys.exit()
 
 print("args: " + str(args))
-if not args_parsed.tpcc and not args_parsed.oltp:
-    print("Precise whenever it's --tpcc or --oltp")
+if not args_parsed.tpcc and not args_parsed.oltp_rw:
+    print("Precise whenever it's --tpcc or --oltp-rw")
     sys.exit()
 
 import os
@@ -81,4 +81,4 @@ with open(f"{DATABASE_CONF_FILE}", "r") as f:
 if args_parsed.tpcc:
     subprocess.call(['/root/template/tpcc.py'] + args)
 else:
-    subprocess.call(['/root/template/oltp.py'] + args)
+    subprocess.call(['/root/template/oltp-rw.py'] + args)
