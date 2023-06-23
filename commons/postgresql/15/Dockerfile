@@ -8,3 +8,5 @@ RUN apt update && apt install -y wget gnupg lsb-release && \
     apt update && \
     apt -y install postgresql-15
 
+
+ENV POSTGRE_HOME /etc/postgresql/15/main
