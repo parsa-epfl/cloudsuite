@@ -92,6 +92,7 @@ mysqlserverdocker
 nginx
 NoSQL
 Nutch
+OLTP
 OPERATIONCOUNT
 os
 PageRank
