@@ -328,7 +328,7 @@ jobs:
           DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
           DBX_PLATFORM: ${{ matrix.platform }}
 
-  data-serving-rational:
+  data-serving-relational:
     runs-on: ubuntu-latest
     needs: postgresql
     env:

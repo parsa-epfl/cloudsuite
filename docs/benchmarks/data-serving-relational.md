@@ -13,7 +13,7 @@ Start the server container with the following command:
 
 ```bash
 
-$ docker run --name postgresql-server -it --net host cloudsuite/data-serving-rational:server
+$ docker run --name postgresql-server -it --net host cloudsuite/data-serving-relational:server
 
 ```
 
@@ -27,13 +27,13 @@ We have two types of benchmarks, TPC-C and OLTP. Both of them require you to poi
 Depending on which one you want to launch, you can pick between `--tpcc` and `--oltp` such as the following:
 
 ```bash
-docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client --warmup <--tpcc | --oltp> --server-ip=127.0.0.1
+docker run --name sysbench-client -it --net host cloudsuite/data-serving-relational:client --warmup <--tpcc | --oltp> --server-ip=127.0.0.1
 ```
 
 And for running the benchmark you can run the following command: 
 
 ```bash
-docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client --run <--tpcc | --oltp> --server-ip=127.0.0.1
+docker run --name sysbench-client -it --net host cloudsuite/data-serving-relational:client --run <--tpcc | --oltp> --server-ip=127.0.0.1
 ```
 
 #### TPC-C
@@ -53,7 +53,7 @@ For the OLTP benchmark, you can configure the following parameters:
 - `--scale=N` the scale `N` of the database.
 
 ```bash
-$ docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client
+$ docker run --name sysbench-client -it --net host cloudsuite/data-serving-relational:client
 ```
 
 ### Container
@@ -61,7 +61,7 @@ $ docker run --name sysbench-client -it --net host cloudsuite/data-serving-ratio
 You can enter the container with the following command:
 
 ```bash
-$ docker run --name sysbench-client -it --net host --entrypoint bash cloudsuite/data-serving-rational:client
+$ docker run --name sysbench-client -it --net host --entrypoint bash cloudsuite/data-serving-relational:client
 ```
 
 - `/root/template/database.conf` defines the port to the PostgreSQL. You can modify the IP address and the port accordingly based on the configuration of your server container.
