@@ -22,18 +22,52 @@ It creates a database user `cloudsuite` (password is `cloudsuite` as well), a da
 
 ### Client Container
 
-Start the client container with the following command:
+We have two types of benchmarks, TPC-C and OLTP. Both of them require you to point to the destination server with `--server-ip=<IP>`. To run the warmup phase one can pass the `--warmup` argument, and for the actual measurements `--run`.
+
+Depending on which one you want to launch, you can pick between `--tpcc` and `--oltp` such as the following:
 
 ```bash
-
-$ docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client
-
+docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client --warmup <--tpcc | --oltp> --server-ip=127.0.0.1
 ```
 
-Under the root folder `/` you can find the following files:
-- `database.conf` defines the port to the PostgreSQL. You can modify the IP address and the port accordingly based on the configuration of your server container.
-- `{oltp_read_write,tpcc}.warmup.sh` is the script to warm up the database by filling its content. As a template, you can change the table counts, the rows per table (for `oltp_read_write`), the scale (for `tpcc`), and the number of threads for the client. More options can be added by referring `sysbench --help` and the help of each workload.
-- `{oltp_read_write,tpcc}.run.sh` is the script to load the database. This script should be run after the database is populated, i.e., the previous script is run. You may change the number of threads (`--threads=N`), the load (use `--rate=N`, see `sysbench --help`) and running time (`--time=360`).
+And for running the benchmark you can run the following command: 
+
+```bash
+docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client --run <--tpcc | --oltp> --server-ip=127.0.0.1
+```
+
+#### TPC-C
+
+For the TPC-C benchmark we can control the following arguments:
+- `--threads=N` spawns `N` threads for the load generator, default is 8 threads.
+- `--report-interval=s` report the intermediate statistics every `s` seconds, default is 10 seconds.
+- `--time=s` the length in `s` seconds of the benchmark, default is 360 seconds.
+- `--scale=N` the scale `N` of the database, default is 50 times.
+
+#### OLTP
+
+For the OLTP benchmark, you can configure the following parameters:
+- `--threads=N` spawns `N` threads for the load generator.
+- `--report-interval=s` report the intermediate statistics every `s` seconds.
+- `--time=s` the length in `s` seconds of the benchmark.
+- `--scale=N` the scale `N` of the database.
+
+```bash
+$ docker run --name sysbench-client -it --net host cloudsuite/data-serving-rational:client
+```
+
+### Container
+
+You can enter the container with the following command:
+
+```bash
+$ docker run --name sysbench-client -it --net host --entrypoint bash cloudsuite/data-serving-rational:client
+```
+
+- `/root/template/database.conf` defines the port to the PostgreSQL. You can modify the IP address and the port accordingly based on the configuration of your server container.
+- More options can be added by referring `sysbench --help` and the help of each workload.
+
+### Results
 
 Afterwards, the script reports the statistics, including the queries mix, the transactions throughput, and the latency (average and 95th tail):
 

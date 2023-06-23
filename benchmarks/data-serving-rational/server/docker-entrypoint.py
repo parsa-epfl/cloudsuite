@@ -19,7 +19,7 @@ import argparse
 parser = argparse.ArgumentParser()
 # If no value provided, the script tries to find the primary IP address by itself. = get_ip()
 parser.add_argument("--listen-addresses", "-a", help="The listening IP address of PostGRES.", default="'*'")
-parser.add_argument("--number", "-n", type=int, help="The number is not used, place holder for new arugment.", default=0)
+parser.add_argument("--number", "-n", type=int, help="The number is not used, place holder for new argument.", default=0)
 
 args, unknown = parser.parse_known_args()
 
