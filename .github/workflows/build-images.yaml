@@ -229,6 +229,33 @@ jobs:
       - id: set_is_parent_modified
         run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
 
+  postgresql:
+    runs-on: ubuntu-latest
+    needs: base-os
+    env:
+      DH_REPO: "cloudsuite/${{ github.job }}"
+    outputs:
+      is_parent_modified: ${{ steps.set_is_parent_modified.outputs.is_parent_modified }}
+    strategy:
+      matrix:
+        tag: ["15"]
+        platform: ["linux/amd64,linux/arm64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.java.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./commons/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+      - id: set_is_parent_modified
+        run: echo "is_parent_modified=${MODIFIED}" >> $GITHUB_OUTPUT
+
   data-analytics:
     runs-on: ubuntu-latest
     needs: hadoop
@@ -287,6 +314,29 @@ jobs:
       matrix:
         tag: ["server", "client"]
         platform: ["linux/amd64,linux/arm64,linux/riscv64"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - if: ${{ needs.cassandra.outputs.is_parent_modified == 'true' }}
+        run: echo "IS_PARENT_MODIFIED=true" >> $GITHUB_ENV
+      - name: build and push
+        run: "./.github/scripts/build-images.sh"
+        env:
+          IMG_TAG: "${{ matrix.tag }}"
+          DF_PATH: "./benchmarks/${{ github.job }}/${{ matrix.tag }}"
+          DBX_PLATFORM: ${{ matrix.platform }}
+
+  data-serving-relational:
+    runs-on: ubuntu-latest
+    needs: postgresql
+    env:
+      DH_REPO: "cloudsuite/${{ github.job }}"
+    strategy:
+      matrix:
+        tag: ["server", "client"]
+        platform: ["linux/amd64,linux/arm64"]
     steps:
       - name: checkout
         uses: actions/checkout@v3
