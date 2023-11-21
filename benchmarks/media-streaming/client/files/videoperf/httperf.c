@@ -171,6 +171,7 @@ static struct option longopts[] =
   {"videosesslog",     required_argument, (void *) &param.videosesslog,	0},
   {"num-sessions",     required_argument, (void *) &param.num_sessions, 0},
   {"output-log",   required_argument, (void *) &param.output_log,	0},
+  {"num-concurrent-sessions", required_argument, (void *)&param.num_concurrent_sessions, 0},
   {0,		     0,			0,				0}
 };
 
@@ -369,6 +370,7 @@ main (int argc, char **argv)
   param.ssl_reuse = 1;
 #endif
   param.num_sessions = 0;
+  param.num_concurrent_sessions = 0;
 
   /* get program name: */
   prog_name = strrchr (argv[0], '/');
@@ -1059,6 +1061,10 @@ skip_local_ip_param:
 else if (flag == &param.num_sessions)
 {
   param.num_sessions = strtoul (optarg, &end, 0);	
+}
+else if (flag == &param.num_concurrent_sessions)
+{
+  param.num_concurrent_sessions = strtoul (optarg, &end, 0);
 }
 /*
    else if (flag == &param.wset)
