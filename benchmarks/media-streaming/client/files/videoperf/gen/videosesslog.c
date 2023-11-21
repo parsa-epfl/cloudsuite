@@ -366,7 +366,11 @@ sess_create (Any_Type arg)
   double random_val = 0.0;
   int i = 0;
   int session_log_index = -1;
-
+  
+  int concurrent_sessions = num_sessions_generated - num_sessions_destroyed;
+  if (param.num_concurrent_sessions && concurrent_sessions >= param.num_concurrent_sessions){
+    return 0;  
+  }
   if (num_sessions_generated++ >= param.num_sessions) {
     //core_exit();
     return -1;

@@ -73,7 +73,7 @@ Then, you can use any command (e.g., `scp`, `rsync`) to transfer files to the cl
 To run the client container, use the following command:
 
 ```bash
-$ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${VIDEOPERF_PROCESSES} ${VIDEO_COUNT} ${RATE} ${ENCRYPTION_MODE}
+$ docker run -t --name=streaming_client -v <lists>:/videos/logs -v <results>:/output --net host cloudsuite/media-streaming:client ${SERVER_IP} ${VIDEOPERF_PROCESSES} ${VIDEO_COUNT} ${RATE} ${ENCRYPTION_MODE} ${NUM_CONCURRENT_SESSIONS}
 ```
 
 Parameters are:
@@ -84,6 +84,7 @@ Parameters are:
 - `VIDEO_COUNT`: The total number of videos to request. Each video is represented by one session from the `session list`, and the client requests the video by sending HTTP queries to get video chunks sequentially. 
 - `RATE`: The rate (videos per second) for new video request generation. 
 - `ENCRYPTION_MODE`: Whether the transfer is encrypted or not. Possible values are "PT", which stands for plain text; and "TLS", which enables TLS v1.3.
+- `NUM_CONCURRENT_SESSIONS`: The maximum number of clients able to concurrently stream videos from the server. If left unspecified or set to zero, there will be no limit on the number of concurrent clients.
 
 #### Note for Video Request Generation
 

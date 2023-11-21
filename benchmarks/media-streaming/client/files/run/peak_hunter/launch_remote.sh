@@ -7,9 +7,10 @@ numClientsPerHost="$4"
 numSessions="$5"
 rate="$6"
 mode="$7"
+num_concurrent_sessions="$8"
 
-if [ $# -ne 7 ]; then
-  echo "Usage: launch_remote.sh <video_server_ip> <host_list_file> <remote_output_path> <num_clients_per_host> <num_sessions> <rate> <encryption_mode>"
+if [ $# -ne 8 ]; then
+  echo "Usage: launch_remote.sh <video_server_ip> <host_list_file> <remote_output_path> <num_clients_per_host> <num_sessions> <rate> <encryption_mode> <num_concurrent_sessions>"
   exit 
 fi
 
@@ -34,7 +35,7 @@ do
 	echo "Launching $numClientsPerHost clients on $host";
 	for i in $(seq 1 $numClientsPerHost)
 	do
-	cmd="httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 $mode --output-log=/output/result$i.log --num-sessions=$numSessions --rate=$rate 2>>/output/bt$i.trace" # > output-stdout/stdout$i"
+	cmd="httperf --hog --server $videoServerIp --videosesslog=[$logs],[0.1,0.3,0.4,0.2],[localhost,localhost,localhost,localhost] --epoll --recv-buffer=524288 $mode --output-log=/output/result$i.log --num-sessions=$numSessions --rate=$rate --num-concurrent-sessions=$num_concurrent_sessions 2>>/output/bt$i.trace" # > output-stdout/stdout$i"
 	echo "Running command $cmd"
 	eval $cmd &
 	done 

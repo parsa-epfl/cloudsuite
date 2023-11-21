@@ -237,6 +237,7 @@ typedef struct Cmdline_Params
 	} 
 	videosesslog;
 	u_int num_sessions;				/* # of user-sessions */
+    u_int num_concurrent_sessions;  /* # of concurrent sessions */
 }
 Cmdline_Params;
 
