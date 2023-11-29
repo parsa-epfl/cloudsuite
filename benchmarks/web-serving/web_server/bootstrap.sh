@@ -17,9 +17,9 @@ sed -i -e"s/mysql_server/${DB_SERVER_IP}/" elgg/elgg-config/settings.php
 sed -i -e"s/'memcache_server'/'${MEMCACHE_SERVER_IP}'/" elgg/elgg-config/settings.php
 
 if [ $PROTOCOL == 'https' ]; then
-    cat /tmp/nginx_sites_avail_tls.append >> /etc/nginx/sites-available/default
+    ln -sf ../sites-available/nginx_sites_avail_tls /etc/nginx/sites-enabled/cloudsuite
 elif [ $PROTOCOL == 'http' ]; then
-    cat /tmp/nginx_sites_avail_pt.append >> /etc/nginx/sites-available/default
+    ln -sf ../sites-available/nginx_sites_avail_pt /etc/nginx/sites-enabled/cloudsuite
 fi
 
 FPM_CHILDREN=${5:-4}

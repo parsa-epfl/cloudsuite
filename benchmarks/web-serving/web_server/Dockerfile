@@ -41,8 +41,9 @@ RUN mkdir /elgg_data
 RUN chmod a+rw /elgg_data
 
 # Copy over the Nginx Server configuration
-COPY files/nginx_sites_avail_pt.append /tmp/
-COPY files/nginx_sites_avail_tls.append /tmp/
+RUN rm /etc/nginx/sites-enabled/default
+COPY files/nginx_sites_avail_pt /etc/nginx/sites-available/
+COPY files/nginx_sites_avail_tls /etc/nginx/sites-available/
 
 
 RUN service nginx restart

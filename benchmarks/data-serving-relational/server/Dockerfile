@@ -1,7 +1,11 @@
 FROM cloudsuite/postgresql:15
 
 # Install sudo for user switching
-RUN apt update && apt install sudo python3 -y
+RUN set -eux ;  \
+    apt update ; \
+    apt install python3 gosu -y ; \
+    rm -rf /var/lib/apt/lists/* ; \
+    gosu postgres true
 
 # Make the database access public
 RUN echo 'host\tall\tcloudsuite\t0.0.0.0/0\tscram-sha-256' >> /etc/postgresql/15/main/pg_hba.conf
