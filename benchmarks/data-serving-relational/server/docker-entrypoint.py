@@ -81,8 +81,8 @@ with open(f"{POSTGRE_HOMEDIR}/postgresql.conf", "r") as f:
         f.writelines(file_txt)
 
 os.system("service postgresql start")
-os.system("sudo -u postgres psql -c \"CREATE USER cloudsuite WITH PASSWORD 'cloudsuite';\"") # Create the user called `cloudsuite`
-os.system("sudo -u postgres psql -c \"CREATE DATABASE sbtest;\"") # Create a table named sbtest
-os.system("sudo -u postgres psql -c \"GRANT ALL PRIVILEGES ON DATABASE sbtest TO cloudsuite\"") # Gave permission to this table
-os.system("sudo -u postgres psql sbtest -c \"GRANT ALL ON SCHEMA public TO cloudsuite;\"")
-os.system("sudo -u postgres psql")
+os.system("gosu postgres psql -c \"CREATE USER cloudsuite WITH PASSWORD 'cloudsuite';\"") # Create the user called `cloudsuite`
+os.system("gosu postgres psql -c \"CREATE DATABASE sbtest;\"") # Create a table named sbtest
+os.system("gosu postgres psql -c \"GRANT ALL PRIVILEGES ON DATABASE sbtest TO cloudsuite\"") # Gave permission to this table
+os.system("gosu postgres psql sbtest -c \"GRANT ALL ON SCHEMA public TO cloudsuite;\"")
+os.system("gosu postgres psql")
