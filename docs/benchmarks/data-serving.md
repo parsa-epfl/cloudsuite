@@ -23,6 +23,8 @@ The following options can modify the settings of the server:
 - `--writer-count=<int>`: The number of writer threads Cassandra uses. Cassandra recommends 8 threads per CPU core. The default value is 32.
 - `--heap-size=<int>`: JVM heap size. Its unit is GB, and by default, JVM uses `max(min(1/2 ram, 1GB), min(1/4 ram, 8GB))`. It is good to increase the value when the server has enough DRAM for better performance or lower the value for explicit resource restriction.
 - `--affinity=<cpu_id, ...>`: The CPUs Cassandra works on. This setting let Cassandra be aware of its CPU affinity explicitly. It should be used together with the container's resource management option (e.g., `--cpuset-cpus`). 
+- `--row-cache=<size>`: The size of the row cache. Also specify the unit, for example `16GiB` or `256MiB`. By default, the row cache is disabled.
+
 
 ### Multiple Server Containers
 
@@ -68,6 +70,8 @@ You can give your expected load, and YCSB will try to meet the requirement. The 
 
 More detailed instructions on generating the dataset and load can be found in Step 5 at [this](http://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload) link. Although Step 5 in the link describes the data loading procedure, other steps (e.g., 1, 2, 3, 4) are useful for understanding the YCSB settings. In this case, our scripts (`warmup.sh` and `load.sh`) are good templates for further customization.
 
+There are a couple of pre-defined workloads from YCSB. For example, Workload C has 100% read operations with no write operations. The default workload is Workload A (50% read + 50% write). You can change the workload by modifying the `load.sh` script. The other workloads can be found at [this](https://github.com/brianfrankcooper/YCSB/wiki/Core-Workloads) link.
+
 A rule of thumb on the dataset size
 -----------------------------------
 If you are only profiling CPU microarchitectures, you should ensure that the hot data part (3% ~ 5% of the dataset) cannot be buffered on-chip to mimic a realistic situation. Usually, a 10GB dataset is enough for a typical CPU with less than 50MB LLC.
@@ -78,7 +82,8 @@ Tuning the server performance
 2. The server settings are under the $CASSANDRA_PATH/conf folder. The main file is cassandra.yaml. The file has comments about all parameters. These parameters can also be found here: http://wiki.apache.org/cassandra/StorageConfiguration
 3. Make sure that half of the main memory is free for the operating system file buffers and caching. 
 4. As a workload based on JVM, you need to load the server to warm up the JIT cache. You can keep monitoring the throughput and tail latency and take measurement when it becomes relatively stable. As a reference, it takes around 2 minutes for a modern x86 machine (Skylake) to attain stable throughput (5000 RPS, 50% read and 50% update).
-5. The following links are useful pointers for performance tuning:
+5. The server has row cache disabled by default. It is used to cache the data rows in memory. It is useful for read-intensive workloads (e.g., Workload B and Workload C) and can improve throughput. However, it is not recommended for write-intensive workloads as it trashes the cache frequently. Tune it according to your workload.
+6. The following links are useful pointers for performance tuning:
 
     a. http://spyced.blogspot.com/2010/01/linux-performance-basics.html
 
